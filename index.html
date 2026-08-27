@@ -3,18 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NarokGo | Delivery & Pickup</title>
+<title>Amir Chap Chap | Delivery & Pickup</title>
+
+<!-- Leaflet CSS for Maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
 :root {
-    --green: #087f3e;
-    --dark-green: #04572b;
-    --yellow: #ffd21f;
+    --green: #0a7c36;
+    --dark-green: #064c21;
+    --yellow: #ffc700;
     --white: #ffffff;
-    --light: #f5f8f6;
-    --dark: #10231a;
-    --gray: #6c7771;
-    --border: #e3e9e5;
+    --light: #f4f8f5;
+    --dark: #121c16;
+    --gray: #626e67;
+    --border: #e0e8e2;
     --danger: #d93025;
     --shadow: 0 12px 35px rgba(0,0,0,.09);
 }
@@ -31,10 +34,7 @@ body {
     color: var(--dark);
 }
 
-button,
-input,
-select,
-textarea {
+button, input, select, textarea {
     font: inherit;
 }
 
@@ -42,15 +42,14 @@ button {
     cursor: pointer;
 }
 
-/* TOP STRIP */
 .top-strip {
     height: 8px;
-    background: var(--green);
+    background: linear-gradient(90deg, var(--green) 70%, var(--yellow) 30%);
 }
 
 /* NAVIGATION */
 nav {
-    height: 72px;
+    height: 75px;
     background: white;
     display: flex;
     align-items: center;
@@ -65,25 +64,23 @@ nav {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 25px;
+    gap: 12px;
+    font-size: 24px;
     font-weight: 900;
     color: var(--green);
 }
 
-.logo-icon {
-    background: var(--yellow);
-    width: 43px;
-    height: 43px;
-    border-radius: 13px;
-    display: grid;
-    place-items: center;
-    font-size: 23px;
+.logo-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--yellow);
 }
 
 .nav-links {
     display: flex;
-    gap: 28px;
+    gap: 20px;
     align-items: center;
 }
 
@@ -93,9 +90,18 @@ nav {
     font-weight: 600;
 }
 
+.user-badge {
+    background: #e8f6ed;
+    color: var(--green);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 .nav-btn {
     border: none;
-    padding: 12px 20px;
+    padding: 10px 18px;
     border-radius: 12px;
     background: var(--green);
     color: white;
@@ -104,21 +110,20 @@ nav {
 
 /* HERO */
 .hero {
-    min-height: 590px;
+    min-height: 540px;
     background:
-        radial-gradient(circle at 80% 30%, rgba(255,210,31,.25), transparent 28%),
+        radial-gradient(circle at 80% 30%, rgba(255,199,0,.25), transparent 30%),
         linear-gradient(135deg, #fafffc, #eaf8ef);
-    padding: 75px 6%;
+    padding: 60px 6%;
     display: grid;
     grid-template-columns: 1.05fr .95fr;
     align-items: center;
-    gap: 50px;
-    overflow: hidden;
+    gap: 40px;
 }
 
 .hero h1 {
-    font-size: clamp(42px, 5vw, 70px);
-    line-height: 1.02;
+    font-size: clamp(38px, 4.5vw, 65px);
+    line-height: 1.05;
     margin-bottom: 20px;
 }
 
@@ -127,11 +132,11 @@ nav {
 }
 
 .hero p {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.6;
     color: var(--gray);
     max-width: 600px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .hero-buttons {
@@ -140,9 +145,8 @@ nav {
     flex-wrap: wrap;
 }
 
-.primary-btn,
-.secondary-btn {
-    padding: 15px 24px;
+.primary-btn, .secondary-btn {
+    padding: 14px 22px;
     border-radius: 14px;
     border: none;
     font-weight: 800;
@@ -158,155 +162,58 @@ nav {
     color: var(--dark);
 }
 
-.hero-visual {
-    position: relative;
-    min-height: 390px;
-}
-
-.map-card {
-    height: 390px;
-    border-radius: 35px;
-    background:
-        linear-gradient(rgba(255,255,255,.8), rgba(255,255,255,.8)),
-        repeating-linear-gradient(45deg, #d9eee0 0 2px, transparent 2px 35px);
-    box-shadow: var(--shadow);
-    border: 8px solid white;
-    position: relative;
-    overflow: hidden;
-}
-
-.map-road {
-    position: absolute;
-    height: 20px;
-    width: 130%;
-    background: #fff;
-    transform: rotate(-18deg);
-    left: -40px;
-    top: 170px;
-    box-shadow: 0 1px 8px rgba(0,0,0,.1);
-}
-
-.map-road.two {
-    transform: rotate(40deg);
-    top: 90px;
-}
-
-.location-pin {
-    position: absolute;
-    background: var(--green);
-    color: white;
-    width: 52px;
-    height: 52px;
-    border-radius: 50% 50% 50% 5px;
-    transform: rotate(-45deg);
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-    box-shadow: 0 10px 20px rgba(8,127,62,.35);
-}
-
-.location-pin span {
-    transform: rotate(45deg);
-}
-
-.pin-one {
-    top: 90px;
-    left: 25%;
-}
-
-.pin-two {
-    bottom: 80px;
-    right: 20%;
-    background: var(--yellow);
-    color: var(--dark);
-}
-
-.rider-card {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    background: white;
-    border-radius: 20px;
-    padding: 15px;
-    width: 290px;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    box-shadow: var(--shadow);
-}
-
-.rider-avatar {
-    width: 55px;
-    height: 55px;
+.hero-logo-display {
+    max-width: 440px;
+    width: 100%;
     border-radius: 50%;
-    background: var(--green);
-    color: white;
-    display: grid;
-    place-items: center;
-    font-size: 25px;
+    box-shadow: 0 15px 35px rgba(10,124,54,0.2);
+    border: 6px solid white;
 }
 
-/* SERVICES */
+/* AUTH MODAL & SECTIONS */
+.auth-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: var(--light);
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.auth-tab.active {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+
+/* ORDER & TRACKING */
 section {
-    padding: 80px 6%;
+    padding: 70px 6%;
 }
 
 .section-title {
     text-align: center;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
 }
 
 .section-title h2 {
-    font-size: 38px;
+    font-size: 36px;
     margin-bottom: 10px;
-}
-
-.section-title p {
-    color: var(--gray);
-}
-
-.service-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.service-card {
-    background: white;
-    padding: 30px 22px;
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-    transition: .25s;
-}
-
-.service-card:hover {
-    transform: translateY(-7px);
-}
-
-.service-icon {
-    width: 60px;
-    height: 60px;
-    background: #e8f6ed;
-    border-radius: 17px;
-    display: grid;
-    place-items: center;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-.service-card h3 {
-    margin-bottom: 10px;
-}
-
-.service-card p {
-    color: var(--gray);
-    line-height: 1.5;
-}
-
-/* ORDER */
-.order-section {
-    background: white;
 }
 
 .order-layout {
@@ -317,23 +224,18 @@ section {
     gap: 30px;
 }
 
-.order-menu,
-.order-form {
-    background: var(--light);
+.order-menu, .order-form {
+    background: white;
     padding: 30px;
     border-radius: 25px;
-}
-
-.order-menu h3,
-.order-form h3 {
-    margin-bottom: 20px;
+    box-shadow: var(--shadow);
 }
 
 .category-btn {
     width: 100%;
-    padding: 15px;
+    padding: 14px;
     border: 1px solid var(--border);
-    background: white;
+    background: var(--light);
     border-radius: 13px;
     text-align: left;
     margin-bottom: 10px;
@@ -355,27 +257,13 @@ section {
     font-weight: bold;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.form-group input, .form-group select, .form-group textarea {
     width: 100%;
     border: 1px solid var(--border);
-    background: white;
+    background: var(--light);
     padding: 13px;
     border-radius: 11px;
     outline: none;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: var(--green);
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
 }
 
 .order-submit {
@@ -389,89 +277,110 @@ section {
     font-size: 16px;
 }
 
-/* RIDER */
-.nearest-section {
-    background: #eef9f1;
-}
-
-.rider-result {
-    max-width: 900px;
-    margin: auto;
+/* MAP & LIVE TRACKER */
+.tracker-card {
     background: white;
-    padding: 30px;
     border-radius: 25px;
+    padding: 25px;
     box-shadow: var(--shadow);
-    display: none;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 25px;
 }
 
-.rider-result.show {
+#map {
+    height: 400px;
+    border-radius: 20px;
+    width: 100%;
+    z-index: 1;
+}
+
+.rider-info-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rider-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.rider-photo-lg {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--green);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    background: var(--yellow);
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background: var(--light);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.info-item label {
+    font-size: 12px;
+    color: var(--gray);
     display: block;
 }
 
-.rider-details {
-    display: grid;
-    grid-template-columns: 130px 1fr 1fr;
-    gap: 25px;
-    align-items: center;
-}
-
-.rider-photo {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 20px;
-    background: #e7eee9;
-}
-
-.badge {
-    display: inline-block;
-    background: #d9f5e2;
-    color: var(--green);
-    padding: 7px 11px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.detail-line {
-    margin: 10px 0;
-    color: var(--gray);
-}
-
-.detail-line strong {
+.info-item strong {
+    font-size: 16px;
     color: var(--dark);
 }
 
-/* ADMIN */
+/* RIDER CONTROL SIMULATOR */
+.rider-sim-card {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--dark);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
+.rider-sim-card h4 {
+    color: var(--yellow);
+    margin-bottom: 10px;
+}
+
+.sim-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+}
+
+/* ADMIN PANEL */
 .admin-section {
     background: var(--dark);
     color: white;
-}
-
-.admin-section .section-title p {
-    color: #b6c5bc;
-}
-
-.admin-container {
-    max-width: 1150px;
-    margin: auto;
-}
-
-.admin-login {
-    max-width: 450px;
-    margin: auto;
-    background: white;
-    color: var(--dark);
-    padding: 30px;
-    border-radius: 22px;
-}
-
-.admin-panel {
-    display: none;
-}
-
-.admin-panel.show {
-    display: block;
 }
 
 .admin-card {
@@ -481,1068 +390,509 @@ section {
     margin-bottom: 25px;
 }
 
-.admin-card h3 {
-    margin-bottom: 20px;
-}
-
-.admin-card input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: none;
-}
-
 .admin-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
-.upload-label {
-    display: block;
-    background: #244637;
-    border: 1px dashed #7ea58d;
-    padding: 18px;
-    text-align: center;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-}
-
-.upload-label input {
-    display: none;
-}
-
-.add-rider-btn {
+.admin-card input {
     width: 100%;
-    padding: 14px;
-    background: var(--yellow);
+    padding: 12px;
+    border-radius: 10px;
     border: none;
-    border-radius: 12px;
-    font-weight: 900;
+    margin-bottom: 10px;
 }
 
-.rider-admin-list {
-    display: grid;
-    gap: 15px;
-}
-
-.admin-rider {
-    background: white;
-    color: var(--dark);
-    border-radius: 15px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.admin-rider img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.delete-btn {
-    margin-left: auto;
-    background: #ffe4e2;
-    color: var(--danger);
-    border: none;
-    padding: 9px 13px;
-    border-radius: 9px;
-    font-weight: bold;
-}
-
-/* CONTACT */
-.contact-section {
-    background: white;
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-.contact-card {
-    border: 1px solid var(--border);
-    padding: 25px;
-    border-radius: 20px;
-}
-
-.contact-card h3 {
-    color: var(--green);
-    margin-bottom: 8px;
-}
-
-.phone {
-    font-weight: 800;
-    font-size: 18px;
-}
-
-/* FOOTER */
-footer {
-    background: #063c20;
-    color: white;
-    text-align: center;
-    padding: 35px 20px;
-}
-
-footer strong {
-    color: var(--yellow);
-}
-
-/* TOAST */
 .toast {
     position: fixed;
-    right: 20px;
     bottom: 20px;
+    left: 20px;
     background: var(--dark);
     color: white;
-    padding: 15px 20px;
+    padding: 15px 25px;
     border-radius: 12px;
     display: none;
-    z-index: 500;
-    box-shadow: var(--shadow);
+    z-index: 1000;
 }
 
-.toast.show {
-    display: block;
-}
+.toast.show { display: block; }
 
-/* MOBILE */
 @media(max-width: 900px) {
-    .hero {
-        grid-template-columns: 1fr;
-        padding-top: 45px;
-    }
-
-    .service-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .order-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .rider-details {
-        grid-template-columns: 100px 1fr;
-    }
-
-    .rider-details > div:last-child {
-        grid-column: 1 / -1;
-    }
-}
-
-@media(max-width: 600px) {
-    nav {
-        padding: 0 20px;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .hero {
-        padding: 45px 20px;
-    }
-
-    section {
-        padding: 55px 20px;
-    }
-
-    .service-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-row,
-    .admin-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-visual {
-        min-height: 320px;
-    }
-
-    .map-card {
-        height: 320px;
-    }
-
-    .rider-card {
-        width: 240px;
-    }
-
-    .rider-details {
+    .hero, .order-layout, .tracker-card {
         grid-template-columns: 1fr;
     }
 }
 </style>
 </head>
-
 <body>
 
 <div class="top-strip"></div>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <nav>
     <div class="logo">
-        <div class="logo-icon">🛵</div>
-        NarokGo
+        <img class="logo-img" src="1000369432.png" alt="Amir Chap Chap Logo">
+        Amir Chap Chap
     </div>
 
     <div class="nav-links">
-        <a href="#services">Services</a>
-        <a href="#order">Order</a>
-        <a href="#rider">Track Rider</a>
-        <a href="#contact">Contact</a>
+        <a href="#order">Request Delivery</a>
+        <a href="#tracking">Live Map</a>
+        <a href="#admin">Admin</a>
     </div>
 
-    <button class="nav-btn" onclick="scrollToOrder()">Order Now</button>
+    <div id="navAuth">
+        <button class="nav-btn" onclick="openAuthModal()">Register / Login</button>
+    </div>
 </nav>
-
 
 <!-- HERO -->
 <header class="hero">
-
     <div>
-        <div class="badge">📍 SERVING NAROK ONLY</div>
-
-        <h1>
-            Anything you need,
-            <span>delivered.</span>
-        </h1>
-
-        <p>
-            Food, parcels, shopping and pickup & drop-off services
-            delivered around Narok quickly, safely and conveniently.
-        </p>
-
+        <span class="status-badge">⚡ FASTEST EXPRESS DELIVERY</span>
+        <h1>Instant pickup, <span>real-time tracking.</span></h1>
+        <p>Connecting customers, server dispatch, and riders seamlessly for all your delivery needs.</p>
         <div class="hero-buttons">
-            <button class="primary-btn" onclick="scrollToOrder()">
-                🛵 Request a Rider
-            </button>
-
-            <button class="secondary-btn" onclick="scrollToRider()">
-                📍 Find Nearest Rider
-            </button>
+            <button class="primary-btn" onclick="scrollToId('order')">Request Delivery 🛵</button>
+            <button class="secondary-btn" onclick="scrollToId('tracking')">View Live Tracker 📍</button>
         </div>
     </div>
-
-    <div class="hero-visual">
-        <div class="map-card">
-
-            <div class="map-road"></div>
-            <div class="map-road two"></div>
-
-            <div class="location-pin pin-one">
-                <span>📍</span>
-            </div>
-
-            <div class="location-pin pin-two">
-                <span>🏠</span>
-            </div>
-
-            <div class="rider-card">
-                <div class="rider-avatar">🛵</div>
-                <div>
-                    <strong>Nearest rider</strong>
-                    <p style="color:#087f3e;margin-top:5px;">
-                        Available • Ready to deliver
-                    </p>
-                </div>
-            </div>
-
-        </div>
+    <div style="text-align:center;">
+        <img src="1000369432.png" class="hero-logo-display" alt="Amir Chap Chap Delivery Rider">
     </div>
-
 </header>
 
-
-<!-- SERVICES -->
-<section id="services">
-
-    <div class="section-title">
-        <h2>What can we deliver?</h2>
-        <p>One platform for your everyday delivery needs in Narok.</p>
+<!-- CUSTOMER AUTH SECTION -->
+<section id="authSection" style="display:none;">
+    <div class="auth-box">
+        <div class="auth-tabs">
+            <button class="auth-tab active" id="tabLogin" onclick="switchAuth('login')">Login</button>
+            <button class="auth-tab" id="tabRegister" onclick="switchAuth('register')">Register</button>
+        </div>
+        <form id="authForm" onsubmit="handleAuth(event)">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="authName" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="authPhone" placeholder="07XXXXXXXX" required>
+            </div>
+            <button type="submit" class="order-submit" id="authSubmitBtn">Login to Continue</button>
+        </form>
     </div>
-
-    <div class="service-grid">
-
-        <div class="service-card">
-            <div class="service-icon">🍔</div>
-            <h3>Food Delivery</h3>
-            <p>Order meals and have them delivered directly to your location.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">🍾</div>
-            <h3>Liquor Delivery</h3>
-            <p>Request legal alcohol deliveries with mandatory age verification.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">📦</div>
-            <h3>Parcel Delivery</h3>
-            <p>Send documents, packages, shopping and other permitted items.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">🔄</div>
-            <h3>Pickup & Drop-off</h3>
-            <p>Tell us where to collect an item and where it needs to go.</p>
-        </div>
-
-    </div>
-
 </section>
 
-
-<!-- ORDER -->
-<section class="order-section" id="order">
-
+<!-- CUSTOMER ORDER REQUEST -->
+<section id="order">
     <div class="section-title">
-        <h2>Request a delivery</h2>
-        <p>Enter your pickup and destination details.</p>
+        <h2>1. Request a Delivery</h2>
+        <p>Fill in pickup and drop-off specifications.</p>
     </div>
 
     <div class="order-layout">
-
         <div class="order-menu">
-
-            <h3>Choose service</h3>
-
-            <button class="category-btn active"
-                    onclick="selectCategory(this,'Food')">
-                🍔 Food
-            </button>
-
-            <button class="category-btn"
-                    onclick="selectCategory(this,'Liquor')">
-                🍾 Liquor
-            </button>
-
-            <button class="category-btn"
-                    onclick="selectCategory(this,'Parcel')">
-                📦 Parcel / Other
-            </button>
-
-            <button class="category-btn"
-                    onclick="selectCategory(this,'Pickup & Drop-off')">
-                🔄 Pickup & Drop-off
-            </button>
-
-            <div style="margin-top:25px;padding:18px;background:#fff8d6;border-radius:14px;">
-                <strong>📍 Narok Service Area</strong>
-                <p style="margin-top:8px;color:#6c7771;">
-                    Our service currently operates within Narok.
-                </p>
-            </div>
-
+            <h3>Select Service</h3>
+            <button class="category-btn active" onclick="selectCategory(this,'Food')">🍔 Food Delivery</button>
+            <button class="category-btn" onclick="selectCategory(this,'Parcel')">📦 Parcel Drop-off</button>
+            <button class="category-btn" onclick="selectCategory(this,'Shopping')">🛒 Shopping Request</button>
         </div>
 
-
-        <form class="order-form" id="orderForm">
-
-            <h3 id="selectedService">Food Delivery</h3>
-
-            <input type="hidden" id="serviceType" value="Food">
-
-            <div class="form-row">
-
-                <div class="form-group">
-                    <label>Your name</label>
-                    <input id="customerName"
-                           type="text"
-                           placeholder="Enter your name"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone number</label>
-                    <input id="customerPhone"
-                           type="tel"
-                           placeholder="07XXXXXXXX"
-                           required>
-                </div>
-
+        <form class="order-form" id="deliveryForm" onsubmit="submitDeliveryRequest(event)">
+            <h3>Pickup + Destination Details</h3>
+            
+            <div class="form-group">
+                <label>Customer Name</label>
+                <input type="text" id="custName" placeholder="Log in or type name" required>
             </div>
 
             <div class="form-group">
-                <label>Pickup location</label>
-                <input id="pickup"
-                       type="text"
-                       placeholder="Where should we collect it?"
-                       required>
+                <label>Pickup Location</label>
+                <input type="text" id="pickupLoc" placeholder="Where should we collect it?" required>
             </div>
 
             <div class="form-group">
-                <label>Drop-off location</label>
-                <input id="dropoff"
-                       type="text"
-                       placeholder="Where should we deliver it?"
-                       required>
+                <label>Destination (Drop-off)</label>
+                <input type="text" id="destLoc" placeholder="Where should we deliver it?" required>
             </div>
 
             <div class="form-group">
-                <label>Item / request</label>
-                <textarea id="item"
-                          rows="3"
-                          placeholder="Describe what you need..."></textarea>
+                <label>Item Description / Delivery Instructions</label>
+                <textarea id="itemDesc" rows="3" placeholder="What are we picking up?" required></textarea>
             </div>
 
-            <div id="ageBox"
-                 style="display:none;background:#fff1ef;padding:15px;border-radius:12px;margin-bottom:17px;">
-                <label style="display:flex;gap:10px;align-items:center;">
-                    <input type="checkbox" id="ageConfirm">
-                    <span>I confirm that I am 18 years or older and legally permitted to receive this order.</span>
-                </label>
-            </div>
-
-            <button class="order-submit" type="submit">
-                Request Delivery 🛵
-            </button>
-
+            <button type="submit" class="order-submit">Submit Request to Server 🚀</button>
         </form>
-
     </div>
-
 </section>
 
-
-<!-- NEAREST RIDER -->
-<section class="nearest-section" id="rider">
-
+<!-- SERVER DISPATCH & LIVE MAP TRACKING -->
+<section id="tracking" style="background:#eef9f1;">
     <div class="section-title">
-        <h2>Nearest available rider</h2>
-        <p>After requesting a delivery, your assigned rider can be verified here.</p>
+        <h2>2. Live Dispatch & Customer Map</h2>
+        <p>Server matches nearest rider and provides real-time GPS tracking.</p>
     </div>
 
-    <div class="rider-result" id="riderResult">
-
-        <div class="rider-details">
-
-            <img class="rider-photo"
-                 id="resultPhoto"
-                 src=""
-                 alt="Rider">
-
+    <div class="tracker-card">
+        <div class="rider-info-panel">
             <div>
-                <span class="badge">✓ VERIFIED RIDER</span>
-
-                <h2 id="resultName" style="margin-top:10px;">
-                    —
-                </h2>
-
-                <p class="detail-line">
-                    📞 <strong id="resultPhone">—</strong>
-                </p>
-
-                <p class="detail-line">
-                    📍 <strong id="resultDistance">Nearest available</strong>
-                </p>
+                <span class="status-badge" id="jobStatusBadge">AWAITING REQUEST</span>
+                <h3 id="displayRiderName">No Rider Assigned</h3>
+                <p style="color:var(--gray); margin-bottom:15px;" id="serverStatusText">Submit an order above to initiate server calculations.</p>
             </div>
 
-            <div>
-                <p class="detail-line">
-                    🏍️ Bike:
-                    <strong id="resultBike">—</strong>
-                </p>
-
-                <p class="detail-line">
-                    🔢 Number plate:
-                    <strong id="resultPlate">—</strong>
-                </p>
-
-                <p class="detail-line">
-                    🛡️ Verification:
-                    <strong>Confirmed</strong>
-                </p>
+            <div class="rider-header" id="riderHeaderBlock" style="display:none;">
+                <img id="displayRiderPhoto" class="rider-photo-lg" src="" alt="Rider">
+                <div>
+                    <h4 id="displayRiderNameHeader">--</h4>
+                    <p style="color:var(--green); font-weight:bold;" id="displayRiderPhone">--</p>
+                </div>
             </div>
 
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Bike Model</label>
+                    <strong id="displayBikeModel">--</strong>
+                </div>
+                <div class="info-item">
+                    <label>Number Plate</label>
+                    <strong id="displayNumberPlate">--</strong>
+                </div>
+                <div class="info-item">
+                    <label>Pickup Location</label>
+                    <strong id="displayPickup">--</strong>
+                </div>
+                <div class="info-item">
+                    <label>Destination</label>
+                    <strong id="displayDestination">--</strong>
+                </div>
+            </div>
         </div>
 
+        <div>
+            <div id="map"></div>
+        </div>
     </div>
-
-    <div id="noRider"
-         style="text-align:center;color:#6c7771;">
-        No rider selected yet. Submit a delivery request to see the nearest available rider.
-    </div>
-
 </section>
 
+<!-- RIDER MOBILE APP INTERFACE SIMULATOR -->
+<div class="rider-sim-card" id="riderSimBox" style="display:none;">
+    <h4>📱 Rider App Interface</h4>
+    <p style="font-size:12px; margin-bottom:8px;">Rider: <strong id="simRiderName" style="color:white;">--</strong></p>
+    <p style="font-size:12px;" id="simJobText">Order Assigned!</p>
+    
+    <button class="sim-btn" id="btnGpsToggle" style="background:var(--yellow); color:var(--dark);" onclick="toggleRiderGPS()">1. Turn GPS ON</button>
+    <button class="sim-btn" id="btnAcceptJob" style="background:#2196F3; color:white;" onclick="riderAcceptJob()" disabled>2. Accept Job</button>
+    <button class="sim-btn" id="btnPickup" style="background:#ff9800; color:white;" onclick="riderPickup()" disabled>3. Pickup Item</button>
+    <button class="sim-btn" id="btnDeliver" style="background:var(--green); color:white;" onclick="riderDeliver()" disabled>4. Complete Delivery</button>
+</div>
 
-<!-- ADMIN -->
+<!-- ADMIN MANAGEMENT -->
 <section class="admin-section" id="admin">
-
     <div class="section-title">
-        <h2>Administration</h2>
-        <p>Manage verified riders and motorbikes.</p>
+        <h2>3. Server & Rider Database Admin</h2>
+        <p>Register verified delivery riders on Amir Chap Chap Server.</p>
     </div>
 
-    <div class="admin-container">
-
-        <div class="admin-login" id="adminLogin">
-
-            <h3>Admin Login</h3>
-
-            <p style="color:#6c7771;margin:10px 0 20px;">
-                Demo login for this prototype.
-            </p>
-
-            <input type="password"
-                   id="adminPassword"
-                   placeholder="Admin password"
-                   style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-bottom:12px;">
-
-            <button class="primary-btn"
-                    style="width:100%;"
-                    onclick="loginAdmin()">
-                Open Dashboard
-            </button>
-
-            <p style="font-size:12px;color:#888;margin-top:12px;">
-                Demo password: <strong>admin123</strong>
-            </p>
-
-        </div>
-
-
-        <div class="admin-panel" id="adminPanel">
-
-            <div class="admin-card">
-
-                <h3>➕ Add Verified Rider</h3>
-
-                <div class="admin-grid">
-
-                    <input id="riderName"
-                           placeholder="Rider full name">
-
-                    <input id="riderPhone"
-                           placeholder="Rider phone">
-
-                    <input id="bikeModel"
-                           placeholder="Motorbike model">
-
-                    <input id="plateNumber"
-                           placeholder="Number plate">
-
-                </div>
-
-                <label class="upload-label">
-                    📸 Upload rider passport/photo
-                    <input type="file"
-                           id="riderPhotoInput"
-                           accept="image/*">
-                </label>
-
-                <label class="upload-label">
-                    🏍️ Upload motorbike image
-                    <input type="file"
-                           id="bikePhotoInput"
-                           accept="image/*">
-                </label>
-
-                <button class="add-rider-btn"
-                        onclick="addRider()">
-                    Add Rider to System
-                </button>
-
+    <div style="max-width:800px; margin:auto;">
+        <div class="admin-card">
+            <h3 style="margin-bottom:15px;">➕ Register Active Rider</h3>
+            <div class="admin-grid">
+                <input type="text" id="admRiderName" placeholder="Rider Full Name">
+                <input type="text" id="admRiderPhone" placeholder="Phone Number">
+                <input type="text" id="admBikeModel" placeholder="Bike Model (e.g., TVS HLX 150)">
+                <input type="text" id="admPlate" placeholder="Number Plate (e.g., KDA 123A)">
             </div>
-
-
-            <div class="admin-card">
-
-                <h3>👥 Registered Riders</h3>
-
-                <div class="rider-admin-list"
-                     id="adminRiderList">
-                </div>
-
-            </div>
-
+            <button class="primary-btn" style="width:100%; margin-top:10px; background:var(--yellow); color:var(--dark);" onclick="adminAddRider()">Add Verified Rider</button>
         </div>
-
     </div>
-
 </section>
-
-
-<!-- CONTACT -->
-<section class="contact-section" id="contact">
-
-    <div class="section-title">
-        <h2>Contact NarokGo</h2>
-        <p>We're here to help.</p>
-    </div>
-
-    <div class="contact-grid">
-
-        <div class="contact-card">
-            <h3>CEO</h3>
-            <h2>Abdi Mohammed</h2>
-            <p class="phone">📞 0795653284</p>
-        </div>
-
-        <div class="contact-card">
-            <h3>Manager</h3>
-            <h2>Salim Mohammed</h2>
-            <p class="phone">📞 0792102645</p>
-        </div>
-
-        <div class="contact-card">
-            <h3>Customer Care</h3>
-            <h2>Sharon Jelimo</h2>
-            <p class="phone">📞 0719222390</p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<footer>
-    <p>
-        © 2026 <strong>NarokGo</strong> — Local delivery & pickup services in Narok.
-    </p>
-
-    <p style="margin-top:8px;font-size:13px;">
-        Safe riders • Verified motorcycles • Reliable deliveries
-    </p>
-</footer>
-
 
 <div class="toast" id="toast"></div>
 
+<!-- Leaflet JS for Maps -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
+/* APPLICATION STATE & STORAGE */
+let currentUser = JSON.parse(localStorage.getItem("amirUser")) || null;
 
-/* =========================
-   DATA
-========================= */
-
-let riders = JSON.parse(localStorage.getItem("narokGoRiders")) || [
-
+let riders = JSON.parse(localStorage.getItem("amirRiders")) || [
     {
-        id: 1,
-        name: "Sample Rider",
-        phone: "0700000000",
+        id: 101,
+        name: "John Kamau",
+        phone: "0712345678",
+        bike: "TVS HLX 150",
+        plate: "KMD 452X",
+        photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+        lat: -1.0833,
+        lng: 35.8667,
+        status: "available"
+    },
+    {
+        id: 102,
+        name: "Peter Kiprono",
+        phone: "0722987654",
         bike: "Bajaj Boxer 150",
-        plate: "KDA 123A",
-        photo: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=500&q=80",
-        bikePhoto: "",
-        verified: true
+        plate: "KMC 891B",
+        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        lat: -1.0880,
+        lng: 35.8700,
+        status: "available"
     }
-
 ];
 
-let selectedService = "Food";
+let activeOrder = null;
+let activeRider = null;
+let map, riderMarker, pickupMarker;
+let simGpsOn = false;
+let authMode = "login";
 
+window.onload = function() {
+    updateAuthUI();
+    initMap();
+};
 
-/* =========================
-   UTILITIES
-========================= */
+function initMap() {
+    map = L.map('map').setView([-1.0833, 35.8667], 14);
 
-function showToast(message) {
-
-    const toast = document.getElementById("toast");
-
-    toast.textContent = message;
-    toast.classList.add("show");
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 3500);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap / Google Maps Engine Simulation'
+    }).addTo(map);
 }
 
-
-function scrollToOrder() {
-
-    document.getElementById("order")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
+function switchAuth(mode) {
+    authMode = mode;
+    document.getElementById("tabLogin").classList.toggle("active", mode === 'login');
+    document.getElementById("tabRegister").classList.toggle("active", mode === 'register');
+    document.getElementById("authName").parentElement.style.display = (mode === 'register') ? 'block' : 'none';
+    document.getElementById("authSubmitBtn").textContent = (mode === 'register') ? 'Create Account' : 'Login';
 }
 
+function handleAuth(e) {
+    e.preventDefault();
+    const phone = document.getElementById("authPhone").value.trim();
+    const name = document.getElementById("authName").value.trim() || "Customer";
 
-function scrollToRider() {
+    if (!phone) return showToast("Please enter phone number.");
 
-    document.getElementById("rider")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
+    currentUser = { name: name, phone: phone };
+    localStorage.setItem("amirUser", JSON.stringify(currentUser));
+    updateAuthUI();
+    showToast(`Welcome ${currentUser.name}!`);
+    document.getElementById("authSection").style.display = "none";
 }
 
-
-/* =========================
-   SERVICE SELECTION
-========================= */
-
-function selectCategory(button, category) {
-
-    document.querySelectorAll(".category-btn")
-        .forEach(btn => btn.classList.remove("active"));
-
-    button.classList.add("active");
-
-    selectedService = category;
-
-    document.getElementById("serviceType")
-        .value = category;
-
-    document.getElementById("selectedService")
-        .textContent = category + " Delivery";
-
-    const ageBox = document.getElementById("ageBox");
-
-    if (category === "Liquor") {
-
-        ageBox.style.display = "block";
-
+function updateAuthUI() {
+    const container = document.getElementById("navAuth");
+    if (currentUser) {
+        container.innerHTML = `<span class="user-badge">👤 ${currentUser.name}</span> <button onclick="logout()" style="border:none;background:none;color:var(--danger);cursor:pointer;font-weight:bold;">Logout</button>`;
+        document.getElementById("custName").value = currentUser.name;
     } else {
-
-        ageBox.style.display = "none";
-
+        container.innerHTML = `<button class="nav-btn" onclick="openAuthModal()">Register / Login</button>`;
     }
-
 }
 
+function openAuthModal() {
+    document.getElementById("authSection").style.display = "block";
+    scrollToId("authSection");
+}
 
-/* =========================
-   ORDER
-========================= */
+function logout() {
+    localStorage.removeItem("amirUser");
+    currentUser = null;
+    updateAuthUI();
+    showToast("Logged out successfully.");
+}
 
-document.getElementById("orderForm")
-.addEventListener("submit", function(e) {
-
+function submitDeliveryRequest(e) {
     e.preventDefault();
 
-    if (selectedService === "Liquor") {
+    const pickup = document.getElementById("pickupLoc").value.trim();
+    const destination = document.getElementById("destLoc").value.trim();
+    const item = document.getElementById("itemDesc").value.trim();
+    const name = document.getElementById("custName").value.trim();
 
-        if (!document.getElementById("ageConfirm").checked) {
-
-            showToast(
-                "You must confirm that you are 18+ for liquor delivery."
-            );
-
-            return;
-        }
-
+    if (!pickup || !destination) {
+        return showToast("Please provide both pickup and destination locations.");
     }
 
-    if (riders.length === 0) {
-
-        showToast(
-            "There are currently no registered riders."
-        );
-
-        return;
-    }
-
-    /*
-       In a real application this should use GPS coordinates
-       from the customer's phone and the riders' live GPS locations.
-       This demo randomly selects an available registered rider.
-    */
-
-    const rider =
-        riders[Math.floor(Math.random() * riders.length)];
-
-    document.getElementById("resultName")
-        .textContent = rider.name;
-
-    document.getElementById("resultPhone")
-        .textContent = rider.phone;
-
-    document.getElementById("resultBike")
-        .textContent = rider.bike;
-
-    document.getElementById("resultPlate")
-        .textContent = rider.plate;
-
-    document.getElementById("resultPhoto")
-        .src = rider.photo ||
-        "https://via.placeholder.com/200?text=Rider";
-
-    document.getElementById("resultDistance")
-        .textContent = "Nearest available rider";
-
-    document.getElementById("riderResult")
-        .classList.add("show");
-
-    document.getElementById("noRider")
-        .style.display = "none";
-
-    showToast(
-        "Delivery request received. Rider assigned."
-    );
-
-    document.getElementById("rider")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
-});
-
-
-/* =========================
-   ADMIN LOGIN
-========================= */
-
-function loginAdmin() {
-
-    const password =
-        document.getElementById("adminPassword").value;
-
-    if (password === "admin123") {
-
-        document.getElementById("adminLogin")
-            .style.display = "none";
-
-        document.getElementById("adminPanel")
-            .classList.add("show");
-
-        renderRiders();
-
-        showToast("Admin dashboard opened.");
-
-    } else {
-
-        showToast("Incorrect admin password.");
-
-    }
-
-}
-
-
-/* =========================
-   IMAGE TO BASE64
-========================= */
-
-function fileToBase64(file) {
-
-    return new Promise((resolve, reject) => {
-
-        if (!file) {
-
-            resolve("");
-
-            return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = () =>
-            resolve(reader.result);
-
-        reader.onerror = reject;
-
-        reader.readAsDataURL(file);
-
-    });
-
-}
-
-
-/* =========================
-   ADD RIDER
-========================= */
-
-async function addRider() {
-
-    const name =
-        document.getElementById("riderName").value.trim();
-
-    const phone =
-        document.getElementById("riderPhone").value.trim();
-
-    const bike =
-        document.getElementById("bikeModel").value.trim();
-
-    const plate =
-        document.getElementById("plateNumber").value.trim();
-
-    const riderFile =
-        document.getElementById("riderPhotoInput").files[0];
-
-    const bikeFile =
-        document.getElementById("bikePhotoInput").files[0];
-
-
-    if (!name || !phone || !bike || !plate) {
-
-        showToast(
-            "Please fill in all rider and motorcycle details."
-        );
-
-        return;
-    }
-
-
-    const riderPhoto =
-        await fileToBase64(riderFile);
-
-    const bikePhoto =
-        await fileToBase64(bikeFile);
-
-
-    const newRider = {
-
-        id: Date.now(),
-
-        name,
-        phone,
-        bike,
-        plate,
-
-        photo:
-            riderPhoto ||
-            "https://via.placeholder.com/200?text=Rider",
-
-        bikePhoto,
-
-        verified: true
-
+    activeOrder = {
+        id: "ORD-" + Math.floor(Math.random() * 8999 + 1000),
+        customerName: name,
+        pickup: pickup,
+        destination: destination,
+        item: item,
+        status: "FINDING_RIDER"
     };
 
-
-    riders.push(newRider);
-
-    localStorage.setItem(
-        "narokGoRiders",
-        JSON.stringify(riders)
-    );
-
-
-    document.getElementById("riderName").value = "";
-    document.getElementById("riderPhone").value = "";
-    document.getElementById("bikeModel").value = "";
-    document.getElementById("plateNumber").value = "";
-
-    document.getElementById("riderPhotoInput").value = "";
-    document.getElementById("bikePhotoInput").value = "";
-
-
-    renderRiders();
-
-    showToast(
-        `${name} has been added as a verified rider.`
-    );
-
+    showToast("AMIR CHAP CHAP SERVER: Finding available riders...");
+    
+    setTimeout(() => {
+        assignNearestRider();
+    }, 1200);
 }
 
+function assignNearestRider() {
+    const availableRiders = riders.filter(r => r.status === "available");
 
-/* =========================
-   DISPLAY RIDERS
-========================= */
-
-function renderRiders() {
-
-    const list =
-        document.getElementById("adminRiderList");
-
-    list.innerHTML = "";
-
-    if (riders.length === 0) {
-
-        list.innerHTML =
-            "<p>No riders registered.</p>";
-
+    if (availableRiders.length === 0) {
+        showToast("No available riders online right now.");
         return;
     }
 
+    activeRider = availableRiders[0]; 
+    activeRider.status = "assigned";
 
-    riders.forEach(rider => {
+    document.getElementById("jobStatusBadge").textContent = "RIDER ASSIGNED";
+    document.getElementById("jobStatusBadge").style.background = "#2196F3";
+    document.getElementById("jobStatusBadge").style.color = "white";
 
-        const item =
-            document.createElement("div");
+    document.getElementById("displayRiderName").textContent = activeRider.name;
+    document.getElementById("displayRiderNameHeader").textContent = activeRider.name;
+    document.getElementById("displayRiderPhone").textContent = "📞 " + activeRider.phone;
+    document.getElementById("displayBikeModel").textContent = activeRider.bike;
+    document.getElementById("displayNumberPlate").textContent = activeRider.plate;
+    document.getElementById("displayPickup").textContent = activeOrder.pickup;
+    document.getElementById("displayDestination").textContent = activeOrder.destination;
+    document.getElementById("displayRiderPhoto").src = activeRider.photo;
+    
+    document.getElementById("riderHeaderBlock").style.display = "flex";
+    document.getElementById("serverStatusText").textContent = "Server matched nearest rider. Awaiting rider response.";
 
-        item.className = "admin-rider";
-
-        item.innerHTML = `
-
-            <img
-                src="${rider.photo}"
-                alt="${rider.name}"
-            >
-
-            <div>
-
-                <strong>${rider.name}</strong>
-
-                <p style="margin-top:5px;color:#6c7771;">
-                    ${rider.bike} • ${rider.plate}
-                </p>
-
-                <p style="margin-top:4px;color:#087f3e;">
-                    ✓ Verified
-                </p>
-
-            </div>
-
-            <button
-                class="delete-btn"
-                onclick="deleteRider(${rider.id})">
-                Delete
-            </button>
-
-        `;
-
-        list.appendChild(item);
-
-    });
-
+    renderMapLocations();
+    triggerRiderAppSimulator();
+    scrollToId("tracking");
 }
 
+function renderMapLocations() {
+    if (riderMarker) map.removeLayer(riderMarker);
+    if (pickupMarker) map.removeLayer(pickupMarker);
 
-/* =========================
-   DELETE RIDER
-========================= */
+    const riderLat = activeRider.lat;
+    const riderLng = activeRider.lng;
+    const pickupLat = riderLat + 0.005;
+    const pickupLng = riderLng + 0.005;
 
-function deleteRider(id) {
+    riderMarker = L.marker([riderLat, riderLng]).addTo(map).bindPopup(`<b>Rider: ${activeRider.name}</b>`).openPopup();
+    pickupMarker = L.marker([pickupLat, pickupLng]).addTo(map).bindPopup(`<b>Pickup: ${activeOrder.pickup}</b>`);
 
-    if (!confirm(
-        "Remove this rider from the system?"
-    )) return;
-
-
-    riders =
-        riders.filter(rider =>
-            rider.id !== id
-        );
-
-
-    localStorage.setItem(
-        "narokGoRiders",
-        JSON.stringify(riders)
-    );
-
-
-    renderRiders();
-
-    showToast(
-        "Rider removed."
-    );
-
+    map.setView([riderLat, riderLng], 14);
 }
 
+function triggerRiderAppSimulator() {
+    document.getElementById("riderSimBox").style.display = "block";
+    document.getElementById("simRiderName").textContent = activeRider.name;
+    document.getElementById("simJobText").textContent = `Job Alert: Delivery to ${activeOrder.destination}`;
+}
 
-/* =========================
-   INITIALIZE
-========================= */
+function toggleRiderGPS() {
+    simGpsOn = !simGpsOn;
+    const btn = document.getElementById("btnGpsToggle");
+    const acceptBtn = document.getElementById("btnAcceptJob");
 
-renderRiders();
+    if (simGpsOn) {
+        btn.textContent = "✓ GPS ON";
+        btn.style.background = "var(--green)";
+        btn.style.color = "white";
+        acceptBtn.disabled = false;
+        showToast("RIDER: GPS signal active.");
+    } else {
+        btn.textContent = "1. Turn GPS ON";
+        btn.style.background = "var(--yellow)";
+        btn.style.color = "var(--dark)";
+        acceptBtn.disabled = true;
+    }
+}
 
+function riderAcceptJob() {
+    document.getElementById("btnAcceptJob").disabled = true;
+    document.getElementById("btnPickup").disabled = false;
+    
+    document.getElementById("jobStatusBadge").textContent = "JOB ACCEPTED - EN ROUTE";
+    document.getElementById("serverStatusText").textContent = "Rider accepted job! Moving to pickup location.";
+    showToast("RIDER: Job accepted. Navigating to pickup location.");
+}
+
+function riderPickup() {
+    document.getElementById("btnPickup").disabled = true;
+    document.getElementById("btnDeliver").disabled = false;
+
+    document.getElementById("jobStatusBadge").textContent = "ITEM PICKED UP";
+    document.getElementById("jobStatusBadge").style.background = "#ff9800";
+    document.getElementById("serverStatusText").textContent = "Rider picked up item. Heading to destination.";
+    
+    showToast("RIDER: Item collected. En route to customer.");
+}
+
+function riderDeliver() {
+    document.getElementById("btnDeliver").disabled = true;
+
+    document.getElementById("jobStatusBadge").textContent = "DELIVERED ✓";
+    document.getElementById("jobStatusBadge").style.background = "var(--green)";
+    document.getElementById("serverStatusText").textContent = "Delivery successfully completed!";
+
+    simGpsOn = false;
+    document.getElementById("btnGpsToggle").textContent = "GPS OFF";
+    document.getElementById("btnGpsToggle").style.background = "gray";
+
+    showToast("RIDER: Delivery completed! GPS OFF.");
+
+    setTimeout(() => {
+        document.getElementById("riderSimBox").style.display = "none";
+    }, 4000);
+}
+
+function adminAddRider() {
+    const name = document.getElementById("admRiderName").value.trim();
+    const phone = document.getElementById("admRiderPhone").value.trim();
+    const bike = document.getElementById("admBikeModel").value.trim();
+    const plate = document.getElementById("admPlate").value.trim();
+
+    if (!name || !phone || !plate) {
+        return showToast("Fill in all rider details.");
+    }
+
+    const newRider = {
+        id: Date.now(),
+        name: name,
+        phone: phone,
+        bike: bike || "Standard Bike",
+        plate: plate,
+        photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+        lat: -1.0850,
+        lng: 35.8680,
+        status: "available"
+    };
+
+    riders.push(newRider);
+    localStorage.setItem("amirRiders", JSON.stringify(riders));
+    
+    showToast(`Rider ${name} registered successfully!`);
+
+    document.getElementById("admRiderName").value = "";
+    document.getElementById("admRiderPhone").value = "";
+    document.getElementById("admBikeModel").value = "";
+    document.getElementById("admPlate").value = "";
+}
+
+function selectCategory(btn, category) {
+    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3500);
+}
+
+function scrollToId(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 
 </body>
