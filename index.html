@@ -1,34 +1,1549 @@
-CUSTOMER
-   │
-   ├── Register / Login
-   │
-   ├── Request delivery
-   │
-   ├── Pickup + destination
-   │
-   ▼
-AMIR CHAP CHAP SERVER
-   │
-   ├── Find available riders
-   │
-   ├── Calculate nearest rider
-   │
-   ├── Assign rider
-   │
-   ▼
-RIDER
-   │
-   ├── Accept job
-   ├── GPS ON
-   ├── Pickup
-   ├── Deliver
-   └── GPS OFF
-   │
-   ▼
-CUSTOMER
-   │
-   ├── Rider photo
-   ├── Rider name
-   ├── Bike model
-   ├── Number plate
-   └── LIVE GOOGLE MAP
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NarokGo | Delivery & Pickup</title>
+
+<style>
+:root {
+    --green: #087f3e;
+    --dark-green: #04572b;
+    --yellow: #ffd21f;
+    --white: #ffffff;
+    --light: #f5f8f6;
+    --dark: #10231a;
+    --gray: #6c7771;
+    --border: #e3e9e5;
+    --danger: #d93025;
+    --shadow: 0 12px 35px rgba(0,0,0,.09);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* TOP STRIP */
+.top-strip {
+    height: 8px;
+    background: var(--green);
+}
+
+/* NAVIGATION */
+nav {
+    height: 72px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--green);
+}
+
+.logo-icon {
+    background: var(--yellow);
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.nav-btn {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: var(--green);
+    color: white;
+    font-weight: bold;
+}
+
+/* HERO */
+.hero {
+    min-height: 590px;
+    background:
+        radial-gradient(circle at 80% 30%, rgba(255,210,31,.25), transparent 28%),
+        linear-gradient(135deg, #fafffc, #eaf8ef);
+    padding: 75px 6%;
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: 50px;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 5vw, 70px);
+    line-height: 1.02;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: var(--green);
+}
+
+.hero p {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--gray);
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 15px 24px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 800;
+}
+
+.primary-btn {
+    background: var(--green);
+    color: white;
+}
+
+.secondary-btn {
+    background: var(--yellow);
+    color: var(--dark);
+}
+
+.hero-visual {
+    position: relative;
+    min-height: 390px;
+}
+
+.map-card {
+    height: 390px;
+    border-radius: 35px;
+    background:
+        linear-gradient(rgba(255,255,255,.8), rgba(255,255,255,.8)),
+        repeating-linear-gradient(45deg, #d9eee0 0 2px, transparent 2px 35px);
+    box-shadow: var(--shadow);
+    border: 8px solid white;
+    position: relative;
+    overflow: hidden;
+}
+
+.map-road {
+    position: absolute;
+    height: 20px;
+    width: 130%;
+    background: #fff;
+    transform: rotate(-18deg);
+    left: -40px;
+    top: 170px;
+    box-shadow: 0 1px 8px rgba(0,0,0,.1);
+}
+
+.map-road.two {
+    transform: rotate(40deg);
+    top: 90px;
+}
+
+.location-pin {
+    position: absolute;
+    background: var(--green);
+    color: white;
+    width: 52px;
+    height: 52px;
+    border-radius: 50% 50% 50% 5px;
+    transform: rotate(-45deg);
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    box-shadow: 0 10px 20px rgba(8,127,62,.35);
+}
+
+.location-pin span {
+    transform: rotate(45deg);
+}
+
+.pin-one {
+    top: 90px;
+    left: 25%;
+}
+
+.pin-two {
+    bottom: 80px;
+    right: 20%;
+    background: var(--yellow);
+    color: var(--dark);
+}
+
+.rider-card {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    width: 290px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    box-shadow: var(--shadow);
+}
+
+.rider-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+}
+
+/* SERVICES */
+section {
+    padding: 80px 6%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: var(--gray);
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.service-card {
+    background: white;
+    padding: 30px 22px;
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: .25s;
+}
+
+.service-card:hover {
+    transform: translateY(-7px);
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: #e8f6ed;
+    border-radius: 17px;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.service-card h3 {
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: var(--gray);
+    line-height: 1.5;
+}
+
+/* ORDER */
+.order-section {
+    background: white;
+}
+
+.order-layout {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: .75fr 1.25fr;
+    gap: 30px;
+}
+
+.order-menu,
+.order-form {
+    background: var(--light);
+    padding: 30px;
+    border-radius: 25px;
+}
+
+.order-menu h3,
+.order-form h3 {
+    margin-bottom: 20px;
+}
+
+.category-btn {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 13px;
+    text-align: left;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.category-btn.active {
+    background: var(--green);
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: white;
+    padding: 13px;
+    border-radius: 11px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--green);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.order-submit {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 13px;
+    background: var(--green);
+    color: white;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+/* RIDER */
+.nearest-section {
+    background: #eef9f1;
+}
+
+.rider-result {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: var(--shadow);
+    display: none;
+}
+
+.rider-result.show {
+    display: block;
+}
+
+.rider-details {
+    display: grid;
+    grid-template-columns: 130px 1fr 1fr;
+    gap: 25px;
+    align-items: center;
+}
+
+.rider-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 20px;
+    background: #e7eee9;
+}
+
+.badge {
+    display: inline-block;
+    background: #d9f5e2;
+    color: var(--green);
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.detail-line {
+    margin: 10px 0;
+    color: var(--gray);
+}
+
+.detail-line strong {
+    color: var(--dark);
+}
+
+/* ADMIN */
+.admin-section {
+    background: var(--dark);
+    color: white;
+}
+
+.admin-section .section-title p {
+    color: #b6c5bc;
+}
+
+.admin-container {
+    max-width: 1150px;
+    margin: auto;
+}
+
+.admin-login {
+    max-width: 450px;
+    margin: auto;
+    background: white;
+    color: var(--dark);
+    padding: 30px;
+    border-radius: 22px;
+}
+
+.admin-panel {
+    display: none;
+}
+
+.admin-panel.show {
+    display: block;
+}
+
+.admin-card {
+    background: #173025;
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+}
+
+.admin-card h3 {
+    margin-bottom: 20px;
+}
+
+.admin-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: none;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.upload-label {
+    display: block;
+    background: #244637;
+    border: 1px dashed #7ea58d;
+    padding: 18px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.upload-label input {
+    display: none;
+}
+
+.add-rider-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--yellow);
+    border: none;
+    border-radius: 12px;
+    font-weight: 900;
+}
+
+.rider-admin-list {
+    display: grid;
+    gap: 15px;
+}
+
+.admin-rider {
+    background: white;
+    color: var(--dark);
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-rider img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.delete-btn {
+    margin-left: auto;
+    background: #ffe4e2;
+    color: var(--danger);
+    border: none;
+    padding: 9px 13px;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+/* CONTACT */
+.contact-section {
+    background: white;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.contact-card {
+    border: 1px solid var(--border);
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.contact-card h3 {
+    color: var(--green);
+    margin-bottom: 8px;
+}
+
+.phone {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+/* FOOTER */
+footer {
+    background: #063c20;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+footer strong {
+    color: var(--yellow);
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: var(--dark);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: none;
+    z-index: 500;
+    box-shadow: var(--shadow);
+}
+
+.toast.show {
+    display: block;
+}
+
+/* MOBILE */
+@media(max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding-top: 45px;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .order-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rider-details {
+        grid-template-columns: 100px 1fr;
+    }
+
+    .rider-details > div:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media(max-width: 600px) {
+    nav {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        padding: 45px 20px;
+    }
+
+    section {
+        padding: 55px 20px;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row,
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+        min-height: 320px;
+    }
+
+    .map-card {
+        height: 320px;
+    }
+
+    .rider-card {
+        width: 240px;
+    }
+
+    .rider-details {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-strip"></div>
+
+<!-- NAV -->
+<nav>
+    <div class="logo">
+        <div class="logo-icon">🛵</div>
+        NarokGo
+    </div>
+
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#order">Order</a>
+        <a href="#rider">Track Rider</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <button class="nav-btn" onclick="scrollToOrder()">Order Now</button>
+</nav>
+
+
+<!-- HERO -->
+<header class="hero">
+
+    <div>
+        <div class="badge">📍 SERVING NAROK ONLY</div>
+
+        <h1>
+            Anything you need,
+            <span>delivered.</span>
+        </h1>
+
+        <p>
+            Food, parcels, shopping and pickup & drop-off services
+            delivered around Narok quickly, safely and conveniently.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="primary-btn" onclick="scrollToOrder()">
+                🛵 Request a Rider
+            </button>
+
+            <button class="secondary-btn" onclick="scrollToRider()">
+                📍 Find Nearest Rider
+            </button>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="map-card">
+
+            <div class="map-road"></div>
+            <div class="map-road two"></div>
+
+            <div class="location-pin pin-one">
+                <span>📍</span>
+            </div>
+
+            <div class="location-pin pin-two">
+                <span>🏠</span>
+            </div>
+
+            <div class="rider-card">
+                <div class="rider-avatar">🛵</div>
+                <div>
+                    <strong>Nearest rider</strong>
+                    <p style="color:#087f3e;margin-top:5px;">
+                        Available • Ready to deliver
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</header>
+
+
+<!-- SERVICES -->
+<section id="services">
+
+    <div class="section-title">
+        <h2>What can we deliver?</h2>
+        <p>One platform for your everyday delivery needs in Narok.</p>
+    </div>
+
+    <div class="service-grid">
+
+        <div class="service-card">
+            <div class="service-icon">🍔</div>
+            <h3>Food Delivery</h3>
+            <p>Order meals and have them delivered directly to your location.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🍾</div>
+            <h3>Liquor Delivery</h3>
+            <p>Request legal alcohol deliveries with mandatory age verification.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">📦</div>
+            <h3>Parcel Delivery</h3>
+            <p>Send documents, packages, shopping and other permitted items.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🔄</div>
+            <h3>Pickup & Drop-off</h3>
+            <p>Tell us where to collect an item and where it needs to go.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ORDER -->
+<section class="order-section" id="order">
+
+    <div class="section-title">
+        <h2>Request a delivery</h2>
+        <p>Enter your pickup and destination details.</p>
+    </div>
+
+    <div class="order-layout">
+
+        <div class="order-menu">
+
+            <h3>Choose service</h3>
+
+            <button class="category-btn active"
+                    onclick="selectCategory(this,'Food')">
+                🍔 Food
+            </button>
+
+            <button class="category-btn"
+                    onclick="selectCategory(this,'Liquor')">
+                🍾 Liquor
+            </button>
+
+            <button class="category-btn"
+                    onclick="selectCategory(this,'Parcel')">
+                📦 Parcel / Other
+            </button>
+
+            <button class="category-btn"
+                    onclick="selectCategory(this,'Pickup & Drop-off')">
+                🔄 Pickup & Drop-off
+            </button>
+
+            <div style="margin-top:25px;padding:18px;background:#fff8d6;border-radius:14px;">
+                <strong>📍 Narok Service Area</strong>
+                <p style="margin-top:8px;color:#6c7771;">
+                    Our service currently operates within Narok.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form class="order-form" id="orderForm">
+
+            <h3 id="selectedService">Food Delivery</h3>
+
+            <input type="hidden" id="serviceType" value="Food">
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Your name</label>
+                    <input id="customerName"
+                           type="text"
+                           placeholder="Enter your name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone number</label>
+                    <input id="customerPhone"
+                           type="tel"
+                           placeholder="07XXXXXXXX"
+                           required>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>Pickup location</label>
+                <input id="pickup"
+                       type="text"
+                       placeholder="Where should we collect it?"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Drop-off location</label>
+                <input id="dropoff"
+                       type="text"
+                       placeholder="Where should we deliver it?"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Item / request</label>
+                <textarea id="item"
+                          rows="3"
+                          placeholder="Describe what you need..."></textarea>
+            </div>
+
+            <div id="ageBox"
+                 style="display:none;background:#fff1ef;padding:15px;border-radius:12px;margin-bottom:17px;">
+                <label style="display:flex;gap:10px;align-items:center;">
+                    <input type="checkbox" id="ageConfirm">
+                    <span>I confirm that I am 18 years or older and legally permitted to receive this order.</span>
+                </label>
+            </div>
+
+            <button class="order-submit" type="submit">
+                Request Delivery 🛵
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- NEAREST RIDER -->
+<section class="nearest-section" id="rider">
+
+    <div class="section-title">
+        <h2>Nearest available rider</h2>
+        <p>After requesting a delivery, your assigned rider can be verified here.</p>
+    </div>
+
+    <div class="rider-result" id="riderResult">
+
+        <div class="rider-details">
+
+            <img class="rider-photo"
+                 id="resultPhoto"
+                 src=""
+                 alt="Rider">
+
+            <div>
+                <span class="badge">✓ VERIFIED RIDER</span>
+
+                <h2 id="resultName" style="margin-top:10px;">
+                    —
+                </h2>
+
+                <p class="detail-line">
+                    📞 <strong id="resultPhone">—</strong>
+                </p>
+
+                <p class="detail-line">
+                    📍 <strong id="resultDistance">Nearest available</strong>
+                </p>
+            </div>
+
+            <div>
+                <p class="detail-line">
+                    🏍️ Bike:
+                    <strong id="resultBike">—</strong>
+                </p>
+
+                <p class="detail-line">
+                    🔢 Number plate:
+                    <strong id="resultPlate">—</strong>
+                </p>
+
+                <p class="detail-line">
+                    🛡️ Verification:
+                    <strong>Confirmed</strong>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="noRider"
+         style="text-align:center;color:#6c7771;">
+        No rider selected yet. Submit a delivery request to see the nearest available rider.
+    </div>
+
+</section>
+
+
+<!-- ADMIN -->
+<section class="admin-section" id="admin">
+
+    <div class="section-title">
+        <h2>Administration</h2>
+        <p>Manage verified riders and motorbikes.</p>
+    </div>
+
+    <div class="admin-container">
+
+        <div class="admin-login" id="adminLogin">
+
+            <h3>Admin Login</h3>
+
+            <p style="color:#6c7771;margin:10px 0 20px;">
+                Demo login for this prototype.
+            </p>
+
+            <input type="password"
+                   id="adminPassword"
+                   placeholder="Admin password"
+                   style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-bottom:12px;">
+
+            <button class="primary-btn"
+                    style="width:100%;"
+                    onclick="loginAdmin()">
+                Open Dashboard
+            </button>
+
+            <p style="font-size:12px;color:#888;margin-top:12px;">
+                Demo password: <strong>admin123</strong>
+            </p>
+
+        </div>
+
+
+        <div class="admin-panel" id="adminPanel">
+
+            <div class="admin-card">
+
+                <h3>➕ Add Verified Rider</h3>
+
+                <div class="admin-grid">
+
+                    <input id="riderName"
+                           placeholder="Rider full name">
+
+                    <input id="riderPhone"
+                           placeholder="Rider phone">
+
+                    <input id="bikeModel"
+                           placeholder="Motorbike model">
+
+                    <input id="plateNumber"
+                           placeholder="Number plate">
+
+                </div>
+
+                <label class="upload-label">
+                    📸 Upload rider passport/photo
+                    <input type="file"
+                           id="riderPhotoInput"
+                           accept="image/*">
+                </label>
+
+                <label class="upload-label">
+                    🏍️ Upload motorbike image
+                    <input type="file"
+                           id="bikePhotoInput"
+                           accept="image/*">
+                </label>
+
+                <button class="add-rider-btn"
+                        onclick="addRider()">
+                    Add Rider to System
+                </button>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h3>👥 Registered Riders</h3>
+
+                <div class="rider-admin-list"
+                     id="adminRiderList">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+
+    <div class="section-title">
+        <h2>Contact NarokGo</h2>
+        <p>We're here to help.</p>
+    </div>
+
+    <div class="contact-grid">
+
+        <div class="contact-card">
+            <h3>CEO</h3>
+            <h2>Abdi Mohammed</h2>
+            <p class="phone">📞 0795653284</p>
+        </div>
+
+        <div class="contact-card">
+            <h3>Manager</h3>
+            <h2>Salim Mohammed</h2>
+            <p class="phone">📞 0792102645</p>
+        </div>
+
+        <div class="contact-card">
+            <h3>Customer Care</h3>
+            <h2>Sharon Jelimo</h2>
+            <p class="phone">📞 0719222390</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    <p>
+        © 2026 <strong>NarokGo</strong> — Local delivery & pickup services in Narok.
+    </p>
+
+    <p style="margin-top:8px;font-size:13px;">
+        Safe riders • Verified motorcycles • Reliable deliveries
+    </p>
+</footer>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+let riders = JSON.parse(localStorage.getItem("narokGoRiders")) || [
+
+    {
+        id: 1,
+        name: "Sample Rider",
+        phone: "0700000000",
+        bike: "Bajaj Boxer 150",
+        plate: "KDA 123A",
+        photo: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=500&q=80",
+        bikePhoto: "",
+        verified: true
+    }
+
+];
+
+let selectedService = "Food";
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3500);
+}
+
+
+function scrollToOrder() {
+
+    document.getElementById("order")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+function scrollToRider() {
+
+    document.getElementById("rider")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =========================
+   SERVICE SELECTION
+========================= */
+
+function selectCategory(button, category) {
+
+    document.querySelectorAll(".category-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    selectedService = category;
+
+    document.getElementById("serviceType")
+        .value = category;
+
+    document.getElementById("selectedService")
+        .textContent = category + " Delivery";
+
+    const ageBox = document.getElementById("ageBox");
+
+    if (category === "Liquor") {
+
+        ageBox.style.display = "block";
+
+    } else {
+
+        ageBox.style.display = "none";
+
+    }
+
+}
+
+
+/* =========================
+   ORDER
+========================= */
+
+document.getElementById("orderForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    if (selectedService === "Liquor") {
+
+        if (!document.getElementById("ageConfirm").checked) {
+
+            showToast(
+                "You must confirm that you are 18+ for liquor delivery."
+            );
+
+            return;
+        }
+
+    }
+
+    if (riders.length === 0) {
+
+        showToast(
+            "There are currently no registered riders."
+        );
+
+        return;
+    }
+
+    /*
+       In a real application this should use GPS coordinates
+       from the customer's phone and the riders' live GPS locations.
+       This demo randomly selects an available registered rider.
+    */
+
+    const rider =
+        riders[Math.floor(Math.random() * riders.length)];
+
+    document.getElementById("resultName")
+        .textContent = rider.name;
+
+    document.getElementById("resultPhone")
+        .textContent = rider.phone;
+
+    document.getElementById("resultBike")
+        .textContent = rider.bike;
+
+    document.getElementById("resultPlate")
+        .textContent = rider.plate;
+
+    document.getElementById("resultPhoto")
+        .src = rider.photo ||
+        "https://via.placeholder.com/200?text=Rider";
+
+    document.getElementById("resultDistance")
+        .textContent = "Nearest available rider";
+
+    document.getElementById("riderResult")
+        .classList.add("show");
+
+    document.getElementById("noRider")
+        .style.display = "none";
+
+    showToast(
+        "Delivery request received. Rider assigned."
+    );
+
+    document.getElementById("rider")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+});
+
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+function loginAdmin() {
+
+    const password =
+        document.getElementById("adminPassword").value;
+
+    if (password === "admin123") {
+
+        document.getElementById("adminLogin")
+            .style.display = "none";
+
+        document.getElementById("adminPanel")
+            .classList.add("show");
+
+        renderRiders();
+
+        showToast("Admin dashboard opened.");
+
+    } else {
+
+        showToast("Incorrect admin password.");
+
+    }
+
+}
+
+
+/* =========================
+   IMAGE TO BASE64
+========================= */
+
+function fileToBase64(file) {
+
+    return new Promise((resolve, reject) => {
+
+        if (!file) {
+
+            resolve("");
+
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = () =>
+            resolve(reader.result);
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* =========================
+   ADD RIDER
+========================= */
+
+async function addRider() {
+
+    const name =
+        document.getElementById("riderName").value.trim();
+
+    const phone =
+        document.getElementById("riderPhone").value.trim();
+
+    const bike =
+        document.getElementById("bikeModel").value.trim();
+
+    const plate =
+        document.getElementById("plateNumber").value.trim();
+
+    const riderFile =
+        document.getElementById("riderPhotoInput").files[0];
+
+    const bikeFile =
+        document.getElementById("bikePhotoInput").files[0];
+
+
+    if (!name || !phone || !bike || !plate) {
+
+        showToast(
+            "Please fill in all rider and motorcycle details."
+        );
+
+        return;
+    }
+
+
+    const riderPhoto =
+        await fileToBase64(riderFile);
+
+    const bikePhoto =
+        await fileToBase64(bikeFile);
+
+
+    const newRider = {
+
+        id: Date.now(),
+
+        name,
+        phone,
+        bike,
+        plate,
+
+        photo:
+            riderPhoto ||
+            "https://via.placeholder.com/200?text=Rider",
+
+        bikePhoto,
+
+        verified: true
+
+    };
+
+
+    riders.push(newRider);
+
+    localStorage.setItem(
+        "narokGoRiders",
+        JSON.stringify(riders)
+    );
+
+
+    document.getElementById("riderName").value = "";
+    document.getElementById("riderPhone").value = "";
+    document.getElementById("bikeModel").value = "";
+    document.getElementById("plateNumber").value = "";
+
+    document.getElementById("riderPhotoInput").value = "";
+    document.getElementById("bikePhotoInput").value = "";
+
+
+    renderRiders();
+
+    showToast(
+        `${name} has been added as a verified rider.`
+    );
+
+}
+
+
+/* =========================
+   DISPLAY RIDERS
+========================= */
+
+function renderRiders() {
+
+    const list =
+        document.getElementById("adminRiderList");
+
+    list.innerHTML = "";
+
+    if (riders.length === 0) {
+
+        list.innerHTML =
+            "<p>No riders registered.</p>";
+
+        return;
+    }
+
+
+    riders.forEach(rider => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "admin-rider";
+
+        item.innerHTML = `
+
+            <img
+                src="${rider.photo}"
+                alt="${rider.name}"
+            >
+
+            <div>
+
+                <strong>${rider.name}</strong>
+
+                <p style="margin-top:5px;color:#6c7771;">
+                    ${rider.bike} • ${rider.plate}
+                </p>
+
+                <p style="margin-top:4px;color:#087f3e;">
+                    ✓ Verified
+                </p>
+
+            </div>
+
+            <button
+                class="delete-btn"
+                onclick="deleteRider(${rider.id})">
+                Delete
+            </button>
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================
+   DELETE RIDER
+========================= */
+
+function deleteRider(id) {
+
+    if (!confirm(
+        "Remove this rider from the system?"
+    )) return;
+
+
+    riders =
+        riders.filter(rider =>
+            rider.id !== id
+        );
+
+
+    localStorage.setItem(
+        "narokGoRiders",
+        JSON.stringify(riders)
+    );
+
+
+    renderRiders();
+
+    showToast(
+        "Rider removed."
+    );
+
+}
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+renderRiders();
+
+</script>
+
+</body>
+</html>
