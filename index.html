@@ -3,836 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Amir Chap Chap | Fast Delivery</title>
-
-<meta name="description"
-content="Amir Chap Chap fast food, parcel and shopping delivery services.">
-
 <meta name="theme-color" content="#0a7c36">
+<meta name="description" content="Amir Chap Chap - Fast delivery, pickup and parcel services in Kenya">
+<title>Amir Chap Chap | Delivery & Pickup</title>
+
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQ3g8Q3j1K9Lx9Q8zX0X0X0X0X0X0X0="
+      crossorigin="">
 
 <style>
-
 :root{
---green:#0a7c36;
---dark-green:#064c21;
---yellow:#ffc700;
---white:#ffffff;
---light:#f4f8f5;
---dark:#121c16;
---gray:#626e67;
---border:#dfe8e2;
---danger:#d93025;
---blue:#1976d2;
---orange:#ff9800;
---shadow:0 12px 35px rgba(0,0,0,.09);
+    --green:#0a7c36;
+    --dark-green:#064c21;
+    --yellow:#ffc700;
+    --white:#fff;
+    --light:#f4f8f5;
+    --dark:#121c16;
+    --gray:#626e67;
+    --border:#dfe8e2;
+    --danger:#d93025;
+    --blue:#1677ff;
+    --orange:#ff9800;
+    --shadow:0 12px 35px rgba(0,0,0,.09);
 }
 
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
-scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:var(--light);
-color:var(--dark);
-line-height:1.5;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--dark);
 }
 
-button,
-input,
-select,
-textarea{
-font:inherit;
+button,input,select,textarea{
+    font:inherit;
 }
 
 button{
-cursor:pointer;
+    cursor:pointer;
+}
+
+button:disabled{
+    cursor:not-allowed;
+    opacity:.55;
 }
 
 .top-strip{
-height:8px;
-background:linear-gradient(
-90deg,
-var(--green) 70%,
-var(--yellow) 70%
-);
+    height:8px;
+    background:linear-gradient(90deg,var(--green) 70%,var(--yellow) 30%);
 }
 
-/* =========================
-NAVIGATION
-========================= */
-
+/* NAV */
 nav{
-min-height:75px;
-background:white;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:18px;
-padding:10px 6%;
-border-bottom:1px solid var(--border);
-position:sticky;
-top:0;
-z-index:1000;
+    min-height:75px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:12px 6%;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:22px;
-font-weight:900;
-color:var(--green);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:23px;
+    font-weight:900;
+    color:var(--green);
+    white-space:nowrap;
 }
 
-.logo img{
-width:48px;
-height:48px;
-border-radius:50%;
-object-fit:cover;
-border:2px solid var(--yellow);
+.logo-img{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--yellow);
 }
 
 .nav-links{
-display:flex;
-gap:18px;
-flex-wrap:wrap;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    flex-wrap:wrap;
 }
 
 .nav-links a{
-color:var(--dark);
-text-decoration:none;
-font-weight:700;
+    text-decoration:none;
+    color:var(--dark);
+    font-weight:700;
 }
 
-.nav-links a:hover{
-color:var(--green);
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.nav-btn,
-.primary-btn,
-.secondary-btn,
-.submit-btn{
-border:0;
-border-radius:12px;
-padding:13px 18px;
-font-weight:800;
+.user-badge{
+    background:#e8f6ed;
+    color:var(--green);
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:14px;
 }
 
-.nav-btn,
-.primary-btn,
-.submit-btn{
-background:var(--green);
-color:white;
+.nav-btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:12px;
+    background:var(--green);
+    color:white;
+    font-weight:bold;
 }
 
-.secondary-btn{
-background:var(--yellow);
-color:var(--dark);
-}
-
-button:hover{
-opacity:.92;
-}
-
-/* =========================
-HERO
-========================= */
-
+/* HERO */
 .hero{
-min-height:540px;
-padding:60px 6%;
-display:grid;
-grid-template-columns:1.05fr .95fr;
-gap:40px;
-align-items:center;
-
-background:
-radial-gradient(
-circle at 80% 30%,
-rgba(255,199,0,.25),
-transparent 30%
-),
-linear-gradient(
-135deg,
-#fafffc,
-#eaf8ef
-);
+    min-height:540px;
+    background:
+        radial-gradient(circle at 80% 30%,rgba(255,199,0,.25),transparent 30%),
+        linear-gradient(135deg,#fafffc,#eaf8ef);
+    padding:60px 6%;
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    align-items:center;
+    gap:40px;
 }
 
 .hero h1{
-font-size:clamp(38px,5vw,64px);
-line-height:1.05;
-margin:15px 0 20px;
+    font-size:clamp(38px,4.5vw,65px);
+    line-height:1.05;
+    margin-bottom:20px;
 }
 
 .hero h1 span{
-color:var(--green);
+    color:var(--green);
 }
 
 .hero p{
-font-size:18px;
-color:var(--gray);
-max-width:650px;
-margin-bottom:25px;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--gray);
+    max-width:600px;
+    margin-bottom:25px;
 }
 
 .hero-buttons{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
 }
 
-.hero-logo{
-width:100%;
-max-width:420px;
-border-radius:50%;
-border:6px solid white;
-box-shadow:
-0 15px 35px rgba(10,124,54,.2);
+.primary-btn,
+.secondary-btn{
+    padding:14px 22px;
+    border-radius:14px;
+    border:none;
+    font-weight:800;
 }
 
-.badge{
-display:inline-block;
-padding:7px 14px;
-border-radius:20px;
-background:var(--yellow);
-font-size:13px;
-font-weight:800;
+.primary-btn{
+    background:var(--green);
+    color:white;
 }
 
-/* =========================
-SECTIONS
-========================= */
+.secondary-btn{
+    background:var(--yellow);
+    color:var(--dark);
+}
 
+.hero-logo-display{
+    max-width:440px;
+    width:100%;
+    border-radius:50%;
+    box-shadow:0 15px 35px rgba(10,124,54,.2);
+    border:6px solid white;
+}
+
+/* GENERAL */
 section{
-padding:65px 6%;
+    padding:70px 6%;
 }
 
 .section-title{
-text-align:center;
-margin-bottom:35px;
+    text-align:center;
+    margin-bottom:40px;
 }
 
 .section-title h2{
-font-size:34px;
-margin-bottom:8px;
+    font-size:36px;
+    margin-bottom:10px;
 }
 
 .section-title p{
-color:var(--gray);
-}
-
-.card{
-background:white;
-border-radius:22px;
-padding:28px;
-box-shadow:var(--shadow);
-}
-
-/* =========================
-ORDER
-========================= */
-
-.order-layout{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:.7fr 1.3fr;
-gap:25px;
-}
-
-.service{
-width:100%;
-padding:14px;
-margin-bottom:10px;
-border-radius:12px;
-border:1px solid var(--border);
-background:var(--light);
-text-align:left;
-font-weight:800;
-}
-
-.service.active{
-background:var(--green);
-color:white;
-border-color:var(--green);
-}
-
-.service-description{
-margin-top:20px;
-padding:15px;
-background:#fff8db;
-border-radius:12px;
-font-size:14px;
+    color:var(--gray);
 }
 
 .form-group{
-margin-bottom:17px;
+    margin-bottom:17px;
 }
 
-label{
-display:block;
-font-weight:800;
-margin-bottom:6px;
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
 }
 
-input,
-select,
-textarea{
-width:100%;
-padding:13px;
-border:1px solid var(--border);
-border-radius:10px;
-background:#fbfdfb;
-outline:none;
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:#fff;
+    padding:13px;
+    border-radius:11px;
+    outline:none;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-border-color:var(--green);
-box-shadow:
-0 0 0 3px rgba(10,124,54,.08);
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(10,124,54,.1);
 }
 
-.small{
-font-size:13px;
-color:var(--gray);
-margin-top:5px;
+/* AUTH */
+#authSection{
+    display:none;
 }
 
-/* =========================
-PAYMENT
-========================= */
-
-.payment-options{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+.auth-box{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    max-width:430px;
+    margin:0 auto;
 }
 
-.payment-option{
-border:1px solid var(--border);
-border-radius:12px;
-padding:14px;
-background:white;
-cursor:pointer;
+.auth-tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
 }
 
-.payment-option input{
-width:auto;
-margin-right:8px;
+.auth-tab{
+    flex:1;
+    padding:11px;
+    border:1px solid var(--border);
+    background:var(--light);
+    border-radius:10px;
+    font-weight:bold;
 }
 
-.payment-option.selected{
-border-color:var(--green);
-background:#eaf8ef;
+.auth-tab.active{
+    background:var(--green);
+    color:white;
+    border-color:var(--green);
 }
 
-.mpesa-box{
-display:none;
-margin-top:12px;
-padding:15px;
-border-radius:12px;
-background:#eaf8ef;
-}
-
-.mpesa-box.show{
-display:block;
-}
-
-/* =========================
-RESULT
-========================= */
-
-.result{
-display:none;
-max-width:1100px;
-margin:25px auto 0;
-padding:25px;
-background:#e8f6ed;
-border:1px solid #b8dfc4;
-border-radius:18px;
-}
-
-.result.show{
-display:block;
-}
-
-.order-id{
-font-size:25px;
-font-weight:900;
-color:var(--green);
-margin:5px 0 15px;
-}
-
-.whatsapp{
-display:inline-block;
-margin-top:15px;
-padding:13px 18px;
-background:#25d366;
-color:white;
-border-radius:12px;
-text-decoration:none;
-font-weight:800;
-}
-
-.whatsapp:hover{
-opacity:.9;
-}
-
-/* =========================
-TRACKING
-========================= */
-
-.tracking{
-background:#eef9f1;
-}
-
-.tracking-card{
-max-width:1100px;
-margin:auto;
-}
-
-.tracking-box{
-background:white;
-padding:25px;
-border-radius:22px;
-box-shadow:var(--shadow);
-}
-
-.status{
-display:inline-block;
-padding:7px 14px;
-border-radius:20px;
-background:var(--yellow);
-font-weight:800;
-font-size:13px;
-}
-
-.status.blue{
-background:var(--blue);
-color:white;
-}
-
-.status.orange{
-background:var(--orange);
-color:white;
-}
-
-.status.green{
-background:var(--green);
-color:white;
-}
-
-.map-placeholder{
-height:300px;
-margin-top:20px;
-border-radius:16px;
-background:
-linear-gradient(
-135deg,
-#dff2e4,
-#f8fff9
-);
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:var(--gray);
-padding:20px;
-}
-
-.order-details{
-margin-top:20px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.detail{
-background:var(--light);
-padding:14px;
-border-radius:12px;
-}
-
-.detail small{
-display:block;
-color:var(--gray);
-}
-
-.detail strong{
-display:block;
-margin-top:3px;
-}
-
-/* =========================
-ADMIN
-========================= */
-
-.admin{
-background:var(--dark);
-color:white;
-}
-
-.admin-card{
-max-width:500px;
-margin:auto;
-background:#173025;
-padding:28px;
-border-radius:22px;
-}
-
-.admin-card input{
-margin-bottom:12px;
-background:white;
-}
-
-.admin-message{
-margin-top:15px;
-padding:13px;
-border-radius:10px;
-display:none;
-}
-
-.admin-message.show{
-display:block;
-}
-
-.admin-dashboard{
-display:none;
-max-width:1100px;
-margin:25px auto 0;
-}
-
-.admin-dashboard.show{
-display:block;
-}
-
-.admin-actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin:15px 0;
-}
-
-.admin-stat-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-margin-bottom:20px;
-}
-
-.admin-stat{
-background:var(--light);
-padding:18px;
-border-radius:12px;
-color:var(--dark);
-}
-
-.admin-stat strong{
-font-size:25px;
-display:block;
-color:var(--green);
-}
-
-.table-wrapper{
-overflow-x:auto;
-}
-
-.admin-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-color:var(--dark);
-border-radius:12px;
-overflow:hidden;
-}
-
-.admin-table th,
-.admin-table td{
-padding:12px;
-border-bottom:1px solid var(--border);
-text-align:left;
-white-space:nowrap;
-}
-
-.admin-table th{
-background:#eaf8ef;
-}
-
-.table-btn{
-border:0;
-border-radius:8px;
-padding:7px 10px;
-background:var(--green);
-color:white;
-font-weight:bold;
-}
-
-.table-btn.danger{
-background:var(--danger);
-}
-
-/* =========================
-RIDER
-========================= */
-
-.rider-section{
-background:#f9fbfa;
-}
-
-.rider-card{
-max-width:900px;
-margin:auto;
-}
-
-.rider-login{
-max-width:450px;
-margin:auto;
-}
-
-.rider-panel{
-display:none;
-}
-
-.rider-panel.show{
-display:block;
-}
-
-.rider-job{
-background:white;
-border-radius:20px;
-padding:25px;
-box-shadow:var(--shadow);
-margin-top:20px;
-}
-
-.rider-status{
-display:inline-block;
-padding:7px 13px;
-border-radius:20px;
-background:var(--yellow);
-font-weight:800;
-}
-
-.rider-buttons{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-top:20px;
-}
-
-.rider-buttons button{
-padding:14px;
-border:0;
-border-radius:12px;
-font-weight:800;
-}
-
-/* =========================
-FOOTER
-========================= */
-
-footer{
-background:#121c16;
-color:white;
-padding:35px 6%;
-text-align:center;
-}
-
-footer p{
-color:#b8c3bc;
-margin-top:7px;
-}
-
-/* =========================
-TOAST
-========================= */
-
-.toast{
-position:fixed;
-bottom:20px;
-left:20px;
-right:20px;
-max-width:500px;
-margin:auto;
-padding:15px 20px;
-background:#121c16;
-color:white;
-border-radius:12px;
-display:none;
-z-index:3000;
-text-align:center;
-}
-
-.toast.show{
-display:block;
-}
-
-/* =========================
-MODAL
-========================= */
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-z-index:2000;
-align-items:center;
-justify-content:center;
-padding:20px;
-}
-
-.modal.show{
-display:flex;
-}
-
-.modal-box{
-background:white;
-padding:28px;
-border-radius:20px;
-width:100%;
-max-width:450px;
-position:relative;
-}
-
-.close{
-position:absolute;
-right:15px;
-top:10px;
-border:0;
-background:none;
-font-size:25px;
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:850px){
-
-.hero,
+/* ORDER */
 .order-layout{
-grid-template-columns:1fr;
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:.75fr 1.25fr;
+    gap:30px;
 }
 
-.nav-links{
-order:3;
-width:100%;
-justify-content:center;
+.order-menu,
+.order-form,
+.tracker-card,
+.admin-card,
+.order-history-card{
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:var(--shadow);
 }
 
-nav{
-flex-wrap:wrap;
+.category-btn{
+    width:100%;
+    padding:14px;
+    border:1px solid var(--border);
+    background:var(--light);
+    border-radius:13px;
+    text-align:left;
+    margin-bottom:10px;
+    font-weight:bold;
 }
 
-.admin-stat-grid{
-grid-template-columns:1fr 1fr;
+.category-btn.active{
+    background:var(--green);
+    color:white;
 }
 
+/* PAYMENT */
+.payment-box{
+    margin:20px 0;
+    padding:20px;
+    border-radius:16px;
+    background:#eef9f1;
+    border:1px solid #cdebd6;
 }
 
-@media(max-width:520px){
-
-section{
-padding:50px 4%;
+.payment-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:12px;
 }
 
-nav{
-padding:10px 4%;
+.mpesa-number{
+    display:block;
+    font-size:27px;
+    color:var(--green);
+    font-weight:900;
+    letter-spacing:1px;
+    margin:10px 0;
 }
 
-.logo{
-font-size:18px;
-}
-
-.payment-options{
-grid-template-columns:1fr;
-}
-
-.order-details{
-grid-template-columns:1fr;
-}
-
-.rider-buttons{
-grid-template-columns:1fr;
-}
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="top-strip"></div>
-
-<!-- =========================
-NAVIGATION
-========================= -->
-
-<nav>
-
-<div class="logo">
-
-<img
-src="1000369432.png"
-alt="Amir Chap Chap logo"
-onerror="this.style.display='none'"
->
-
-Amir Chap Chap
-
-</div>
-
-<div class="nav-links">
-
-<a href="#order">Order</a>
-
-<a href="#tracking">Track</a>
-
-<a href="#rider">Rider</a>
-
-<a href="#admin">Admin</a>
-
-</div>
-
-<button
-class="nav-btn"
-onclick="scrollToId('order')"
->
-Order Now
-</button>
-
-</nav>
-
-
-<!-- =========================
-HERO
-========================= -->
-
-<header class="hero">
-
-<div>
-
-<span class="badge">
-⚡ FAST LOCAL DELIVERY
-</span>
-
-<h1>
-Fast pickup,
-<span>simple delivery.</span>
-</h1>
-
-<p>
-Amir Chap Chap connects customers with
+.payment-methods{
+   
