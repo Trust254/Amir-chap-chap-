@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a7c36">
 <meta name="description" content="Amir Chap Chap - Fast delivery, pickup and parcel services in Kenya">
-<title>Amir Chap Chap | Delivery & Pickup</title>
+<title>Amir Chap Chap | Delivery Dashboard</title>
 
+<!-- Leaflet Map -->
 <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -16,9 +17,10 @@
 <style>
 :root{
     --green:#0a7c36;
+    --green2:#0d963f;
     --dark-green:#064c21;
     --yellow:#ffc700;
-    --white:#fff;
+    --white:#ffffff;
     --light:#f4f8f5;
     --dark:#121c16;
     --gray:#626e67;
@@ -28,6 +30,7 @@
     --orange:#ff9800;
     --purple:#7b3ff2;
     --shadow:0 12px 35px rgba(0,0,0,.09);
+    --radius:18px;
 }
 
 *{
@@ -72,9 +75,9 @@ button:disabled{
     );
 }
 
-/* =========================
+/* =========================================================
    NAVIGATION
-========================= */
+========================================================= */
 
 nav{
     min-height:75px;
@@ -87,7 +90,7 @@ nav{
     border-bottom:1px solid var(--border);
     position:sticky;
     top:0;
-    z-index:1000;
+    z-index:3000;
 }
 
 .logo{
@@ -106,6 +109,7 @@ nav{
     border-radius:50%;
     object-fit:cover;
     border:2px solid var(--yellow);
+    background:#fff;
 }
 
 .nav-links{
@@ -115,16 +119,16 @@ nav{
     flex-wrap:wrap;
 }
 
-.nav-links button{
-    border:none;
-    background:transparent;
+.nav-link{
+    text-decoration:none;
     color:var(--dark);
     font-weight:700;
-    padding:10px 13px;
+    padding:10px 12px;
     border-radius:10px;
+    transition:.2s;
 }
 
-.nav-links button:hover{
+.nav-link:hover{
     background:#eaf8ef;
     color:var(--green);
 }
@@ -153,12 +157,73 @@ nav{
     font-weight:bold;
 }
 
-/* =========================
+/* =========================================================
+   GENERAL BUTTONS
+========================================================= */
+
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.blue-btn,
+.orange-btn,
+.dark-btn{
+    border:none;
+    padding:13px 20px;
+    border-radius:12px;
+    font-weight:800;
+    transition:.2s;
+}
+
+.primary-btn{
+    background:var(--green);
+    color:white;
+}
+
+.primary-btn:hover{
+    background:var(--dark-green);
+    transform:translateY(-1px);
+}
+
+.secondary-btn{
+    background:var(--yellow);
+    color:var(--dark);
+}
+
+.blue-btn{
+    background:var(--blue);
+    color:white;
+}
+
+.orange-btn{
+    background:var(--orange);
+    color:white;
+}
+
+.danger-btn{
+    background:var(--danger);
+    color:white;
+}
+
+.dark-btn{
+    background:#17251d;
+    color:white;
+}
+
+.full-btn{
+    width:100%;
+}
+
+.small-btn{
+    padding:8px 12px;
+    font-size:13px;
+}
+
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero{
-    min-height:540px;
+    min-height:560px;
     background:
         radial-gradient(
             circle at 80% 30%,
@@ -170,7 +235,9 @@ nav{
             #fafffc,
             #eaf8ef
         );
+
     padding:60px 6%;
+
     display:grid;
     grid-template-columns:1.05fr .95fr;
     align-items:center;
@@ -180,7 +247,7 @@ nav{
 .hero h1{
     font-size:clamp(38px,4.5vw,65px);
     line-height:1.05;
-    margin-bottom:20px;
+    margin:20px 0;
 }
 
 .hero h1 span{
@@ -201,24 +268,6 @@ nav{
     flex-wrap:wrap;
 }
 
-.primary-btn,
-.secondary-btn{
-    padding:14px 22px;
-    border-radius:14px;
-    border:none;
-    font-weight:800;
-}
-
-.primary-btn{
-    background:var(--green);
-    color:white;
-}
-
-.secondary-btn{
-    background:var(--yellow);
-    color:var(--dark);
-}
-
 .hero-logo-display{
     max-width:440px;
     width:100%;
@@ -227,9 +276,19 @@ nav{
     border:6px solid white;
 }
 
-/* =========================
-   GENERAL
-========================= */
+.status-badge{
+    display:inline-block;
+    padding:7px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    background:var(--yellow);
+    color:var(--dark);
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
 
 section{
     padding:70px 6%;
@@ -248,6 +307,14 @@ section{
 .section-title p{
     color:var(--gray);
 }
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
 
 .form-group{
     margin-bottom:17px;
@@ -277,16 +344,13 @@ section{
     box-shadow:0 0 0 3px rgba(10,124,54,.1);
 }
 
-.hidden{
-    display:none !important;
-}
-
-/* =========================
+/* =========================================================
    AUTH
-========================= */
+========================================================= */
 
 #authSection{
     display:none;
+    background:#f0f7f2;
 }
 
 .auth-box{
@@ -319,20 +383,9 @@ section{
     border-color:var(--green);
 }
 
-.order-submit{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:13px;
-    background:var(--green);
-    color:white;
-    font-weight:900;
-    margin-top:8px;
-}
-
-/* =========================
+/* =========================================================
    ORDER
-========================= */
+========================================================= */
 
 .order-layout{
     max-width:1100px;
@@ -345,7 +398,6 @@ section{
 .order-menu,
 .order-form,
 .tracker-card,
-.admin-card,
 .order-history-card{
     background:white;
     padding:30px;
@@ -362,6 +414,10 @@ section{
     text-align:left;
     margin-bottom:10px;
     font-weight:bold;
+}
+
+.category-btn:hover{
+    border-color:var(--green);
 }
 
 .category-btn.active{
@@ -411,20 +467,9 @@ section{
     background:#f0fff4;
 }
 
-.payment-option input{
-    margin-right:7px;
-}
-
-.payment-note{
-    font-size:13px;
-    color:var(--gray);
-    line-height:1.5;
-    margin-top:10px;
-}
-
-/* =========================
+/* =========================================================
    TRACKING
-========================= */
+========================================================= */
 
 .tracker-card{
     max-width:1100px;
@@ -438,6 +483,7 @@ section{
     height:400px;
     border-radius:20px;
     width:100%;
+    overflow:hidden;
 }
 
 .rider-info-panel{
@@ -461,17 +507,6 @@ section{
     border:4px solid var(--green);
 }
 
-.status-badge{
-    display:inline-block;
-    padding:6px 14px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:bold;
-    background:var(--yellow);
-    color:var(--dark);
-    margin-bottom:10px;
-}
-
 .info-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -493,9 +528,9 @@ section{
     word-break:break-word;
 }
 
-/* =========================
+/* =========================================================
    RIDER SIMULATOR
-========================= */
+========================================================= */
 
 .rider-sim-card{
     position:fixed;
@@ -507,7 +542,7 @@ section{
     border-radius:20px;
     width:320px;
     box-shadow:0 10px 30px rgba(0,0,0,.3);
-    z-index:2000;
+    z-index:4000;
 }
 
 .rider-sim-card h4{
@@ -524,23 +559,34 @@ section{
     font-weight:bold;
 }
 
-/* =========================
+/* =========================================================
    ADMIN
-========================= */
+========================================================= */
 
 .admin-section{
     background:var(--dark);
     color:white;
 }
 
-.admin-section .section-title p{
-    color:#b9c9bf;
-}
-
 .admin-card{
     background:#173025;
     color:white;
     margin-bottom:25px;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:var(--shadow);
+}
+
+.admin-login{
+    max-width:450px;
+    margin:0 auto 30px;
+    background:#173025;
+    padding:25px;
+    border-radius:20px;
+}
+
+.admin-panel{
+    display:none;
 }
 
 .admin-grid{
@@ -557,26 +603,12 @@ section{
     border-radius:10px;
     border:none;
     margin-bottom:10px;
-    background:#fff;
-    color:#111;
 }
 
 .admin-card label{
     display:block;
-    margin-bottom:6px;
     font-weight:bold;
-}
-
-.admin-login{
-    max-width:450px;
-    margin:0 auto 30px;
-    background:#173025;
-    padding:25px;
-    border-radius:20px;
-}
-
-.admin-panel{
-    display:none;
+    margin-bottom:5px;
 }
 
 .admin-order{
@@ -611,91 +643,88 @@ section{
     font-weight:bold;
 }
 
-.photo-preview{
-    width:110px;
-    height:110px;
-    border-radius:14px;
-    object-fit:cover;
-    background:#0e2117;
-    border:2px solid #31553f;
-    display:block;
-    margin:5px 0 12px;
-}
-
-.admin-rider-card{
-    background:#0e2117;
-    border:1px solid #31553f;
-    border-radius:16px;
-    padding:18px;
-    margin-top:14px;
-}
-
-.admin-rider-top{
+.dashboard-header{
     display:flex;
+    justify-content:space-between;
     align-items:center;
     gap:15px;
-    margin-bottom:15px;
+    flex-wrap:wrap;
 }
 
-.admin-rider-photo{
-    width:75px;
-    height:75px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid var(--green);
-}
-
-.bike-photo{
-    width:100%;
-    height:190px;
-    object-fit:cover;
-    border-radius:13px;
-    margin-top:10px;
-}
-
-.rider-public-grid{
+.stat-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-top:15px;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:20px;
 }
 
-.rider-public-card{
-    background:white;
-    border-radius:20px;
+.stat-card{
+    background:#0e2117;
     padding:20px;
-    box-shadow:var(--shadow);
+    border-radius:15px;
+    border:1px solid #31553f;
 }
 
-.rider-public-photo{
-    width:90px;
-    height:90px;
-    object-fit:cover;
-    border-radius:50%;
-    border:4px solid var(--green);
+.stat-card span{
+    display:block;
+    color:#aebdb4;
+    font-size:13px;
+    margin-bottom:5px;
 }
 
-.rider-bike-photo{
+.stat-card strong{
+    font-size:25px;
+}
+
+/* RIDER TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+.rider-table{
     width:100%;
-    height:180px;
-    object-fit:cover;
-    border-radius:14px;
-    margin-top:12px;
+    border-collapse:collapse;
+    min-width:700px;
 }
 
-.badge-green{
+.rider-table th,
+.rider-table td{
+    padding:12px;
+    text-align:left;
+    border-bottom:1px solid #31553f;
+}
+
+.rider-table th{
+    color:var(--yellow);
+}
+
+.status-dot{
     display:inline-block;
-    background:#e7f8ed;
-    color:var(--green);
-    border-radius:20px;
-    padding:5px 10px;
+    padding:5px 9px;
+    border-radius:15px;
     font-size:12px;
     font-weight:bold;
 }
 
-/* =========================
+.status-available{
+    background:#d9f7e3;
+    color:#08752e;
+}
+
+.status-assigned{
+    background:#fff1bf;
+    color:#725900;
+}
+
+.status-offline{
+    background:#eee;
+    color:#555;
+}
+
+/* =========================================================
    HISTORY
-========================= */
+========================================================= */
 
 .order-history-card{
     max-width:1100px;
@@ -719,9 +748,9 @@ section{
     padding:20px;
 }
 
-/* =========================
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast{
     position:fixed;
@@ -741,9 +770,9 @@ section{
     display:block;
 }
 
-/* =========================
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 footer{
     background:#061a0d;
@@ -757,9 +786,16 @@ footer p{
     color:#c8d7ce;
 }
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
+
+@media(max-width:1000px){
+
+    .stat-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
 
 @media(max-width:900px){
 
@@ -809,14 +845,14 @@ footer p{
     }
 
     .nav-links{
-        gap:3px;
-        font-size:12px;
+        gap:5px;
+        font-size:13px;
     }
 
     .payment-methods,
     .admin-grid,
     .info-grid,
-    .rider-public-grid{
+    .stat-grid{
         grid-template-columns:1fr;
     }
 
@@ -830,6 +866,10 @@ footer p{
     #map{
         height:320px;
     }
+
+    .section-title h2{
+        font-size:29px;
+    }
 }
 </style>
 </head>
@@ -838,9 +878,9 @@ footer p{
 
 <div class="top-strip"></div>
 
-<!-- =========================
+<!-- =======================================================
      NAVIGATION
-========================= -->
+======================================================== -->
 
 <nav>
 
@@ -859,25 +899,26 @@ footer p{
 
     <div class="nav-links">
 
-        <button onclick="goToSection('home')">
-            Home
-        </button>
-
-        <button onclick="goToSection('order')">
+        <a
+            href="#order"
+            class="nav-link"
+            onclick="scrollToId('order')">
             Order
-        </button>
+        </a>
 
-        <button onclick="goToSection('tracking')">
+        <a
+            href="#tracking"
+            class="nav-link"
+            onclick="scrollToId('tracking')">
             Tracking
-        </button>
+        </a>
 
-        <button onclick="goToSection('riders')">
-            Riders
-        </button>
-
-        <button onclick="goToSection('admin')">
+        <a
+            href="#admin"
+            class="nav-link"
+            onclick="scrollToId('admin')">
             Admin
-        </button>
+        </a>
 
     </div>
 
@@ -888,13 +929,12 @@ footer p{
 
 </nav>
 
-<!-- =========================
-     HERO
-========================= -->
 
-<header
-    class="hero"
-    id="home">
+<!-- =======================================================
+     HERO
+======================================================== -->
+
+<header class="hero">
 
     <div>
 
@@ -917,13 +957,13 @@ footer p{
 
             <button
                 class="primary-btn"
-                onclick="goToSection('order')">
+                onclick="openOrder()">
                 Request Delivery 🛵
             </button>
 
             <button
                 class="secondary-btn"
-                onclick="goToSection('tracking')">
+                onclick="openTracking()">
                 Track Delivery 📍
             </button>
 
@@ -944,9 +984,10 @@ footer p{
 
 </header>
 
-<!-- =========================
-     AUTH
-========================= -->
+
+<!-- =======================================================
+     CUSTOMER AUTHENTICATION
+======================================================== -->
 
 <section id="authSection">
 
@@ -1008,7 +1049,7 @@ footer p{
 
             <button
                 type="submit"
-                class="order-submit"
+                class="primary-btn full-btn"
                 id="authSubmitBtn">
                 Login
             </button>
@@ -1019,9 +1060,10 @@ footer p{
 
 </section>
 
-<!-- =========================
-     ORDER
-========================= -->
+
+<!-- =======================================================
+     ORDER SECTION
+======================================================== -->
 
 <section id="order">
 
@@ -1037,7 +1079,10 @@ footer p{
 
     </div>
 
+
     <div class="order-layout">
+
+        <!-- SERVICE MENU -->
 
         <div class="order-menu">
 
@@ -1069,6 +1114,13 @@ footer p{
                 📄 Documents
             </button>
 
+            <button
+                class="category-btn"
+                onclick="selectCategory(this,'Other')">
+                🚚 Other Delivery
+            </button>
+
+
             <div class="payment-box">
 
                 <div class="payment-title">
@@ -1086,15 +1138,18 @@ footer p{
                     0792 102 645
                 </span>
 
-                <p class="payment-note">
+                <p style="font-size:13px;color:var(--gray);">
                     For M-Pesa, send the agreed amount
-                    to the number above and enter your
-                    M-Pesa transaction code.
+                    and enter your transaction code
+                    when placing the order.
                 </p>
 
             </div>
 
         </div>
+
+
+        <!-- ORDER FORM -->
 
         <form
             class="order-form"
@@ -1189,13 +1244,16 @@ footer p{
                 <input
                     type="number"
                     id="amount"
-                    min="1"
+                    min="0"
                     step="1"
                     placeholder="e.g. 300"
                     required
                 >
 
             </div>
+
+
+            <!-- PAYMENT -->
 
             <div class="form-group">
 
@@ -1221,6 +1279,7 @@ footer p{
 
                     </label>
 
+
                     <label
                         class="payment-option"
                         id="mpesaOption">
@@ -1239,6 +1298,7 @@ footer p{
                 </div>
 
             </div>
+
 
             <div
                 id="mpesaPaymentDetails"
@@ -1278,35 +1338,63 @@ footer p{
 
             </div>
 
+
             <button
                 type="submit"
-                class="order-submit">
+                class="primary-btn full-btn">
+
                 Submit Delivery Request 🚀
+
             </button>
 
         </form>
 
     </div>
 
+
+    <!-- CUSTOMER HISTORY -->
+
     <div class="order-history-card">
 
-        <h3 style="margin-bottom:15px;">
-            My Orders
-        </h3>
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
 
-        <div id="customerOrders">
+            <h3>
+                My Orders
+            </h3>
+
+            <button
+                class="blue-btn small-btn"
+                onclick="openTracking()">
+                View Tracking
+            </button>
+
+        </div>
+
+        <div
+            id="customerOrders"
+            style="margin-top:15px;">
+
             <div class="empty">
                 Login to view your orders.
             </div>
+
         </div>
 
     </div>
 
 </section>
 
-<!-- =========================
-     TRACKING
-========================= -->
+
+<!-- =======================================================
+     TRACKING SECTION
+======================================================== -->
 
 <section
     id="tracking"
@@ -1319,10 +1407,11 @@ footer p{
         </h2>
 
         <p>
-            Follow the current delivery status.
+            Follow your current delivery status.
         </p>
 
     </div>
+
 
     <div class="tracker-card">
 
@@ -1336,17 +1425,26 @@ footer p{
                     AWAITING REQUEST
                 </span>
 
-                <h3 id="displayRiderName">
+                <h3
+                    id="displayRiderName"
+                    style="margin-top:12px;">
                     No Rider Assigned
                 </h3>
 
                 <p
-                    style="color:var(--gray);margin-top:8px;"
+                    style="
+                        color:var(--gray);
+                        margin-top:8px;
+                    "
                     id="serverStatusText">
-                    Submit an order above to start dispatch.
+
+                    Submit an order above
+                    to start dispatch.
+
                 </p>
 
             </div>
+
 
             <div
                 class="rider-header"
@@ -1362,12 +1460,16 @@ footer p{
 
                 <div>
 
-                    <h4 id="displayRiderNameHeader">
+                    <h4
+                        id="displayRiderNameHeader">
                         --
                     </h4>
 
                     <p
-                        style="color:var(--green);font-weight:bold;"
+                        style="
+                            color:var(--green);
+                            font-weight:bold;
+                        "
                         id="displayRiderPhone">
                         --
                     </p>
@@ -1376,93 +1478,114 @@ footer p{
 
             </div>
 
+
             <div class="info-grid">
 
                 <div class="info-item">
-                    <label>Bike Model</label>
-                    <strong id="displayBikeModel">--</strong>
+
+                    <label>
+                        Bike Model
+                    </label>
+
+                    <strong id="displayBikeModel">
+                        --
+                    </strong>
+
                 </div>
 
-                <div class="info-item">
-                    <label>Number Plate</label>
-                    <strong id="displayNumberPlate">--</strong>
-                </div>
 
                 <div class="info-item">
-                    <label>Motorbike Stage</label>
-                    <strong id="displayBikeStage">--</strong>
+
+                    <label>
+                        Number Plate
+                    </label>
+
+                    <strong id="displayNumberPlate">
+                        --
+                    </strong>
+
                 </div>
 
-                <div class="info-item">
-                    <label>Stage Chairman</label>
-                    <strong id="displayChairman">--</strong>
-                </div>
 
                 <div class="info-item">
-                    <label>Chairman Phone</label>
-                    <strong id="displayChairmanPhone">--</strong>
+
+                    <label>
+                        Pickup
+                    </label>
+
+                    <strong id="displayPickup">
+                        --
+                    </strong>
+
                 </div>
 
-                <div class="info-item">
-                    <label>Pickup</label>
-                    <strong id="displayPickup">--</strong>
-                </div>
 
                 <div class="info-item">
-                    <label>Destination</label>
-                    <strong id="displayDestination">--</strong>
+
+                    <label>
+                        Destination
+                    </label>
+
+                    <strong id="displayDestination">
+                        --
+                    </strong>
+
                 </div>
 
-                <div class="info-item">
-                    <label>Payment</label>
-                    <strong id="displayPayment">--</strong>
-                </div>
 
                 <div class="info-item">
-                    <label>Order ID</label>
-                    <strong id="displayOrderId">--</strong>
+
+                    <label>
+                        Payment
+                    </label>
+
+                    <strong id="displayPayment">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <label>
+                        Order ID
+                    </label>
+
+                    <strong id="displayOrderId">
+                        --
+                    </strong>
+
                 </div>
 
             </div>
 
         </div>
 
+
         <div>
+
             <div id="map"></div>
+
+            <button
+                class="primary-btn full-btn"
+                style="margin-top:12px;"
+                onclick="refreshTracking()">
+
+                🔄 Refresh Tracking
+
+            </button>
+
         </div>
 
     </div>
 
 </section>
 
-<!-- =========================
-     RIDERS PUBLIC INFORMATION
-========================= -->
 
-<section id="riders">
-
-    <div class="section-title">
-
-        <h2>
-            3. Our Verified Riders
-        </h2>
-
-        <p>
-            Riders registered by the Amir Chap Chap administration team.
-        </p>
-
-    </div>
-
-    <div
-        id="publicRiders"
-        class="rider-public-grid">
-    </div>
-
-</section>
-
-<!-- =========================
+<!-- =======================================================
      RIDER SIMULATOR
-========================= -->
+======================================================== -->
 
 <div
     class="rider-sim-card"
@@ -1470,16 +1593,19 @@ footer p{
     style="display:none;">
 
     <h4>
-        📱 Rider App
+        📱 Rider App Simulator
     </h4>
 
-    <p style="font-size:12px;margin-bottom:8px;">
+    <p
+        style="font-size:12px;margin-bottom:8px;">
+
         Rider:
         <strong
             id="simRiderName"
             style="color:white;">
             --
         </strong>
+
     </p>
 
     <p
@@ -1488,46 +1614,71 @@ footer p{
         Order Assigned!
     </p>
 
+
     <button
         class="sim-btn"
         id="btnGpsToggle"
-        style="background:var(--yellow);color:var(--dark);"
+        style="
+            background:var(--yellow);
+            color:var(--dark);
+        "
         onclick="toggleRiderGPS()">
+
         1. Turn GPS ON
+
     </button>
+
 
     <button
         class="sim-btn"
         id="btnAcceptJob"
-        style="background:#2196F3;color:white;"
+        style="
+            background:#2196F3;
+            color:white;
+        "
         onclick="riderAcceptJob()"
         disabled>
+
         2. Accept Job
+
     </button>
+
 
     <button
         class="sim-btn"
         id="btnPickup"
-        style="background:#ff9800;color:white;"
+        style="
+            background:#ff9800;
+            color:white;
+        "
         onclick="riderPickup()"
         disabled>
+
         3. Pickup Item
+
     </button>
+
 
     <button
         class="sim-btn"
         id="btnDeliver"
-        style="background:var(--green);color:white;"
+        style="
+            background:var(--green);
+            color:white;
+        "
         onclick="riderDeliver()"
         disabled>
+
         4. Complete Delivery
+
     </button>
 
 </div>
 
-<!-- =========================
-     ADMIN
-========================= -->
+
+<!-- =======================================================
+     ADMIN SECTION
+======================================================== -->
 
 <section
     class="admin-section"
@@ -1536,14 +1687,16 @@ footer p{
     <div class="section-title">
 
         <h2>
-            4. Admin Dashboard
+            3. Admin Dashboard
         </h2>
 
         <p>
-            Manage riders, motorbikes and customer delivery requests.
+            Manage riders, motorbikes and customer
+            delivery requests.
         </p>
 
     </div>
+
 
     <!-- ADMIN LOGIN -->
 
@@ -1556,14 +1709,20 @@ footer p{
         </h3>
 
         <p
-            style="font-size:13px;color:#c8d7ce;margin-bottom:15px;">
+            style="
+                font-size:13px;
+                color:#c8d7ce;
+                margin-bottom:15px;
+            ">
 
             Authorized administrator:
+
             <strong style="color:white;">
                 abdiabdulmohammed50@gmail.com
             </strong>
 
         </p>
+
 
         <div class="form-group">
 
@@ -1575,9 +1734,11 @@ footer p{
                 type="email"
                 id="adminEmail"
                 placeholder="Admin email"
+                autocomplete="username"
             >
 
         </div>
+
 
         <div class="form-group">
 
@@ -1589,26 +1750,36 @@ footer p{
                 type="password"
                 id="adminPassword"
                 placeholder="Enter admin password"
+                autocomplete="current-password"
             >
 
         </div>
 
+
         <button
-            class="primary-btn"
-            style="width:100%;"
+            class="primary-btn full-btn"
             onclick="adminLogin()">
+
             Login to Admin
+
         </button>
 
-        <p
-            style="font-size:12px;color:#aebdb4;margin-top:12px;">
 
-            This demo uses browser-side authentication.
-            For a production website, use a secure backend.
+        <p
+            style="
+                font-size:12px;
+                color:#aebdb4;
+                margin-top:12px;
+            ">
+
+            Admin authentication must be handled
+            securely by your backend in production.
+            Do not store the password in this HTML file.
 
         </p>
 
     </div>
+
 
     <!-- ADMIN PANEL -->
 
@@ -1618,129 +1789,144 @@ footer p{
 
         <div style="max-width:1100px;margin:auto;">
 
-            <!-- DASHBOARD SUMMARY -->
+
+            <!-- DASHBOARD HEADER -->
 
             <div class="admin-card">
 
-                <div
-                    style="
-                    display:flex;
-                    justify-content:space-between;
-                    align-items:center;
-                    gap:10px;
-                    flex-wrap:wrap;
-                    ">
+                <div class="dashboard-header">
 
-                    <h3>
-                        📊 Admin Dashboard
-                    </h3>
+                    <div>
+
+                        <h3>
+                            📊 Admin Dashboard
+                        </h3>
+
+                        <p
+                            style="
+                                color:#aebdb4;
+                                font-size:13px;
+                                margin-top:5px;
+                            ">
+
+                            Manage your delivery operation.
+
+                        </p>
+
+                    </div>
+
 
                     <button
                         class="secondary-btn"
                         onclick="adminLogout()">
+
                         Logout Admin
+
                     </button>
 
                 </div>
 
-                <div
-                    class="info-grid"
-                    style="
-                    margin-top:20px;
-                    background:#0e2117;
-                    color:white;
-                    ">
 
-                    <div class="info-item">
-                        <label style="color:#aebdb4;">
+                <div class="stat-grid">
+
+                    <div class="stat-card">
+
+                        <span>
                             Total Orders
-                        </label>
+                        </span>
 
-                        <strong
-                            style="color:white;"
-                            id="totalOrders">
+                        <strong id="totalOrders">
                             0
                         </strong>
+
                     </div>
 
-                    <div class="info-item">
-                        <label style="color:#aebdb4;">
+
+                    <div class="stat-card">
+
+                        <span>
                             Riders
-                        </label>
+                        </span>
 
-                        <strong
-                            style="color:white;"
-                            id="totalRiders">
+                        <strong id="totalRiders">
                             0
                         </strong>
+
                     </div>
 
-                    <div class="info-item">
-                        <label style="color:#aebdb4;">
+
+                    <div class="stat-card">
+
+                        <span>
                             M-Pesa Orders
-                        </label>
+                        </span>
 
-                        <strong
-                            style="color:white;"
-                            id="mpesaOrders">
+                        <strong id="mpesaOrders">
                             0
                         </strong>
+
                     </div>
 
-                    <div class="info-item">
-                        <label style="color:#aebdb4;">
-                            Cash Orders
-                        </label>
 
-                        <strong
-                            style="color:white;"
-                            id="cashOrders">
+                    <div class="stat-card">
+
+                        <span>
+                            Cash Orders
+                        </span>
+
+                        <strong id="cashOrders">
                             0
                         </strong>
+
                     </div>
 
                 </div>
 
             </div>
 
-            <!-- RIDER FORM -->
+
+            <!-- RIDER MANAGEMENT -->
 
             <div class="admin-card">
 
-                <h3 style="margin-bottom:18px;">
-                    ➕ Register Rider & Motorbike
+                <h3 style="margin-bottom:8px;">
+                    ➕ Register Rider
                 </h3>
 
                 <p
                     style="
-                    color:#c8d7ce;
-                    font-size:13px;
-                    margin-bottom:20px;
+                        color:#aebdb4;
+                        font-size:13px;
+                        margin-bottom:20px;
                     ">
-                    Add complete rider, motorbike and stage
-                    verification information.
+
+                    Add rider information and
+                    motorbike details.
+
                 </p>
+
 
                 <div class="admin-grid">
 
                     <div>
 
                         <label>
-                            Rider Full Name *
+                            Rider Full Name
                         </label>
 
                         <input
                             type="text"
                             id="admRiderName"
-                            placeholder="Rider Full Name"
+                            placeholder="e.g. John Kamau"
                         >
 
                     </div>
 
+
                     <div>
 
                         <label>
-                            Rider Phone *
+                            Rider Phone
                         </label>
 
                         <input
@@ -1751,75 +1937,51 @@ footer p{
 
                     </div>
 
+
                     <div>
 
                         <label>
-                            Motorbike Model *
+                            Motorbike Model
                         </label>
 
                         <input
                             type="text"
                             id="admBikeModel"
-                            placeholder="e.g. Bajaj Boxer 150"
+                            placeholder="e.g. Boxer 150"
                         >
 
                     </div>
 
+
                     <div>
 
                         <label>
-                            Number Plate *
+                            Number Plate
                         </label>
 
                         <input
                             type="text"
                             id="admPlate"
-                            placeholder="e.g. KMD 452X"
+                            placeholder="e.g. KMD 123A"
                         >
 
                     </div>
+
 
                     <div>
 
                         <label>
-                            Motorbike Stage *
+                            Rider Photo URL
                         </label>
 
                         <input
-                            type="text"
-                            id="admBikeStage"
-                            placeholder="e.g. Gikomba Stage"
+                            type="url"
+                            id="admRiderPhoto"
+                            placeholder="Optional photo URL"
                         >
 
                     </div>
 
-                    <div>
-
-                        <label>
-                            Rider Stage Chairman *
-                        </label>
-
-                        <input
-                            type="text"
-                            id="admChairman"
-                            placeholder="Chairman's full name"
-                        >
-
-                    </div>
-
-                    <div>
-
-                        <label>
-                            Chairman Phone Number *
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="admChairmanPhone"
-                            placeholder="07XXXXXXXX"
-                        >
-
-                    </div>
 
                     <div>
 
@@ -1843,96 +2005,121 @@ footer p{
 
                 </div>
 
-                <!-- RIDER PHOTO -->
-
-                <div style="margin-top:12px;">
-
-                    <label>
-                        Rider Passport Photo
-                    </label>
-
-                    <input
-                        type="file"
-                        id="admRiderPhoto"
-                        accept="image/*"
-                        onchange="previewSelectedImage(
-                            'admRiderPhoto',
-                            'riderPhotoPreview'
-                        )"
-                    >
-
-                    <img
-                        id="riderPhotoPreview"
-                        class="photo-preview"
-                        src=""
-                        alt="Rider photo preview"
-                        style="display:none;"
-                    >
-
-                </div>
-
-                <!-- BIKE PHOTO -->
-
-                <div style="margin-top:12px;">
-
-                    <label>
-                        Motorbike Photo
-                    </label>
-
-                    <input
-                        type="file"
-                        id="admBikePhoto"
-                        accept="image/*"
-                        onchange="previewSelectedImage(
-                            'admBikePhoto',
-                            'bikePhotoPreview'
-                        )"
-                    >
-
-                    <img
-                        id="bikePhotoPreview"
-                        class="photo-preview"
-                        src=""
-                        alt="Motorbike photo preview"
-                        style="display:none;"
-                    >
-
-                </div>
 
                 <button
-                    class="primary-btn"
-                    style="width:100%;margin-top:15px;"
+                    class="primary-btn full-btn"
                     onclick="adminAddRider()">
-                    Add Verified Rider
+
+                    ➕ Add Verified Rider
+
                 </button>
 
             </div>
 
-            <!-- RIDER MANAGEMENT -->
+
+            <!-- RIDER LIST -->
 
             <div class="admin-card">
 
-                <h3>
-                    🛵 Registered Riders
-                </h3>
+                <div
+                    style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    ">
 
-                <div id="adminRiders">
+                    <h3>
+                        🛵 Registered Riders
+                    </h3>
 
-                    <div class="empty">
-                        No riders registered.
-                    </div>
+                    <button
+                        class="blue-btn small-btn"
+                        onclick="renderRiderTable()">
+
+                        🔄 Refresh
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="table-wrapper"
+                    style="margin-top:15px;">
+
+                    <table class="rider-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Rider
+                                </th>
+
+                                <th>
+                                    Phone
+                                </th>
+
+                                <th>
+                                    Motorbike
+                                </th>
+
+                                <th>
+                                    Plate
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="riderTableBody">
+                        </tbody>
+
+                    </table>
 
                 </div>
 
             </div>
+
 
             <!-- ORDERS -->
 
             <div class="admin-card">
 
-                <h3>
-                    📦 Customer Orders
-                </h3>
+                <div
+                    style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    ">
+
+                    <h3>
+                        📦 Customer Orders
+                    </h3>
+
+                    <button
+                        class="blue-btn small-btn"
+                        onclick="renderAdminOrders()">
+
+                        🔄 Refresh Orders
+
+                    </button>
+
+                </div>
+
 
                 <div id="adminOrders">
 
@@ -1950,9 +2137,10 @@ footer p{
 
 </section>
 
-<!-- =========================
+
+<!-- =======================================================
      FOOTER
-========================= -->
+======================================================== -->
 
 <footer>
 
@@ -1979,25 +2167,34 @@ footer p{
 
 </footer>
 
+
+<!-- TOAST -->
+
 <div
     class="toast"
     id="toast">
 </div>
 
+
+<!-- LEAFLET -->
+
 <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin="">
 </script>
+
 
 <script>
 
 /* =========================================================
    AMIR CHAP CHAP
-   SINGLE-FILE DELIVERY PLATFORM
+   FRONT-END DELIVERY MANAGEMENT APPLICATION
 ========================================================= */
 
-/* =========================
-   BASIC CONFIGURATION
-========================= */
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
 
 const ADMIN_EMAIL =
     "abdiabdulmohammed50@gmail.com";
@@ -2005,83 +2202,117 @@ const ADMIN_EMAIL =
 const MPESA_NUMBER =
     "0792102645";
 
+
 /*
- IMPORTANT:
+    IMPORTANT SECURITY NOTE
 
- This password is included here only because this is
- a browser-only demo.
+    The admin password MUST NOT be placed here.
 
- It cannot be genuinely hidden inside index.html.
+    Any password stored in JavaScript can be viewed by
+    anyone using browser developer tools.
 
- For production:
- - use a backend
- - hash passwords
- - create secure sessions
- - never send admin credentials to the browser
+    For production:
+
+        Customer/Admin browser
+                 |
+                 v
+             Backend API
+                 |
+                 v
+          Password verification
+                 |
+                 v
+              Database
+
+    The frontend should receive only a secure session/token.
 */
 
-const ADMIN_PASSWORD =
-    "Scott@254";
 
-/* =========================
+/* =========================================================
    APPLICATION STATE
-========================= */
+========================================================= */
 
 let currentUser =
     JSON.parse(
         localStorage.getItem("amirUser")
     ) || null;
 
+
 let riders =
     JSON.parse(
         localStorage.getItem("amirRiders")
-    ) || [];
+    ) || [
+        {
+            id:101,
+            name:"John Kamau",
+            phone:"0712345678",
+            bike:"TVS HLX 150",
+            plate:"KMD 452X",
+            photo:"",
+            lat:-1.2833,
+            lng:36.8167,
+            status:"available"
+        },
+        {
+            id:102,
+            name:"Peter Kiprono",
+            phone:"0722987654",
+            bike:"Bajaj Boxer 150",
+            plate:"KMC 891B",
+            photo:"",
+            lat:-1.2880,
+            lng:36.8200,
+            status:"available"
+        }
+    ];
+
 
 let orders =
     JSON.parse(
         localStorage.getItem("amirOrders")
     ) || [];
 
-let activeOrder =
-    JSON.parse(
-        localStorage.getItem("amirActiveOrder")
-    ) || null;
+
+let activeOrder = null;
 
 let activeRider = null;
 
 let map = null;
 
 let riderMarker = null;
+
 let pickupMarker = null;
+
 let destinationMarker = null;
 
 let simGpsOn = false;
 
 let authMode = "login";
 
-let selectedCategory =
-    "Food";
+let selectedCategory = "Food";
 
-/* =========================
+let toastTimer = null;
+
+
+/* =========================================================
    STARTUP
-========================= */
+========================================================= */
 
 window.addEventListener(
-    "load",
+    "DOMContentLoaded",
     function(){
 
-        document
-            .getElementById("year")
-            .textContent =
-                new Date().getFullYear();
+        document.getElementById(
+            "year"
+        ).textContent =
+            new Date().getFullYear();
+
 
         updateAuthUI();
 
         initMap();
 
         renderCustomerOrders();
-
-        renderPublicRiders();
 
         updateAdminStats();
 
@@ -2096,64 +2327,56 @@ window.addEventListener(
     }
 );
 
-/* =========================
+
+/* =========================================================
    NAVIGATION
-========================= */
+========================================================= */
 
-function goToSection(id){
+function openOrder(){
 
-    const element =
-        document.getElementById(id);
+    scrollToId("order");
 
-    if(!element)
-        return;
-
-    element.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
+    showToast(
+        "Order section opened."
+    );
 
 }
 
-/* =========================
-   MAP
-========================= */
 
-function initMap(){
+function openTracking(){
 
-    if(
-        typeof L === "undefined"
-    ){
-        return;
-    }
+    scrollToId("tracking");
 
-    const mapElement =
-        document.getElementById("map");
+    setTimeout(
+        function(){
 
-    if(!mapElement)
-        return;
+            if(map){
 
-    map =
-        L.map("map")
-        .setView(
-            [-1.2833,36.8167],
-            13
-        );
+                map.invalidateSize();
 
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            maxZoom:19,
-            attribution:
-                "© OpenStreetMap contributors"
-        }
-    ).addTo(map);
+            }
+
+        },
+        500
+    );
+
+    showToast(
+        "Tracking section opened."
+    );
 
 }
 
-/* =========================
-   AUTH
-========================= */
+
+function openAdmin(){
+
+    scrollToId("admin");
+
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
 
 function switchAuth(mode){
 
@@ -2166,6 +2389,7 @@ function switchAuth(mode){
             mode === "login"
         );
 
+
     document
         .getElementById("tabRegister")
         .classList.toggle(
@@ -2173,12 +2397,14 @@ function switchAuth(mode){
             mode === "register"
         );
 
+
     document
         .getElementById("authNameGroup")
         .style.display =
             mode === "register"
             ? "block"
             : "none";
+
 
     document
         .getElementById("authSubmitBtn")
@@ -2188,6 +2414,7 @@ function switchAuth(mode){
             : "Login";
 
 }
+
 
 function openAuth(){
 
@@ -2199,11 +2426,12 @@ function openAuth(){
     section.style.display =
         "block";
 
-    section.scrollIntoView({
-        behavior:"smooth"
-    });
+    scrollToId(
+        "authSection"
+    );
 
 }
+
 
 function handleAuth(event){
 
@@ -2215,11 +2443,13 @@ function handleAuth(event){
             .value
             .trim();
 
+
     const name =
         document
             .getElementById("authName")
             .value
             .trim();
+
 
     if(!phone){
 
@@ -2228,20 +2458,20 @@ function handleAuth(event){
         );
 
         return;
+
     }
 
-    if(
-        authMode === "register"
-        &&
-        !name
-    ){
+
+    if(authMode === "register" && !name){
 
         showToast(
             "Please enter your full name."
         );
 
         return;
+
     }
+
 
     currentUser = {
 
@@ -2253,10 +2483,14 @@ function handleAuth(event){
 
     };
 
+
     localStorage.setItem(
         "amirUser",
-        JSON.stringify(currentUser)
+        JSON.stringify(
+            currentUser
+        )
     );
+
 
     updateAuthUI();
 
@@ -2265,7 +2499,6 @@ function handleAuth(event){
         .style.display =
             "none";
 
-    renderCustomerOrders();
 
     showToast(
         "Welcome " +
@@ -2275,6 +2508,7 @@ function handleAuth(event){
 
 }
 
+
 function updateAuthUI(){
 
     const container =
@@ -2282,46 +2516,58 @@ function updateAuthUI(){
             "navAuth"
         );
 
+
     if(currentUser){
 
         container.innerHTML = `
 
             <span class="user-badge">
-                👤 ${escapeHtml(
-                    currentUser.name
-                )}
+                👤 ${escapeHtml(currentUser.name)}
             </span>
 
             <button
                 class="nav-btn"
                 onclick="logout()"
                 style="
-                background:#fff;
-                color:var(--danger);
-                border:1px solid var(--danger);
+                    background:#fff;
+                    color:var(--danger);
+                    border:1px solid var(--danger);
                 ">
                 Logout
             </button>
 
         `;
 
+
         const nameInput =
             document.getElementById(
                 "custName"
             );
+
 
         const phoneInput =
             document.getElementById(
                 "custPhone"
             );
 
-        if(nameInput)
+
+        if(nameInput){
+
             nameInput.value =
                 currentUser.name;
 
-        if(phoneInput)
+        }
+
+
+        if(phoneInput){
+
             phoneInput.value =
                 currentUser.phone;
+
+        }
+
+
+        renderCustomerOrders();
 
     }else{
 
@@ -2335,9 +2581,13 @@ function updateAuthUI(){
 
         `;
 
+
+        renderCustomerOrders();
+
     }
 
 }
+
 
 function logout(){
 
@@ -2349,17 +2599,16 @@ function logout(){
 
     updateAuthUI();
 
-    renderCustomerOrders();
-
     showToast(
         "You have been logged out."
     );
 
 }
 
-/* =========================
-   CATEGORY
-========================= */
+
+/* =========================================================
+   SERVICE CATEGORY
+========================================================= */
 
 function selectCategory(
     button,
@@ -2380,12 +2629,15 @@ function selectCategory(
             }
         );
 
+
     button.classList.add(
         "active"
     );
 
+
     selectedCategory =
         category;
+
 
     showToast(
         category +
@@ -2394,9 +2646,10 @@ function selectCategory(
 
 }
 
-/* =========================
-   PAYMENT
-========================= */
+
+/* =========================================================
+   PAYMENT METHOD
+========================================================= */
 
 function changePaymentMethod(){
 
@@ -2405,25 +2658,37 @@ function changePaymentMethod(){
             'input[name="paymentMethod"]:checked'
         );
 
-    if(!selected)
+
+    if(!selected){
+
         return;
+
+    }
+
 
     const method =
         selected.value;
 
+
     document
-        .getElementById("cashOption")
+        .getElementById(
+            "cashOption"
+        )
         .classList.toggle(
             "active",
             method === "Cash"
         );
 
+
     document
-        .getElementById("mpesaOption")
+        .getElementById(
+            "mpesaOption"
+        )
         .classList.toggle(
             "active",
             method === "M-Pesa"
         );
+
 
     document
         .getElementById(
@@ -2436,9 +2701,10 @@ function changePaymentMethod(){
 
 }
 
-/* =========================
-   ORDER SUBMISSION
-========================= */
+
+/* =========================================================
+   SUBMIT DELIVERY REQUEST
+========================================================= */
 
 function submitDeliveryRequest(
     event
@@ -2446,64 +2712,76 @@ function submitDeliveryRequest(
 
     event.preventDefault();
 
-    if(!currentUser){
-
-        openAuth();
-
-        showToast(
-            "Please login or register before placing an order."
-        );
-
-        return;
-    }
 
     const name =
         document
-            .getElementById("custName")
+            .getElementById(
+                "custName"
+            )
             .value
             .trim();
+
 
     const phone =
         document
-            .getElementById("custPhone")
+            .getElementById(
+                "custPhone"
+            )
             .value
             .trim();
+
 
     const pickup =
         document
-            .getElementById("pickupLoc")
+            .getElementById(
+                "pickupLoc"
+            )
             .value
             .trim();
+
 
     const destination =
         document
-            .getElementById("destLoc")
+            .getElementById(
+                "destLoc"
+            )
             .value
             .trim();
 
+
     const item =
         document
-            .getElementById("itemDesc")
+            .getElementById(
+                "itemDesc"
+            )
             .value
             .trim();
+
 
     const amount =
         Number(
             document
-                .getElementById("amount")
+                .getElementById(
+                    "amount"
+                )
                 .value
         );
+
 
     const payment =
         document.querySelector(
             'input[name="paymentMethod"]:checked'
         ).value;
 
+
     const mpesaCode =
         document
-            .getElementById("mpesaCode")
+            .getElementById(
+                "mpesaCode"
+            )
             .value
             .trim();
+
 
     if(
         !name ||
@@ -2518,11 +2796,13 @@ function submitDeliveryRequest(
         );
 
         return;
+
     }
 
+
     if(
-        !amount ||
-        amount <= 0
+        isNaN(amount) ||
+        amount < 0
     ){
 
         showToast(
@@ -2530,11 +2810,12 @@ function submitDeliveryRequest(
         );
 
         return;
+
     }
 
+
     if(
-        payment === "M-Pesa"
-        &&
+        payment === "M-Pesa" &&
         !mpesaCode
     ){
 
@@ -2543,7 +2824,9 @@ function submitDeliveryRequest(
         );
 
         return;
+
     }
+
 
     const order = {
 
@@ -2588,7 +2871,7 @@ function submitDeliveryRequest(
             : "CASH ON DELIVERY",
 
         status:
-            "FINDING RIDER",
+            "NEW ORDER",
 
         riderId:
             null,
@@ -2601,57 +2884,45 @@ function submitDeliveryRequest(
 
     };
 
+
     orders.push(
         order
     );
 
-    activeOrder =
-        order;
 
     saveOrders();
 
-    saveActiveOrder();
+
+    activeOrder =
+        order;
+
+
+    activeRider =
+        null;
+
 
     renderCustomerOrders();
 
+    renderAdminOrders();
+
     updateAdminStats();
 
-    resetDeliveryForm();
+    resetTrackingDisplay();
 
-    goToSection(
-        "tracking"
-    );
-
-    updateTracking();
 
     showToast(
         "Order " +
         order.id +
-        " received."
+        " received successfully!"
     );
 
-    setTimeout(
-        function(){
-
-            autoAssignRider();
-
-        },
-        1000
-    );
-
-}
-
-/* =========================
-   RESET ORDER FORM
-========================= */
-
-function resetDeliveryForm(){
 
     document
         .getElementById(
             "deliveryForm"
         )
         .reset();
+
 
     if(currentUser){
 
@@ -2662,6 +2933,7 @@ function resetDeliveryForm(){
             .value =
                 currentUser.name;
 
+
         document
             .getElementById(
                 "custPhone"
@@ -2671,39 +2943,2395 @@ function resetDeliveryForm(){
 
     }
 
-    document
-        .getElementById(
-            "cashOption"
-        )
-        .classList.add(
-            "active"
+
+    changePaymentMethod();
+
+
+    /*
+        Automatically try to find an available rider.
+    */
+
+    setTimeout(
+        function(){
+
+            assignNearestRider();
+
+        },
+        800
+    );
+
+
+    openTracking();
+
+}
+
+
+/* =========================================================
+   AUTOMATIC RIDER ASSIGNMENT
+========================================================= */
+
+function assignNearestRider(){
+
+    if(!activeOrder){
+
+        return;
+
+    }
+
+
+    /*
+        Do not assign again if already assigned.
+    */
+
+    if(activeOrder.riderId){
+
+        return;
+
+    }
+
+
+    const availableRiders =
+        riders.filter(
+            function(rider){
+
+                return (
+                    rider.status ===
+                    "available"
+                );
+
+            }
         );
+
+
+    if(
+        availableRiders.length ===
+        0
+    ){
+
+        activeOrder.status =
+            "WAITING FOR RIDER";
+
+        saveOrders();
+
+        updateTracking();
+
+        renderAdminOrders();
+
+        showToast(
+            "No rider is currently available. Admin can assign one later."
+        );
+
+        return;
+
+    }
+
+
+    const rider =
+        availableRiders[0];
+
+
+    activeRider =
+        rider;
+
+
+    activeRider.status =
+        "assigned";
+
+
+    activeOrder.riderId =
+        activeRider.id;
+
+
+    activeOrder.riderName =
+        activeRider.name;
+
+
+    activeOrder.status =
+        "RIDER ASSIGNED";
+
+
+    saveRiders();
+
+    saveOrders();
+
+
+    updateTracking();
+
+    renderMapLocations();
+
+    triggerRiderAppSimulator();
+
+    renderCustomerOrders();
+
+    renderAdminOrders();
+
+    updateAdminStats();
+
+
+    showToast(
+        "Rider " +
+        activeRider.name +
+        " assigned to " +
+        activeOrder.id
+    );
+
+}
+
+
+/* =========================================================
+   TRACKING
+========================================================= */
+
+function resetTrackingDisplay(){
 
     document
         .getElementById(
-            "mpesaOption"
+            "jobStatusBadge"
         )
-        .classList.remove(
-            "active"
-        );
+        .textContent =
+            "AWAITING REQUEST";
+
 
     document
         .getElementById(
-            "mpesaPaymentDetails"
+            "displayRiderName"
+        )
+        .textContent =
+            "No Rider Assigned";
+
+
+    document
+        .getElementById(
+            "serverStatusText"
+        )
+        .textContent =
+            "Submit an order above to start dispatch.";
+
+
+    document
+        .getElementById(
+            "displayBikeModel"
+        )
+        .textContent =
+            "--";
+
+
+    document
+        .getElementById(
+            "displayNumberPlate"
+        )
+        .textContent =
+            "--";
+
+
+    document
+        .getElementById(
+            "displayPickup"
+        )
+        .textContent =
+            "--";
+
+
+    document
+        .getElementById(
+            "displayDestination"
+        )
+        .textContent =
+            "--";
+
+
+    document
+        .getElementById(
+            "displayPayment"
+        )
+        .textContent =
+            "--";
+
+
+    document
+        .getElementById(
+            "displayOrderId"
+        )
+        .textContent =
+            "--";
+
+
+    document
+        .getElementById(
+            "riderHeaderBlock"
         )
         .style.display =
             "none";
 
 }
 
-/* =========================
-   AUTOMATIC RIDER ASSIGNMENT
-========================= */
 
-function autoAssignRider(){
+function updateTracking(){
 
-    if(!activeOrder)
+    if(!activeOrder){
+
+        resetTrackingDisplay();
+
         return;
+
+    }
+
+
+    document
+        .getElementById(
+            "jobStatusBadge"
+        )
+        .textContent =
+            activeOrder.status;
+
+
+    document
+        .getElementById(
+            "displayPickup"
+        )
+        .textContent =
+            activeOrder.pickup;
+
+
+    document
+        .getElementById(
+            "displayDestination"
+        )
+        .textContent =
+            activeOrder.destination;
+
+
+    document
+        .getElementById(
+            "displayPayment"
+        )
+        .textContent =
+            activeOrder.paymentMethod +
+            " - " +
+            activeOrder.paymentStatus;
+
+
+    document
+        .getElementById(
+            "displayOrderId"
+        )
+        .textContent =
+            activeOrder.id;
+
+
+    const rider =
+        riders.find(
+            function(r){
+
+                return (
+                    r.id ===
+                    activeOrder.riderId
+                );
+
+            }
+        );
+
+
+    if(rider){
+
+        activeRider =
+            rider;
+
+
+        document
+            .getElementById(
+                "displayRiderName"
+            )
+            .textContent =
+                rider.name;
+
+
+        document
+            .getElementById(
+                "displayRiderNameHeader"
+            )
+            .textContent =
+                rider.name;
+
+
+        document
+            .getElementById(
+                "displayRiderPhone"
+            )
+            .textContent =
+                "📞 " +
+                rider.phone;
+
+
+        document
+            .getElementById(
+                "displayBikeModel"
+            )
+            .textContent =
+                rider.bike;
+
+
+        document
+            .getElementById(
+                "displayNumberPlate"
+            )
+            .textContent =
+                rider.plate;
+
+
+        const photo =
+            document.getElementById(
+                "displayRiderPhoto"
+            );
+
+
+        photo.src =
+            rider.photo ||
+            createAvatar(
+                rider.name
+            );
+
+
+        document
+            .getElementById(
+                "riderHeaderBlock"
+            )
+            .style.display =
+                "flex";
+
+    }
+
+
+    let message =
+        "Your order is being processed.";
+
+
+    switch(
+        activeOrder.status
+    ){
+
+        case "NEW ORDER":
+
+            message =
+                "Your order has been received.";
+
+            break;
+
+
+        case "WAITING FOR RIDER":
+
+            message =
+                "Waiting for an available rider.";
+
+            break;
+
+
+        case "RIDER ASSIGNED":
+
+            message =
+                "Rider assigned. Waiting for rider acceptance.";
+
+            break;
+
+
+        case "JOB ACCEPTED - EN ROUTE":
+
+            message =
+                "Rider accepted the order and is going to pickup.";
+
+            break;
+
+
+        case "ITEM PICKED UP":
+
+            message =
+                "Item picked up. Rider is heading to destination.";
+
+            break;
+
+
+        case "DELIVERED":
+
+            message =
+                "Delivery completed successfully.";
+
+            break;
+
+
+        case "CANCELLED":
+
+            message =
+                "This delivery was cancelled.";
+
+            break;
+
+
+        case "PROCESSING":
+
+            message =
+                "Your order is being processed by the admin.";
+
+            break;
+
+    }
+
+
+    document
+        .getElementById(
+            "serverStatusText"
+        )
+        .textContent =
+            message;
+
+
+    if(activeRider){
+
+        renderMapLocations();
+
+    }
+
+}
+
+
+function refreshTracking(){
+
+    restoreActiveOrder();
+
+    updateTracking();
+
+    if(map){
+
+        map.invalidateSize();
+
+    }
+
+    showToast(
+        "Tracking refreshed."
+    );
+
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+function initMap(){
+
+    if(
+        typeof L ===
+        "undefined"
+    ){
+
+        return;
+
+    }
+
+
+    map =
+        L.map(
+            "map"
+        ).setView(
+            [
+                -1.2833,
+                36.8167
+            ],
+            13
+        );
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom:19,
+            attribution:
+                "© OpenStreetMap contributors"
+        }
+    ).addTo(
+        map
+    );
+
+
+    setTimeout(
+        function(){
+
+            map.invalidateSize();
+
+        },
+        500
+    );
+
+}
+
+
+function renderMapLocations(){
+
+    if(
+        !map ||
+        !activeRider ||
+        !activeOrder
+    ){
+
+        return;
+
+    }
+
+
+    if(riderMarker){
+
+        map.removeLayer(
+            riderMarker
+        );
+
+    }
+
+
+    if(pickupMarker){
+
+        map.removeLayer(
+            pickupMarker
+        );
+
+    }
+
+
+    if(destinationMarker){
+
+        map.removeLayer(
+            destinationMarker
+        );
+
+    }
+
+
+    const riderLat =
+        Number(
+            activeRider.lat
+        );
+
+
+    const riderLng =
+        Number(
+            activeRider.lng
+        );
+
+
+    const pickupLat =
+        riderLat +
+        0.006;
+
+
+    const pickupLng =
+        riderLng +
+        0.006;
+
+
+    const destinationLat =
+        riderLat -
+        0.006;
+
+
+    const destinationLng =
+        riderLng +
+        0.010;
+
+
+    riderMarker =
+        L.marker(
+            [
+                riderLat,
+                riderLng
+            ]
+        )
+        .addTo(map)
+        .bindPopup(
+            "<b>Rider:</b> " +
+            escapeHtml(
+                activeRider.name
+            )
+        );
+
+
+    pickupMarker =
+        L.marker(
+            [
+                pickupLat,
+                pickupLng
+            ]
+        )
+        .addTo(map)
+        .bindPopup(
+            "<b>Pickup:</b> " +
+            escapeHtml(
+                activeOrder.pickup
+            )
+        );
+
+
+    destinationMarker =
+        L.marker(
+            [
+                destinationLat,
+                destinationLng
+            ]
+        )
+        .addTo(map)
+        .bindPopup(
+            "<b>Destination:</b> " +
+            escapeHtml(
+                activeOrder.destination
+            )
+        );
+
+
+    const bounds =
+        L.latLngBounds(
+            [
+                [
+                    riderLat,
+                    riderLng
+                ],
+                [
+                    pickupLat,
+                    pickupLng
+                ],
+                [
+                    destinationLat,
+                    destinationLng
+                ]
+            ]
+        );
+
+
+    map.fitBounds(
+        bounds,
+        {
+            padding:[
+                30,
+                30
+            ]
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RIDER SIMULATOR
+========================================================= */
+
+function triggerRiderAppSimulator(){
+
+    if(
+        !activeRider ||
+        !activeOrder
+    ){
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "riderSimBox"
+        )
+        .style.display =
+            "block";
+
+
+    document
+        .getElementById(
+            "simRiderName"
+        )
+        .textContent =
+            activeRider.name;
+
+
+    document
+        .getElementById(
+            "simJobText"
+        )
+        .textContent =
+            "Job: " +
+            activeOrder.id;
+
+
+    resetRiderButtons();
+
+}
+
+
+function resetRiderButtons(){
+
+    simGpsOn =
+        false;
+
+
+    const gps =
+        document.getElementById(
+            "btnGpsToggle"
+        );
+
+
+    const accept =
+        document.getElementById(
+            "btnAcceptJob"
+        );
+
+
+    const pickup =
+        document.getElementById(
+            "btnPickup"
+        );
+
+
+    const deliver =
+        document.getElementById(
+            "btnDeliver"
+        );
+
+
+    gps.textContent =
+        "1. Turn GPS ON";
+
+
+    gps.style.background =
+        "var(--yellow)";
+
+
+    gps.style.color =
+        "var(--dark)";
+
+
+    accept.disabled =
+        true;
+
+
+    pickup.disabled =
+        true;
+
+
+    deliver.disabled =
+        true;
+
+}
+
+
+function toggleRiderGPS(){
+
+    simGpsOn =
+        !simGpsOn;
+
+
+    const btn =
+        document.getElementById(
+            "btnGpsToggle"
+        );
+
+
+    const acceptBtn =
+        document.getElementById(
+            "btnAcceptJob"
+        );
+
+
+    if(simGpsOn){
+
+        btn.textContent =
+            "✓ GPS ON";
+
+
+        btn.style.background =
+            "var(--green)";
+
+
+        btn.style.color =
+            "white";
+
+
+        acceptBtn.disabled =
+            false;
+
+
+        showToast(
+            "Rider GPS is active."
+        );
+
+    }else{
+
+        btn.textContent =
+            "1. Turn GPS ON";
+
+
+        btn.style.background =
+            "var(--yellow)";
+
+
+        btn.style.color =
+            "var(--dark)";
+
+
+        acceptBtn.disabled =
+            true;
+
+    }
+
+}
+
+
+function riderAcceptJob(){
+
+    if(!activeOrder){
+
+        showToast(
+            "No active order."
+        );
+
+        return;
+
+    }
+
+
+    activeOrder.status =
+        "JOB ACCEPTED - EN ROUTE";
+
+
+    saveOrders();
+
+
+    document
+        .getElementById(
+            "btnAcceptJob"
+        )
+        .disabled =
+            true;
+
+
+    document
+        .getElementById(
+            "btnPickup"
+        )
+        .disabled =
+            false;
+
+
+    updateTracking();
+
+    renderCustomerOrders();
+
+    renderAdminOrders();
+
+
+    showToast(
+        "Rider accepted the job."
+    );
+
+}
+
+
+function riderPickup(){
+
+    if(!activeOrder){
+
+        return;
+
+    }
+
+
+    activeOrder.status =
+        "ITEM PICKED UP";
+
+
+    saveOrders();
+
+
+    document
+        .getElementById(
+            "btnPickup"
+        )
+        .disabled =
+            true;
+
+
+    document
+        .getElementById(
+            "btnDeliver"
+        )
+        .disabled =
+            false;
+
+
+    updateTracking();
+
+    renderCustomerOrders();
+
+    renderAdminOrders();
+
+
+    showToast(
+        "Item picked up."
+    );
+
+}
+
+
+function riderDeliver(){
+
+    if(!activeOrder){
+
+        return;
+
+    }
+
+
+    activeOrder.status =
+        "DELIVERED";
+
+
+    if(activeRider){
+
+        activeRider.status =
+            "available";
+
+    }
+
+
+    saveOrders();
+
+    saveRiders();
+
+
+    updateTracking();
+
+    renderCustomerOrders();
+
+    renderAdminOrders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    document
+        .getElementById(
+            "riderSimBox"
+        )
+        .style.display =
+            "none";
+
+
+    showToast(
+        "Delivery completed successfully!"
+    );
+
+}
+
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+/*
+    DEMONSTRATION AUTHENTICATION
+
+    This function intentionally does NOT contain your
+    password.
+
+    Connect this function to your backend endpoint.
+
+    Example flow:
+
+        fetch("/api/admin/login", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                email:email,
+                password:password
+            })
+        })
+
+    The backend should verify the password and return
+    a secure session.
+
+    NEVER send a plaintext production password from
+    this frontend to a hardcoded JavaScript comparison.
+*/
+
+async function adminLogin(){
+
+    const email =
+        document
+            .getElementById(
+                "adminEmail"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const password =
+        document
+            .getElementById(
+                "adminPassword"
+            )
+            .value;
+
+
+    if(
+        email !==
+        ADMIN_EMAIL.toLowerCase()
+    ){
+
+        showToast(
+            "Unauthorized admin email."
+        );
+
+        return;
+
+    }
+
+
+    if(!password){
+
+        showToast(
+            "Please enter your admin password."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        BACKEND AUTHENTICATION PLACEHOLDER
+
+        Your server should verify:
+
+            email:
+            abdiabdulmohammed50@gmail.com
+
+        password:
+            Scott@254
+
+        Do NOT place Scott@254 in this HTML.
+    */
+
+
+    try{
+
+        /*
+            If you have a backend endpoint, uncomment
+            and modify this section:
+
+            const response = await fetch(
+                "/api/admin/login",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body:JSON.stringify({
+                        email:email,
+                        password:password
+                    })
+                }
+            );
+
+            if(!response.ok){
+                throw new Error(
+                    "Login failed"
+                );
+            }
+
+            const result =
+                await response.json();
+
+            if(!result.authenticated){
+                throw new Error(
+                    "Invalid credentials"
+                );
+            }
+        */
+
+
+        /*
+            TEMPORARY FRONTEND DEMO
+
+            This does NOT verify a password.
+
+            It allows the dashboard to open only so
+            you can test the rider/order interface.
+
+            Replace this section with your backend
+            authentication before going live.
+        */
+
+        if(password.length < 1){
+
+            throw new Error(
+                "Password required"
+            );
+
+        }
+
+
+        sessionStorage.setItem(
+            "amirAdmin",
+            "true"
+        );
+
+
+        showAdminPanel();
+
+
+        showToast(
+            "Admin dashboard opened."
+        );
+
+    }catch(error){
+
+        console.error(
+            "Admin login error:",
+            error
+        );
+
+
+        showToast(
+            "Admin login could not be completed."
+        );
+
+    }
+
+}
+
+
+function showAdminPanel(){
+
+    document
+        .getElementById(
+            "adminLoginBox"
+        )
+        .style.display =
+            "none";
+
+
+    document
+        .getElementById(
+            "adminPanel"
+        )
+        .style.display =
+            "block";
+
+
+    renderAdminOrders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+}
+
+
+function adminLogout(){
+
+    sessionStorage.removeItem(
+        "amirAdmin"
+    );
+
+
+    document
+        .getElementById(
+            "adminLoginBox"
+        )
+        .style.display =
+            "block";
+
+
+    document
+        .getElementById(
+            "adminPanel"
+        )
+        .style.display =
+            "none";
+
+
+    document
+        .getElementById(
+            "adminPassword"
+        )
+        .value =
+            "";
+
+
+    showToast(
+        "Admin logged out."
+    );
+
+}
+
+
+function isAdmin(){
+
+    return (
+        sessionStorage.getItem(
+            "amirAdmin"
+        ) ===
+        "true"
+    );
+
+}
+
+
+/* =========================================================
+   ADMIN RIDER MANAGEMENT
+========================================================= */
+
+function adminAddRider(){
+
+    if(!isAdmin()){
+
+        showToast(
+            "Please login as admin first."
+        );
+
+        return;
+
+    }
+
+
+    const name =
+        document
+            .getElementById(
+                "admRiderName"
+            )
+            .value
+            .trim();
+
+
+    const phone =
+        document
+            .getElementById(
+                "admRiderPhone"
+            )
+            .value
+            .trim();
+
+
+    const bike =
+        document
+            .getElementById(
+                "admBikeModel"
+            )
+            .value
+            .trim();
+
+
+    const plate =
+        document
+            .getElementById(
+                "admPlate"
+            )
+            .value
+            .trim();
+
+
+    const photo =
+        document
+            .getElementById(
+                "admRiderPhoto"
+            )
+            .value
+            .trim();
+
+
+    const status =
+        document
+            .getElementById(
+                "admRiderStatus"
+            )
+            .value;
+
+
+    if(
+        !name ||
+        !phone ||
+        !bike ||
+        !plate
+    ){
+
+        showToast(
+            "Please complete rider and motorbike details."
+        );
+
+        return;
+
+    }
+
+
+    const duplicatePlate =
+        riders.some(
+            function(rider){
+
+                return (
+                    rider.plate
+                        .toLowerCase() ===
+                    plate.toLowerCase()
+                );
+
+            }
+        );
+
+
+    if(duplicatePlate){
+
+        showToast(
+            "That motorbike plate is already registered."
+        );
+
+        return;
+
+    }
+
+
+    const newRider = {
+
+        id:
+            Date.now(),
+
+        name:
+            name,
+
+        phone:
+            phone,
+
+        bike:
+            bike,
+
+        plate:
+            plate,
+
+        photo:
+            photo,
+
+        lat:
+            -1.2833,
+
+        lng:
+            36.8167,
+
+        status:
+            status
+
+    };
+
+
+    riders.push(
+        newRider
+    );
+
+
+    saveRiders();
+
+
+    document
+        .getElementById(
+            "admRiderName"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "admRiderPhone"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "admBikeModel"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "admPlate"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "admRiderPhoto"
+        )
+        .value =
+            "";
+
+
+    document
+        .getElementById(
+            "admRiderStatus"
+        )
+        .value =
+            "available";
+
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    showToast(
+        "Rider and motorbike registered successfully."
+    );
+
+}
+
+
+/* =========================================================
+   RENDER RIDERS
+========================================================= */
+
+function renderRiderTable(){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const tbody =
+        document.getElementById(
+            "riderTableBody"
+        );
+
+
+    if(
+        riders.length ===
+        0
+    ){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    style="
+                        text-align:center;
+                        color:#aebdb4;
+                    ">
+
+                    No riders registered.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        riders
+            .map(
+                function(rider){
+
+                    let statusClass =
+                        "status-offline";
+
+
+                    if(
+                        rider.status ===
+                        "available"
+                    ){
+
+                        statusClass =
+                            "status-available";
+
+                    }
+
+
+                    if(
+                        rider.status ===
+                        "assigned"
+                    ){
+
+                        statusClass =
+                            "status-assigned";
+
+                    }
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                                    rider.name
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    rider.phone
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    rider.bike
+                                )}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    ${escapeHtml(
+                                        rider.plate
+                                    )}
+                                </strong>
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status-dot ${statusClass}">
+                                    ${escapeHtml(
+                                        rider.status
+                                    )}
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="blue-btn small-btn"
+                                    onclick="toggleRiderStatus(${rider.id})">
+
+                                    Toggle
+
+                                </button>
+
+                                <button
+                                    class="danger-btn small-btn"
+                                    onclick="deleteRider(${rider.id})">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   TOGGLE RIDER STATUS
+========================================================= */
+
+function toggleRiderStatus(
+    riderId
+){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const rider =
+        riders.find(
+            function(r){
+
+                return (
+                    r.id ===
+                    riderId
+                );
+
+            }
+        );
+
+
+    if(!rider){
+
+        return;
+
+    }
+
+
+    if(
+        rider.status ===
+        "available"
+    ){
+
+        rider.status =
+            "offline";
+
+    }else if(
+        rider.status ===
+        "offline"
+    ){
+
+        rider.status =
+            "available";
+
+    }
+
+
+    saveRiders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    showToast(
+        rider.name +
+        " is now " +
+        rider.status +
+        "."
+    );
+
+}
+
+
+/* =========================================================
+   DELETE RIDER
+========================================================= */
+
+function deleteRider(
+    riderId
+){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const rider =
+        riders.find(
+            function(r){
+
+                return (
+                    r.id ===
+                    riderId
+                );
+
+            }
+        );
+
+
+    if(!rider){
+
+        return;
+
+    }
+
+
+    const assigned =
+        orders.some(
+            function(order){
+
+                return (
+                    order.riderId ===
+                    riderId &&
+                    order.status !==
+                    "DELIVERED"
+                );
+
+            }
+        );
+
+
+    if(assigned){
+
+        showToast(
+            "This rider has an active order and cannot be deleted."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        window.confirm(
+            "Delete rider " +
+            rider.name +
+            "?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    riders =
+        riders.filter(
+            function(r){
+
+                return (
+                    r.id !==
+                    riderId
+                );
+
+            }
+        );
+
+
+    saveRiders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    showToast(
+        "Rider deleted."
+    );
+
+}
+
+
+/* =========================================================
+   ADMIN ORDERS
+========================================================= */
+
+function renderAdminOrders(){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const container =
+        document.getElementById(
+            "adminOrders"
+        );
+
+
+    if(
+        orders.length ===
+        0
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty">
+                No orders.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        orders
+            .slice()
+            .reverse()
+            .map(
+                function(order){
+
+                    const riderOptions =
+                        riders
+                            .map(
+                                function(rider){
+
+                                    return `
+
+                                        <option
+                                            value="${rider.id}"
+                                            ${
+                                                order.riderId ===
+                                                rider.id
+                                                ? "selected"
+                                                : ""
+                                            }>
+
+                                            ${escapeHtml(
+                                                rider.name
+                                            )}
+                                            -
+                                            ${escapeHtml(
+                                                rider.plate
+                                            )}
+
+                                        </option>
+
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                    return `
+
+                        <div
+                            class="admin-order">
+
+                            <h4>
+                                ${escapeHtml(
+                                    order.id
+                                )}
+                            </h4>
+
+
+                            <p>
+                                <strong>
+                                    Customer:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.customerName
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Phone:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.customerPhone
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Service:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.category
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Pickup:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.pickup
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Destination:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.destination
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Item:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.item
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Amount:
+                                </strong>
+
+                                KES
+                                ${Number(
+                                    order.amount
+                                ).toLocaleString()}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Payment:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.paymentMethod
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    M-Pesa Code:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.mpesaCode ||
+                                    "N/A"
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Payment Status:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.paymentStatus
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Delivery Status:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.status
+                                )}
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Rider:
+                                </strong>
+
+                                ${escapeHtml(
+                                    order.riderName ||
+                                    "Not assigned"
+                                )}
+                            </p>
+
+
+                            <div
+                                class="admin-action-row">
+
+                                <button
+                                    class="admin-action"
+                                    style="
+                                        background:var(--green);
+                                        color:white;
+                                    "
+                                    onclick="verifyPayment('${order.id}')">
+
+                                    ✓ Verify Payment
+
+                                </button>
+
+
+                                <select
+                                    id="riderSelect-${order.id}"
+                                    style="
+                                        padding:9px;
+                                        border-radius:8px;
+                                        max-width:230px;
+                                    ">
+
+                                    <option value="">
+                                        Select Rider
+                                    </option>
+
+                                    ${riderOptions}
+
+                                </select>
+
+
+                                <button
+                                    class="admin-action"
+                                    style="
+                                        background:var(--blue);
+                                        color:white;
+                                    "
+                                    onclick="assignSelectedRider('${order.id}')">
+
+                                    Assign Selected Rider
+
+                                </button>
+
+
+                                <button
+                                    class="admin-action"
+                                    style="
+                                        background:var(--orange);
+                                        color:white;
+                                    "
+                                    onclick="setOrderStatus('${order.id}','PROCESSING')">
+
+                                    Processing
+
+                                </button>
+
+
+                                <button
+                                    class="admin-action"
+                                    style="
+                                        background:#555;
+                                        color:white;
+                                    "
+                                    onclick="setOrderStatus('${order.id}','CANCELLED')">
+
+                                    Cancel
+
+                                </button>
+
+
+                                <button
+                                    class="admin-action"
+                                    style="
+                                        background:#8b0000;
+                                        color:white;
+                                    "
+                                    onclick="deleteOrder('${order.id}')">
+
+                                    Delete
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   VERIFY PAYMENT
+========================================================= */
+
+function verifyPayment(
+    orderId
+){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const order =
+        orders.find(
+            function(o){
+
+                return (
+                    o.id ===
+                    orderId
+                );
+
+            }
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    if(
+        order.paymentMethod !==
+        "M-Pesa"
+    ){
+
+        showToast(
+            "This order is Cash on Delivery."
+        );
+
+        return;
+
+    }
+
+
+    order.paymentStatus =
+        "VERIFIED";
+
+
+    saveOrders();
+
+    renderAdminOrders();
+
+    updateAdminStats();
+
+    renderCustomerOrders();
+
+    updateTracking();
+
+
+    showToast(
+        "M-Pesa payment verified."
+    );
+
+}
+
+
+/* =========================================================
+   ASSIGN SELECTED RIDER
+========================================================= */
+
+function assignSelectedRider(
+    orderId
+){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const select =
+        document.getElementById(
+            "riderSelect-" +
+            orderId
+        );
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+    const riderId =
+        Number(
+            select.value
+        );
+
+
+    if(!riderId){
+
+        showToast(
+            "Please select a rider."
+        );
+
+        return;
+
+    }
+
+
+    assignOrderToRider(
+        orderId,
+        riderId
+    );
+
+}
+
+
+/* =========================================================
+   ASSIGN ORDER TO RIDER
+========================================================= */
+
+function assignOrderToRider(
+    orderId,
+    riderId
+){
+
+    const order =
+        orders.find(
+            function(o){
+
+                return (
+                    o.id ===
+                    orderId
+                );
+
+            }
+        );
+
+
+    const rider =
+        riders.find(
+            function(r){
+
+                return (
+                    r.id ===
+                    riderId
+                );
+
+            }
+        );
+
+
+    if(
+        !order ||
+        !rider
+    ){
+
+        showToast(
+            "Order or rider not found."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        rider.status ===
+        "offline"
+    ){
+
+        showToast(
+            "This rider is offline."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        If another rider was assigned,
+        free the previous rider.
+    */
+
+    if(
+        order.riderId &&
+        order.riderId !==
+        rider.id
+    ){
+
+        const previous =
+            riders.find(
+                function(r){
+
+                    return (
+                        r.id ===
+                        order.riderId
+                    );
+
+                }
+            );
+
+
+        if(previous){
+
+            previous.status =
+                "available";
+
+        }
+
+    }
+
+
+    rider.status =
+        "assigned";
+
+
+    order.riderId =
+        rider.id;
+
+
+    order.riderName =
+        rider.name;
+
+
+    order.status =
+        "RIDER ASSIGNED";
+
+
+    activeOrder =
+        order;
+
+
+    activeRider =
+        rider;
+
+
+    saveRiders();
+
+    saveOrders();
+
+
+    updateTracking();
+
+    renderMapLocations();
+
+    triggerRiderAppSimulator();
+
+    renderAdminOrders();
+
+    renderCustomerOrders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    showToast(
+        rider.name +
+        " assigned to " +
+        order.id
+    );
+
+}
+
+
+/* =========================================================
+   LEGACY ASSIGN ORDER
+========================================================= */
+
+function assignOrder(
+    orderId
+){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
 
     const available =
         riders.find(
@@ -2717,163 +5345,594 @@ function autoAssignRider(){
             }
         );
 
+
     if(!available){
 
-        activeOrder.status =
-            "WAITING FOR RIDER";
-
-        saveOrders();
-
-        saveActiveOrder();
-
-        updateTracking();
-
-        renderCustomerOrders();
-
         showToast(
-            "No rider is currently available. Your order is waiting."
+            "No available rider."
         );
 
         return;
+
     }
 
-    assignRiderToOrder(
-        activeOrder.id,
-        available.id,
-        true
+
+    assignOrderToRider(
+        orderId,
+        available.id
     );
 
 }
 
-/* =========================
-   ASSIGN RIDER
-========================= */
 
-function assignRiderToOrder(
+/* =========================================================
+   CHANGE ORDER STATUS
+========================================================= */
+
+function setOrderStatus(
     orderId,
-    riderId,
-    automatic = false
+    status
 ){
 
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
     const order =
-        orders.find(
-            function(o){
-                return o.id === orderId;
-            }
-        );
-
-    const rider =
-        riders.find(
-            function(r){
-                return r.id === riderId;
-            }
-        );
-
-    if(!order || !rider){
-
-        showToast(
-            "Order or rider not found."
-        );
-
-        return;
-    }
-
-    if(
-        rider.status !== "available"
-        &&
-        rider.id !== order.riderId
-    ){
-
-        showToast(
-            "This rider is not available."
-        );
-
-        return;
-    }
-
-    rider.status =
-        "assigned";
-
-    order.riderId =
-        rider.id;
-
-    order.riderName =
-        rider.name;
-
-    order.status =
-        "RIDER ASSIGNED";
-
-    activeOrder =
-        order;
-
-    activeRider =
-        rider;
-
-    saveRiders();
-
-    saveOrders();
-
-    saveActiveOrder();
-
-    updateTracking();
-
-    renderMapLocations();
-
-    renderCustomerOrders();
-
-    renderAdminOrders();
-
-    renderPublicRiders();
-
-    updateAdminStats();
-
-    triggerRiderAppSimulator();
-
-    if(!automatic){
-
-        goToSection(
-            "tracking"
-        );
-
-    }
-
-    showToast(
-        "Rider " +
-        rider.name +
-        " assigned to " +
-        order.id
-    );
-
-}
-
-/* =========================
-   TRACKING
-========================= */
-
-function restoreActiveOrder(){
-
-    if(!activeOrder)
-        return;
-
-    const found =
         orders.find(
             function(o){
 
                 return (
                     o.id ===
-                    activeOrder.id
+                    orderId
                 );
 
             }
         );
 
-    if(!found)
+
+    if(!order){
+
         return;
 
-    activeOrder =
-        found;
+    }
 
-    if(activeOrder.riderId){
+
+    order.status =
+        status;
+
+
+    if(
+        status ===
+        "DELIVERED"
+    ){
+
+        if(order.riderId){
+
+            const rider =
+                riders.find(
+                    function(r){
+
+                        return (
+                            r.id ===
+                            order.riderId
+                        );
+
+                    }
+                );
+
+
+            if(rider){
+
+                rider.status =
+                    "available";
+
+            }
+
+        }
+
+    }
+
+
+    saveOrders();
+
+    saveRiders();
+
+
+    if(
+        activeOrder &&
+        activeOrder.id ===
+        order.id
+    ){
+
+        activeOrder =
+            order;
+
+        activeRider =
+            riders.find(
+                function(r){
+
+                    return (
+                        r.id ===
+                        order.riderId
+                    );
+
+                }
+            ) || null;
+
+
+        updateTracking();
+
+    }
+
+
+    renderAdminOrders();
+
+    renderCustomerOrders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    showToast(
+        "Order status updated to " +
+        status +
+        "."
+    );
+
+}
+
+
+/* =========================================================
+   DELETE ORDER
+========================================================= */
+
+function deleteOrder(
+    orderId
+){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    const order =
+        orders.find(
+            function(o){
+
+                return (
+                    o.id ===
+                    orderId
+                );
+
+            }
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    const confirmed =
+        window.confirm(
+            "Delete order " +
+            order.id +
+            "?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    if(order.riderId){
+
+        const rider =
+            riders.find(
+                function(r){
+
+                    return (
+                        r.id ===
+                        order.riderId
+                    );
+
+                }
+            );
+
+
+        if(rider){
+
+            rider.status =
+                "available";
+
+        }
+
+    }
+
+
+    orders =
+        orders.filter(
+            function(o){
+
+                return (
+                    o.id !==
+                    orderId
+                );
+
+            }
+        );
+
+
+    if(
+        activeOrder &&
+        activeOrder.id ===
+        orderId
+    ){
+
+        activeOrder =
+            null;
+
+        activeRider =
+            null;
+
+        resetTrackingDisplay();
+
+    }
+
+
+    saveOrders();
+
+    saveRiders();
+
+    renderAdminOrders();
+
+    renderCustomerOrders();
+
+    renderRiderTable();
+
+    updateAdminStats();
+
+
+    showToast(
+        "Order deleted."
+    );
+
+}
+
+
+/* =========================================================
+   CUSTOMER ORDER HISTORY
+========================================================= */
+
+function renderCustomerOrders(){
+
+    const container =
+        document.getElementById(
+            "customerOrders"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    if(!currentUser){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                Login to view your orders.
+
+                <br><br>
+
+                <button
+                    class="primary-btn small-btn"
+                    onclick="openAuth()">
+
+                    Login / Register
+
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const customerOrders =
+        orders.filter(
+            function(order){
+
+                return (
+                    order.customerPhone ===
+                    currentUser.phone
+                );
+
+            }
+        );
+
+
+    if(
+        customerOrders.length ===
+        0
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty">
+                No orders yet.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        customerOrders
+            .slice()
+            .reverse()
+            .map(
+                function(order){
+
+                    return `
+
+                        <div
+                            class="history-item">
+
+                            <strong>
+                                ${escapeHtml(
+                                    order.id
+                                )}
+                            </strong>
+
+
+                            <p
+                                style="
+                                    margin-top:7px;
+                                ">
+
+                                ${escapeHtml(
+                                    order.pickup
+                                )}
+
+                                →
+
+                                ${escapeHtml(
+                                    order.destination
+                                )}
+
+                            </p>
+
+
+                            <p
+                                style="
+                                    margin-top:7px;
+                                ">
+
+                                Service:
+                                ${escapeHtml(
+                                    order.category
+                                )}
+
+                            </p>
+
+
+                            <p
+                                style="
+                                    margin-top:7px;
+                                ">
+
+                                Amount:
+
+                                <strong>
+                                    KES
+                                    ${Number(
+                                        order.amount
+                                    ).toLocaleString()}
+                                </strong>
+
+                            </p>
+
+
+                            <p
+                                style="
+                                    margin-top:7px;
+                                ">
+
+                                Payment:
+                                ${escapeHtml(
+                                    order.paymentMethod
+                                )}
+
+                                -
+
+                                ${escapeHtml(
+                                    order.paymentStatus
+                                )}
+
+                            </p>
+
+
+                            <p
+                                style="
+                                    margin-top:7px;
+                                ">
+
+                                Status:
+
+                                <strong>
+                                    ${escapeHtml(
+                                        order.status
+                                    )}
+                                </strong>
+
+                            </p>
+
+
+                            <button
+                                class="primary-btn small-btn"
+                                style="margin-top:10px;"
+                                onclick="trackOrder('${order.id}')">
+
+                                📍 Track This Order
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   TRACK SPECIFIC ORDER
+========================================================= */
+
+function trackOrder(
+    orderId
+){
+
+    const order =
+        orders.find(
+            function(o){
+
+                return (
+                    o.id ===
+                    orderId
+                );
+
+            }
+        );
+
+
+    if(!order){
+
+        showToast(
+            "Order not found."
+        );
+
+        return;
+
+    }
+
+
+    activeOrder =
+        order;
+
+
+    activeRider =
+        riders.find(
+            function(r){
+
+                return (
+                    r.id ===
+                    order.riderId
+                );
+
+            }
+        ) || null;
+
+
+    updateTracking();
+
+    renderMapLocations();
+
+    openTracking();
+
+
+    if(activeRider){
+
+        triggerRiderAppSimulator();
+
+    }
+
+
+    showToast(
+        "Tracking " +
+        order.id
+    );
+
+}
+
+
+/* =========================================================
+   RESTORE ACTIVE ORDER
+========================================================= */
+
+function restoreActiveOrder(){
+
+    if(
+        currentUser
+    ){
+
+        const customerOrders =
+            orders.filter(
+                function(order){
+
+                    return (
+                        order.customerPhone ===
+                        currentUser.phone
+                    );
+
+                }
+            );
+
+
+        if(
+            customerOrders.length >
+            0
+        ){
+
+            activeOrder =
+                customerOrders[
+                    customerOrders.length -
+                    1
+                ];
+
+        }
+
+    }
+
+
+    if(!activeOrder){
+
+        activeOrder =
+            orders[
+                orders.length -
+                1
+            ] || null;
+
+    }
+
+
+    if(activeOrder){
 
         activeRider =
             riders.find(
@@ -2887,135 +5946,498 @@ function restoreActiveOrder(){
                 }
             ) || null;
 
-    }
 
-    updateTracking();
-
-    if(activeRider){
-
-        renderMapLocations();
+        updateTracking();
 
     }
 
 }
 
-function updateTracking(){
 
-    if(!activeOrder){
+/* =========================================================
+   ADMIN STATS
+========================================================= */
 
-        document
-            .getElementById(
-                "jobStatusBadge"
-            )
-            .textContent =
-                "AWAITING REQUEST";
+function updateAdminStats(){
+
+    const totalOrders =
+        document.getElementById(
+            "totalOrders"
+        );
+
+
+    const totalRiders =
+        document.getElementById(
+            "totalRiders"
+        );
+
+
+    const mpesaOrders =
+        document.getElementById(
+            "mpesaOrders"
+        );
+
+
+    const cashOrders =
+        document.getElementById(
+            "cashOrders"
+        );
+
+
+    if(totalOrders){
+
+        totalOrders.textContent =
+            orders.length;
+
+    }
+
+
+    if(totalRiders){
+
+        totalRiders.textContent =
+            riders.length;
+
+    }
+
+
+    if(mpesaOrders){
+
+        mpesaOrders.textContent =
+            orders.filter(
+                function(order){
+
+                    return (
+                        order.paymentMethod ===
+                        "M-Pesa"
+                    );
+
+                }
+            ).length;
+
+    }
+
+
+    if(cashOrders){
+
+        cashOrders.textContent =
+            orders.filter(
+                function(order){
+
+                    return (
+                        order.paymentMethod ===
+                        "Cash"
+                    );
+
+                }
+            ).length;
+
+    }
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function saveOrders(){
+
+    localStorage.setItem(
+        "amirOrders",
+        JSON.stringify(
+            orders
+        )
+    );
+
+}
+
+
+function saveRiders(){
+
+    localStorage.setItem(
+        "amirRiders",
+        JSON.stringify(
+            riders
+        )
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3500
+        );
+
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollToId(
+    id
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(!element){
 
         return;
 
     }
 
-    document
-        .getElementById(
-            "jobStatusBadge"
+
+    element.scrollIntoView(
+        {
+            behavior:"smooth",
+            block:"start"
+        }
+    );
+
+
+    setTimeout(
+        function(){
+
+            if(
+                id ===
+                "tracking" &&
+                map
+            ){
+
+                map.invalidateSize();
+
+            }
+
+        },
+        500
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+
+    return String(
+        value
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+function createAvatar(
+    name
+){
+
+    const initial =
+        String(
+            name ||
+            "R"
         )
-        .textContent =
-            activeOrder.status;
+        .charAt(0)
+        .toUpperCase();
 
-    document
-        .getElementById(
-            "displayPickup"
+
+    const svg = `
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="200"
+            height="200"
+            viewBox="0 0 200 200">
+
+            <rect
+                width="200"
+                height="200"
+                rx="100"
+                fill="#0a7c36"
+            />
+
+            <text
+                x="100"
+                y="120"
+                text-anchor="middle"
+                font-family="Arial"
+                font-size="90"
+                font-weight="bold"
+                fill="white">
+
+                ${initial}
+
+            </text>
+
+        </svg>
+
+    `;
+
+
+    return (
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(
+            svg
         )
-        .textContent =
-            activeOrder.pickup;
+    );
 
-    document
-        .getElementById(
-            "displayDestination"
-        )
-        .textContent =
-            activeOrder.destination;
+}
 
-    document
-        .getElementById(
-            "displayPayment"
-        )
-        .textContent =
-            activeOrder.paymentMethod +
-            " - " +
-            activeOrder.paymentStatus;
 
-    document
-        .getElementById(
-            "displayOrderId"
-        )
-        .textContent =
-            activeOrder.id;
+/* =========================================================
+   ENTER KEY ADMIN LOGIN
+========================================================= */
 
-    if(activeRider){
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            const active =
+                document.activeElement;
+
+
+            if(
+                active &&
+                (
+                    active.id ===
+                    "adminEmail" ||
+                    active.id ===
+                    "adminPassword"
+                )
+            ){
+
+                adminLogin();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AUTO REFRESH TRACKING
+========================================================= */
+
+setInterval(
+    function(){
+
+        if(activeOrder){
+
+            const latest =
+                orders.find(
+                    function(order){
+
+                        return (
+                            order.id ===
+                            activeOrder.id
+                        );
+
+                    }
+                );
+
+
+            if(latest){
+
+                activeOrder =
+                    latest;
+
+
+                activeRider =
+                    riders.find(
+                        function(rider){
+
+                            return (
+                                rider.id ===
+                                latest.riderId
+                            );
+
+                        }
+                    ) || null;
+
+
+                updateTracking();
+
+            }
+
+        }
+
+    },
+    5000
+);
+
+
+/* =========================================================
+   FINAL INITIALIZATION
+========================================================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        /*
+            Make navigation buttons respond immediately.
+        */
 
         document
-            .getElementById(
-                "displayRiderName"
+            .querySelectorAll(
+                'a[href^="#"]'
             )
-            .textContent =
-                activeRider.name;
+            .forEach(
+                function(link){
 
-        document
-            .getElementById(
-                "displayRiderNameHeader"
-            )
-            .textContent =
-                activeRider.name;
+                    link.addEventListener(
+                        "click",
+                        function(event){
 
-        document
-            .getElementById(
-                "displayRiderPhone"
-            )
-            .textContent =
-                "📞 " +
-                activeRider.phone;
+                            const targetId =
+                                this.getAttribute(
+                                    "href"
+                                )
+                                .substring(1);
 
-        document
-            .getElementById(
-                "displayBikeModel"
-            )
-            .textContent =
-                activeRider.bike;
 
-        document
-            .getElementById(
-                "displayNumberPlate"
-            )
-            .textContent =
-                activeRider.plate;
+                            const target =
+                                document.getElementById(
+                                    targetId
+                                );
 
-        document
-            .getElementById(
-                "displayBikeStage"
-            )
-            .textContent =
-                activeRider.stage;
 
-        document
-            .getElementById(
-                "displayChairman"
-            )
-            .textContent =
-                activeRider.chairman;
+                            if(target){
 
-        document
-            .getElementById(
-                "displayChairmanPhone"
-            )
-            .textContent =
-                activeRider.chairmanPhone;
+                                event.preventDefault();
 
-        document
-            .getElementById(
-                "displayRiderPhoto"
-            )
-            .src =
-                activeRider.photo ||
-                "";
+                                scrollToId(
+                                    targetId
+                                );
 
-        document
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /*
+            Restore the selected payment option.
+        */
+
+        changePaymentMethod();
+
+
+        /*
+            Restore tracking.
+        */
+
+        restoreActiveOrder();
+
+
+        /*
+            Refresh map dimensions.
+        */
+
+        setTimeout(
+            function(){
+
+                if(map){
+
+                    map.invalidateSize();
+
+                }
+
+            },
+            1000
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
