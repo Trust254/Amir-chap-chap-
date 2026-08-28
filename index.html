@@ -1,45 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a7c36">
+<meta name="description" content="Amir Chap Chap - Fast delivery and parcel services in Kenya">
+<title>Amir Chap Chap | Delivery</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+:root{
+    --green:#0a7c36;
+    --dark:#092015;
+    --yellow:#ffc700;
+    --light:#f3f8f5;
+    --white:#fff;
+    --gray:#68736d;
+    --border:#dce6df;
+    --red:#d93025;
+    --blue:#1677ff;
+    --orange:#ff9800;
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--dark);
+    line-height:1.5;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.top-strip{
+    height:7px;
+    background:linear-gradient(
+        90deg,
+        var(--green) 75%,
+        var(--yellow) 25%
+    );
+}
+
+nav{
+    background:#fff;
+    min-height:70px;
+    padding:10px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    position:sticky;
+    top:0;
+    z-index:3000;
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:900;
+    font-size:22px;
+    color:var(--green);
+}
+
+.logo img{
+    width:48px;
+    height:48px;
+    object-fit:cover;
+    border-radius:50%;
+    border:2px solid var(--yellow);
+}
+
+.nav-links{
+    display:flex;
+    gap:5px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:var(--dark);
+    padding:9px 12px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.nav-links a:hover{
+    background:#eaf8ef;
+    color:var(--green);
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.user-badge{
+    background:#e7f6ed;
+    color:var(--green);
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+button{
+    border:0;
+}
+
+.btn{
+    padding:12px 18px;
+    border-radius:11px;
+    font-weight:bold;
+}
+
+.green{
+    background:var(--green);
+    color:#fff;
+}
+
+.yellow{
+    background:var(--yellow);
+    color:#111;
+}
+
+.blue{
+    background:var(--blue);
+    color:#fff;
+}
+
+.red{
+    background:var(--red);
+    color:#fff;
+}
+
+.orange{
+    background:var(--orange);
+    color:#fff;
+}
+
+.dark{
+    background:#17251d;
+    color:#fff;
+}
+
+.full{
+    width:100%;
+}
+
+.hero{
+    min-height:520px;
+    padding:60px 6%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+    background:
+    radial-gradient(
+        circle at 85% 25%,
+        rgba(255,199,0,.25),
+        transparent 30%
+    ),
+    linear-gradient(135deg,#fff,#eaf8ef);
+}
+
+.hero h1{
+    font-size:clamp(38px,5vw,65px);
+    line-height:1.05;
+    margin:20px 0;
+}
+
+.hero h1 span{
+    color:var(--green);
+}
+
+.hero p{
+    color:var(--gray);
+    font-size:18px;
+    max-width:600px;
+    margin-bottom:25px;
+}
+
+.hero-logo{
+    width:min(430px,100%);
+    border-radius:50%;
+    border:7px solid #fff;
+    box-shadow:0 15px 40px rgba(10,124,54,.2);
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+section{
+    padding:65px 6%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.title h2{
+    font-size:35px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:var(--gray);
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* AUTH */
+
+#authSection{
+    display:none;
+    background:#eef8f1;
+}
+
+.auth-box{
+    max-width:430px;
+    margin:auto;
+    background:#fff;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.tab{
+    flex:1;
+    padding:11px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:#f4f8f5;
+    font-weight:bold;
+}
+
+.tab.active{
+    background:var(--green);
+    color:#fff;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,select,textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:#fff;
+    padding:12px;
+    border-radius:10px;
+    outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(10,124,54,.1);
+}
+
+/* ORDER */
+
+.order-layout{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:.75fr 1.25fr;
+    gap:25px;
+}
+
+.card{
+    background:#fff;
+    padding:25px;
+    border-radius:22px;
+    box-shadow:var(--shadow);
+}
+
+.category{
+    width:100%;
+    text-align:left;
+    padding:13px;
+    margin-bottom:9px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:#f5f8f6;
+    font-weight:bold;
+}
+
+.category.active{
+    background:var(--green);
+    color:#fff;
+}
+
+.payment-box{
+    margin-top:20px;
+    background:#edf9f1;
+    border:1px solid #cce8d5;
+    padding:18px;
+    border-radius:15px;
+}
+
+.mpesa-number{
+    display:block;
+    color:var(--green);
+    font-size:25px;
+    font-weight:900;
+    margin:8px 0;
+}
+
+.payment-methods{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.payment-option{
+    border:2px solid var(--border);
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.payment-option.active{
+    border-color:var(--green);
+    background:#effff4;
+}
+
+/* HISTORY */
+
+.history{
+    max-width:1100px;
+    margin:25px auto 0;
+}
+
+.history-item{
+    border:1px solid var(--border);
+    padding:15px;
+    border-radius:13px;
+    margin-top:10px;
+}
+
+.history-item strong{
+    color:var(--green);
+}
+
+/* TRACKING */
+
+.tracking{
+    background:#edf9f1;
+}
+
+.tracker{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:25px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:20px;
+}
+
+.info{
+    background:#f5f8f6;
+    padding:14px;
+    border-radius:12px;
+}
+
+.info small{
+    display:block;
+    color:var(--gray);
+}
+
+.info strong{
+    word-break:break-word;
+}
+
+.rider{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin:20px 0;
+}
+
+.rider img{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid var(--green);
+}
+
+#map{
+    height:400px;
+    width:100%;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+/* SIMULATOR */
+
+.simulator{
+    position:fixed;
+    right:15px;
+    bottom:15px;
+    width:320px;
+    background:#17251d;
+    color:#fff;
+    padding:20px;
+    border-radius:18px;
+    z-index:4000;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.simulator h3{
+    color:var(--yellow);
+    margin-bottom:8px;
+}
+
+.simulator button{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* ADMIN */
+
+.admin{
+    background:#08170e;
+    color:#fff;
+}
+
+.admin-login{
+    max-width:430px;
+    margin:auto;
+    background:#173025;
+    padding:25px;
+    border-radius:20px;
+}
+
+.admin-login input{
+    margin-bottom:12px;
+}
+
+.admin-panel{
+    max-width:1150px;
+    margin:auto;
+    display:none;
+}
+
+.admin-card{
+    background:#173025;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.stat{
+    background:#0d2116;
+    padding:18px;
+    border-radius:13px;
+    border:1px solid #31553f;
+}
+
+.stat small{
+    color:#aebdb4;
+    display:block;
+}
+
+.stat strong{
+    font-size:25px;
+}
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.admin-grid input,
+.admin-grid select{
+    margin-top:5px;
+}
+
+.table{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:700px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px;
+    text-align:left;
+    border-bottom:1px solid #31553f;
+}
+
+th{
+    color:var(--yellow);
+}
+
+.admin-order{
+    background:#0d2116;
+    border:1px solid #31553f;
+    padding:17px;
+    border-radius:13px;
+    margin-top:12px;
+}
+
+.admin-order h4{
+    color:var(--yellow);
+}
+
+.admin-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.admin-actions button{
+    padding:8px 11px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+footer{
+    background:#06140b;
+    color:#fff;
+    text-align:center;
+    padding:30px;
+}
+
+footer p{
+    color:#c8d7ce;
+    margin-top:5px;
+}
+
+/* TOAST */
+
+#toast{
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    background:#17251d;
+    color:#fff;
+    padding:14px 18px;
+    border-radius:12px;
+    display:none;
+    z-index:6000;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+#toast.show{
+    display:block;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    nav{
+        flex-wrap:wrap;
+    }
+
+    .nav-links{
+        order:3;
+        width:100%;
+        justify-content:center;
+    }
+
+    .hero,
+    .order-layout,
+    .tracker{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .hero p{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:45px 4%;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .logo img{
+        width:40px;
+        height:40px;
+    }
+
+    .nav-links a{
+        font-size:13px;
+        padding:7px;
+    }
+
+    .stats,
+    .admin-grid,
+    .info-grid,
+    .payment-methods{
+        grid-template-columns:1fr;
+    }
+
+    #map{
+        height:320px;
+    }
+
+    .simulator{
+        left:10px;
+        right:10px;
+        width:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-strip"></div>
+
+<nav>
+
+    <div class="logo">
+        <img src="1000369432.png"
+             alt="Amir Chap Chap"
+             onerror="this.style.display='none'">
+        Amir Chap Chap
+    </div>
+
+    <div class="nav-links">
+        <a href="#order">Order</a>
+        <a href="#tracking">Tracking</a>
+        <a href="#admin">Admin</a>
+    </div>
+
+    <div class="user-area" id="navAuth"></div>
+
+</nav>
+
+<header class="hero">
+
+    <div>
+        <span class="btn yellow">
+            ⚡ FAST DELIVERY
+        </span>
+
+        <h1>
+            Fast pickup,
+            <span>safe delivery.</span>
+        </h1>
+
+        <p>
+            Amir Chap Chap connects customers,
+            riders and delivery management in one
+            simple platform.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button class="btn green"
+                    onclick="openOrder()">
+                Request Delivery 🛵
+            </button>
+
+            <button class="btn yellow"
+                    onclick="openTracking()">
+                Track Delivery 📍
+            </button>
+
+        </div>
+    </div>
+
+    <div style="text-align:center">
+        <img src="1000369432.png"
+             class="hero-logo"
+             alt="Amir Chap Chap"
+             onerror="this.style.display='none'">
+    </div>
+
+</header>
+
+
+<!-- AUTH -->
+
+<section id="authSection">
+
+    <div class="auth-box">
+
+        <div class="tabs">
+
+            <button id="loginTab"
+                    class="tab active"
+                    onclick="switchAuth('login')">
+                Login
+            </button>
+
+            <button id="registerTab"
+                    class="tab"
+                    onclick="switchAuth('register')">
+                Register
+            </button>
+
+        </div>
+
+        <form onsubmit="handleAuth(event)">
+
+            <div class="form-group"
+                 id="nameGroup"
+                 style="display:none">
+
+                <label>Full Name</label>
+
+                <input id="authName"
+                       type="text"
+                       placeholder="Your full name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Phone Number</label>
+
+                <input id="authPhone"
+                       type="tel"
+                       placeholder="07XXXXXXXX"
+                       required>
+
+            </div>
+
+            <button class="btn green full"
+                    id="authButton">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ORDER -->
+
+<section id="order">
+
+    <div class="title">
+
+        <h2>1. Request a Delivery</h2>
+
+        <p>
+            Tell us where to collect and where to deliver.
+        </p>
+
+    </div>
+
+    <div class="order-layout">
+
+        <div class="card">
+
+            <h3>Select Service</h3>
+
+            <br>
+
+            <button class="category active"
+                    onclick="selectCategory(this,'Food')">
+                🍔 Food Delivery
+            </button>
+
+            <button class="category"
+                    onclick="selectCategory(this,'Parcel')">
+                📦 Parcel Delivery
+            </button>
+
+            <button class="category"
+                    onclick="selectCategory(this,'Shopping')">
+                🛒 Shopping Request
+            </button>
+
+            <button class="category"
+                    onclick="selectCategory(this,'Documents')">
+                📄 Documents
+            </button>
+
+            <button class="category"
+                    onclick="selectCategory(this,'Other')">
+                🚚 Other Delivery
+            </button>
+
+            <div class="payment-box">
+
+                <strong>💰 Payment</strong>
+
+                <p>
+                    Cash or M-Pesa accepted.
+                </p>
+
+                <span class="mpesa-number">
+                    0792 102 645
+                </span>
+
+                <small>
+                    For M-Pesa, send the agreed amount
+                    and enter the transaction code.
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <form class="card"
+              onsubmit="submitOrder(event)">
+
+            <h3>Pickup + Destination Details</h3>
+
+            <br>
+
+            <div class="form-group">
+
+                <label>Customer Name</label>
+
+                <input id="custName"
+                       required
+                       placeholder="Your name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Customer Phone</label>
+
+                <input id="custPhone"
+                       required
+                       type="tel"
+                       placeholder="07XXXXXXXX">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Pickup Location</label>
+
+                <input id="pickup"
+                       required
+                       placeholder="Where should we collect it?">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Destination</label>
+
+                <input id="destination"
+                       required
+                       placeholder="Where should we deliver it?">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Item / Instructions</label>
+
+                <textarea id="item"
+                          rows="3"
+                          required
+                          placeholder="What are we picking up?"></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Delivery Amount (KES)</label>
+
+                <input id="amount"
+                       type="number"
+                       min="0"
+                       required
+                       placeholder="e.g. 300">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Payment Method</label>
+
+                <div class="payment-methods">
+
+                    <label class="payment-option active"
+                           id="cashOption">
+
+                        <input type="radio"
+                               name="payment"
+                               value="Cash"
+                               checked
+                               onchange="changePayment()">
+
+                        💵 Cash
+
+                    </label>
+
+                    <label class="payment-option"
+                           id="mpesaOption">
+
+                        <input type="radio"
+                               name="payment"
+                               value="M-Pesa"
+                               onchange="changePayment()">
+
+                        📱 M-Pesa
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="payment-box"
+                 id="mpesaDetails"
+                 style="display:none">
+
+                <strong>Send M-Pesa to:</strong>
+
+                <span class="mpesa-number">
+                    0792 102 645
+                </span>
+
+                <p>
+                    Enter your M-Pesa transaction code:
+                </p>
+
+                <input id="mpesaCode"
+                       placeholder="e.g. QGH7ABC123">
+
+            </div>
+
+            <button class="btn green full"
+                    type="submit">
+                Submit Delivery Request 🚀
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="history card">
+
+        <div style="display:flex;
+                    justify-content:space-between;
+                    gap:10px;
+                    align-items:center">
+
+            <h3>My Orders</h3>
+
+            <button class="btn blue"
+                    onclick="openTracking()">
+                Tracking
+            </button>
+
+        </div>
+
+        <div id="customerOrders">
+            <p style="color:#68736d;margin-top:15px">
+                Login to view your orders.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TRACKING -->
+
+<section id="tracking" class="tracking">
+
+    <div class="title">
+
+        <h2>2. Delivery Tracking</h2>
+
+        <p>
+            Follow your current delivery.
+        </p>
+
+    </div>
+
+    <div class="tracker">
+
+        <div class="card">
+
+            <span class="btn yellow"
+                  id="statusBadge">
+                AWAITING REQUEST
+            </span>
+
+            <h3 id="riderName"
+                style="margin-top:12px">
+                No Rider Assigned
+            </h3>
+
+            <p id="statusText"
+               style="color:#68736d;margin-top:6px">
+                Submit an order to start dispatch.
+            </p>
+
+            <div class="rider"
+                 id="riderBlock"
+                 style="display:none">
+
+                <img id="riderPhoto"
+                     alt="Rider">
+
+                <div>
+
+                    <h3 id="riderHeader">--</h3>
+
+                    <p id="riderPhone"
+                       style="color:#0a7c36;font-weight:bold">
+                        --
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info">
+                    <small>Bike</small>
+                    <strong id="bike">--</strong>
+                </div>
+
+                <div class="info">
+                    <small>Number Plate</small>
+                    <strong id="plate">--</strong>
+                </div>
+
+                <div class="info">
+                    <small>Pickup</small>
+                    <strong id="trackPickup">--</strong>
+                </div>
+
+                <div class="info">
+                    <small>Destination</small>
+                    <strong id="trackDestination">--</strong>
+                </div>
+
+                <div class="info">
+                    <small>Payment</small>
+                    <strong id="trackPayment">--</strong>
+                </div>
+
+                <div class="info">
+                    <small>Order ID</small>
+                    <strong id="orderId">--</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div id="map"></div>
+
+            <button class="btn green full"
+                    style="margin-top:10px"
+                    onclick="refreshTracking()">
+                🔄 Refresh Tracking
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RIDER SIMULATOR -->
+
+<div class="simulator"
+     id="simulator"
+     style="display:none">
+
+    <h3>📱 Rider App</h3>
+
+    <p>
+        Rider:
+        <strong id="simRider">--</strong>
+    </p>
+
+    <p id="simJob"
+       style="font-size:13px">
+        --
+    </p>
+
+    <button id="gpsButton"
+            style="background:#ffc700"
+            onclick="toggleGPS()">
+        1. Turn GPS ON
+    </button>
+
+    <button id="acceptButton"
+            style="background:#1677ff;color:white"
+            onclick="acceptJob()"
+            disabled>
+        2. Accept Job
+    </button>
+
+    <button id="pickupButton"
+            style="background:#ff9800;color:white"
+            onclick="pickupJob()"
+            disabled>
+        3. Pickup Item
+    </button>
+
+    <button id="deliverButton"
+            style="background:#0a7c36;color:white"
+            onclick="deliverJob()"
+            disabled>
+        4. Complete Delivery
+    </button>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<section id="admin" class="admin">
+
+    <div class="title">
+
+        <h2>3. Admin Dashboard</h2>
+
+        <p>
+            Manage riders and customer orders.
+        </p>
+
+    </div>
+
+
+    <div class="admin-login"
+         id="adminLogin">
+
+        <h3>🔐 Admin Login</h3>
+
+        <p style="font-size:13px;
+                  color:#c8d7ce;
+                  margin:10px 0 15px">
+
+            Authorized email:
+            <strong>
+                abdiabdulmohammed50@gmail.com
+            </strong>
+
+        </p>
+
+        <input id="adminEmail"
+               type="email"
+               placeholder="Admin email">
+
+        <input id="adminPassword"
+               type="password"
+               placeholder="Admin password">
+
+        <button class="btn green full"
+                onclick="adminLogin()">
+            Login to Admin
+        </button>
+
+    </div>
+
+
+    <div class="admin-panel"
+         id="adminPanel">
+
+        <div class="admin-card">
+
+            <div style="display:flex;
+                        justify-content:space-between;
+                        gap:10px;
+                        flex-wrap:wrap">
+
+                <div>
+                    <h3>📊 Admin Dashboard</h3>
+                    <p style="color:#aebdb4">
+                        Manage Amir Chap Chap.
+                    </p>
+                </div>
+
+                <button class="btn yellow"
+                        onclick="adminLogout()">
+                    Logout
+                </button>
+
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <small>Total Orders</small>
+                    <strong id="totalOrders">0</strong>
+                </div>
+
+                <div class="stat">
+                    <small>Riders</small>
+                    <strong id="totalRiders">0</strong>
+                </div>
+
+                <div class="stat">
+                    <small>M-Pesa Orders</small>
+                    <strong id="mpesaOrders">0</strong>
+                </div>
+
+                <div class="stat">
+                    <small>Cash Orders</small>
+                    <strong id="cashOrders">0</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADD RIDER -->
+
+        <div class="admin-card">
+
+            <h3>➕ Register Rider</h3>
+
+            <br>
+
+            <div class="admin-grid">
+
+                <div>
+                    <label>Rider Name</label>
+                    <input id="riderNameInput"
+                           placeholder="John Kamau">
+                </div>
+
+                <div>
+                    <label>Phone</label>
+                    <input id="riderPhoneInput"
+                           placeholder="0712345678">
+                </div>
+
+                <div>
+                    <label>Motorbike</label>
+                    <input id="bikeInput"
+                           placeholder="Boxer 150">
+                </div>
+
+                <div>
+                    <label>Number Plate</label>
+                    <input id="plateInput"
+                           placeholder="KMD 123A">
+                </div>
+
+                <div>
+                    <label>Photo URL</label>
+                    <input id="photoInput"
+                           placeholder="Optional image URL">
+                </div>
+
+                <div>
+                    <label>Status</label>
+                    <select id="riderStatusInput">
+                        <option value="available">
+                            Available
+                        </option>
+                        <option value="offline">
+                            Offline
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="btn green full"
+                    onclick="addRider()">
+                ➕ Add Verified Rider
+            </button>
+
+        </div>
+
+
+        <!-- RIDERS -->
+
+        <div class="admin-card">
+
+            <div style="display:flex;
+                        justify-content:space-between;
+                        gap:10px">
+
+                <h3>🛵 Registered Riders</h3>
+
+                <button class="btn blue"
+                        onclick="renderRiders()">
+                    Refresh
+                </button>
+
+            </div>
+
+            <div class="table"
+                 style="margin-top:15px">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Rider</th>
+                            <th>Phone</th>
+                            <th>Bike</th>
+                            <th>Plate</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="riderTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="admin-card">
+
+            <div style="display:flex;
+                        justify-content:space-between;
+                        gap:10px">
+
+                <h3>📦 Customer Orders</h3>
+
+                <button class="btn blue"
+                        onclick="renderAdminOrders()">
+                    Refresh
+                </button>
+
+            </div>
+
+            <div id="adminOrders"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <h3>Amir Chap Chap</h3>
+
+    <p>Fast. Simple. Reliable.</p>
+
+    <p>
+        M-Pesa:
+        <strong>0792 102 645</strong>
+    </p>
+
+    <p>
+        © <span id="year"></span>
+        Amir Chap Chap
+    </p>
+
+</footer>
+
+<div id="toast"></div>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+/* =====================================================
+   CONFIGURATION
+===================================================== */
+
+const ADMIN_EMAIL =
+    "abdiabdulmohammed50@gmail.com";
+
+const MPESA_NUMBER =
+    "0792102645";
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let currentUser =
+    JSON.parse(localStorage.getItem("amirUser")) || null;
+
+let users =
+    JSON.parse(localStorage.getItem("amirUsers")) || [];
+
+let orders =
+    JSON.parse(localStorage.getItem("amirOrders")) || [];
+
+let riders =
+    JSON.parse(localStorage.getItem("amirRiders")) || [];
+
+let activeOrder = null;
+let activeRider = null;
+let selectedCategory = "Food";
+let authMode = "login";
+let gpsOn = false;
+
+let map = null;
+let riderMarker = null;
+let pickupMarker = null;
+let destinationMarker = null;
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+    createDefaultRiders();
+
+    updateAuthUI();
+
+    initMap();
+
+    restoreOrder();
+
+    renderCustomerOrders();
+
+    updateTracking();
+
+    updateStats();
+
+});
+
+
+/* =====================================================
+   DEFAULT RIDERS
+===================================================== */
+
+function createDefaultRiders(){
+
+    if(riders.length > 0){
+        return;
+    }
+
+    riders = [
+
+        {
+            id:101,
+            name:"John Kamau",
+            phone:"0712345678",
+            bike:"TVS HLX 150",
+            plate:"KMD 452X",
+            photo:"",
+            lat:-1.2833,
+            lng:36.8167,
+            status:"available"
+        },
+
+        {
+            id:102,
+            name:"Peter Kiprono",
+            phone:"0722987654",
+            bike:"Bajaj Boxer 150",
+            plate:"KMC 891B",
+            photo:"",
+            lat:-1.2880,
+            lng:36.8200,
+            status:"available"
+        }
+
+    ];
+
+    saveRiders();
+}
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+function saveUsers(){
+    localStorage.setItem(
+        "amirUsers",
+        JSON.stringify(users)
+    );
+}
+
+function saveOrders(){
+    localStorage.setItem(
+        "amirOrders",
+        JSON.stringify(orders)
+    );
+}
+
+function saveRiders(){
+    localStorage.setItem(
+        "amirRiders",
+        JSON.stringify(riders)
+    );
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function openOrder(){
+
+    document.getElementById("order")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+function openTracking(){
+
+    document.getElementById("tracking")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+    setTimeout(function(){
+
+        if(map){
+            map.invalidateSize();
+        }
+
+    },500);
+
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+function switchAuth(mode){
+
+    authMode = mode;
+
+    document.getElementById("loginTab")
+        .classList.toggle(
+            "active",
+            mode === "login"
+        );
+
+    document.getElementById("registerTab")
+        .classList.toggle(
+            "active",
+            mode === "register"
+        );
+
+    document.getElementById("nameGroup")
+        .style.display =
+            mode === "register"
+            ? "block"
+            : "none";
+
+    document.getElementById("authButton")
+        .textContent =
+            mode === "register"
+            ? "Create Account"
+            : "Login";
+
+}
+
+
+function openAuth(){
+
+    const section =
+        document.getElementById("authSection");
+
+    section.style.display = "block";
+
+    section.scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
 function handleAuth(event){
 
     event.preventDefault();
 
-    const phone = document
-        .getElementById("authPhone")
-        .value
-        .trim();
+    const phone =
+        document.getElementById("authPhone")
+        .value.trim();
 
-    const name = document
-        .getElementById("authName")
-        .value
-        .trim();
+    const name =
+        document.getElementById("authName")
+        .value.trim();
+
 
     if(!phone){
-        showToast("Please enter your phone number.");
+
+        showToast("Enter your phone number.");
+
         return;
     }
 
-    // Get all registered users
-    let registeredUsers =
-        JSON.parse(
-            localStorage.getItem("amirRegisteredUsers")
-        ) || [];
 
-    // =========================
-    // REGISTER
-    // =========================
     if(authMode === "register"){
 
         if(!name){
-            showToast("Please enter your full name.");
+
+            showToast("Enter your full name.");
+
             return;
         }
 
-        // Check if phone already exists
-        const existingUser =
-            registeredUsers.find(
+
+        const existing =
+            users.find(
                 user => user.phone === phone
             );
 
-        if(existingUser){
+
+        if(existing){
 
             showToast(
                 "This phone number is already registered. Please login."
@@ -47,29 +1710,33 @@ function handleAuth(event){
 
             switchAuth("login");
 
-            document.getElementById(
-                "authPhone"
-            ).value = phone;
+            document.getElementById("authPhone")
+                .value = phone;
 
             return;
         }
 
-        // Create new account
+
         const newUser = {
-            id: "USR-" + Date.now(),
-            name: name,
-            phone: phone,
-            createdAt: new Date().toISOString()
+
+            id:
+                "USR-" +
+                Date.now(),
+
+            name:name,
+
+            phone:phone,
+
+            createdAt:
+                new Date().toISOString()
+
         };
 
-        registeredUsers.push(newUser);
 
-        localStorage.setItem(
-            "amirRegisteredUsers",
-            JSON.stringify(registeredUsers)
-        );
+        users.push(newUser);
 
-        // Automatically login after registration
+        saveUsers();
+
         currentUser = newUser;
 
         localStorage.setItem(
@@ -77,61 +1744,1373 @@ function handleAuth(event){
             JSON.stringify(currentUser)
         );
 
+
+        document.getElementById("authSection")
+            .style.display = "none";
+
+
         updateAuthUI();
 
-        document.getElementById(
-            "authSection"
-        ).style.display = "none";
-
         showToast(
-            "Account created successfully. Welcome " +
-            currentUser.name + "!"
+            "Account created successfully."
         );
 
         return;
+
     }
 
 
-    // =========================
-    // LOGIN
-    // =========================
+    /* LOGIN */
 
-    const existingUser =
-        registeredUsers.find(
-            user => user.phone === phone
+    const user =
+        users.find(
+            item => item.phone === phone
         );
 
-    if(!existingUser){
+
+    if(!user){
 
         showToast(
             "Account not found. Please register first."
         );
 
-        switchAuth("register");
-
-        document.getElementById(
-            "authPhone"
-        ).value = phone;
-
         return;
     }
 
-    // Login existing account
-    currentUser = existingUser;
+
+    currentUser = user;
 
     localStorage.setItem(
         "amirUser",
         JSON.stringify(currentUser)
     );
 
-    updateAuthUI();
 
-    document.getElementById(
-        "authSection"
-    ).style.display = "none";
+    document.getElementById("authSection")
+        .style.display = "none";
+
+
+    updateAuthUI();
 
     showToast(
         "Welcome back, " +
-        currentUser.name + "!"
+        currentUser.name
     );
+
 }
+
+
+function updateAuthUI(){
+
+    const area =
+        document.getElementById("navAuth");
+
+
+    if(currentUser){
+
+        area.innerHTML = `
+
+            <span class="user-badge">
+                👤 ${escapeHTML(currentUser.name)}
+            </span>
+
+            <button
+                class="btn"
+                style="
+                    background:white;
+                    color:#d93025;
+                    border:1px solid #d93025;
+                "
+                onclick="logout()">
+                Logout
+            </button>
+
+        `;
+
+
+        document.getElementById("custName")
+            .value = currentUser.name;
+
+        document.getElementById("custPhone")
+            .value = currentUser.phone;
+
+
+    }else{
+
+        area.innerHTML = `
+
+            <button
+                class="btn green"
+                onclick="openAuth()">
+                Register / Login
+            </button>
+
+        `;
+
+    }
+
+    renderCustomerOrders();
+}
+
+
+function logout(){
+
+    localStorage.removeItem("amirUser");
+
+    currentUser = null;
+
+    updateAuthUI();
+
+    showToast("Logged out successfully.");
+
+}
+
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+function selectCategory(button, category){
+
+    document.querySelectorAll(".category")
+        .forEach(
+            item => item.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    selectedCategory = category;
+
+}
+
+
+/* =====================================================
+   PAYMENT
+===================================================== */
+
+function changePayment(){
+
+    const selected =
+        document.querySelector(
+            'input[name="payment"]:checked'
+        );
+
+    if(!selected){
+        return;
+    }
+
+    const method = selected.value;
+
+    document.getElementById("cashOption")
+        .classList.toggle(
+            "active",
+            method === "Cash"
+        );
+
+    document.getElementById("mpesaOption")
+        .classList.toggle(
+            "active",
+            method === "M-Pesa"
+        );
+
+    document.getElementById("mpesaDetails")
+        .style.display =
+            method === "M-Pesa"
+            ? "block"
+            : "none";
+
+}
+
+
+/* =====================================================
+   SUBMIT ORDER
+===================================================== */
+
+function submitOrder(event){
+
+    event.preventDefault();
+
+
+    if(!currentUser){
+
+        openAuth();
+
+        showToast(
+            "Please register or login before placing an order."
+        );
+
+        return;
+    }
+
+
+    const name =
+        document.getElementById("custName")
+        .value.trim();
+
+    const phone =
+        document.getElementById("custPhone")
+        .value.trim();
+
+    const pickup =
+        document.getElementById("pickup")
+        .value.trim();
+
+    const destination =
+        document.getElementById("destination")
+        .value.trim();
+
+    const item =
+        document.getElementById("item")
+        .value.trim();
+
+    const amount =
+        Number(
+            document.getElementById("amount")
+            .value
+        );
+
+    const payment =
+        document.querySelector(
+            'input[name="payment"]:checked'
+        ).value;
+
+    const mpesaCode =
+        document.getElementById("mpesaCode")
+        .value.trim();
+
+
+    if(
+        !name ||
+        !phone ||
+        !pickup ||
+        !destination ||
+        !item
+    ){
+
+        showToast(
+            "Please complete all details."
+        );
+
+        return;
+    }
+
+
+    if(
+        !Number.isFinite(amount) ||
+        amount < 0
+    ){
+
+        showToast(
+            "Enter a valid amount."
+        );
+
+        return;
+    }
+
+
+    if(
+        payment === "M-Pesa" &&
+        !mpesaCode
+    ){
+
+        showToast(
+            "Enter your M-Pesa transaction code."
+        );
+
+        return;
+    }
+
+
+    const order = {
+
+        id:
+            "ACC-" +
+            Date.now().toString().slice(-8),
+
+        userId:
+            currentUser.id,
+
+        category:
+            selectedCategory,
+
+        customerName:name,
+
+        customerPhone:phone,
+
+        pickup:pickup,
+
+        destination:destination,
+
+        item:item,
+
+        amount:amount,
+
+        paymentMethod:payment,
+
+        mpesaCode:
+            payment === "M-Pesa"
+            ? mpesaCode
+            : "",
+
+        paymentStatus:
+            payment === "M-Pesa"
+            ? "PENDING VERIFICATION"
+            : "CASH ON DELIVERY",
+
+        status:"NEW ORDER",
+
+        riderId:null,
+
+        riderName:null,
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    orders.push(order);
+
+    saveOrders();
+
+    activeOrder = order;
+
+    activeRider = null;
+
+    renderCustomerOrders();
+
+    renderAdminOrders();
+
+    updateStats();
+
+    updateTracking();
+
+    document.getElementById("deliveryForm")?.reset();
+
+    document.getElementById("custName")
+        .value = currentUser.name;
+
+    document.getElementById("custPhone")
+        .value = currentUser.phone;
+
+    changePayment();
+
+    showToast(
+        "Order " +
+        order.id +
+        " submitted successfully."
+    );
+
+
+    openTracking();
+
+
+    setTimeout(
+        assignRider,
+        700
+    );
+
+}
+
+
+/* =====================================================
+   ASSIGN RIDER
+===================================================== */
+
+function assignRider(){
+
+    if(!activeOrder){
+        return;
+    }
+
+    if(activeOrder.riderId){
+        return;
+    }
+
+
+    const available =
+        riders.filter(
+            rider =>
+                rider.status === "available"
+        );
+
+
+    if(available.length === 0){
+
+        activeOrder.status =
+            "WAITING FOR RIDER";
+
+        saveOrders();
+
+        updateTracking();
+
+        renderAdminOrders();
+
+        showToast(
+            "No rider available. Admin can assign one."
+        );
+
+        return;
+    }
+
+
+    const rider =
+        available[0];
+
+
+    activeRider = rider;
+
+    rider.status = "assigned";
+
+
+    activeOrder.riderId =
+        rider.id;
+
+    activeOrder.riderName =
+        rider.name;
+
+    activeOrder.status =
+        "RIDER ASSIGNED";
+
+
+    saveRiders();
+
+    saveOrders();
+
+    updateTracking();
+
+    renderAdminOrders();
+
+    updateStats();
+
+    startSimulator();
+
+    showToast(
+        rider.name +
+        " has been assigned."
+    );
+
+}
+
+
+/* =====================================================
+   CUSTOMER ORDERS
+===================================================== */
+
+function renderCustomerOrders(){
+
+    const box =
+        document.getElementById(
+            "customerOrders"
+        );
+
+
+    if(!box){
+        return;
+    }
+
+
+    if(!currentUser){
+
+        box.innerHTML =
+            `<p style="color:#68736d;margin-top:15px">
+                Login to view your orders.
+             </p>`;
+
+        return;
+    }
+
+
+    const myOrders =
+        orders.filter(
+            order =>
+                order.userId === currentUser.id
+        );
+
+
+    if(myOrders.length === 0){
+
+        box.innerHTML =
+            `<p style="color:#68736d;margin-top:15px">
+                You have no orders yet.
+             </p>`;
+
+        return;
+    }
+
+
+    box.innerHTML =
+        myOrders
+        .slice()
+        .reverse()
+        .map(
+            order => `
+
+                <div class="history-item">
+
+                    <strong>
+                        ${escapeHTML(order.id)}
+                    </strong>
+
+                    <p>
+                        ${escapeHTML(order.category)}
+                        —
+                        ${escapeHTML(order.pickup)}
+                        → 
+                        ${escapeHTML(order.destination)}
+                    </p>
+
+                    <p>
+                        Amount:
+                        KES ${Number(order.amount).toLocaleString()}
+                    </p>
+
+                    <p>
+                        Status:
+                        <strong>
+                            ${escapeHTML(order.status)}
+                        </strong>
+                    </p>
+
+                    <button
+                        class="btn blue"
+                        style="margin-top:8px"
+                        onclick="trackOrder('${order.id}')">
+                        Track
+                    </button>
+
+                </div>
+            `
+        )
+        .join("");
+
+}
+
+
+/* =====================================================
+   TRACK ORDER
+===================================================== */
+
+function trackOrder(id){
+
+    const order =
+        orders.find(
+            item => item.id === id
+        );
+
+
+    if(!order){
+        return;
+    }
+
+
+    activeOrder = order;
+
+    activeRider =
+        riders.find(
+            rider =>
+                rider.id === order.riderId
+        ) || null;
+
+
+    updateTracking();
+
+    openTracking();
+
+}
+
+
+/* =====================================================
+   RESTORE
+===================================================== */
+
+function restoreOrder(){
+
+    if(!currentUser){
+        return;
+    }
+
+
+    const myOrders =
+        orders.filter(
+            order =>
+                order.userId === currentUser.id
+        );
+
+
+    if(myOrders.length === 0){
+        return;
+    }
+
+
+    activeOrder =
+        myOrders[myOrders.length - 1];
+
+
+    activeRider =
+        riders.find(
+            rider =>
+                rider.id === activeOrder.riderId
+        ) || null;
+
+}
+
+
+/* =====================================================
+   TRACKING
+===================================================== */
+
+function updateTracking(){
+
+    if(!activeOrder){
+
+        document.getElementById("statusBadge")
+            .textContent =
+            "AWAITING REQUEST";
+
+        document.getElementById("riderName")
+            .textContent =
+            "No Rider Assigned";
+
+        document.getElementById("statusText")
+            .textContent =
+            "Submit an order to start dispatch.";
+
+        clearTrackingFields();
+
+        return;
+    }
+
+
+    document.getElementById("statusBadge")
+        .textContent =
+        activeOrder.status;
+
+
+    document.getElementById("trackPickup")
+        .textContent =
+        activeOrder.pickup;
+
+    document.getElementById("trackDestination")
+        .textContent =
+        activeOrder.destination;
+
+    document.getElementById("trackPayment")
+        .textContent =
+        activeOrder.paymentMethod +
+        " - " +
+        activeOrder.paymentStatus;
+
+    document.getElementById("orderId")
+        .textContent =
+        activeOrder.id;
+
+
+    activeRider =
+        riders.find(
+            rider =>
+                rider.id === activeOrder.riderId
+        ) || null;
+
+
+    if(activeRider){
+
+        document.getElementById("riderName")
+            .textContent =
+            activeRider.name;
+
+        document.getElementById("riderHeader")
+            .textContent =
+            activeRider.name;
+
+        document.getElementById("riderPhone")
+            .textContent =
+            "📞 " + activeRider.phone;
+
+        document.getElementById("bike")
+            .textContent =
+            activeRider.bike;
+
+        document.getElementById("plate")
+            .textContent =
+            activeRider.plate;
+
+        document.getElementById("riderPhoto")
+            .src =
+            activeRider.photo ||
+            avatar(activeRider.name);
+
+        document.getElementById("riderBlock")
+            .style.display =
+            "flex";
+
+
+    }else{
+
+        document.getElementById("riderName")
+            .textContent =
+            "No Rider Assigned";
+
+        document.getElementById("riderBlock")
+            .style.display =
+            "none";
+
+        document.getElementById("bike")
+            .textContent = "--";
+
+        document.getElementById("plate")
+            .textContent = "--";
+    }
+
+
+    let message =
+        "Your order is being processed.";
+
+
+    switch(activeOrder.status){
+
+        case "NEW ORDER":
+            message =
+                "Your order has been received.";
+            break;
+
+        case "WAITING FOR RIDER":
+            message =
+                "Waiting for an available rider.";
+            break;
+
+        case "RIDER ASSIGNED":
+            message =
+                "Rider assigned. Waiting for acceptance.";
+            break;
+
+        case "JOB ACCEPTED - EN ROUTE":
+            message =
+                "Rider accepted the order and is going to pickup.";
+            break;
+
+        case "ITEM PICKED UP":
+            message =
+                "Item picked up. Rider is heading to destination.";
+            break;
+
+        case "DELIVERED":
+            message =
+                "Delivery completed successfully.";
+            break;
+
+        case "CANCELLED":
+            message =
+                "This delivery was cancelled.";
+            break;
+
+        case "PROCESSING":
+            message =
+                "Admin is processing your order.";
+            break;
+    }
+
+
+    document.getElementById("statusText")
+        .textContent = message;
+
+
+    renderMap();
+
+}
+
+
+function clearTrackingFields(){
+
+    document.getElementById("bike")
+        .textContent = "--";
+
+    document.getElementById("plate")
+        .textContent = "--";
+
+    document.getElementById("trackPickup")
+        .textContent = "--";
+
+    document.getElementById("trackDestination")
+        .textContent = "--";
+
+    document.getElementById("trackPayment")
+        .textContent = "--";
+
+    document.getElementById("orderId")
+        .textContent = "--";
+
+    document.getElementById("riderBlock")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+function initMap(){
+
+    if(typeof L === "undefined"){
+        return;
+    }
+
+
+    map =
+        L.map("map")
+        .setView(
+            [-1.2833,36.8167],
+            13
+        );
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom:19,
+            attribution:
+                "© OpenStreetMap contributors"
+        }
+    ).addTo(map);
+
+}
+
+
+function renderMap(){
+
+    if(
+        !map ||
+        !activeOrder ||
+        !activeRider
+    ){
+        return;
+    }
+
+
+    if(riderMarker){
+        map.removeLayer(riderMarker);
+    }
+
+    if(pickupMarker){
+        map.removeLayer(pickupMarker);
+    }
+
+    if(destinationMarker){
+        map.removeLayer(destinationMarker);
+    }
+
+
+    const lat =
+        Number(activeRider.lat);
+
+    const lng =
+        Number(activeRider.lng);
+
+
+    riderMarker =
+        L.marker([lat,lng])
+        .addTo(map)
+        .bindPopup(
+            "<b>Rider:</b> " +
+            escapeHTML(activeRider.name)
+        );
+
+
+    pickupMarker =
+        L.marker(
+            [lat + .006,lng + .006]
+        )
+        .addTo(map)
+        .bindPopup(
+            "<b>Pickup:</b> " +
+            escapeHTML(activeOrder.pickup)
+        );
+
+
+    destinationMarker =
+        L.marker(
+            [lat - .006,lng + .010]
+        )
+        .addTo(map)
+        .bindPopup(
+            "<b>Destination:</b> " +
+            escapeHTML(activeOrder.destination)
+        );
+
+
+    map.fitBounds(
+        L.latLngBounds([
+            [lat,lng],
+            [lat+.006,lng+.006],
+            [lat-.006,lng+.010]
+        ]),
+        {
+            padding:[30,30]
+        }
+    );
+
+}
+
+
+function refreshTracking(){
+
+    restoreOrder();
+
+    updateTracking();
+
+    if(map){
+        map.invalidateSize();
+    }
+
+    showToast("Tracking refreshed.");
+
+}
+
+
+/* =====================================================
+   RIDER SIMULATOR
+===================================================== */
+
+function startSimulator(){
+
+    if(
+        !activeRider ||
+        !activeOrder
+    ){
+        return;
+    }
+
+
+    document.getElementById("simulator")
+        .style.display = "block";
+
+    document.getElementById("simRider")
+        .textContent =
+        activeRider.name;
+
+    document.getElementById("simJob")
+        .textContent =
+        "Job: " + activeOrder.id;
+
+
+    gpsOn = false;
+
+    document.getElementById("gpsButton")
+        .textContent =
+        "1. Turn GPS ON";
+
+    document.getElementById("gpsButton")
+        .style.background =
+        "#ffc700";
+
+    document.getElementById("gpsButton")
+        .style.color =
+        "#111";
+
+    document.getElementById("acceptButton")
+        .disabled = true;
+
+    document.getElementById("pickupButton")
+        .disabled = true;
+
+    document.getElementById("deliverButton")
+        .disabled = true;
+
+}
+
+
+function toggleGPS(){
+
+    gpsOn = !gpsOn;
+
+
+    const button =
+        document.getElementById("gpsButton");
+
+
+    if(gpsOn){
+
+        button.textContent =
+            "✓ GPS ON";
+
+        button.style.background =
+            "#0a7c36";
+
+        button.style.color =
+            "#fff";
+
+        document.getElementById("acceptButton")
+            .disabled = false;
+
+        showToast("Rider GPS is ON.");
+
+    }else{
+
+        button.textContent =
+            "1. Turn GPS ON";
+
+        button.style.background =
+            "#ffc700";
+
+        button.style.color =
+            "#111";
+
+        document.getElementById("acceptButton")
+            .disabled = true;
+
+    }
+
+}
+
+
+function acceptJob(){
+
+    if(!activeOrder || !activeRider){
+        return;
+    }
+
+
+    activeOrder.status =
+        "JOB ACCEPTED - EN ROUTE";
+
+
+    saveOrders();
+
+    document.getElementById("pickupButton")
+        .disabled = false;
+
+    updateTracking();
+
+    renderAdminOrders();
+
+    showToast("Rider accepted the job.");
+
+}
+
+
+function pickupJob(){
+
+    if(!activeOrder){
+        return;
+    }
+
+
+    activeOrder.status =
+        "ITEM PICKED UP";
+
+
+    saveOrders();
+
+    document.getElementById("deliverButton")
+        .disabled = false;
+
+    updateTracking();
+
+    renderAdminOrders();
+
+    showToast("Item picked up.");
+
+}
+
+
+function deliverJob(){
+
+    if(!activeOrder){
+        return;
+    }
+
+
+    activeOrder.status =
+        "DELIVERED";
+
+
+    if(activeRider){
+
+        activeRider.status =
+            "available";
+
+        saveRiders();
+    }
+
+
+    saveOrders();
+
+    updateTracking();
+
+    renderAdminOrders();
+
+    renderRiders();
+
+    updateStats();
+
+    document.getElementById("simulator")
+        .style.display = "none";
+
+    showToast(
+        "Delivery completed successfully."
+    );
+
+}
+
+
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
+
+function adminLogin(){
+
+    const email =
+        document.getElementById("adminEmail")
+        .value.trim()
+        .toLowerCase();
+
+
+    const password =
+        document.getElementById("adminPassword")
+        .value;
+
+
+    if(email !== ADMIN_EMAIL.toLowerCase()){
+
+        showToast("Incorrect admin email.");
+
+        return;
+    }
+
+
+    /*
+       Demo/local admin password.
+
+       IMPORTANT:
+       This is NOT secure production authentication.
+       Replace this with Firebase Authentication/backend
+       before going live.
+    */
+
+    if(password !== "Admin1234"){
+
+        showToast(
+            "Incorrect admin password."
+        );
+
+        return;
+    }
+
+
+    sessionStorage.setItem(
+        "amirAdmin",
+        "true"
+    );
+
+
+    showAdminPanel();
+
+    showToast("Admin login successful.");
+
+}
+
+
+function showAdminPanel(){
+
+    document.getElementById("adminLogin")
+        .style.display = "none";
+
+    document.getElementById("adminPanel")
+        .style.display = "block";
+
+    renderRiders();
+
+    renderAdminOrders();
+
+    updateStats();
+
+}
+
+
+function adminLogout(){
+
+    sessionStorage.removeItem(
+        "amirAdmin"
+    );
+
+    document.getElementById("adminLogin")
+        .style.display = "block";
+
+    document.getElementById("adminPanel")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   ADD RIDER
+===================================================== */
+
+function addRider(){
+
+    if(!sessionStorage.getItem("amirAdmin")){
+
+        showToast("Login as admin first.");
+
+        return;
+    }
+
+
+    const name =
+        document.getElementById("riderNameInput")
+        .value.trim();
+
+    const phone =
+        document.getElementById("riderPhoneInput")
+        .value.trim();
+
+    const bike =
+        document.getElementById("bikeInput")
+        .value.trim();
+
+    const plate =
+        document.getElementById("plateInput")
+        .value.trim();
+
+    const photo =
+        document.getElementById("photoInput")
+        .value.trim();
+
+    const status =
+        document.getElementById("riderStatusInput")
+        .value;
+
+
+    if(
+        !name ||
+        !phone ||
+        !bike ||
+        !plate
+    ){
+
+        showToast(
+            "Complete rider details."
+        );
+
+        return;
+    }
+
+
+    const rider = {
+
+        id:Date.now(),
+
+        name:name,
+
+        phone:phone,
+
+        bike:bike,
+
+        plate:plate,
+
+        photo:photo,
+
+        lat:-1.2833,
+
+        lng:36.8167,
+
+        status:status
+
+    };
+
+
+    riders.push(rider);
+
+    saveRiders();
+
+    renderRiders();
+
+    updateStats();
+
+
+    document.getElementById("riderNameInput")
+        .value = "";
+
+    document.getElementById("riderPhoneInput")
+        .value = "";
+
+    document.getElementById("bikeInput")
+        .value = "";
+
+    document.getElementById("plateInput")
+        .value = "";
+
+    document.getElementById("photoInput")
+        .value = "";
+
+
+    showToast(
+        "Rider added successfully."
+    );
+
+}
+
+
+/* =====================================================
+   RIDER TABLE
+===================================================== */
+
+function renderRiders(){
+
+    const body =
+        document.getElementById(
+            "riderTable"
+        );
+
+
+    if(!body){
+        return;
+    }
+
+
+    if(riders.length === 0){
+
+        body.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    No riders registered.
+                </td>
+             </tr>`;
+
+        return;
+    }
+
+
+    body.innerHTML =
+        riders.map(
+            rider => `
+
+                <tr>
+
+                    <td>
+                        ${escapeHTML(rider.name)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(rider.phone)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(rider.bike)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(rider.plate)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(rider.status)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn red"
+                            style="padding:7px"
+                           
