@@ -1,872 +1,1729 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Amir Chap Chap Delivery</title>
 
 <style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  background:#f4f6f8;
-  color:#222;
+    background:#f4f6f8;
+    color:#222;
+    line-height:1.5;
 }
 
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none !important;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
 header{
-  background:#087a3d;
-  color:white;
-  text-align:center;
-  padding:20px;
+    background:#087a3d;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
 }
 
 header h1{
-  font-size:29px;
+    font-size:30px;
+    margin-bottom:5px;
 }
 
 header p{
-  margin-top:6px;
+    font-size:15px;
 }
 
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
 nav{
-  background:white;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:8px;
-  padding:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,.12);
-  position:sticky;
-  top:0;
-  z-index:100;
+    background:white;
+    padding:12px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 7px rgba(0,0,0,.12);
 }
 
 nav button{
-  border:0;
-  background:#087a3d;
-  color:white;
-  padding:10px 15px;
-  border-radius:7px;
-  cursor:pointer;
+    border:none;
+    background:#087a3d;
+    color:white;
+    padding:10px 14px;
+    border-radius:7px;
+    font-weight:bold;
 }
 
 nav button:hover{
-  background:#065d2e;
+    background:#075d2e;
 }
 
+
+/* =====================================================
+   HERO
+===================================================== */
+
 .hero{
-  background:linear-gradient(135deg,#087a3d,#10a854);
-  color:white;
-  text-align:center;
-  padding:55px 20px;
+    background:linear-gradient(
+        135deg,
+        #087a3d,
+        #12a653
+    );
+
+    color:white;
+    text-align:center;
+    padding:60px 20px;
 }
 
 .hero h2{
-  font-size:34px;
-  margin-bottom:12px;
+    font-size:38px;
+    margin-bottom:10px;
 }
 
 .hero p{
-  font-size:18px;
-  margin-bottom:20px;
+    font-size:18px;
+    margin-bottom:22px;
 }
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
 
 .container{
-  width:100%;
-  max-width:850px;
-  margin:25px auto;
-  padding:15px;
+    width:100%;
+    max-width:1050px;
+    margin:25px auto;
+    padding:15px;
 }
 
+
+/* =====================================================
+   CARDS
+===================================================== */
+
 .card{
-  background:white;
-  padding:23px;
-  border-radius:13px;
-  margin-bottom:20px;
-  box-shadow:0 2px 9px rgba(0,0,0,.08);
+    background:white;
+    padding:23px;
+    border-radius:13px;
+    margin-bottom:20px;
+    box-shadow:0 2px 9px rgba(0,0,0,.08);
 }
 
 .card h2{
-  color:#087a3d;
-  margin-bottom:15px;
+    color:#087a3d;
+    margin-bottom:15px;
 }
 
+.card h3{
+    margin-bottom:10px;
+}
+
+
+/* =====================================================
+   FORMS
+===================================================== */
+
 label{
-  display:block;
-  font-weight:bold;
-  margin-top:13px;
+    display:block;
+    font-weight:bold;
+    margin-top:13px;
 }
 
 input,
 select,
 textarea{
-  width:100%;
-  padding:12px;
-  margin-top:6px;
-  border:1px solid #ccc;
-  border-radius:7px;
-  font-size:15px;
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:6px;
+
+    border:1px solid #ccc;
+
+    border-radius:7px;
+
+    font-size:15px;
+
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#087a3d;
+
 }
 
 textarea{
-  min-height:90px;
-  resize:vertical;
+    min-height:90px;
+    resize:vertical;
 }
 
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
 .btn{
-  border:0;
-  background:#087a3d;
-  color:white;
-  padding:12px 17px;
-  margin-top:15px;
-  border-radius:7px;
-  cursor:pointer;
-  font-size:15px;
+
+    border:none;
+
+    background:#087a3d;
+
+    color:white;
+
+    padding:12px 17px;
+
+    margin-top:12px;
+
+    border-radius:7px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
 }
 
 .btn:hover{
-  opacity:.9;
+    opacity:.9;
+}
+
+.green{
+    background:#087a3d;
 }
 
 .whatsapp{
-  background:#25d366;
+    background:#25d366;
+}
+
+.call{
+    background:#1565c0;
 }
 
 .danger{
-  background:#d62828;
+    background:#d62828;
 }
 
 .orange{
-  background:#f59e0b;
+    background:#f59e0b;
 }
 
-.hidden{
-  display:none !important;
+.dark{
+    background:#333;
 }
 
-.admin{
-  display:none;
+.gray{
+    background:#6c757d;
 }
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+}
+
+.stat{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,.07);
+
+}
+
+.stat h3{
+
+    color:#087a3d;
+
+    font-size:28px;
+
+}
+
+
+/* =====================================================
+   ORDER CARD
+===================================================== */
 
 .order{
-  background:#fafafa;
-  border:1px solid #ddd;
-  border-radius:9px;
-  padding:16px;
-  margin-top:15px;
+
+    background:#fafafa;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    padding:17px;
+
+    margin-top:15px;
+
 }
 
 .order p{
-  margin-top:7px;
-  line-height:1.4;
+
+    margin-top:6px;
+
 }
+
+.order-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+
+    margin-top:10px;
+
+}
+
+.order-actions .btn{
+
+    margin-top:0;
+
+}
+
+
+/* =====================================================
+   RIDER CARD
+===================================================== */
+
+.rider{
+
+    background:#fafafa;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    padding:17px;
+
+    margin-top:15px;
+
+}
+
+.rider p{
+
+    margin-top:6px;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
 
 .status{
-  display:inline-block;
-  background:#e9ecef;
-  padding:5px 9px;
-  border-radius:5px;
-  margin-top:5px;
-  font-weight:bold;
+
+    display:inline-block;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    background:#e9ecef;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin-top:5px;
+
 }
 
+.status.pending{
+    background:#fff3cd;
+}
+
+.status.accepted{
+    background:#d1ecf1;
+}
+
+.status.pickup{
+    background:#cfe2ff;
+}
+
+.status.transit{
+    background:#e2d9f3;
+}
+
+.status.delivered{
+    background:#d1e7dd;
+}
+
+.status.cancelled{
+    background:#f8d7da;
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
 .success{
-  color:#087a3d;
-  font-weight:bold;
-  margin-top:12px;
+
+    color:#087a3d;
+
+    font-weight:bold;
+
+    margin-top:12px;
+
 }
 
 .error{
-  color:#d62828;
-  font-weight:bold;
-  margin-top:12px;
+
+    color:#d62828;
+
+    font-weight:bold;
+
+    margin-top:12px;
+
 }
 
 .info{
-  color:#555;
-  margin-top:8px;
+
+    color:#555;
+
+    margin-top:7px;
+
 }
 
 .small{
-  color:#777;
-  font-size:13px;
-  margin-top:8px;
+
+    color:#777;
+
+    font-size:13px;
+
 }
 
+
+/* =====================================================
+   RIDER BADGE
+===================================================== */
+
+.available{
+    color:#087a3d;
+    font-weight:bold;
+}
+
+.busy{
+    color:#d97706;
+    font-weight:bold;
+}
+
+.offline{
+    color:#777;
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
 footer{
-  background:#222;
-  color:white;
-  text-align:center;
-  padding:28px 15px;
-  margin-top:40px;
+
+    background:#222;
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px 15px;
+
+    margin-top:40px;
+
 }
 
 footer p{
-  margin-top:7px;
+    margin-top:7px;
 }
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:600px){
 
-  header h1{
-    font-size:25px;
-  }
+    header h1{
+        font-size:25px;
+    }
 
-  .hero h2{
-    font-size:27px;
-  }
+    .hero{
+        padding:45px 15px;
+    }
 
-  nav button{
-    font-size:13px;
-  }
+    .hero h2{
+        font-size:28px;
+    }
+
+    nav button{
+        font-size:12px;
+        padding:9px 10px;
+    }
+
+    .order-actions{
+        flex-direction:column;
+    }
+
+    .order-actions .btn{
+        width:100%;
+    }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<!-- ================= HEADER ================= -->
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header>
 
-  <h1>🚚 Amir Chap Chap</h1>
+    <h1>🚚 Amir Chap Chap</h1>
 
-  <p>
-    Fast • Reliable • Door-to-Door Delivery
-  </p>
+    <p>
+        Fast • Safe • Reliable Door-to-Door Delivery
+    </p>
 
 </header>
 
 
-<!-- ================= NAVIGATION ================= -->
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
 
 <nav>
 
-  <button onclick="showSection('home')">
-    🏠 Home
-  </button>
+    <button onclick="showSection('home')">
+        🏠 Home
+    </button>
 
-  <button onclick="showSection('delivery')">
-    📦 Request Delivery
-  </button>
+    <button onclick="showSection('delivery')">
+        📦 Request Delivery
+    </button>
 
-  <button onclick="showSection('track')">
-    🔎 Track Order
-  </button>
+    <button onclick="showSection('track')">
+        🔎 Track Order
+    </button>
 
-  <button onclick="showSection('adminLogin')">
-    🔐 Moderator
-  </button>
+    <button onclick="showSection('riderLogin')">
+        🏍️ Rider Portal
+    </button>
+
+    <button onclick="showSection('adminLogin')">
+        🔐 Moderator
+    </button>
 
 </nav>
 
 
-<!-- ================= HOME ================= -->
+<!-- =====================================================
+     HOME
+===================================================== -->
 
 <section id="home">
 
-  <div class="hero">
+    <div class="hero">
 
-    <h2>
-      Delivery Chap Chap!
-    </h2>
+        <h2>
+            Delivery Chap Chap!
+        </h2>
 
-    <p>
-      We deliver your package safely and conveniently.
-    </p>
-
-    <button
-      class="btn"
-      onclick="showSection('delivery')">
-
-      🚚 Request a Delivery
-
-    </button>
-
-  </div>
-
-
-  <div class="container">
-
-    <div class="card">
-
-      <h2>
-        📦 Our Delivery Services
-      </h2>
-
-      <p>📍 Pick-up from your location</p>
-      <p>🏠 Door-to-door delivery</p>
-      <p>📱 Delivery updates</p>
-      <p>⚡ Fast service</p>
-      <p>🤝 Customer support</p>
-
-    </div>
-
-
-    <div class="card">
-
-      <h2>
-        📞 Customer Care
-      </h2>
-
-      <p>
-        Need help with your delivery?
-        Contact Amir Chap Chap customer care.
-      </p>
-
-      <button
-        class="btn whatsapp"
-        onclick="openWhatsApp()">
-
-        💬 WhatsApp Customer Care
-
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= DELIVERY REQUEST ================= -->
-
-<section id="delivery" class="hidden">
-
-  <div class="container">
-
-    <div class="card">
-
-      <h2>
-        📦 Request a Delivery
-      </h2>
-
-      <form id="deliveryForm">
-
-
-        <label>
-          Customer Name
-        </label>
-
-        <input
-          type="text"
-          id="customerName"
-          placeholder="Enter your name"
-          required>
-
-
-        <label>
-          Phone Number
-        </label>
-
-        <input
-          type="tel"
-          id="customerPhone"
-          placeholder="07XXXXXXXX"
-          required>
-
-
-        <label>
-          Pick-up Location
-        </label>
-
-        <input
-          type="text"
-          id="pickup"
-          placeholder="Where should we collect the item?"
-          required>
-
-
-        <label>
-          Delivery Location
-        </label>
-
-        <input
-          type="text"
-          id="destination"
-          placeholder="Where should we deliver it?"
-          required>
-
-
-        <label>
-          Item Type
-        </label>
-
-        <select id="itemType" required>
-
-          <option value="">
-            Select item
-          </option>
-
-          <option>
-            Food
-          </option>
-
-          <option>
-            Documents
-          </option>
-
-          <option>
-            Clothes
-          </option>
-
-          <option>
-            Electronics
-          </option>
-
-          <option>
-            Shopping
-          </option>
-
-          <option>
-            Parcel
-          </option>
-
-          <option>
-            Other
-          </option>
-
-        </select>
-
-
-        <label>
-          Item Description
-        </label>
-
-        <textarea
-          id="description"
-          placeholder="Describe the item"></textarea>
-
-
-        <label>
-          Delivery Instructions
-        </label>
-
-        <textarea
-          id="instructions"
-          placeholder="Any special instructions?"></textarea>
-
+        <p>
+            From pickup to your doorstep —
+            we are here for you.
+        </p>
 
         <button
-          class="btn"
-          type="submit">
+            class="btn"
+            onclick="showSection('delivery')">
 
-          🚚 Submit Delivery Request
+            🚚 Request a Delivery
 
         </button>
 
-
-        <div id="formMessage"></div>
-
-      </form>
-
     </div>
 
-  </div>
+
+    <div class="container">
+
+
+        <div class="grid">
+
+
+            <div class="stat">
+
+                <h3>📦</h3>
+
+                <p>
+                    Easy Booking
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>🏍️</h3>
+
+                <p>
+                    Trusted Riders
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>📍</h3>
+
+                <p>
+                    Door-to-Door
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>📱</h3>
+
+                <p>
+                    Easy Tracking
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                📦 Our Services
+            </h2>
+
+            <p>
+                • Food delivery
+            </p>
+
+            <p>
+                • Documents
+            </p>
+
+            <p>
+                • Shopping
+            </p>
+
+            <p>
+                • Clothes
+            </p>
+
+            <p>
+                • Parcels
+            </p>
+
+            <p>
+                • Other permitted items
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                📞 Customer Care
+            </h2>
+
+            <p>
+                Need assistance with your delivery?
+            </p>
+
+            <p>
+                Customer Care:
+                <strong>0795653284</strong>
+            </p>
+
+
+            <button
+                class="btn call"
+                onclick="callCustomerCare()">
+
+                📞 Call Customer Care
+
+            </button>
+
+
+            <button
+                class="btn whatsapp"
+                onclick="whatsappCustomerCare()">
+
+                💬 WhatsApp Customer Care
+
+            </button>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- ================= TRACK ORDER ================= -->
+<!-- =====================================================
+     DELIVERY REQUEST
+===================================================== -->
 
-<section id="track" class="hidden">
+<section
+    id="delivery"
+    class="hidden">
 
-  <div class="container">
+    <div class="container">
 
-    <div class="card">
+        <div class="card">
 
-      <h2>
-        🔎 Track Your Delivery
-      </h2>
+            <h2>
+                📦 Request a Delivery
+            </h2>
 
-      <p class="info">
-        Enter the Order ID you received after submitting your request.
-      </p>
-
-
-      <label>
-        Order ID
-      </label>
-
-      <input
-        type="text"
-        id="trackingId"
-        placeholder="Example: AC123456">
+            <p class="info">
+                Fill in your details below.
+            </p>
 
 
-      <button
-        class="btn"
-        onclick="trackOrder()">
-
-        🔎 Track Order
-
-      </button>
+            <form id="deliveryForm">
 
 
-      <div id="trackingResult"></div>
+                <label>
+                    Customer Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your full name"
+                    required>
+
+
+                <label>
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="07XXXXXXXX"
+                    required>
+
+
+                <label>
+                    Pickup Location
+                </label>
+
+                <input
+                    type="text"
+                    id="pickup"
+                    placeholder="Where should we collect?"
+                    required>
+
+
+                <label>
+                    Destination
+                </label>
+
+                <input
+                    type="text"
+                    id="destination"
+                    placeholder="Where should we deliver?"
+                    required>
+
+
+                <label>
+                    Item Type
+                </label>
+
+                <select
+                    id="itemType"
+                    required>
+
+                    <option value="">
+                        Select item
+                    </option>
+
+                    <option>
+                        Food
+                    </option>
+
+                    <option>
+                        Documents
+                    </option>
+
+                    <option>
+                        Clothes
+                    </option>
+
+                    <option>
+                        Electronics
+                    </option>
+
+                    <option>
+                        Shopping
+                    </option>
+
+                    <option>
+                        Parcel
+                    </option>
+
+                    <option>
+                        Other
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Item Description
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Describe the item"></textarea>
+
+
+                <label>
+                    Delivery Instructions
+                </label>
+
+                <textarea
+                    id="instructions"
+                    placeholder="Special instructions"></textarea>
+
+
+                <button
+                    class="btn green"
+                    type="submit">
+
+                    🚚 Submit Delivery Request
+
+                </button>
+
+
+                <div
+                    id="formMessage">
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= ADMIN LOGIN ================= -->
+<!-- =====================================================
+     TRACKING
+===================================================== -->
 
-<section id="adminLogin" class="hidden">
+<section
+    id="track"
+    class="hidden">
 
-  <div class="container">
+    <div class="container">
 
-    <div class="card">
+        <div class="card">
 
-      <h2>
-        🔐 Moderator / Customer Care
-      </h2>
+            <h2>
+                🔎 Track Your Delivery
+            </h2>
 
-      <p class="info">
-        This area is for authorized Amir Chap Chap staff only.
-      </p>
-
-
-      <label>
-        Admin Password
-      </label>
-
-      <input
-        type="password"
-        id="adminPassword"
-        placeholder="Enter admin password">
+            <p class="info">
+                Enter your Order ID.
+            </p>
 
 
-      <button
-        class="btn"
-        onclick="adminLogin()">
+            <label>
+                Order ID
+            </label>
 
-        🔐 Sign In
+            <input
+                type="text"
+                id="trackingId"
+                placeholder="Example: AC123456">
 
-      </button>
+
+            <button
+                class="btn"
+                onclick="trackOrder()">
+
+                🔎 Track Order
+
+            </button>
 
 
-      <div id="loginMessage"></div>
+            <div id="trackingResult">
+            </div>
+
+        </div>
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= ADMIN PANEL ================= -->
+<!-- =====================================================
+     RIDER LOGIN
+===================================================== -->
 
-<section id="adminPanel" class="admin">
+<section
+    id="riderLogin"
+    class="hidden">
 
-  <div class="container">
+    <div class="container">
 
+        <div class="card">
 
-    <div class="card">
+            <h2>
+                🏍️ Rider Portal
+            </h2>
 
-      <h2>
-        👨‍💼 Moderator Dashboard
-      </h2>
-
-      <p>
-        Welcome to Amir Chap Chap Customer Care.
-      </p>
-
-      <p class="small">
-        Manage delivery requests and update their status.
-      </p>
+            <p class="info">
+                Riders can log in using their Rider ID
+                and registered phone number.
+            </p>
 
 
-      <button
-        class="btn danger"
-        onclick="adminLogout()">
+            <label>
+                Rider ID
+            </label>
 
-        🚪 Log Out
+            <input
+                type="text"
+                id="riderLoginId"
+                placeholder="Example: RID001">
 
-      </button>
+
+            <label>
+                Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="riderLoginPhone"
+                placeholder="07XXXXXXXX">
+
+
+            <button
+                class="btn"
+                onclick="riderLogin()">
+
+                🏍️ Rider Sign In
+
+            </button>
+
+
+            <div id="riderLoginMessage">
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="card">
-
-      <h2>
-        📦 Delivery Requests
-      </h2>
-
-      <div id="ordersList"></div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- =====================================================
+     RIDER DASHBOARD
+===================================================== -->
+
+<section
+    id="riderDashboard"
+    class="hidden">
+
+    <div class="container">
+
+
+        <div class="card">
+
+            <h2>
+                🏍️ Rider Dashboard
+            </h2>
+
+            <div id="riderInformation">
+            </div>
+
+
+            <button
+                class="btn danger"
+                onclick="riderLogout()">
+
+                🚪 Log Out
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                📦 My Assigned Deliveries
+            </h2>
+
+            <div id="riderOrders">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MODERATOR LOGIN
+===================================================== -->
+
+<section
+    id="adminLogin"
+    class="hidden">
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                🔐 Moderator / Customer Care
+            </h2>
+
+            <p class="info">
+                Authorized staff only.
+            </p>
+
+
+            <label>
+                Moderator Password
+            </label>
+
+            <input
+                type="password"
+                id="adminPassword"
+                placeholder="Enter password">
+
+
+            <button
+                class="btn"
+                onclick="adminLogin()">
+
+                🔐 Sign In
+
+            </button>
+
+
+            <div id="loginMessage">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MODERATOR DASHBOARD
+===================================================== -->
+
+<section
+    id="adminPanel"
+    class="hidden">
+
+    <div class="container">
+
+
+        <!-- DASHBOARD STATS -->
+
+        <div class="grid">
+
+
+            <div class="stat">
+
+                <h3 id="totalOrders">
+                    0
+                </h3>
+
+                <p>
+                    Total Orders
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3 id="pendingOrders">
+                    0
+                </h3>
+
+                <p>
+                    Pending
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3 id="activeOrders">
+                    0
+                </h3>
+
+                <p>
+                    Active Deliveries
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3 id="completedOrders">
+                    0
+                </h3>
+
+                <p>
+                    Delivered
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- MODERATOR -->
+
+        <div class="card">
+
+            <h2>
+                👨‍💼 Moderator Dashboard
+            </h2>
+
+            <p>
+                Welcome to Amir Chap Chap Customer Care.
+            </p>
+
+
+            <button
+                class="btn danger"
+                onclick="adminLogout()">
+
+                🚪 Log Out
+
+            </button>
+
+        </div>
+
+
+        <!-- ADD RIDER -->
+
+        <div class="card">
+
+            <h2>
+                🏍️ Add New Rider
+            </h2>
+
+            <form id="riderForm">
+
+
+                <label>
+                    Rider Name
+                </label>
+
+                <input
+                    type="text"
+                    id="riderName"
+                    placeholder="Full rider name"
+                    required>
+
+
+                <label>
+                    Rider Phone
+                </label>
+
+                <input
+                    type="tel"
+                    id="riderPhone"
+                    placeholder="07XXXXXXXX"
+                    required>
+
+
+                <label>
+                    WhatsApp Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="riderWhatsApp"
+                    placeholder="07XXXXXXXX"
+                    required>
+
+
+                <label>
+                    Motorcycle Type
+                </label>
+
+                <select
+                    id="bikeType"
+                    required>
+
+                    <option value="">
+                        Select motorcycle type
+                    </option>
+
+                    <option>
+                        Motorbike
+                    </option>
+
+                    <option>
+                        Scooter
+                    </option>
+
+                    <option>
+                        Motorcycle
+                    </option>
+
+                    <option>
+                        Electric Bike
+                    </option>
+
+                    <option>
+                        Other
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Motorcycle Model
+                </label>
+
+                <input
+                    type="text"
+                    id="bikeModel"
+                    placeholder="Example: Boxer 150"
+                    required>
+
+
+                <label>
+                    Registration / Number Plate
+                </label>
+
+                <input
+                    type="text"
+                    id="bikePlate"
+                    placeholder="Example: KDA 123A"
+                    required>
+
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    ➕ Add Rider
+
+                </button>
+
+
+                <div
+                    id="riderMessage">
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- RIDER LIST -->
+
+        <div class="card">
+
+            <h2>
+                🏍️ Rider Management
+            </h2>
+
+            <div id="ridersList">
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERY REQUESTS -->
+
+        <div class="card">
+
+            <h2>
+                📦 Delivery Requests
+            </h2>
+
+            <div id="ordersList">
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
-  <h3>
-    Amir Chap Chap
-  </h3>
+    <h3>
+        🚚 Amir Chap Chap
+    </h3>
 
-  <p>
-    Fast • Safe • Reliable Delivery
-  </p>
+    <p>
+        Fast • Safe • Reliable Delivery
+    </p>
 
-  <p class="small">
-    © 2026 Amir Chap Chap. All rights reserved.
-  </p>
+    <p>
+        Customer Care:
+        <strong>0795653284</strong>
+    </p>
+
+    <p class="small">
+        © 2026 Amir Chap Chap.
+        All rights reserved.
+    </p>
 
 </footer>
 
 
 <script>
 
-/* =========================================
-   AMIR CHAP CHAP SETTINGS
-========================================= */
+/* =====================================================
+   SETTINGS
+===================================================== */
 
 
 /*
-   CHANGE THIS NUMBER TO YOUR OFFICIAL
-   AMIR CHAP CHAP WHATSAPP NUMBER.
+   CUSTOMER CARE NUMBER
 
-   Format:
-   2547XXXXXXXX
+   Kenyan format:
+   0795653284
 
-   Do NOT put + before the number.
+   International format:
+   254795653284
 */
 
-const WHATSAPP_NUMBER = "254700000000";
+const CUSTOMER_CARE_NUMBER = "254795653284";
 
 
 /*
-   ADMIN PASSWORD
+   MODERATOR PASSWORD
 
-   The moderator must enter:
-
+   Password:
    Scott@254
 */
 
 const ADMIN_PASSWORD = "Scott@254";
 
 
-/* =========================================
+/*
+   Currently logged-in rider
+*/
+
+let currentRider = null;
+
+
+/* =====================================================
    NAVIGATION
-========================================= */
+===================================================== */
 
 function showSection(section){
 
-  const sections = [
-    "home",
-    "delivery",
-    "track",
-    "adminLogin"
-  ];
+    const sections = [
 
-  sections.forEach(function(id){
+        "home",
+        "delivery",
+        "track",
+        "riderLogin",
+        "adminLogin"
+
+    ];
+
+
+    sections.forEach(function(id){
+
+        const element =
+            document.getElementById(id);
+
+        if(element){
+
+            element.classList.add("hidden");
+
+        }
+
+    });
+
 
     document
-      .getElementById(id)
-      .classList
-      .add("hidden");
-
-  });
+        .getElementById("riderDashboard")
+        .classList.add("hidden");
 
 
-  document
-    .getElementById("adminPanel")
-    .style.display = "none";
+    document
+        .getElementById("adminPanel")
+        .classList.add("hidden");
 
 
-  document
-    .getElementById(section)
-    .classList
-    .remove("hidden");
+    const target =
+        document.getElementById(section);
 
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+    if(target){
+
+        target.classList.remove("hidden");
+
+    }
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
 
 }
 
 
-/* =========================================
-   DELIVERY REQUEST
-========================================= */
+/* =====================================================
+   STORAGE HELPERS
+===================================================== */
 
-document
-  .getElementById("deliveryForm")
-  .addEventListener("submit", function(event){
+function getOrders(){
 
-    event.preventDefault();
+    return JSON.parse(
 
-
-    const name =
-      document
-        .getElementById("customerName")
-        .value
-        .trim();
-
-
-    const phone =
-      document
-        .getElementById("customerPhone")
-        .value
-        .trim();
-
-
-    const pickup =
-      document
-        .getElementById("pickup")
-        .value
-        .trim();
-
-
-    const destination =
-      document
-        .getElementById("destination")
-        .value
-        .trim();
-
-
-    const item =
-      document
-        .getElementById("itemType")
-        .value;
-
-
-    const description =
-      document
-        .getElementById("description")
-        .value
-        .trim();
-
-
-    const instructions =
-      document
-        .getElementById("instructions")
-        .value
-        .trim();
-
-
-    /*
-       Generate Order ID
-    */
-
-    const orderId =
-      "AC" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      );
-
-
-    const order = {
-
-      id:orderId,
-
-      name:name,
-
-      phone:phone,
-
-      pickup:pickup,
-
-      destination:destination,
-
-      item:item,
-
-      description:description,
-
-      instructions:instructions,
-
-      status:"Pending",
-
-      date:new Date().toLocaleString()
-
-    };
-
-
-    /*
-       Get existing orders
-    */
-
-    let orders =
-      JSON.parse(
         localStorage.getItem("amirOrders")
-      ) || [];
+
+    ) || [];
+
+}
 
 
-    /*
-       Add new order
-    */
-
-    orders.push(order);
-
-
-    /*
-       Save order
-    */
+function saveOrders(orders){
 
     localStorage.setItem(
-      "amirOrders",
-      JSON.stringify(orders)
+
+        "amirOrders",
+
+        JSON.stringify(orders)
+
+    );
+
+}
+
+
+function getRiders(){
+
+    return JSON.parse(
+
+        localStorage.getItem("amirRiders")
+
+    ) || [];
+
+}
+
+
+function saveRiders(riders){
+
+    localStorage.setItem(
+
+        "amirRiders",
+
+        JSON.stringify(riders)
+
+    );
+
+}
+
+
+/* =====================================================
+   GENERATE RIDER ID
+===================================================== */
+
+function generateRiderId(){
+
+    const riders = getRiders();
+
+    return "RID" +
+
+        String(riders.length + 1)
+
+        .padStart(3,"0");
+
+}
+
+
+/* =====================================================
+   GENERATE ORDER ID
+===================================================== */
+
+function generateOrderId(){
+
+    let id;
+
+    let orders = getOrders();
+
+    do{
+
+        id =
+
+            "AC" +
+
+            Math.floor(
+
+                100000 +
+
+                Math.random() *
+
+                900000
+
+            );
+
+    }
+
+    while(
+
+        orders.some(
+
+            order => order.id === id
+
+        )
+
     );
 
 
-    /*
-       Show success message
-    */
+    return id;
 
-    document
-      .getElementById("formMessage")
-      .innerHTML =
-
-      `<p class="success">
-
-        ✅ Delivery request submitted!
-
-        <br><br>
-
-        Your Order ID is:
-
-        <strong>${orderId}</strong>
-
-        <br>
-
-        Please save this Order ID
-        for tracking.
-
-      </p>`;
+}
 
 
-    /*
-       Prepare WhatsApp message
-    */
+/* =====================================================
+   CUSTOMER DELIVERY FORM
+===================================================== */
 
-    const message =
+document
+.getElementById("deliveryForm")
+.addEventListener(
+
+    "submit",
+
+    function(event){
+
+        event.preventDefault();
+
+
+        const name =
+
+            document
+            .getElementById("customerName")
+            .value
+            .trim();
+
+
+        const phone =
+
+            document
+            .getElementById("customerPhone")
+            .value
+            .trim();
+
+
+        const pickup =
+
+            document
+            .getElementById("pickup")
+            .value
+            .trim();
+
+
+        const destination =
+
+            document
+            .getElementById("destination")
+            .value
+            .trim();
+
+
+        const item =
+
+            document
+            .getElementById("itemType")
+            .value;
+
+
+        const description =
+
+            document
+            .getElementById("description")
+            .value
+            .trim();
+
+
+        const instructions =
+
+            document
+            .getElementById("instructions")
+            .value
+            .trim();
+
+
+        const order = {
+
+            id:generateOrderId(),
+
+            name:name,
+
+            phone:phone,
+
+            pickup:pickup,
+
+            destination:destination,
+
+            item:item,
+
+            description:description,
+
+            instructions:instructions,
+
+            status:"Pending",
+
+            riderId:"",
+
+            riderName:"",
+
+            date:new Date().toLocaleString(),
+
+            deliveredAt:""
+
+        };
+
+
+        const orders = getOrders();
+
+
+        orders.push(order);
+
+
+        saveOrders(orders);
+
+
+        document
+        .getElementById("formMessage")
+        .innerHTML = `
+
+            <p class="success">
+
+                ✅ Delivery request submitted!
+
+                <br><br>
+
+                Your Order ID is:
+
+                <strong>${order.id}</strong>
+
+                <br><br>
+
+                Save this Order ID
+                to track your delivery.
+
+            </p>
+
+        `;
+
+
+        /*
+           Send order to customer care
+           through WhatsApp.
+        */
+
+        const message =
 
 `AMIR CHAP CHAP DELIVERY REQUEST
 
-Order ID: ${orderId}
+Order ID: ${order.id}
 
 Customer: ${name}
 
 Phone: ${phone}
 
-Pick-up Location:
+Pickup:
 ${pickup}
 
 Destination:
@@ -882,650 +1739,2299 @@ Instructions:
 ${instructions}`;
 
 
-    /*
-       Open WhatsApp
-    */
+        const whatsappURL =
 
-    const whatsappURL =
+            "https://wa.me/" +
 
-      "https://wa.me/" +
-      WHATSAPP_NUMBER +
-      "?text=" +
-      encodeURIComponent(message);
+            CUSTOMER_CARE_NUMBER +
 
+            "?text=" +
 
-    window.open(
-      whatsappURL,
-      "_blank"
-    );
+            encodeURIComponent(message);
 
 
-    /*
-       Clear form
-    */
+        window.open(
 
-    document
-      .getElementById("deliveryForm")
-      .reset();
+            whatsappURL,
 
-});
+            "_blank"
+
+        );
 
 
-/* =========================================
+        document
+        .getElementById("deliveryForm")
+        .reset();
+
+    }
+
+);
+
+
+/* =====================================================
    TRACK ORDER
-========================================= */
+===================================================== */
 
 function trackOrder(){
 
-  const id =
+    const id =
 
-    document
-      .getElementById("trackingId")
-      .value
-      .trim()
-      .toUpperCase();
-
-
-  const result =
-
-    document
-      .getElementById("trackingResult");
+        document
+        .getElementById("trackingId")
+        .value
+        .trim()
+        .toUpperCase();
 
 
-  const orders =
+    const result =
 
-    JSON.parse(
-      localStorage.getItem("amirOrders")
-    ) || [];
-
-
-  const order =
-
-    orders.find(function(item){
-
-      return item.id === id;
-
-    });
+        document
+        .getElementById("trackingResult");
 
 
-  if(!order){
-
-    result.innerHTML =
-
-      `<p class="error">
-
-        ❌ Order not found.
-
-      </p>`;
-
-    return;
-
-  }
+    const orders = getOrders();
 
 
-  result.innerHTML = `
+    const order =
 
-    <div class="order">
+        orders.find(
 
-      <h3>
-        Order ${escapeHTML(order.id)}
-      </h3>
+            item => item.id === id
 
-      <p>
-        <strong>Customer:</strong>
-        ${escapeHTML(order.name)}
-      </p>
+        );
 
-      <p>
-        <strong>Pick-up:</strong>
-        ${escapeHTML(order.pickup)}
-      </p>
 
-      <p>
-        <strong>Destination:</strong>
-        ${escapeHTML(order.destination)}
-      </p>
+    if(!order){
 
-      <p>
-        <strong>Item:</strong>
-        ${escapeHTML(order.item)}
-      </p>
+        result.innerHTML = `
 
-      <p>
-        <strong>Status:</strong>
+            <p class="error">
 
-        <span class="status">
-          ${escapeHTML(order.status)}
-        </span>
+                ❌ Order not found.
 
-      </p>
+            </p>
 
-      <p class="small">
-        Submitted:
-        ${escapeHTML(order.date)}
-      </p>
+        `;
 
-    </div>
+        return;
 
-  `;
+    }
+
+
+    let riderHTML = "";
+
+
+    if(order.riderId){
+
+        const riders = getRiders();
+
+
+        const rider =
+
+            riders.find(
+
+                r =>
+
+                r.id === order.riderId
+
+            );
+
+
+        if(rider){
+
+            riderHTML = `
+
+                <div class="order">
+
+                    <h3>
+                        🏍️ Assigned Rider
+                    </h3>
+
+                    <p>
+                        <strong>Name:</strong>
+                        ${escapeHTML(rider.name)}
+                    </p>
+
+                    <p>
+                        <strong>Motorcycle:</strong>
+                        ${escapeHTML(rider.bikeType)}
+                    </p>
+
+                    <p>
+                        <strong>Model:</strong>
+                        ${escapeHTML(rider.bikeModel)}
+                    </p>
+
+                    <p>
+                        <strong>Plate:</strong>
+                        ${escapeHTML(rider.plate)}
+                    </p>
+
+
+                    <button
+                        class="btn call"
+                        onclick="callRider('${rider.phone}')">
+
+                        📞 Call Rider
+
+                    </button>
+
+
+                    <button
+                        class="btn whatsapp"
+                        onclick="whatsappRider('${rider.whatsapp}')">
+
+                        💬 WhatsApp Rider
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    result.innerHTML = `
+
+        <div class="order">
+
+            <h3>
+                📦 Order ${escapeHTML(order.id)}
+            </h3>
+
+            <p>
+                <strong>Customer:</strong>
+                ${escapeHTML(order.name)}
+            </p>
+
+            <p>
+                <strong>Pickup:</strong>
+                ${escapeHTML(order.pickup)}
+            </p>
+
+            <p>
+                <strong>Destination:</strong>
+                ${escapeHTML(order.destination)}
+            </p>
+
+            <p>
+                <strong>Item:</strong>
+                ${escapeHTML(order.item)}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+
+                <span class="status">
+
+                    ${escapeHTML(order.status)}
+
+                </span>
+
+            </p>
+
+            ${
+                order.deliveredAt
+
+                ?
+
+                `<p class="success">
+
+                    ✅ Delivery successfully completed.
+
+                    <br>
+
+                    ${escapeHTML(
+                        order.deliveredAt
+                    )}
+
+                </p>`
+
+                :
+
+                ""
+
+            }
+
+            <p class="small">
+
+                Submitted:
+                ${escapeHTML(order.date)}
+
+            </p>
+
+        </div>
+
+        ${riderHTML}
+
+    `;
 
 }
 
 
-/* =========================================
-   ADMIN LOGIN
-========================================= */
+/* =====================================================
+   MODERATOR LOGIN
+===================================================== */
 
 function adminLogin(){
 
-  /*
-     Get the password entered by moderator
-  */
+    const password =
 
-  const password =
-
-    document
-      .getElementById("adminPassword")
-      .value;
+        document
+        .getElementById("adminPassword")
+        .value;
 
 
-  /*
-     Get login message area
-  */
+    const message =
 
-  const message =
-
-    document
-      .getElementById("loginMessage");
-
-
-  /*
-     CORRECT PASSWORD CHECK
-
-     Password:
-     Scott@254
-  */
-
-  if(password === "Scott@254"){
-
-    /*
-       Hide login page
-    */
-
-    document
-      .getElementById("adminLogin")
-      .classList
-      .add("hidden");
+        document
+        .getElementById("loginMessage");
 
 
     /*
-       Show moderator dashboard
+       CORRECT PASSWORD
+
+       Scott@254
     */
 
-    document
-      .getElementById("adminPanel")
-      .style
-      .display = "block";
+    if(password === ADMIN_PASSWORD){
+
+        document
+        .getElementById("adminLogin")
+        .classList
+        .add("hidden");
 
 
-    /*
-       Clear error
-    */
-
-    message.innerHTML = "";
-
-
-    /*
-       Load orders
-    */
-
-    loadOrders();
+        document
+        .getElementById("adminPanel")
+        .classList
+        .remove("hidden");
 
 
-    /*
-       Scroll to dashboard
-    */
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
+        message.innerHTML = "";
 
 
-  }else{
+        loadAdminDashboard();
 
-    /*
-       Wrong password
-    */
 
-    message.innerHTML =
+    }else{
 
-      `<p class="error">
+        message.innerHTML = `
 
-        ❌ Incorrect password.
+            <p class="error">
 
-      </p>`;
+                ❌ Incorrect password.
 
-  }
+            </p>
+
+        `;
+
+    }
 
 }
 
 
-/* =========================================
-   ADMIN LOGOUT
-========================================= */
+/* =====================================================
+   MODERATOR LOGOUT
+===================================================== */
 
 function adminLogout(){
 
-  document
+    document
     .getElementById("adminPanel")
-    .style
-    .display = "none";
-
-
-  document
-    .getElementById("adminLogin")
     .classList
-    .remove("hidden");
+    .add("hidden");
 
 
-  document
+    document
     .getElementById("adminPassword")
     .value = "";
 
 
-  showSection("home");
+    showSection("home");
 
 }
 
 
-/* =========================================
-   LOAD DELIVERY REQUESTS
-========================================= */
+/* =====================================================
+   ADD RIDER
+===================================================== */
 
-function loadOrders(){
+document
+.getElementById("riderForm")
+.addEventListener(
 
-  const container =
+    "submit",
 
-    document
-      .getElementById("ordersList");
+    function(event){
 
-
-  const orders =
-
-    JSON.parse(
-      localStorage.getItem("amirOrders")
-    ) || [];
+        event.preventDefault();
 
 
-  if(orders.length === 0){
+        const name =
 
-    container.innerHTML =
-
-      `<p>
-        No delivery requests yet.
-      </p>`;
-
-    return;
-
-  }
+            document
+            .getElementById("riderName")
+            .value
+            .trim();
 
 
-  container.innerHTML = "";
+        const phone =
+
+            document
+            .getElementById("riderPhone")
+            .value
+            .trim();
 
 
-  orders
+        const whatsapp =
+
+            document
+            .getElementById("riderWhatsApp")
+            .value
+            .trim();
+
+
+        const bikeType =
+
+            document
+            .getElementById("bikeType")
+            .value;
+
+
+        const bikeModel =
+
+            document
+            .getElementById("bikeModel")
+            .value
+            .trim();
+
+
+        const plate =
+
+            document
+            .getElementById("bikePlate")
+            .value
+            .trim();
+
+
+        const rider = {
+
+            id:generateRiderId(),
+
+            name:name,
+
+            phone:phone,
+
+            whatsapp:whatsapp,
+
+            bikeType:bikeType,
+
+            bikeModel:bikeModel,
+
+            plate:plate,
+
+            status:"Available",
+
+            dateAdded:
+                new Date().toLocaleString()
+
+        };
+
+
+        const riders = getRiders();
+
+
+        riders.push(rider);
+
+
+        saveRiders(riders);
+
+
+        document
+        .getElementById("riderMessage")
+        .innerHTML = `
+
+            <p class="success">
+
+                ✅ Rider added successfully.
+
+                <br>
+
+                Rider ID:
+
+                <strong>
+                    ${rider.id}
+                </strong>
+
+            </p>
+
+        `;
+
+
+        document
+        .getElementById("riderForm")
+        .reset();
+
+
+        loadAdminDashboard();
+
+    }
+
+);
+
+
+/* =====================================================
+   LOAD RIDERS
+===================================================== */
+
+function loadRiders(){
+
+    const container =
+
+        document
+        .getElementById("ridersList");
+
+
+    const riders = getRiders();
+
+
+    if(riders.length === 0){
+
+        container.innerHTML = `
+
+            <p class="info">
+
+                No riders have been added yet.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    riders.forEach(function(rider){
+
+        const div =
+
+            document.createElement("div");
+
+
+        div.className = "rider";
+
+
+        div.innerHTML = `
+
+            <h3>
+                🏍️ ${escapeHTML(rider.name)}
+            </h3>
+
+            <p>
+                <strong>Rider ID:</strong>
+                ${escapeHTML(rider.id)}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                ${escapeHTML(rider.phone)}
+            </p>
+
+            <p>
+                <strong>WhatsApp:</strong>
+                ${escapeHTML(rider.whatsapp)}
+            </p>
+
+            <p>
+                <strong>Motorcycle Type:</strong>
+                ${escapeHTML(rider.bikeType)}
+            </p>
+
+            <p>
+                <strong>Motorcycle Model:</strong>
+                ${escapeHTML(rider.bikeModel)}
+            </p>
+
+            <p>
+                <strong>Registration:</strong>
+                ${escapeHTML(rider.plate)}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+
+                <span class="status">
+
+                    ${escapeHTML(rider.status)}
+
+                </span>
+
+            </p>
+
+
+            <button
+                class="btn call"
+                onclick="callRider('${rider.phone}')">
+
+                📞 Call
+
+            </button>
+
+
+            <button
+                class="btn whatsapp"
+                onclick="whatsappRider('${rider.whatsapp}')">
+
+                💬 WhatsApp
+
+            </button>
+
+
+            <button
+                class="btn orange"
+                onclick="toggleRiderStatus('${rider.id}')">
+
+                🔄 Change Status
+
+            </button>
+
+
+            <button
+                class="btn danger"
+                onclick="deleteRider('${rider.id}')">
+
+                🗑️ Delete Rider
+
+            </button>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   CHANGE RIDER STATUS
+===================================================== */
+
+function toggleRiderStatus(id){
+
+    const riders = getRiders();
+
+
+    const rider =
+
+        riders.find(
+
+            r => r.id === id
+
+        );
+
+
+    if(!rider){
+
+        return;
+
+    }
+
+
+    if(rider.status === "Available"){
+
+        rider.status = "Busy";
+
+    }
+
+    else if(rider.status === "Busy"){
+
+        rider.status = "Offline";
+
+    }
+
+    else{
+
+        rider.status = "Available";
+
+    }
+
+
+    saveRiders(riders);
+
+
+    loadAdminDashboard();
+
+}
+
+
+/* =====================================================
+   DELETE RIDER
+===================================================== */
+
+function deleteRider(id){
+
+    if(
+
+        !confirm(
+
+            "Are you sure you want to delete this rider?"
+
+        )
+
+    ){
+
+        return;
+
+    }
+
+
+    let riders = getRiders();
+
+
+    riders = riders.filter(
+
+        rider => rider.id !== id
+
+    );
+
+
+    saveRiders(riders);
+
+
+    loadAdminDashboard();
+
+}
+
+
+/* =====================================================
+   LOAD ADMIN DASHBOARD
+===================================================== */
+
+function loadAdminDashboard(){
+
+    loadRiders();
+
+    loadOrdersAdmin();
+
+    updateStatistics();
+
+}
+
+
+/* =====================================================
+   LOAD ADMIN ORDERS
+===================================================== */
+
+function loadOrdersAdmin(){
+
+    const container =
+
+        document
+        .getElementById("ordersList");
+
+
+    const orders = getOrders();
+
+
+    if(orders.length === 0){
+
+        container.innerHTML = `
+
+            <p class="info">
+
+                No delivery requests yet.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    orders
     .slice()
     .reverse()
     .forEach(function(order){
 
-      const div =
-        document.createElement("div");
+        const div =
+
+            document.createElement("div");
 
 
-      div.className = "order";
+        div.className = "order";
 
 
-      div.innerHTML = `
-
-        <h3>
-          📦 ${escapeHTML(order.id)}
-        </h3>
-
-        <p>
-          <strong>Customer:</strong>
-          ${escapeHTML(order.name)}
-        </p>
-
-        <p>
-          <strong>Phone:</strong>
-          ${escapeHTML(order.phone)}
-        </p>
-
-        <p>
-          <strong>Pick-up:</strong>
-          ${escapeHTML(order.pickup)}
-        </p>
-
-        <p>
-          <strong>Destination:</strong>
-          ${escapeHTML(order.destination)}
-        </p>
-
-        <p>
-          <strong>Item:</strong>
-          ${escapeHTML(order.item)}
-        </p>
-
-        <p>
-          <strong>Description:</strong>
-          ${escapeHTML(order.description)}
-        </p>
-
-        <p>
-          <strong>Instructions:</strong>
-          ${escapeHTML(order.instructions)}
-        </p>
-
-        <p>
-          <strong>Status:</strong>
-
-          <span class="status">
-            ${escapeHTML(order.status)}
-          </span>
-
-        </p>
-
-        <p class="small">
-          Submitted:
-          ${escapeHTML(order.date)}
-        </p>
+        let assignedRider = "Not assigned";
 
 
-        <button
-          class="btn"
-          onclick="updateStatus('${order.id}','Accepted')">
+        if(order.riderName){
 
-          ✅ Accept
+            assignedRider =
+                order.riderName;
 
-        </button>
-
-
-        <button
-          class="btn orange"
-          onclick="updateStatus('${order.id}','Picked Up')">
-
-          📦 Picked Up
-
-        </button>
+        }
 
 
-        <button
-          class="btn"
-          onclick="updateStatus('${order.id}','Out for Delivery')">
+        div.innerHTML = `
 
-          🚚 Out for Delivery
+            <h3>
 
-        </button>
+                📦
+                ${escapeHTML(order.id)}
 
-
-        <button
-          class="btn"
-          onclick="updateStatus('${order.id}','Delivered')">
-
-          🏠 Delivered
-
-        </button>
+            </h3>
 
 
-        <button
-          class="btn whatsapp"
-          onclick="contactCustomer('${order.phone}','${order.id}')">
+            <p>
 
-          💬 WhatsApp Customer
+                <strong>
+                    Customer:
+                </strong>
 
-        </button>
+                ${escapeHTML(order.name)}
 
-
-        <button
-          class="btn danger"
-          onclick="deleteOrder('${order.id}')">
-
-          🗑️ Delete
-
-        </button>
-
-      `;
+            </p>
 
 
-      container.appendChild(div);
+            <p>
+
+                <strong>
+                    Phone:
+                </strong>
+
+                ${escapeHTML(order.phone)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Pickup:
+                </strong>
+
+                ${escapeHTML(order.pickup)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Destination:
+                </strong>
+
+                ${escapeHTML(order.destination)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Item:
+                </strong>
+
+                ${escapeHTML(order.item)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Status:
+                </strong>
+
+                <span class="status">
+
+                    ${escapeHTML(order.status)}
+
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Rider:
+                </strong>
+
+                ${escapeHTML(assignedRider)}
+
+            </p>
+
+
+            <p class="small">
+
+                Submitted:
+                ${escapeHTML(order.date)}
+
+            </p>
+
+
+            <div class="order-actions">
+
+
+                <button
+                    class="btn"
+                    onclick="updateOrderStatus(
+                        '${order.id}',
+                        'Accepted'
+                    )">
+
+                    ✅ Accept
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="updateOrderStatus(
+                        '${order.id}',
+                        'Picked Up'
+                    )">
+
+                    📦 Picked Up
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="updateOrderStatus(
+                        '${order.id}',
+                        'Out for Delivery'
+                    )">
+
+                    🚚 Out for Delivery
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="updateOrderStatus(
+                        '${order.id}',
+                        'Delivered'
+                    )">
+
+                    ✅ Delivered
+
+                </button>
+
+
+                <button
+                    class="btn danger"
+                    onclick="deleteOrder(
+                        '${order.id}'
+                    )">
+
+                    🗑️ Delete
+
+                </button>
+
+            </div>
+
+
+            <label>
+
+                Assign Rider
+
+            </label>
+
+
+            <select
+                onchange="assignRider(
+                    '${order.id}',
+                    this.value
+                )">
+
+                <option value="">
+
+                    Select Rider
+
+                </option>
+
+                ${getRiderOptions(order.riderId)}
+
+            </select>
+
+
+            ${
+                order.riderId
+
+                ?
+
+                `
+
+                <button
+                    class="btn whatsapp"
+                    onclick="contactAssignedRider(
+                        '${order.id}'
+                    )">
+
+                    💬 Contact Rider
+
+                </button>
+
+                `
+
+                :
+
+                ""
+
+            }
+
+        `;
+
+
+        container.appendChild(div);
 
     });
 
 }
 
 
-/* =========================================
+/* =====================================================
+   RIDER OPTIONS
+===================================================== */
+
+function getRiderOptions(selectedId){
+
+    const riders = getRiders();
+
+
+    return riders.map(function(rider){
+
+        const selected =
+
+            rider.id === selectedId
+
+            ?
+
+            "selected"
+
+            :
+
+            "";
+
+
+        return `
+
+            <option
+                value="${escapeHTML(rider.id)}"
+                ${selected}>
+
+                ${escapeHTML(rider.name)}
+                -
+                ${escapeHTML(rider.bikeModel)}
+                -
+                ${escapeHTML(rider.plate)}
+
+            </option>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   ASSIGN RIDER
+===================================================== */
+
+function assignRider(orderId,riderId){
+
+    const orders = getOrders();
+
+    const riders = getRiders();
+
+
+    const order =
+
+        orders.find(
+
+            o => o.id === orderId
+
+        );
+
+
+    const rider =
+
+        riders.find(
+
+            r => r.id === riderId
+
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    if(!riderId){
+
+        order.riderId = "";
+
+        order.riderName = "";
+
+        order.status = "Accepted";
+
+
+        saveOrders(orders);
+
+        loadAdminDashboard();
+
+        return;
+
+    }
+
+
+    if(!rider){
+
+        return;
+
+    }
+
+
+    order.riderId = rider.id;
+
+    order.riderName = rider.name;
+
+    order.status = "Rider Assigned";
+
+
+    /*
+       Rider becomes busy.
+    */
+
+    rider.status = "Busy";
+
+
+    saveOrders(orders);
+
+    saveRiders(riders);
+
+
+    loadAdminDashboard();
+
+
+    /*
+       Notify rider through WhatsApp.
+    */
+
+    const message =
+
+`AMIR CHAP CHAP DELIVERY
+
+Hello ${rider.name}.
+
+You have been assigned delivery order ${order.id}.
+
+Pickup:
+${order.pickup}
+
+Destination:
+${order.destination}
+
+Customer:
+${order.name}
+
+Customer Phone:
+${order.phone}`;
+
+
+    const url =
+
+        "https://wa.me/" +
+
+        cleanKenyanNumber(
+            rider.whatsapp
+        ) +
+
+        "?text=" +
+
+        encodeURIComponent(message);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
    UPDATE ORDER STATUS
-========================================= */
+===================================================== */
 
-function updateStatus(id,status){
+function updateOrderStatus(id,status){
 
-  let orders =
-
-    JSON.parse(
-      localStorage.getItem("amirOrders")
-    ) || [];
+    const orders = getOrders();
 
 
-  const index =
+    const order =
 
-    orders.findIndex(function(order){
+        orders.find(
 
-      return order.id === id;
+            o => o.id === id
 
-    });
-
-
-  if(index === -1){
-
-    return;
-
-  }
+        );
 
 
-  orders[index].status = status;
+    if(!order){
+
+        return;
+
+    }
 
 
-  localStorage.setItem(
-    "amirOrders",
-    JSON.stringify(orders)
-  );
+    order.status = status;
 
 
-  loadOrders();
+    if(status === "Delivered"){
+
+        order.deliveredAt =
+            new Date().toLocaleString();
+
+
+        /*
+           Make rider available again.
+        */
+
+        if(order.riderId){
+
+            const riders = getRiders();
+
+
+            const rider =
+
+                riders.find(
+
+                    r =>
+                    r.id === order.riderId
+
+                );
+
+
+            if(rider){
+
+                rider.status =
+                    "Available";
+
+                saveRiders(riders);
+
+            }
+
+        }
+
+    }
+
+
+    saveOrders(orders);
+
+
+    loadAdminDashboard();
 
 }
 
 
-/* =========================================
+/* =====================================================
    DELETE ORDER
-========================================= */
+===================================================== */
 
 function deleteOrder(id){
 
-  const confirmed =
+    if(
 
-    confirm(
-      "Are you sure you want to delete this delivery request?"
+        !confirm(
+
+            "Delete this delivery request?"
+
+        )
+
+    ){
+
+        return;
+
+    }
+
+
+    let orders = getOrders();
+
+
+    orders = orders.filter(
+
+        order => order.id !== id
+
     );
 
 
-  if(!confirmed){
-
-    return;
-
-  }
+    saveOrders(orders);
 
 
-  let orders =
+    loadAdminDashboard();
 
-    JSON.parse(
-      localStorage.getItem("amirOrders")
-    ) || [];
+}
 
 
-  orders =
+/* =====================================================
+   RIDER LOGIN
+===================================================== */
 
-    orders.filter(function(order){
+function riderLogin(){
 
-      return order.id !== id;
+    const id =
+
+        document
+        .getElementById("riderLoginId")
+        .value
+        .trim()
+        .toUpperCase();
+
+
+    const phone =
+
+        document
+        .getElementById("riderLoginPhone")
+        .value
+        .trim();
+
+
+    const message =
+
+        document
+        .getElementById(
+            "riderLoginMessage"
+        );
+
+
+    const riders = getRiders();
+
+
+    const rider =
+
+        riders.find(function(r){
+
+            return (
+
+                r.id.toUpperCase() === id &&
+
+                normalizePhone(r.phone) ===
+                normalizePhone(phone)
+
+            );
+
+        });
+
+
+    if(!rider){
+
+        message.innerHTML = `
+
+            <p class="error">
+
+                ❌ Rider ID or phone number is incorrect.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    currentRider = rider;
+
+
+    document
+    .getElementById("riderLogin")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("riderDashboard")
+    .classList
+    .remove("hidden");
+
+
+    loadRiderDashboard();
+
+}
+
+
+/* =====================================================
+   RIDER DASHBOARD
+===================================================== */
+
+function loadRiderDashboard(){
+
+    if(!currentRider){
+
+        return;
+
+    }
+
+
+    /*
+       Refresh rider data.
+    */
+
+    const riders = getRiders();
+
+
+    const freshRider =
+
+        riders.find(
+
+            r =>
+            r.id === currentRider.id
+
+        );
+
+
+    if(freshRider){
+
+        currentRider =
+            freshRider;
+
+    }
+
+
+    document
+    .getElementById("riderInformation")
+    .innerHTML = `
+
+        <p>
+
+            <strong>
+                Rider ID:
+            </strong>
+
+            ${escapeHTML(
+                currentRider.id
+            )}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Name:
+            </strong>
+
+            ${escapeHTML(
+                currentRider.name
+            )}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Motorcycle:
+            </strong>
+
+            ${escapeHTML(
+                currentRider.bikeType
+            )}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Model:
+            </strong>
+
+            ${escapeHTML(
+                currentRider.bikeModel
+            )}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Plate:
+            </strong>
+
+            ${escapeHTML(
+                currentRider.plate
+            )}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Status:
+            </strong>
+
+            ${escapeHTML(
+                currentRider.status
+            )}
+
+        </p>
+
+    `;
+
+
+    loadRiderOrders();
+
+}
+
+
+/* =====================================================
+   RIDER ORDERS
+===================================================== */
+
+function loadRiderOrders(){
+
+    const container =
+
+        document
+        .getElementById(
+            "riderOrders"
+        );
+
+
+    const orders = getOrders();
+
+
+    const myOrders =
+
+        orders.filter(
+
+            order =>
+
+            order.riderId ===
+            currentRider.id
+
+        );
+
+
+    if(myOrders.length === 0){
+
+        container.innerHTML = `
+
+            <p class="info">
+
+                You currently have no assigned deliveries.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    myOrders
+    .slice()
+    .reverse()
+    .forEach(function(order){
+
+        const div =
+
+            document.createElement("div");
+
+
+        div.className = "order";
+
+
+        div.innerHTML = `
+
+            <h3>
+
+                📦
+                ${escapeHTML(order.id)}
+
+            </h3>
+
+
+            <p>
+
+                <strong>
+                    Customer:
+                </strong>
+
+                ${escapeHTML(order.name)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Customer Phone:
+                </strong>
+
+                ${escapeHTML(order.phone)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Pickup:
+                </strong>
+
+                ${escapeHTML(order.pickup)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Destination:
+                </strong>
+
+                ${escapeHTML(order.destination)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Item:
+                </strong>
+
+                ${escapeHTML(order.item)}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Status:
+                </strong>
+
+                <span class="status">
+
+                    ${escapeHTML(
+                        order.status
+                    )}
+
+                </span>
+
+            </p>
+
+
+            <button
+                class="btn call"
+                onclick="callCustomer(
+                    '${order.phone}'
+                )">
+
+                📞 Call Customer
+
+            </button>
+
+
+            <button
+                class="btn whatsapp"
+                onclick="whatsappCustomer(
+                    '${order.phone}',
+                    '${order.id}'
+                )">
+
+                💬 WhatsApp Customer
+
+            </button>
+
+
+            <br>
+
+
+            ${
+                order.status !==
+                "Delivered"
+
+                ?
+
+                `
+
+                <button
+                    class="btn"
+                    onclick="riderUpdateOrder(
+                        '${order.id}',
+                        'Picked Up'
+                    )">
+
+                    📦 I Picked Up
+
+                </button>
+
+
+                <button
+                    class="btn orange"
+                    onclick="riderUpdateOrder(
+                        '${order.id}',
+                        'Out for Delivery'
+                    )">
+
+                    🚚 Out for Delivery
+
+                </button>
+
+
+                <button
+                    class="btn green"
+                    onclick="riderConfirmDelivery(
+                        '${order.id}'
+                    )">
+
+                    ✅ I Delivered Successfully
+
+                </button>
+
+                `
+
+                :
+
+                `
+
+                <p class="success">
+
+                    ✅ Delivery Successfully Completed
+
+                    <br>
+
+                    ${escapeHTML(
+                        order.deliveredAt
+                    )}
+
+                </p>
+
+                `
+
+            }
+
+        `;
+
+
+        container.appendChild(div);
 
     });
 
-
-  localStorage.setItem(
-    "amirOrders",
-    JSON.stringify(orders)
-  );
+}
 
 
-  loadOrders();
+/* =====================================================
+   RIDER UPDATE ORDER
+===================================================== */
+
+function riderUpdateOrder(id,status){
+
+    const orders = getOrders();
+
+
+    const order =
+
+        orders.find(
+
+            o => o.id === id
+
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    order.status = status;
+
+
+    saveOrders(orders);
+
+
+    loadRiderDashboard();
 
 }
 
 
-/* =========================================
-   CONTACT CUSTOMER
-========================================= */
+/* =====================================================
+   RIDER CONFIRM DELIVERY
+===================================================== */
 
-function contactCustomer(phone,id){
+function riderConfirmDelivery(id){
 
-  let cleanPhone =
+    if(
 
-    phone.replace(
-      /\D/g,
-      ""
+        !confirm(
+
+            "Confirm that this package has been delivered successfully?"
+
+        )
+
+    ){
+
+        return;
+
+    }
+
+
+    const orders = getOrders();
+
+
+    const order =
+
+        orders.find(
+
+            o => o.id === id
+
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    order.status = "Delivered";
+
+
+    order.deliveredAt =
+
+        new Date().toLocaleString();
+
+
+    /*
+       Make rider available again.
+    */
+
+    const riders = getRiders();
+
+
+    const rider =
+
+        riders.find(
+
+            r =>
+            r.id === currentRider.id
+
+        );
+
+
+    if(rider){
+
+        rider.status = "Available";
+
+    }
+
+
+    saveOrders(orders);
+
+    saveRiders(riders);
+
+
+    /*
+       Refresh dashboard.
+    */
+
+    loadRiderDashboard();
+
+
+    alert(
+
+        "✅ Delivery successfully acknowledged."
+
     );
 
-
-  /*
-     Convert Kenyan 07XXXXXXXX
-     to 2547XXXXXXXX
-  */
-
-  if(cleanPhone.startsWith("0")){
-
-    cleanPhone =
-      "254" +
-      cleanPhone.substring(1);
-
-  }
+}
 
 
-  const message =
+/* =====================================================
+   RIDER LOGOUT
+===================================================== */
 
-    `Hello from Amir Chap Chap.
+function riderLogout(){
 
-We are contacting you regarding your delivery order ${id}.`;
-
-
-  const url =
-
-    "https://wa.me/" +
-    cleanPhone +
-    "?text=" +
-    encodeURIComponent(message);
+    currentRider = null;
 
 
-  window.open(
-    url,
-    "_blank"
-  );
+    document
+    .getElementById(
+        "riderDashboard"
+    )
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById(
+        "riderLoginId"
+    )
+    .value = "";
+
+
+    document
+    .getElementById(
+        "riderLoginPhone"
+    )
+    .value = "";
+
+
+    showSection("home");
 
 }
 
 
-/* =========================================
+/* =====================================================
+   CALL RIDER
+===================================================== */
+
+function callRider(phone){
+
+    const number =
+
+        cleanKenyanNumber(phone);
+
+
+    window.location.href =
+        "tel:+" + number;
+
+}
+
+
+/* =====================================================
+   WHATSAPP RIDER
+===================================================== */
+
+function whatsappRider(phone){
+
+    const number =
+
+        cleanKenyanNumber(phone);
+
+
+    const message =
+
+        "Hello from Amir Chap Chap. I would like to follow up on my delivery.";
+
+
+    window.open(
+
+        "https://wa.me/" +
+
+        number +
+
+        "?text=" +
+
+        encodeURIComponent(message),
+
+        "_blank"
+
+    );
+
+}
+
+
+/* =====================================================
+   CALL CUSTOMER
+===================================================== */
+
+function callCustomer(phone){
+
+    const number =
+
+        cleanKenyanNumber(phone);
+
+
+    window.location.href =
+
+        "tel:+" + number;
+
+}
+
+
+/* =====================================================
+   WHATSAPP CUSTOMER
+===================================================== */
+
+function whatsappCustomer(phone,id){
+
+    const number =
+
+        cleanKenyanNumber(phone);
+
+
+    const message =
+
+`Hello from Amir Chap Chap.
+
+This is your rider regarding delivery order ${id}.`;
+
+
+    window.open(
+
+        "https://wa.me/" +
+
+        number +
+
+        "?text=" +
+
+        encodeURIComponent(message),
+
+        "_blank"
+
+    );
+
+}
+
+
+/* =====================================================
+   CONTACT ASSIGNED RIDER
+===================================================== */
+
+function contactAssignedRider(orderId){
+
+    const orders = getOrders();
+
+
+    const order =
+
+        orders.find(
+
+            o => o.id === orderId
+
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    const riders = getRiders();
+
+
+    const rider =
+
+        riders.find(
+
+            r =>
+            r.id === order.riderId
+
+        );
+
+
+    if(!rider){
+
+        return;
+
+    }
+
+
+    whatsappRider(rider.whatsapp);
+
+}
+
+
+/* =====================================================
+   CUSTOMER CARE CALL
+===================================================== */
+
+function callCustomerCare(){
+
+    window.location.href =
+
+        "tel:+254795653284";
+
+}
+
+
+/* =====================================================
    CUSTOMER CARE WHATSAPP
-========================================= */
+===================================================== */
 
-function openWhatsApp(){
+function whatsappCustomerCare(){
 
-  const message =
+    const message =
 
-    "Hello Amir Chap Chap Customer Care, I need assistance with a delivery.";
-
-
-  const url =
-
-    "https://wa.me/" +
-    WHATSAPP_NUMBER +
-    "?text=" +
-    encodeURIComponent(message);
+        "Hello Amir Chap Chap Customer Care, I need assistance with my delivery.";
 
 
-  window.open(
-    url,
-    "_blank"
-  );
+    window.open(
+
+        "https://wa.me/254795653284?text=" +
+
+        encodeURIComponent(message),
+
+        "_blank"
+
+    );
 
 }
 
 
-/* =========================================
-   SECURITY / HTML ESCAPE
-========================================= */
+/* =====================================================
+   PHONE NORMALIZATION
+===================================================== */
+
+function normalizePhone(phone){
+
+    let number =
+
+        String(phone)
+        .replace(/\D/g,"");
+
+
+    if(number.startsWith("254")){
+
+        return number;
+
+    }
+
+
+    if(number.startsWith("0")){
+
+        return "254" +
+            number.substring(1);
+
+    }
+
+
+    return number;
+
+}
+
+
+function cleanKenyanNumber(phone){
+
+    return normalizePhone(phone);
+
+}
+
+
+/* =====================================================
+   HTML SECURITY
+===================================================== */
 
 function escapeHTML(value){
 
-  if(
-    value === undefined ||
-    value === null
-  ){
+    if(
 
-    return "";
+        value === undefined ||
 
-  }
+        value === null
+
+    ){
+
+        return "";
+
+    }
 
 
-  return String(value)
+    return String(value)
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-    .replace(
-      /</g,
-      "&lt;"
-    )
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-    .replace(
-      />/g,
-      "&gt;"
-    )
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-    .replace(
-      /"/g,
-      "&quot;"
-    )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-/* =========================================
+/* =====================================================
+   DASHBOARD STATISTICS
+===================================================== */
+
+function updateStatistics(){
+
+    const orders = getOrders();
+
+
+    const total =
+        orders.length;
+
+
+    const pending =
+
+        orders.filter(
+
+            order =>
+            order.status ===
+            "Pending"
+
+        ).length;
+
+
+    const active =
+
+        orders.filter(
+
+            order =>
+
+            order.status !==
+            "Pending" &&
+
+            order.status !==
+            "Delivered" &&
+
+            order.status !==
+            "Cancelled"
+
+        ).length;
+
+
+    const completed =
+
+        orders.filter(
+
+            order =>
+            order.status ===
+            "Delivered"
+
+        ).length;
+
+
+    document
+    .getElementById(
+        "totalOrders"
+    )
+    .textContent = total;
+
+
+    document
+    .getElementById(
+        "pendingOrders"
+    )
+    .textContent = pending;
+
+
+    document
+    .getElementById(
+        "activeOrders"
+    )
+    .textContent = active;
+
+
+    document
+    .getElementById(
+        "completedOrders"
+    )
+    .textContent = completed;
+
+}
+
+
+/* =====================================================
    START WEBSITE
-========================================= */
+===================================================== */
 
 showSection("home");
+
+
+/*
+   Refresh dashboard periodically
+   while page is open.
+*/
+
+setInterval(function(){
+
+    if(
+
+        !document
+        .getElementById(
+            "adminPanel"
+        )
+        .classList
+        .contains("hidden")
+
+    ){
+
+        loadAdminDashboard();
+
+    }
+
+
+    if(
+
+        currentRider &&
+
+        !document
+        .getElementById(
+            "riderDashboard"
+        )
+        .classList
+        .contains("hidden")
+
+    ){
+
+        loadRiderDashboard();
+
+    }
+
+},5000);
 
 </script>
 
 </body>
+
 </html>
