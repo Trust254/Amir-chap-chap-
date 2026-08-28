@@ -6438,6 +6438,27 @@ window.addEventListener(
 );
 
 </script>
+<!-- Firebase Setup -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDajjbkMszs-HVNHeUivTMVS2OzrSxw-Lo",
+    authDomain: "planning-with-ai-f9d10.firebaseapp.com",
+    projectId: "planning-with-ai-f9d10",
+    storageBucket: "planning-with-ai-f9d10.firebasestorage.app",
+    messagingSenderId: "943382820296",
+    appId: "1:943382820296:web:677b8056f7212354ca3cfd"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window.auth = getAuth(app);
+  window.db = getFirestore(app);
+  
+  console.log("Firebase connected!");
+</script>
 
 </body>
 </html>
