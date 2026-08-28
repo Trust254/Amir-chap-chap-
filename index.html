@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a7c36">
-<meta name="description" content="Amir Chap Chap - Fast delivery and parcel services in Kenya">
+<meta name="description" content="Amir Chap Chap - Delivery Services in Kenya">
 <title>Amir Chap Chap | Delivery</title>
 
 <link rel="stylesheet"
@@ -12,677 +12,663 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
 :root{
-    --green:#0a7c36;
-    --dark:#092015;
-    --yellow:#ffc700;
-    --light:#f3f8f5;
-    --white:#fff;
-    --gray:#68736d;
-    --border:#dce6df;
-    --red:#d93025;
-    --blue:#1677ff;
-    --orange:#ff9800;
-    --shadow:0 10px 30px rgba(0,0,0,.08);
+--green:#0a7c36;
+--green2:#0d963f;
+--dark:#122018;
+--yellow:#ffc700;
+--light:#f4f8f5;
+--white:#fff;
+--gray:#66736b;
+--border:#dce7df;
+--red:#d93025;
+--blue:#1677ff;
+--orange:#ff9800;
+--shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--light);
-    color:var(--dark);
-    line-height:1.5;
+font-family:Arial,Helvetica,sans-serif;
+background:var(--light);
+color:var(--dark);
+line-height:1.5;
 }
 
 button,input,select,textarea{
-    font:inherit;
+font:inherit;
 }
 
 button{
-    cursor:pointer;
+cursor:pointer;
 }
 
 button:disabled{
-    opacity:.5;
-    cursor:not-allowed;
+opacity:.5;
+cursor:not-allowed;
 }
 
 .top-strip{
-    height:7px;
-    background:linear-gradient(
-        90deg,
-        var(--green) 75%,
-        var(--yellow) 25%
-    );
+height:7px;
+background:linear-gradient(90deg,var(--green) 75%,var(--yellow) 25%);
 }
 
 nav{
-    background:#fff;
-    min-height:70px;
-    padding:10px 5%;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    position:sticky;
-    top:0;
-    z-index:3000;
-    border-bottom:1px solid var(--border);
+position:sticky;
+top:0;
+z-index:3000;
+background:#fff;
+border-bottom:1px solid var(--border);
+min-height:72px;
+padding:10px 5%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight:900;
-    font-size:22px;
-    color:var(--green);
+display:flex;
+align-items:center;
+gap:10px;
+font-size:21px;
+font-weight:900;
+color:var(--green);
 }
 
 .logo img{
-    width:48px;
-    height:48px;
-    object-fit:cover;
-    border-radius:50%;
-    border:2px solid var(--yellow);
+width:48px;
+height:48px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid var(--yellow);
 }
 
 .nav-links{
-    display:flex;
-    gap:5px;
+display:flex;
+gap:7px;
+flex-wrap:wrap;
 }
 
 .nav-links a{
-    text-decoration:none;
-    color:var(--dark);
-    padding:9px 12px;
-    border-radius:9px;
-    font-weight:bold;
+text-decoration:none;
+color:var(--dark);
+font-weight:bold;
+padding:9px 12px;
+border-radius:9px;
 }
 
 .nav-links a:hover{
-    background:#eaf8ef;
-    color:var(--green);
+background:#eaf7ee;
+color:var(--green);
 }
 
 .user-area{
-    display:flex;
-    align-items:center;
-    gap:8px;
+display:flex;
+align-items:center;
+gap:8px;
 }
 
 .user-badge{
-    background:#e7f6ed;
-    color:var(--green);
-    padding:8px 12px;
-    border-radius:20px;
-    font-weight:bold;
-    font-size:13px;
-}
-
-button{
-    border:0;
+background:#e7f6ec;
+color:var(--green);
+padding:8px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
 }
 
 .btn{
-    padding:12px 18px;
-    border-radius:11px;
-    font-weight:bold;
+border:0;
+padding:12px 18px;
+border-radius:11px;
+font-weight:800;
 }
 
 .green{
-    background:var(--green);
-    color:#fff;
+background:var(--green);
+color:#fff;
 }
 
 .yellow{
-    background:var(--yellow);
-    color:#111;
+background:var(--yellow);
+color:#111;
 }
 
 .blue{
-    background:var(--blue);
-    color:#fff;
+background:var(--blue);
+color:#fff;
 }
 
 .red{
-    background:var(--red);
-    color:#fff;
+background:var(--red);
+color:#fff;
 }
 
 .orange{
-    background:var(--orange);
-    color:#fff;
+background:var(--orange);
+color:#fff;
 }
 
 .dark{
-    background:#17251d;
-    color:#fff;
+background:var(--dark);
+color:#fff;
 }
 
 .full{
-    width:100%;
+width:100%;
 }
 
 .hero{
-    min-height:520px;
-    padding:60px 6%;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-    align-items:center;
-    background:
-    radial-gradient(
-        circle at 85% 25%,
-        rgba(255,199,0,.25),
-        transparent 30%
-    ),
-    linear-gradient(135deg,#fff,#eaf8ef);
+min-height:540px;
+padding:60px 6%;
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+gap:40px;
+background:
+radial-gradient(circle at 80% 20%,rgba(255,199,0,.25),transparent 30%),
+linear-gradient(135deg,#fff,#eaf8ef);
 }
 
 .hero h1{
-    font-size:clamp(38px,5vw,65px);
-    line-height:1.05;
-    margin:20px 0;
+font-size:clamp(40px,5vw,65px);
+line-height:1.05;
+margin:20px 0;
 }
 
 .hero h1 span{
-    color:var(--green);
+color:var(--green);
 }
 
 .hero p{
-    color:var(--gray);
-    font-size:18px;
-    max-width:600px;
-    margin-bottom:25px;
-}
-
-.hero-logo{
-    width:min(430px,100%);
-    border-radius:50%;
-    border:7px solid #fff;
-    box-shadow:0 15px 40px rgba(10,124,54,.2);
+font-size:18px;
+color:var(--gray);
+max-width:600px;
+margin-bottom:25px;
 }
 
 .hero-buttons{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.hero-logo{
+width:min(420px,100%);
+border-radius:50%;
+border:6px solid white;
+box-shadow:var(--shadow);
+}
+
+.badge{
+display:inline-block;
+background:var(--yellow);
+padding:7px 14px;
+border-radius:20px;
+font-weight:bold;
+font-size:13px;
 }
 
 section{
-    padding:65px 6%;
+padding:65px 6%;
 }
 
-.title{
-    text-align:center;
-    margin-bottom:35px;
+.section-title{
+text-align:center;
+margin-bottom:35px;
 }
 
-.title h2{
-    font-size:35px;
-    margin-bottom:7px;
+.section-title h2{
+font-size:35px;
+margin-bottom:7px;
 }
 
-.title p{
-    color:var(--gray);
+.section-title p{
+color:var(--gray);
 }
 
 .hidden{
-    display:none!important;
+display:none!important;
 }
 
-/* AUTH */
-
-#authSection{
-    display:none;
-    background:#eef8f1;
-}
-
-.auth-box{
-    max-width:430px;
-    margin:auto;
-    background:#fff;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:var(--shadow);
-}
-
-.tabs{
-    display:flex;
-    gap:8px;
-    margin-bottom:20px;
-}
-
-.tab{
-    flex:1;
-    padding:11px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    background:#f4f8f5;
-    font-weight:bold;
-}
-
-.tab.active{
-    background:var(--green);
-    color:#fff;
-}
-
-.form-group{
-    margin-bottom:16px;
-}
-
-.form-group label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:6px;
-}
-
-input,select,textarea{
-    width:100%;
-    border:1px solid var(--border);
-    background:#fff;
-    padding:12px;
-    border-radius:10px;
-    outline:none;
-}
-
-input:focus,select:focus,textarea:focus{
-    border-color:var(--green);
-    box-shadow:0 0 0 3px rgba(10,124,54,.1);
-}
-
-/* ORDER */
-
-.order-layout{
-    max-width:1100px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:.75fr 1.25fr;
-    gap:25px;
+.auth-section{
+display:none;
+background:#eef8f1;
 }
 
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:22px;
-    box-shadow:var(--shadow);
+background:#fff;
+padding:25px;
+border-radius:20px;
+box-shadow:var(--shadow);
+}
+
+.auth-box{
+max-width:440px;
+margin:auto;
+}
+
+.tabs{
+display:flex;
+gap:8px;
+margin-bottom:20px;
+}
+
+.tab{
+flex:1;
+padding:11px;
+border:1px solid var(--border);
+background:var(--light);
+border-radius:10px;
+font-weight:bold;
+}
+
+.tab.active{
+background:var(--green);
+color:#fff;
+}
+
+.form-group{
+margin-bottom:16px;
+}
+
+.form-group label{
+display:block;
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+width:100%;
+padding:13px;
+border:1px solid var(--border);
+border-radius:10px;
+outline:none;
+background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+border-color:var(--green);
+box-shadow:0 0 0 3px rgba(10,124,54,.1);
+}
+
+.order-layout{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:.75fr 1.25fr;
+gap:25px;
 }
 
 .category{
-    width:100%;
-    text-align:left;
-    padding:13px;
-    margin-bottom:9px;
-    border:1px solid var(--border);
-    border-radius:11px;
-    background:#f5f8f6;
-    font-weight:bold;
+width:100%;
+padding:14px;
+border:1px solid var(--border);
+background:var(--light);
+border-radius:12px;
+margin-bottom:10px;
+text-align:left;
+font-weight:bold;
 }
 
 .category.active{
-    background:var(--green);
-    color:#fff;
+background:var(--green);
+color:#fff;
 }
 
 .payment-box{
-    margin-top:20px;
-    background:#edf9f1;
-    border:1px solid #cce8d5;
-    padding:18px;
-    border-radius:15px;
+background:#eef9f1;
+border:1px solid #cce9d4;
+padding:18px;
+border-radius:15px;
+margin-top:20px;
 }
 
 .mpesa-number{
-    display:block;
-    color:var(--green);
-    font-size:25px;
-    font-weight:900;
-    margin:8px 0;
+display:block;
+font-size:25px;
+font-weight:900;
+color:var(--green);
+margin:9px 0;
 }
 
 .payment-methods{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
 }
 
 .payment-option{
-    border:2px solid var(--border);
-    padding:14px;
-    border-radius:12px;
-    cursor:pointer;
+border:2px solid var(--border);
+padding:14px;
+border-radius:12px;
+cursor:pointer;
+background:white;
 }
 
 .payment-option.active{
-    border-color:var(--green);
-    background:#effff4;
+border-color:var(--green);
+background:#effff3;
 }
 
-/* HISTORY */
-
 .history{
-    max-width:1100px;
-    margin:25px auto 0;
+max-width:1100px;
+margin:25px auto 0;
 }
 
 .history-item{
-    border:1px solid var(--border);
-    padding:15px;
-    border-radius:13px;
-    margin-top:10px;
+border:1px solid var(--border);
+padding:15px;
+border-radius:13px;
+margin-top:10px;
 }
 
 .history-item strong{
-    color:var(--green);
+color:var(--green);
 }
 
-/* TRACKING */
+.empty{
+text-align:center;
+padding:20px;
+color:var(--gray);
+}
 
 .tracking{
-    background:#edf9f1;
+background:#eef9f1;
 }
 
 .tracker{
-    max-width:1100px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:1fr 1.2fr;
-    gap:25px;
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:25px;
 }
 
 .info-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-top:20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:20px;
+background:var(--light);
+padding:18px;
+border-radius:15px;
 }
 
-.info{
-    background:#f5f8f6;
-    padding:14px;
-    border-radius:12px;
+.info-item label{
+display:block;
+font-size:12px;
+color:var(--gray);
 }
 
-.info small{
-    display:block;
-    color:var(--gray);
+.info-item strong{
+word-break:break-word;
 }
 
-.info strong{
-    word-break:break-word;
+.rider-header{
+display:none;
+align-items:center;
+gap:15px;
+margin:20px 0;
 }
 
-.rider{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    margin:20px 0;
-}
-
-.rider img{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid var(--green);
+.rider-photo{
+width:80px;
+height:80px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid var(--green);
 }
 
 #map{
-    height:400px;
-    width:100%;
-    border-radius:18px;
-    overflow:hidden;
+height:400px;
+border-radius:18px;
+overflow:hidden;
 }
 
-/* SIMULATOR */
-
 .simulator{
-    position:fixed;
-    right:15px;
-    bottom:15px;
-    width:320px;
-    background:#17251d;
-    color:#fff;
-    padding:20px;
-    border-radius:18px;
-    z-index:4000;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
+display:none;
+position:fixed;
+right:15px;
+bottom:15px;
+width:320px;
+background:var(--dark);
+color:#fff;
+padding:20px;
+border-radius:18px;
+z-index:4000;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
 .simulator h3{
-    color:var(--yellow);
-    margin-bottom:8px;
+color:var(--yellow);
+margin-bottom:10px;
 }
 
 .simulator button{
-    width:100%;
-    padding:10px;
-    margin-top:8px;
-    border-radius:8px;
-    font-weight:bold;
+width:100%;
+padding:10px;
+margin-top:8px;
+border:0;
+border-radius:8px;
+font-weight:bold;
 }
 
-/* ADMIN */
-
-.admin{
-    background:#08170e;
-    color:#fff;
+.admin-section{
+background:var(--dark);
+color:#fff;
 }
 
 .admin-login{
-    max-width:430px;
-    margin:auto;
-    background:#173025;
-    padding:25px;
-    border-radius:20px;
-}
-
-.admin-login input{
-    margin-bottom:12px;
+max-width:450px;
+margin:auto;
+background:#173025;
+padding:25px;
+border-radius:20px;
 }
 
 .admin-panel{
-    max-width:1150px;
-    margin:auto;
-    display:none;
+display:none;
+max-width:1100px;
+margin:auto;
 }
 
 .admin-card{
-    background:#173025;
-    padding:25px;
-    border-radius:20px;
-    margin-bottom:20px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin-top:18px;
-}
-
-.stat{
-    background:#0d2116;
-    padding:18px;
-    border-radius:13px;
-    border:1px solid #31553f;
-}
-
-.stat small{
-    color:#aebdb4;
-    display:block;
-}
-
-.stat strong{
-    font-size:25px;
+background:#173025;
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
 }
 
 .admin-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
-.admin-grid input,
-.admin-grid select{
-    margin-top:5px;
+.admin-card input,
+.admin-card select{
+width:100%;
+padding:12px;
+border:0;
+border-radius:9px;
+margin-bottom:10px;
 }
 
-.table{
-    overflow-x:auto;
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+.stat{
+background:#0e2117;
+padding:18px;
+border-radius:13px;
+border:1px solid #31553f;
+}
+
+.stat span{
+display:block;
+font-size:12px;
+color:#aebdb4;
+}
+
+.stat strong{
+font-size:25px;
+}
+
+.table-wrap{
+overflow-x:auto;
 }
 
 table{
-    width:100%;
-    min-width:700px;
-    border-collapse:collapse;
+width:100%;
+border-collapse:collapse;
+min-width:650px;
 }
 
 th,td{
-    padding:12px;
-    text-align:left;
-    border-bottom:1px solid #31553f;
+padding:11px;
+text-align:left;
+border-bottom:1px solid #31553f;
 }
 
 th{
-    color:var(--yellow);
+color:var(--yellow);
 }
 
 .admin-order{
-    background:#0d2116;
-    border:1px solid #31553f;
-    padding:17px;
-    border-radius:13px;
-    margin-top:12px;
+background:#0e2117;
+padding:16px;
+border-radius:12px;
+margin-top:10px;
+border:1px solid #31553f;
 }
 
 .admin-order h4{
-    color:var(--yellow);
+color:var(--yellow);
 }
 
 .admin-actions{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-    margin-top:12px;
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin-top:10px;
 }
 
 .admin-actions button{
-    padding:8px 11px;
-    border-radius:8px;
-    font-weight:bold;
+border:0;
+padding:8px 11px;
+border-radius:7px;
+font-weight:bold;
 }
 
 footer{
-    background:#06140b;
-    color:#fff;
-    text-align:center;
-    padding:30px;
+background:#061a0d;
+color:#fff;
+text-align:center;
+padding:30px;
 }
 
 footer p{
-    color:#c8d7ce;
-    margin-top:5px;
+color:#c8d7ce;
+margin:5px;
 }
 
-/* TOAST */
-
-#toast{
-    position:fixed;
-    left:20px;
-    bottom:20px;
-    background:#17251d;
-    color:#fff;
-    padding:14px 18px;
-    border-radius:12px;
-    display:none;
-    z-index:6000;
-    box-shadow:0 10px 25px rgba(0,0,0,.3);
+.toast{
+display:none;
+position:fixed;
+left:20px;
+bottom:20px;
+z-index:6000;
+background:var(--dark);
+color:white;
+padding:14px 18px;
+border-radius:10px;
+box-shadow:var(--shadow);
+max-width:350px;
 }
 
-#toast.show{
-    display:block;
+.toast.show{
+display:block;
 }
-
-/* MOBILE */
 
 @media(max-width:900px){
 
-    nav{
-        flex-wrap:wrap;
-    }
+.hero,
+.order-layout,
+.tracker{
+grid-template-columns:1fr;
+}
 
-    .nav-links{
-        order:3;
-        width:100%;
-        justify-content:center;
-    }
+.hero{
+text-align:center;
+}
 
-    .hero,
-    .order-layout,
-    .tracker{
-        grid-template-columns:1fr;
-    }
+.hero p{
+margin-left:auto;
+margin-right:auto;
+}
 
-    .hero{
-        text-align:center;
-    }
+.hero-buttons{
+justify-content:center;
+}
 
-    .hero p{
-        margin-left:auto;
-        margin-right:auto;
-    }
+nav{
+flex-wrap:wrap;
+}
 
-    .hero-buttons{
-        justify-content:center;
-    }
+.nav-links{
+order:3;
+width:100%;
+justify-content:center;
+}
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
 }
 
 @media(max-width:600px){
 
-    section{
-        padding:45px 4%;
-    }
+section{
+padding:50px 4%;
+}
 
-    .logo{
-        font-size:17px;
-    }
+.admin-grid,
+.info-grid,
+.stats,
+.payment-methods{
+grid-template-columns:1fr;
+}
 
-    .logo img{
-        width:40px;
-        height:40px;
-    }
+.logo{
+font-size:17px;
+}
 
-    .nav-links a{
-        font-size:13px;
-        padding:7px;
-    }
+.logo img{
+width:40px;
+height:40px;
+}
 
-    .stats,
-    .admin-grid,
-    .info-grid,
-    .payment-methods{
-        grid-template-columns:1fr;
-    }
+#map{
+height:320px;
+}
 
-    #map{
-        height:320px;
-    }
+.simulator{
+left:10px;
+right:10px;
+width:auto;
+}
 
-    .simulator{
-        left:10px;
-        right:10px;
-        width:auto;
-    }
 }
 </style>
 </head>
@@ -693,774 +679,751 @@ footer p{
 
 <nav>
 
-    <div class="logo">
-        <img src="1000369432.png"
-             alt="Amir Chap Chap"
-             onerror="this.style.display='none'">
-        Amir Chap Chap
-    </div>
+<div class="logo">
+<img src="1000369432.png"
+alt="Amir Chap Chap Logo"
+onerror="this.style.display='none'">
+Amir Chap Chap
+</div>
 
-    <div class="nav-links">
-        <a href="#order">Order</a>
-        <a href="#tracking">Tracking</a>
-        <a href="#admin">Admin</a>
-    </div>
+<div class="nav-links">
+<a href="#order">Order</a>
+<a href="#tracking">Tracking</a>
+<a href="#admin">Admin</a>
+</div>
 
-    <div class="user-area" id="navAuth"></div>
+<div id="navAuth" class="user-area"></div>
 
 </nav>
 
 <header class="hero">
 
-    <div>
-        <span class="btn yellow">
-            ⚡ FAST DELIVERY
-        </span>
+<div>
 
-        <h1>
-            Fast pickup,
-            <span>safe delivery.</span>
-        </h1>
+<span class="badge">⚡ FAST DELIVERY</span>
 
-        <p>
-            Amir Chap Chap connects customers,
-            riders and delivery management in one
-            simple platform.
-        </p>
+<h1>
+Fast pickup,
+<span>safe delivery.</span>
+</h1>
 
-        <div class="hero-buttons">
+<p>
+Amir Chap Chap connects customers,
+riders and delivery management in one
+simple platform across Kenya.
+</p>
 
-            <button class="btn green"
-                    onclick="openOrder()">
-                Request Delivery 🛵
-            </button>
+<div class="hero-buttons">
 
-            <button class="btn yellow"
-                    onclick="openTracking()">
-                Track Delivery 📍
-            </button>
+<button class="btn green"
+onclick="openOrder()">
+Request Delivery 🛵
+</button>
 
-        </div>
-    </div>
+<button class="btn yellow"
+onclick="openTracking()">
+Track Delivery 📍
+</button>
 
-    <div style="text-align:center">
-        <img src="1000369432.png"
-             class="hero-logo"
-             alt="Amir Chap Chap"
-             onerror="this.style.display='none'">
-    </div>
+</div>
+
+</div>
+
+<div style="text-align:center">
+
+<img src="1000369432.png"
+class="hero-logo"
+alt="Amir Chap Chap"
+onerror="this.style.display='none'">
+
+</div>
 
 </header>
 
-
 <!-- AUTH -->
 
-<section id="authSection">
+<section id="authSection" class="auth-section">
 
-    <div class="auth-box">
+<div class="auth-box card">
 
-        <div class="tabs">
+<div class="tabs">
 
-            <button id="loginTab"
-                    class="tab active"
-                    onclick="switchAuth('login')">
-                Login
-            </button>
+<button id="loginTab"
+class="tab active"
+onclick="switchAuth('login')">
+Login
+</button>
 
-            <button id="registerTab"
-                    class="tab"
-                    onclick="switchAuth('register')">
-                Register
-            </button>
+<button id="registerTab"
+class="tab"
+onclick="switchAuth('register')">
+Register
+</button>
 
-        </div>
+</div>
 
-        <form onsubmit="handleAuth(event)">
+<form onsubmit="handleAuth(event)">
 
-            <div class="form-group"
-                 id="nameGroup"
-                 style="display:none">
+<div id="nameGroup" class="form-group"
+style="display:none">
 
-                <label>Full Name</label>
+<label>Full Name</label>
 
-                <input id="authName"
-                       type="text"
-                       placeholder="Your full name">
+<input id="authName"
+type="text"
+placeholder="Enter full name">
 
-            </div>
+</div>
 
-            <div class="form-group">
+<div class="form-group">
 
-                <label>Phone Number</label>
+<label>Phone Number</label>
 
-                <input id="authPhone"
-                       type="tel"
-                       placeholder="07XXXXXXXX"
-                       required>
+<input id="authPhone"
+type="tel"
+placeholder="07XXXXXXXX"
+required>
 
-            </div>
+</div>
 
-            <button class="btn green full"
-                    id="authButton">
-                Login
-            </button>
+<button id="authButton"
+class="btn green full"
+type="submit">
+Login
+</button>
 
-        </form>
+</form>
 
-    </div>
+</div>
 
 </section>
-
 
 <!-- ORDER -->
 
 <section id="order">
 
-    <div class="title">
+<div class="section-title">
 
-        <h2>1. Request a Delivery</h2>
+<h2>1. Request a Delivery</h2>
 
-        <p>
-            Tell us where to collect and where to deliver.
-        </p>
+<p>
+Tell us what you need delivered.
+</p>
 
-    </div>
+</div>
+
+<div class="order-layout">
+
+<div class="card">
+
+<h3>Select Service</h3>
+
+<br>
+
+<button class="category active"
+onclick="selectCategory(this,'Food')">
+🍔 Food Delivery
+</button>
+
+<button class="category"
+onclick="selectCategory(this,'Parcel')">
+📦 Parcel Delivery
+</button>
 
-    <div class="order-layout">
+<button class="category"
+onclick="selectCategory(this,'Shopping')">
+🛒 Shopping
+</button>
 
-        <div class="card">
+<button class="category"
+onclick="selectCategory(this,'Documents')">
+📄 Documents
+</button>
+
+<button class="category"
+onclick="selectCategory(this,'Other')">
+🚚 Other Delivery
+</button>
 
-            <h3>Select Service</h3>
+<div class="payment-box">
 
-            <br>
+<strong>💰 Payment</strong>
 
-            <button class="category active"
-                    onclick="selectCategory(this,'Food')">
-                🍔 Food Delivery
-            </button>
+<p>
+Cash or M-Pesa accepted.
+</p>
 
-            <button class="category"
-                    onclick="selectCategory(this,'Parcel')">
-                📦 Parcel Delivery
-            </button>
+<span class="mpesa-number">
+0792 102 645
+</span>
 
-            <button class="category"
-                    onclick="selectCategory(this,'Shopping')">
-                🛒 Shopping Request
-            </button>
+<small>
+For M-Pesa, enter your transaction code
+when submitting your order.
+</small>
 
-            <button class="category"
-                    onclick="selectCategory(this,'Documents')">
-                📄 Documents
-            </button>
+</div>
 
-            <button class="category"
-                    onclick="selectCategory(this,'Other')">
-                🚚 Other Delivery
-            </button>
+</div>
 
-            <div class="payment-box">
+<form id="deliveryForm"
+class="card"
+onsubmit="submitOrder(event)">
 
-                <strong>💰 Payment</strong>
+<h3>Pickup + Destination</h3>
 
-                <p>
-                    Cash or M-Pesa accepted.
-                </p>
+<br>
 
-                <span class="mpesa-number">
-                    0792 102 645
-                </span>
+<div class="form-group">
+<label>Customer Name</label>
+<input id="custName"
+type="text"
+required
+placeholder="Your name">
+</div>
 
-                <small>
-                    For M-Pesa, send the agreed amount
-                    and enter the transaction code.
-                </small>
+<div class="form-group">
+<label>Customer Phone</label>
+<input id="custPhone"
+type="tel"
+required
+placeholder="07XXXXXXXX">
+</div>
 
-            </div>
+<div class="form-group">
+<label>Pickup Location</label>
+<input id="pickup"
+type="text"
+required
+placeholder="Where should we collect it?">
+</div>
 
-        </div>
+<div class="form-group">
+<label>Destination</label>
+<input id="destination"
+type="text"
+required
+placeholder="Where should we deliver it?">
+</div>
 
+<div class="form-group">
+<label>Item / Instructions</label>
+<textarea id="item"
+rows="3"
+required
+placeholder="What are we picking up?"></textarea>
+</div>
 
-        <form class="card"
-              onsubmit="submitOrder(event)">
+<div class="form-group">
+<label>Delivery Amount (KES)</label>
+<input id="amount"
+type="number"
+min="0"
+required
+placeholder="e.g. 300">
+</div>
 
-            <h3>Pickup + Destination Details</h3>
+<div class="form-group">
 
-            <br>
+<label>Payment Method</label>
 
-            <div class="form-group">
+<div class="payment-methods">
 
-                <label>Customer Name</label>
+<label id="cashOption"
+class="payment-option active">
 
-                <input id="custName"
-                       required
-                       placeholder="Your name">
+<input type="radio"
+name="payment"
+value="Cash"
+checked
+onchange="changePayment()">
 
-            </div>
+💵 Cash
 
-            <div class="form-group">
+</label>
 
-                <label>Customer Phone</label>
+<label id="mpesaOption"
+class="payment-option">
 
-                <input id="custPhone"
-                       required
-                       type="tel"
-                       placeholder="07XXXXXXXX">
+<input type="radio"
+name="payment"
+value="M-Pesa"
+onchange="changePayment()">
 
-            </div>
+📱 M-Pesa
 
-            <div class="form-group">
+</label>
 
-                <label>Pickup Location</label>
+</div>
 
-                <input id="pickup"
-                       required
-                       placeholder="Where should we collect it?">
+</div>
 
-            </div>
+<div id="mpesaDetails"
+class="payment-box"
+style="display:none">
 
-            <div class="form-group">
+<strong>Send M-Pesa to:</strong>
 
-                <label>Destination</label>
+<span class="mpesa-number">
+0792 102 645
+</span>
 
-                <input id="destination"
-                       required
-                       placeholder="Where should we deliver it?">
+<p>
+Enter the M-Pesa transaction code below.
+</p>
 
-            </div>
+<div class="form-group">
+<label>Transaction Code</label>
+<input id="mpesaCode"
+type="text"
+maxlength="30"
+placeholder="e.g. QGH7ABC123">
+</div>
 
-            <div class="form-group">
+</div>
 
-                <label>Item / Instructions</label>
+<button class="btn green full"
+type="submit">
+Submit Delivery Request 🚀
+</button>
 
-                <textarea id="item"
-                          rows="3"
-                          required
-                          placeholder="What are we picking up?"></textarea>
+</form>
 
-            </div>
+</div>
 
-            <div class="form-group">
+<div class="history card">
 
-                <label>Delivery Amount (KES)</label>
+<div style="display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap">
 
-                <input id="amount"
-                       type="number"
-                       min="0"
-                       required
-                       placeholder="e.g. 300">
+<h3>My Orders</h3>
 
-            </div>
+<button class="btn blue"
+onclick="openTracking()">
+View Tracking
+</button>
 
-            <div class="form-group">
+</div>
 
-                <label>Payment Method</label>
+<div id="customerOrders">
+<div class="empty">
+Login to view your orders.
+</div>
+</div>
 
-                <div class="payment-methods">
-
-                    <label class="payment-option active"
-                           id="cashOption">
-
-                        <input type="radio"
-                               name="payment"
-                               value="Cash"
-                               checked
-                               onchange="changePayment()">
-
-                        💵 Cash
-
-                    </label>
-
-                    <label class="payment-option"
-                           id="mpesaOption">
-
-                        <input type="radio"
-                               name="payment"
-                               value="M-Pesa"
-                               onchange="changePayment()">
-
-                        📱 M-Pesa
-
-                    </label>
-
-                </div>
-
-            </div>
-
-            <div class="payment-box"
-                 id="mpesaDetails"
-                 style="display:none">
-
-                <strong>Send M-Pesa to:</strong>
-
-                <span class="mpesa-number">
-                    0792 102 645
-                </span>
-
-                <p>
-                    Enter your M-Pesa transaction code:
-                </p>
-
-                <input id="mpesaCode"
-                       placeholder="e.g. QGH7ABC123">
-
-            </div>
-
-            <button class="btn green full"
-                    type="submit">
-                Submit Delivery Request 🚀
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="history card">
-
-        <div style="display:flex;
-                    justify-content:space-between;
-                    gap:10px;
-                    align-items:center">
-
-            <h3>My Orders</h3>
-
-            <button class="btn blue"
-                    onclick="openTracking()">
-                Tracking
-            </button>
-
-        </div>
-
-        <div id="customerOrders">
-            <p style="color:#68736d;margin-top:15px">
-                Login to view your orders.
-            </p>
-        </div>
-
-    </div>
+</div>
 
 </section>
-
 
 <!-- TRACKING -->
 
 <section id="tracking" class="tracking">
 
-    <div class="title">
+<div class="section-title">
 
-        <h2>2. Delivery Tracking</h2>
+<h2>2. Delivery Tracking</h2>
 
-        <p>
-            Follow your current delivery.
-        </p>
-
-    </div>
-
-    <div class="tracker">
-
-        <div class="card">
-
-            <span class="btn yellow"
-                  id="statusBadge">
-                AWAITING REQUEST
-            </span>
-
-            <h3 id="riderName"
-                style="margin-top:12px">
-                No Rider Assigned
-            </h3>
-
-            <p id="statusText"
-               style="color:#68736d;margin-top:6px">
-                Submit an order to start dispatch.
-            </p>
-
-            <div class="rider"
-                 id="riderBlock"
-                 style="display:none">
-
-                <img id="riderPhoto"
-                     alt="Rider">
-
-                <div>
-
-                    <h3 id="riderHeader">--</h3>
-
-                    <p id="riderPhone"
-                       style="color:#0a7c36;font-weight:bold">
-                        --
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="info-grid">
-
-                <div class="info">
-                    <small>Bike</small>
-                    <strong id="bike">--</strong>
-                </div>
-
-                <div class="info">
-                    <small>Number Plate</small>
-                    <strong id="plate">--</strong>
-                </div>
-
-                <div class="info">
-                    <small>Pickup</small>
-                    <strong id="trackPickup">--</strong>
-                </div>
-
-                <div class="info">
-                    <small>Destination</small>
-                    <strong id="trackDestination">--</strong>
-                </div>
-
-                <div class="info">
-                    <small>Payment</small>
-                    <strong id="trackPayment">--</strong>
-                </div>
-
-                <div class="info">
-                    <small>Order ID</small>
-                    <strong id="orderId">--</strong>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="card">
-
-            <div id="map"></div>
-
-            <button class="btn green full"
-                    style="margin-top:10px"
-                    onclick="refreshTracking()">
-                🔄 Refresh Tracking
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- RIDER SIMULATOR -->
-
-<div class="simulator"
-     id="simulator"
-     style="display:none">
-
-    <h3>📱 Rider App</h3>
-
-    <p>
-        Rider:
-        <strong id="simRider">--</strong>
-    </p>
-
-    <p id="simJob"
-       style="font-size:13px">
-        --
-    </p>
-
-    <button id="gpsButton"
-            style="background:#ffc700"
-            onclick="toggleGPS()">
-        1. Turn GPS ON
-    </button>
-
-    <button id="acceptButton"
-            style="background:#1677ff;color:white"
-            onclick="acceptJob()"
-            disabled>
-        2. Accept Job
-    </button>
-
-    <button id="pickupButton"
-            style="background:#ff9800;color:white"
-            onclick="pickupJob()"
-            disabled>
-        3. Pickup Item
-    </button>
-
-    <button id="deliverButton"
-            style="background:#0a7c36;color:white"
-            onclick="deliverJob()"
-            disabled>
-        4. Complete Delivery
-    </button>
+<p>
+Track your current delivery.
+</p>
 
 </div>
 
+<div class="tracker">
 
-<!-- ADMIN -->
+<div class="card">
 
-<section id="admin" class="admin">
+<span id="statusBadge"
+class="badge">
+AWAITING REQUEST
+</span>
 
-    <div class="title">
+<h3 id="riderName"
+style="margin-top:12px">
+No Rider Assigned
+</h3>
 
-        <h2>3. Admin Dashboard</h2>
+<p id="statusText"
+style="color:var(--gray)">
+Submit an order to start dispatch.
+</p>
 
-        <p>
-            Manage riders and customer orders.
-        </p>
+<div id="riderHeader"
+class="rider-header">
 
-    </div>
+<img id="riderPhoto"
+class="rider-photo"
+alt="Rider">
 
+<div>
 
-    <div class="admin-login"
-         id="adminLogin">
+<h4 id="riderHeaderName">--</h4>
 
-        <h3>🔐 Admin Login</h3>
+<p id="riderPhone"
+style="color:var(--green)">
+--</p>
 
-        <p style="font-size:13px;
-                  color:#c8d7ce;
-                  margin:10px 0 15px">
+</div>
 
-            Authorized email:
-            <strong>
-                abdiabdulmohammed50@gmail.com
-            </strong>
+</div>
 
-        </p>
+<div class="info-grid">
 
-        <input id="adminEmail"
-               type="email"
-               placeholder="Admin email">
+<div class="info-item">
+<label>Bike Model</label>
+<strong id="bike">--</strong>
+</div>
 
-        <input id="adminPassword"
-               type="password"
-               placeholder="Admin password">
+<div class="info-item">
+<label>Number Plate</label>
+<strong id="plate">--</strong>
+</div>
 
-        <button class="btn green full"
-                onclick="adminLogin()">
-            Login to Admin
-        </button>
+<div class="info-item">
+<label>Pickup</label>
+<strong id="trackPickup">--</strong>
+</div>
 
-    </div>
+<div class="info-item">
+<label>Destination</label>
+<strong id="trackDestination">--</strong>
+</div>
 
+<div class="info-item">
+<label>Payment</label>
+<strong id="trackPayment">--</strong>
+</div>
 
-    <div class="admin-panel"
-         id="adminPanel">
+<div class="info-item">
+<label>Order ID</label>
+<strong id="trackId">--</strong>
+</div>
 
-        <div class="admin-card">
+</div>
 
-            <div style="display:flex;
-                        justify-content:space-between;
-                        gap:10px;
-                        flex-wrap:wrap">
+</div>
 
-                <div>
-                    <h3>📊 Admin Dashboard</h3>
-                    <p style="color:#aebdb4">
-                        Manage Amir Chap Chap.
-                    </p>
-                </div>
+<div class="card">
 
-                <button class="btn yellow"
-                        onclick="adminLogout()">
-                    Logout
-                </button>
+<div id="map"></div>
 
-            </div>
+<button class="btn green full"
+style="margin-top:10px"
+onclick="refreshTracking()">
+🔄 Refresh Tracking
+</button>
 
-            <div class="stats">
+</div>
 
-                <div class="stat">
-                    <small>Total Orders</small>
-                    <strong id="totalOrders">0</strong>
-                </div>
-
-                <div class="stat">
-                    <small>Riders</small>
-                    <strong id="totalRiders">0</strong>
-                </div>
-
-                <div class="stat">
-                    <small>M-Pesa Orders</small>
-                    <strong id="mpesaOrders">0</strong>
-                </div>
-
-                <div class="stat">
-                    <small>Cash Orders</small>
-                    <strong id="cashOrders">0</strong>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ADD RIDER -->
-
-        <div class="admin-card">
-
-            <h3>➕ Register Rider</h3>
-
-            <br>
-
-            <div class="admin-grid">
-
-                <div>
-                    <label>Rider Name</label>
-                    <input id="riderNameInput"
-                           placeholder="John Kamau">
-                </div>
-
-                <div>
-                    <label>Phone</label>
-                    <input id="riderPhoneInput"
-                           placeholder="0712345678">
-                </div>
-
-                <div>
-                    <label>Motorbike</label>
-                    <input id="bikeInput"
-                           placeholder="Boxer 150">
-                </div>
-
-                <div>
-                    <label>Number Plate</label>
-                    <input id="plateInput"
-                           placeholder="KMD 123A">
-                </div>
-
-                <div>
-                    <label>Photo URL</label>
-                    <input id="photoInput"
-                           placeholder="Optional image URL">
-                </div>
-
-                <div>
-                    <label>Status</label>
-                    <select id="riderStatusInput">
-                        <option value="available">
-                            Available
-                        </option>
-                        <option value="offline">
-                            Offline
-                        </option>
-                    </select>
-                </div>
-
-            </div>
-
-            <br>
-
-            <button class="btn green full"
-                    onclick="addRider()">
-                ➕ Add Verified Rider
-            </button>
-
-        </div>
-
-
-        <!-- RIDERS -->
-
-        <div class="admin-card">
-
-            <div style="display:flex;
-                        justify-content:space-between;
-                        gap:10px">
-
-                <h3>🛵 Registered Riders</h3>
-
-                <button class="btn blue"
-                        onclick="renderRiders()">
-                    Refresh
-                </button>
-
-            </div>
-
-            <div class="table"
-                 style="margin-top:15px">
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Rider</th>
-                            <th>Phone</th>
-                            <th>Bike</th>
-                            <th>Plate</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="riderTable"></tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-
-        <!-- ORDERS -->
-
-        <div class="admin-card">
-
-            <div style="display:flex;
-                        justify-content:space-between;
-                        gap:10px">
-
-                <h3>📦 Customer Orders</h3>
-
-                <button class="btn blue"
-                        onclick="renderAdminOrders()">
-                    Refresh
-                </button>
-
-            </div>
-
-            <div id="adminOrders"></div>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
+<!-- RIDER SIMULATOR -->
+
+<div id="simulator" class="simulator">
+
+<h3>📱 Rider App</h3>
+
+<p>
+Rider:
+<strong id="simName">--</strong>
+</p>
+
+<p id="simOrder">
+-- 
+</p>
+
+<button id="gpsBtn"
+style="background:#ffc700"
+onclick="toggleGPS()">
+1. Turn GPS ON
+</button>
+
+<button id="acceptBtn"
+style="background:#2196f3;color:#fff"
+onclick="acceptJob()"
+disabled>
+2. Accept Job
+</button>
+
+<button id="pickupBtn"
+style="background:#ff9800;color:#fff"
+onclick="pickupJob()"
+disabled>
+3. Pickup Item
+</button>
+
+<button id="deliverBtn"
+style="background:#0a7c36;color:#fff"
+onclick="deliverJob()"
+disabled>
+4. Complete Delivery
+</button>
+
+</div>
+
+<!-- ADMIN -->
+
+<section id="admin" class="admin-section">
+
+<div class="section-title">
+
+<h2>3. Admin Dashboard</h2>
+
+<p>
+Manage riders and customer orders.
+</p>
+
+</div>
+
+<div id="adminLoginBox"
+class="admin-login">
+
+<h3>🔐 Admin Login</h3>
+
+<br>
+
+<p style="font-size:13px;color:#c8d7ce">
+Authorized administrator:
+<strong>
+abdiabdulmohammed50@gmail.com
+</strong>
+</p>
+
+<br>
+
+<div class="form-group">
+<label>Admin Email</label>
+<input id="adminEmail"
+type="email"
+placeholder="Admin email">
+</div>
+
+<div class="form-group">
+<label>Admin Password</label>
+<input id="adminPassword"
+type="password"
+placeholder="Admin password">
+</div>
+
+<button class="btn green full"
+onclick="adminLogin()">
+Login to Admin
+</button>
+
+<p style="font-size:11px;
+color:#aebdb4;
+margin-top:10px">
+For production, admin authentication
+must be moved to a secure backend.
+</p>
+
+</div>
+
+<div id="adminPanel" class="admin-panel">
+
+<div class="admin-card">
+
+<div style="display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap">
+
+<div>
+<h3>📊 Admin Dashboard</h3>
+<p style="color:#aebdb4">
+Manage Amir Chap Chap.
+</p>
+</div>
+
+<button class="btn yellow"
+onclick="adminLogout()">
+Logout Admin
+</button>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<span>Total Orders</span>
+<strong id="totalOrders">0</strong>
+</div>
+
+<div class="stat">
+<span>Riders</span>
+<strong id="totalRiders">0</strong>
+</div>
+
+<div class="stat">
+<span>M-Pesa Orders</span>
+<strong id="mpesaOrders">0</strong>
+</div>
+
+<div class="stat">
+<span>Cash Orders</span>
+<strong id="cashOrders">0</strong>
+</div>
+
+</div>
+
+</div>
+
+<!-- RIDERS -->
+
+<div class="admin-card">
+
+<h3>➕ Register Rider</h3>
+
+<br>
+
+<div class="admin-grid">
+
+<div>
+<label>Rider Name</label>
+<input id="riderNameInput"
+placeholder="John Kamau">
+</div>
+
+<div>
+<label>Phone</label>
+<input id="riderPhoneInput"
+placeholder="0712345678">
+</div>
+
+<div>
+<label>Motorbike</label>
+<input id="bikeInput"
+placeholder="Boxer 150">
+</div>
+
+<div>
+<label>Number Plate</label>
+<input id="plateInput"
+placeholder="KMD 123A">
+</div>
+
+<div>
+<label>Photo URL</label>
+<input id="photoInput"
+placeholder="Optional">
+</div>
+
+<div>
+<label>Status</label>
+<select id="riderStatusInput">
+<option value="available">Available</option>
+<option value="offline">Offline</option>
+</select>
+</div>
+
+</div>
+
+<button class="btn green full"
+onclick="addRider()">
+➕ Add Verified Rider
+</button>
+
+</div>
+
+<div class="admin-card">
+
+<h3>🛵 Registered Riders</h3>
+
+<div class="table-wrap"
+style="margin-top:15px">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Bike</th>
+<th>Plate</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="riderTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ORDERS -->
+
+<div class="admin-card">
+
+<div style="display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px">
+
+<h3>📦 Customer Orders</h3>
+
+<button class="btn blue"
+onclick="renderAdminOrders()">
+🔄 Refresh
+</button>
+
+</div>
+
+<div id="adminOrders"
+style="margin-top:15px">
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 <footer>
 
-    <h3>Amir Chap Chap</h3>
+<h3>Amir Chap Chap</h3>
 
-    <p>Fast. Simple. Reliable.</p>
+<p>Fast. Simple. Reliable.</p>
 
-    <p>
-        M-Pesa:
-        <strong>0792 102 645</strong>
-    </p>
+<p>
+M-Pesa:
+<strong>0792 102 645</strong>
+</p>
 
-    <p>
-        © <span id="year"></span>
-        Amir Chap Chap
-    </p>
+<p>
+© <span id="year"></span>
+Amir Chap Chap
+</p>
 
 </footer>
 
-<div id="toast"></div>
-
+<div id="toast" class="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
 /* =====================================================
-   CONFIGURATION
+   CONFIG
 ===================================================== */
 
 const ADMIN_EMAIL =
-    "abdiabdulmohammed50@gmail.com";
+"abdiabdulmohammed50@gmail.com";
+
+const ADMIN_PASSWORD =
+"CHANGE_THIS_PASSWORD";
+
 
 const MPESA_NUMBER =
-    "0792102645";
+"0792102645";
 
 
 /* =====================================================
@@ -1468,120 +1431,136 @@ const MPESA_NUMBER =
 ===================================================== */
 
 let currentUser =
-    JSON.parse(localStorage.getItem("amirUser")) || null;
+JSON.parse(localStorage.getItem("amirUser")) || null;
 
 let users =
-    JSON.parse(localStorage.getItem("amirUsers")) || [];
+JSON.parse(localStorage.getItem("amirUsers")) || [];
 
 let orders =
-    JSON.parse(localStorage.getItem("amirOrders")) || [];
+JSON.parse(localStorage.getItem("amirOrders")) || [];
 
 let riders =
-    JSON.parse(localStorage.getItem("amirRiders")) || [];
+JSON.parse(localStorage.getItem("amirRiders")) || [
+{
+id:101,
+name:"John Kamau",
+phone:"0712345678",
+bike:"TVS HLX 150",
+plate:"KMD 452X",
+photo:"",
+lat:-1.2833,
+lng:36.8167,
+status:"available"
+},
+{
+id:102,
+name:"Peter Kiprono",
+phone:"0722987654",
+bike:"Bajaj Boxer 150",
+plate:"KMC 891B",
+photo:"",
+lat:-1.2880,
+lng:36.8200,
+status:"available"
+}
+];
 
-let activeOrder = null;
-let activeRider = null;
-let selectedCategory = "Food";
-let authMode = "login";
-let gpsOn = false;
+let selectedCategory="Food";
+let authMode="login";
+let activeOrder=null;
+let activeRider=null;
 
-let map = null;
-let riderMarker = null;
-let pickupMarker = null;
-let destinationMarker = null;
+let map=null;
+let riderMarker=null;
+let pickupMarker=null;
+let destinationMarker=null;
+
+let gpsOn=false;
 
 
 /* =====================================================
    START
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded",function(){
 
-    document.getElementById("year").textContent =
-        new Date().getFullYear();
+document.getElementById("year").textContent =
+new Date().getFullYear();
 
-    createDefaultRiders();
+updateAuthUI();
 
-    updateAuthUI();
+initMap();
 
-    initMap();
+renderCustomerOrders();
 
-    restoreOrder();
+renderAdminOrders();
 
-    renderCustomerOrders();
+renderRiders();
 
-    updateTracking();
+updateStats();
 
-    updateStats();
+restoreActiveOrder();
 
 });
 
 
 /* =====================================================
-   DEFAULT RIDERS
-===================================================== */
-
-function createDefaultRiders(){
-
-    if(riders.length > 0){
-        return;
-    }
-
-    riders = [
-
-        {
-            id:101,
-            name:"John Kamau",
-            phone:"0712345678",
-            bike:"TVS HLX 150",
-            plate:"KMD 452X",
-            photo:"",
-            lat:-1.2833,
-            lng:36.8167,
-            status:"available"
-        },
-
-        {
-            id:102,
-            name:"Peter Kiprono",
-            phone:"0722987654",
-            bike:"Bajaj Boxer 150",
-            plate:"KMC 891B",
-            photo:"",
-            lat:-1.2880,
-            lng:36.8200,
-            status:"available"
-        }
-
-    ];
-
-    saveRiders();
-}
-
-
-/* =====================================================
-   STORAGE
+   UTILITIES
 ===================================================== */
 
 function saveUsers(){
-    localStorage.setItem(
-        "amirUsers",
-        JSON.stringify(users)
-    );
+localStorage.setItem(
+"amirUsers",
+JSON.stringify(users)
+);
 }
 
 function saveOrders(){
-    localStorage.setItem(
-        "amirOrders",
-        JSON.stringify(orders)
-    );
+localStorage.setItem(
+"amirOrders",
+JSON.stringify(orders)
+);
 }
 
 function saveRiders(){
-    localStorage.setItem(
-        "amirRiders",
-        JSON.stringify(riders)
-    );
+localStorage.setItem(
+"amirRiders",
+JSON.stringify(riders)
+);
+}
+
+function escapeHtml(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+function showToast(message){
+
+const toast=document.getElementById("toast");
+
+toast.textContent=message;
+toast.classList.add("show");
+
+clearTimeout(window.toastTimer);
+
+window.toastTimer=setTimeout(function(){
+toast.classList.remove("show");
+},3000);
+
+}
+
+function avatar(name){
+
+return "https://ui-avatars.com/api/?name="+
+encodeURIComponent(name)+
+"&background=0a7c36&color=fff";
+
 }
 
 
@@ -1591,27 +1570,23 @@ function saveRiders(){
 
 function openOrder(){
 
-    document.getElementById("order")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+document.getElementById("order")
+.scrollIntoView({behavior:"smooth"});
 
 }
 
 function openTracking(){
 
-    document.getElementById("tracking")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+document.getElementById("tracking")
+.scrollIntoView({behavior:"smooth"});
 
-    setTimeout(function(){
+setTimeout(function(){
 
-        if(map){
-            map.invalidateSize();
-        }
+if(map){
+map.invalidateSize();
+}
 
-    },500);
+},400);
 
 }
 
@@ -1622,246 +1597,194 @@ function openTracking(){
 
 function switchAuth(mode){
 
-    authMode = mode;
+authMode=mode;
 
-    document.getElementById("loginTab")
-        .classList.toggle(
-            "active",
-            mode === "login"
-        );
+document.getElementById("loginTab")
+.classList.toggle("active",mode==="login");
 
-    document.getElementById("registerTab")
-        .classList.toggle(
-            "active",
-            mode === "register"
-        );
+document.getElementById("registerTab")
+.classList.toggle("active",mode==="register");
 
-    document.getElementById("nameGroup")
-        .style.display =
-            mode === "register"
-            ? "block"
-            : "none";
+document.getElementById("nameGroup")
+.style.display=
+mode==="register"?"block":"none";
 
-    document.getElementById("authButton")
-        .textContent =
-            mode === "register"
-            ? "Create Account"
-            : "Login";
+document.getElementById("authButton")
+.textContent=
+mode==="register"
+?"Create Account"
+:"Login";
 
 }
-
 
 function openAuth(){
 
-    const section =
-        document.getElementById("authSection");
+document.getElementById("authSection").style.display="block";
 
-    section.style.display = "block";
-
-    section.scrollIntoView({
-        behavior:"smooth"
-    });
+document.getElementById("authSection")
+.scrollIntoView({behavior:"smooth"});
 
 }
-
 
 function handleAuth(event){
 
-    event.preventDefault();
+event.preventDefault();
 
-    const phone =
-        document.getElementById("authPhone")
-        .value.trim();
+const phone=
+document.getElementById("authPhone")
+.value.trim();
 
-    const name =
-        document.getElementById("authName")
-        .value.trim();
+const name=
+document.getElementById("authName")
+.value.trim();
 
-
-    if(!phone){
-
-        showToast("Enter your phone number.");
-
-        return;
-    }
+if(!phone){
+showToast("Enter your phone number.");
+return;
+}
 
 
-    if(authMode === "register"){
+/* REGISTER */
 
-        if(!name){
+if(authMode==="register"){
 
-            showToast("Enter your full name.");
+if(!name){
+showToast("Enter your full name.");
+return;
+}
 
-            return;
-        }
+const exists=users.find(
+u=>u.phone===phone
+);
 
+if(exists){
 
-        const existing =
-            users.find(
-                user => user.phone === phone
-            );
+showToast(
+"This phone number is already registered. Please login."
+);
 
+switchAuth("login");
 
-        if(existing){
+return;
+}
 
-            showToast(
-                "This phone number is already registered. Please login."
-            );
+const user={
+id:Date.now(),
+name:name,
+phone:phone
+};
 
-            switchAuth("login");
+users.push(user);
 
-            document.getElementById("authPhone")
-                .value = phone;
+saveUsers();
 
-            return;
-        }
+currentUser=user;
 
+localStorage.setItem(
+"amirUser",
+JSON.stringify(user)
+);
 
-        const newUser = {
-
-            id:
-                "USR-" +
-                Date.now(),
-
-            name:name,
-
-            phone:phone,
-
-            createdAt:
-                new Date().toISOString()
-
-        };
-
-
-        users.push(newUser);
-
-        saveUsers();
-
-        currentUser = newUser;
-
-        localStorage.setItem(
-            "amirUser",
-            JSON.stringify(currentUser)
-        );
-
-
-        document.getElementById("authSection")
-            .style.display = "none";
-
-
-        updateAuthUI();
-
-        showToast(
-            "Account created successfully."
-        );
-
-        return;
-
-    }
-
-
-    /* LOGIN */
-
-    const user =
-        users.find(
-            item => item.phone === phone
-        );
-
-
-    if(!user){
-
-        showToast(
-            "Account not found. Please register first."
-        );
-
-        return;
-    }
-
-
-    currentUser = user;
-
-    localStorage.setItem(
-        "amirUser",
-        JSON.stringify(currentUser)
-    );
-
-
-    document.getElementById("authSection")
-        .style.display = "none";
-
-
-    updateAuthUI();
-
-    showToast(
-        "Welcome back, " +
-        currentUser.name
-    );
+showToast(
+"Account created successfully. You are now logged in."
+);
 
 }
 
+/* LOGIN */
+
+else{
+
+const user=users.find(
+u=>u.phone===phone
+);
+
+if(!user){
+
+showToast(
+"Account not found. Please register first."
+);
+
+switchAuth("register");
+
+return;
+}
+
+currentUser=user;
+
+localStorage.setItem(
+"amirUser",
+JSON.stringify(user)
+);
+
+showToast(
+"Login successful. Welcome "+user.name+"!"
+);
+
+}
+
+document.getElementById("authSection")
+.style.display="none";
+
+updateAuthUI();
+
+}
+
+
+/* =====================================================
+   AUTH UI
+===================================================== */
 
 function updateAuthUI(){
 
-    const area =
-        document.getElementById("navAuth");
+const area=
+document.getElementById("navAuth");
 
+if(currentUser){
 
-    if(currentUser){
+area.innerHTML=`
 
-        area.innerHTML = `
+<span class="user-badge">
+👤 ${escapeHtml(currentUser.name)}
+</span>
 
-            <span class="user-badge">
-                👤 ${escapeHTML(currentUser.name)}
-            </span>
+<button class="btn red"
+onclick="logout()">
+Logout
+</button>
+`;
 
-            <button
-                class="btn"
-                style="
-                    background:white;
-                    color:#d93025;
-                    border:1px solid #d93025;
-                "
-                onclick="logout()">
-                Logout
-            </button>
+document.getElementById("custName").value=
+currentUser.name;
 
-        `;
+document.getElementById("custPhone").value=
+currentUser.phone;
 
+}else{
 
-        document.getElementById("custName")
-            .value = currentUser.name;
+area.innerHTML=`
 
-        document.getElementById("custPhone")
-            .value = currentUser.phone;
+<button class="btn green"
+onclick="openAuth()">
+Register / Login
+</button>
+`;
 
-
-    }else{
-
-        area.innerHTML = `
-
-            <button
-                class="btn green"
-                onclick="openAuth()">
-                Register / Login
-            </button>
-
-        `;
-
-    }
-
-    renderCustomerOrders();
 }
 
+renderCustomerOrders();
+
+}
 
 function logout(){
 
-    localStorage.removeItem("amirUser");
+localStorage.removeItem("amirUser");
 
-    currentUser = null;
+currentUser=null;
 
-    updateAuthUI();
+updateAuthUI();
 
-    showToast("Logged out successfully.");
+showToast("You have logged out.");
 
 }
 
@@ -1870,16 +1793,17 @@ function logout(){
    CATEGORY
 ===================================================== */
 
-function selectCategory(button, category){
+function selectCategory(button,category){
 
-    document.querySelectorAll(".category")
-        .forEach(
-            item => item.classList.remove("active")
-        );
+document
+.querySelectorAll(".category")
+.forEach(function(btn){
+btn.classList.remove("active");
+});
 
-    button.classList.add("active");
+button.classList.add("active");
 
-    selectedCategory = category;
+selectedCategory=category;
 
 }
 
@@ -1890,305 +1814,238 @@ function selectCategory(button, category){
 
 function changePayment(){
 
-    const selected =
-        document.querySelector(
-            'input[name="payment"]:checked'
-        );
+const selected=
+document.querySelector(
+'input[name="payment"]:checked'
+);
 
-    if(!selected){
-        return;
-    }
+if(!selected)return;
 
-    const method = selected.value;
+const mpesa=
+selected.value==="M-Pesa";
 
-    document.getElementById("cashOption")
-        .classList.toggle(
-            "active",
-            method === "Cash"
-        );
+document.getElementById("cashOption")
+.classList.toggle("active",!mpesa);
 
-    document.getElementById("mpesaOption")
-        .classList.toggle(
-            "active",
-            method === "M-Pesa"
-        );
+document.getElementById("mpesaOption")
+.classList.toggle("active",mpesa);
 
-    document.getElementById("mpesaDetails")
-        .style.display =
-            method === "M-Pesa"
-            ? "block"
-            : "none";
+document.getElementById("mpesaDetails")
+.style.display=mpesa?"block":"none";
 
 }
 
 
 /* =====================================================
-   SUBMIT ORDER
+   ORDER SUBMISSION
 ===================================================== */
 
 function submitOrder(event){
 
-    event.preventDefault();
+event.preventDefault();
 
+if(!currentUser){
 
-    if(!currentUser){
+showToast(
+"Please register or login before placing an order."
+);
 
-        openAuth();
+openAuth();
 
-        showToast(
-            "Please register or login before placing an order."
-        );
+return;
+}
 
-        return;
-    }
+const name=
+document.getElementById("custName")
+.value.trim();
 
+const phone=
+document.getElementById("custPhone")
+.value.trim();
 
-    const name =
-        document.getElementById("custName")
-        .value.trim();
+const pickup=
+document.getElementById("pickup")
+.value.trim();
 
-    const phone =
-        document.getElementById("custPhone")
-        .value.trim();
+const destination=
+document.getElementById("destination")
+.value.trim();
 
-    const pickup =
-        document.getElementById("pickup")
-        .value.trim();
+const item=
+document.getElementById("item")
+.value.trim();
 
-    const destination =
-        document.getElementById("destination")
-        .value.trim();
+const amount=
+Number(document.getElementById("amount").value);
 
-    const item =
-        document.getElementById("item")
-        .value.trim();
+const payment=
+document.querySelector(
+'input[name="payment"]:checked'
+).value;
 
-    const amount =
-        Number(
-            document.getElementById("amount")
-            .value
-        );
+const mpesaCode=
+document.getElementById("mpesaCode")
+.value.trim();
 
-    const payment =
-        document.querySelector(
-            'input[name="payment"]:checked'
-        ).value;
+if(!name||!phone||!pickup||!destination||!item){
 
-    const mpesaCode =
-        document.getElementById("mpesaCode")
-        .value.trim();
+showToast("Please complete all details.");
 
+return;
+}
 
-    if(
-        !name ||
-        !phone ||
-        !pickup ||
-        !destination ||
-        !item
-    ){
+if(amount<0||isNaN(amount)){
 
-        showToast(
-            "Please complete all details."
-        );
+showToast("Enter a valid amount.");
 
-        return;
-    }
+return;
+}
 
+if(payment==="M-Pesa"&&!mpesaCode){
 
-    if(
-        !Number.isFinite(amount) ||
-        amount < 0
-    ){
+showToast("Enter your M-Pesa transaction code.");
 
-        showToast(
-            "Enter a valid amount."
-        );
+return;
+}
 
-        return;
-    }
+const order={
 
+id:
+"ACC-"+Date.now().toString().slice(-8),
 
-    if(
-        payment === "M-Pesa" &&
-        !mpesaCode
-    ){
+userId:currentUser.id,
 
-        showToast(
-            "Enter your M-Pesa transaction code."
-        );
+category:selectedCategory,
 
-        return;
-    }
+customerName:name,
 
+customerPhone:phone,
 
-    const order = {
+pickup:pickup,
 
-        id:
-            "ACC-" +
-            Date.now().toString().slice(-8),
+destination:destination,
 
-        userId:
-            currentUser.id,
+item:item,
 
-        category:
-            selectedCategory,
+amount:amount,
 
-        customerName:name,
+paymentMethod:payment,
 
-        customerPhone:phone,
+mpesaCode:
+payment==="M-Pesa"?mpesaCode:"",
 
-        pickup:pickup,
+paymentStatus:
+payment==="M-Pesa"
+?"PENDING VERIFICATION"
+:"CASH ON DELIVERY",
 
-        destination:destination,
+status:"NEW ORDER",
 
-        item:item,
+riderId:null,
 
-        amount:amount,
+riderName:null,
 
-        paymentMethod:payment,
+createdAt:new Date().toISOString()
 
-        mpesaCode:
-            payment === "M-Pesa"
-            ? mpesaCode
-            : "",
+};
 
-        paymentStatus:
-            payment === "M-Pesa"
-            ? "PENDING VERIFICATION"
-            : "CASH ON DELIVERY",
+orders.push(order);
 
-        status:"NEW ORDER",
+saveOrders();
 
-        riderId:null,
+activeOrder=order;
 
-        riderName:null,
+showToast(
+"Order "+order.id+" received successfully."
+);
 
-        createdAt:
-            new Date().toISOString()
+document.getElementById("deliveryForm").reset();
 
-    };
+document.getElementById("custName").value=
+currentUser.name;
 
+document.getElementById("custPhone").value=
+currentUser.phone;
 
-    orders.push(order);
+changePayment();
 
-    saveOrders();
+renderCustomerOrders();
 
-    activeOrder = order;
+renderAdminOrders();
 
-    activeRider = null;
+updateStats();
 
-    renderCustomerOrders();
+openTracking();
 
-    renderAdminOrders();
-
-    updateStats();
-
-    updateTracking();
-
-    document.getElementById("deliveryForm")?.reset();
-
-    document.getElementById("custName")
-        .value = currentUser.name;
-
-    document.getElementById("custPhone")
-        .value = currentUser.phone;
-
-    changePayment();
-
-    showToast(
-        "Order " +
-        order.id +
-        " submitted successfully."
-    );
-
-
-    openTracking();
-
-
-    setTimeout(
-        assignRider,
-        700
-    );
+setTimeout(assignRider,700);
 
 }
 
 
 /* =====================================================
-   ASSIGN RIDER
+   RIDER ASSIGNMENT
 ===================================================== */
 
 function assignRider(){
 
-    if(!activeOrder){
-        return;
-    }
+if(!activeOrder)return;
 
-    if(activeOrder.riderId){
-        return;
-    }
+if(activeOrder.riderId)return;
 
+const available=
+riders.filter(
+r=>r.status==="available"
+);
 
-    const available =
-        riders.filter(
-            rider =>
-                rider.status === "available"
-        );
+if(!available.length){
 
+activeOrder.status=
+"WAITING FOR RIDER";
 
-    if(available.length === 0){
+saveOrders();
 
-        activeOrder.status =
-            "WAITING FOR RIDER";
+updateTracking();
 
-        saveOrders();
+renderAdminOrders();
 
-        updateTracking();
+showToast(
+"No rider available. Admin can assign one later."
+);
 
-        renderAdminOrders();
+return;
+}
 
-        showToast(
-            "No rider available. Admin can assign one."
-        );
+const rider=available[0];
 
-        return;
-    }
+rider.status="assigned";
 
+activeRider=rider;
 
-    const rider =
-        available[0];
+activeOrder.riderId=rider.id;
 
+activeOrder.riderName=rider.name;
 
-    activeRider = rider;
+activeOrder.status="RIDER ASSIGNED";
 
-    rider.status = "assigned";
+saveRiders();
 
+saveOrders();
 
-    activeOrder.riderId =
-        rider.id;
+updateTracking();
 
-    activeOrder.riderName =
-        rider.name;
+renderCustomerOrders();
 
-    activeOrder.status =
-        "RIDER ASSIGNED";
+renderAdminOrders();
 
+renderRiders();
 
-    saveRiders();
+updateStats();
 
-    saveOrders();
+showToast(
+"Rider "+rider.name+" assigned."
+);
 
-    updateTracking();
-
-    renderAdminOrders();
-
-    updateStats();
-
-    startSimulator();
-
-    showToast(
-        rider.name +
-        " has been assigned."
-    );
+startSimulator();
 
 }
 
@@ -2199,159 +2056,170 @@ function assignRider(){
 
 function renderCustomerOrders(){
 
-    const box =
-        document.getElementById(
-            "customerOrders"
-        );
+const box=
+document.getElementById("customerOrders");
 
+if(!currentUser){
 
-    if(!box){
-        return;
-    }
+box.innerHTML=
+`<div class="empty">
+Login to view your orders.
+</div>`;
 
+return;
+}
 
-    if(!currentUser){
+const myOrders=
+orders.filter(
+o=>o.userId===currentUser.id
+);
 
-        box.innerHTML =
-            `<p style="color:#68736d;margin-top:15px">
-                Login to view your orders.
-             </p>`;
+if(!myOrders.length){
 
-        return;
-    }
+box.innerHTML=
+`<div class="empty">
+You have no orders yet.
+</div>`;
 
+return;
+}
 
-    const myOrders =
-        orders.filter(
-            order =>
-                order.userId === currentUser.id
-        );
+box.innerHTML=
+myOrders
+.slice()
+.reverse()
+.map(function(order){
 
+return `
 
-    if(myOrders.length === 0){
+<div class="history-item">
 
-        box.innerHTML =
-            `<p style="color:#68736d;margin-top:15px">
-                You have no orders yet.
-             </p>`;
+<strong>${escapeHtml(order.id)}</strong>
 
-        return;
-    }
+<p>
+${escapeHtml(order.category)}
+</p>
 
+<p>
+${escapeHtml(order.pickup)}
+ →
+${escapeHtml(order.destination)}
+</p>
 
-    box.innerHTML =
-        myOrders
-        .slice()
-        .reverse()
-        .map(
-            order => `
+<p>
+KES ${Number(order.amount).toLocaleString()}
+</p>
 
-                <div class="history-item">
+<p>
+Payment:
+${escapeHtml(order.paymentMethod)}
+</p>
 
-                    <strong>
-                        ${escapeHTML(order.id)}
-                    </strong>
+<p>
+Status:
+<strong>
+${escapeHtml(order.status)}
+</strong>
+</p>
 
-                    <p>
-                        ${escapeHTML(order.category)}
-                        —
-                        ${escapeHTML(order.pickup)}
-                        → 
-                        ${escapeHTML(order.destination)}
-                    </p>
+<button
+class="btn blue"
+style="margin-top:8px"
+onclick="selectOrder('${order.id}')">
+Track
+</button>
 
-                    <p>
-                        Amount:
-                        KES ${Number(order.amount).toLocaleString()}
-                    </p>
+</div>
+`;
 
-                    <p>
-                        Status:
-                        <strong>
-                            ${escapeHTML(order.status)}
-                        </strong>
-                    </p>
+})
+.join("");
 
-                    <button
-                        class="btn blue"
-                        style="margin-top:8px"
-                        onclick="trackOrder('${order.id}')">
-                        Track
-                    </button>
+}
 
-                </div>
-            `
-        )
-        .join("");
+function selectOrder(id){
+
+const order=orders.find(
+o=>o.id===id
+);
+
+if(!order)return;
+
+activeOrder=order;
+
+activeRider=
+riders.find(
+r=>r.id===order.riderId
+)||null;
+
+localStorage.setItem(
+"amirActiveOrder",
+JSON.stringify(order)
+);
+
+updateTracking();
+
+openTracking();
 
 }
 
 
 /* =====================================================
-   TRACK ORDER
+   ACTIVE ORDER
 ===================================================== */
 
-function trackOrder(id){
+function restoreActiveOrder(){
 
-    const order =
-        orders.find(
-            item => item.id === id
-        );
+if(currentUser){
 
+const saved=
+localStorage.getItem(
+"amirActiveOrder"
+);
 
-    if(!order){
-        return;
-    }
+if(saved){
 
+try{
 
-    activeOrder = order;
+const savedOrder=
+JSON.parse(saved);
 
-    activeRider =
-        riders.find(
-            rider =>
-                rider.id === order.riderId
-        ) || null;
+const found=
+orders.find(
+o=>o.id===savedOrder.id
+);
 
+if(found&&found.userId===currentUser.id){
 
-    updateTracking();
+activeOrder=found;
 
-    openTracking();
+activeRider=
+riders.find(
+r=>r.id===found.riderId
+)||null;
 
 }
 
+}catch(e){}
 
-/* =====================================================
-   RESTORE
-===================================================== */
+}
 
-function restoreOrder(){
+}
 
-    if(!currentUser){
-        return;
-    }
+updateTracking();
 
+}
 
-    const myOrders =
-        orders.filter(
-            order =>
-                order.userId === currentUser.id
-        );
+function saveActiveOrder(){
 
+if(activeOrder){
 
-    if(myOrders.length === 0){
-        return;
-    }
+localStorage.setItem(
+"amirActiveOrder",
+JSON.stringify(activeOrder)
+);
 
-
-    activeOrder =
-        myOrders[myOrders.length - 1];
-
-
-    activeRider =
-        riders.find(
-            rider =>
-                rider.id === activeOrder.riderId
-        ) || null;
+}
 
 }
 
@@ -2362,186 +2230,121 @@ function restoreOrder(){
 
 function updateTracking(){
 
-    if(!activeOrder){
+if(!activeOrder){
 
-        document.getElementById("statusBadge")
-            .textContent =
-            "AWAITING REQUEST";
+document.getElementById("statusBadge")
+.textContent="AWAITING REQUEST";
 
-        document.getElementById("riderName")
-            .textContent =
-            "No Rider Assigned";
+document.getElementById("riderName")
+.textContent="No Rider Assigned";
 
-        document.getElementById("statusText")
-            .textContent =
-            "Submit an order to start dispatch.";
+document.getElementById("statusText")
+.textContent=
+"Submit an order to start dispatch.";
 
-        clearTrackingFields();
+document.getElementById("bike").textContent="--";
+document.getElementById("plate").textContent="--";
+document.getElementById("trackPickup").textContent="--";
+document.getElementById("trackDestination").textContent="--";
+document.getElementById("trackPayment").textContent="--";
+document.getElementById("trackId").textContent="--";
 
-        return;
-    }
+document.getElementById("riderHeader")
+.style.display="none";
 
+return;
+}
 
-    document.getElementById("statusBadge")
-        .textContent =
-        activeOrder.status;
+document.getElementById("statusBadge")
+.textContent=activeOrder.status;
 
+document.getElementById("trackPickup")
+.textContent=activeOrder.pickup;
 
-    document.getElementById("trackPickup")
-        .textContent =
-        activeOrder.pickup;
+document.getElementById("trackDestination")
+.textContent=activeOrder.destination;
 
-    document.getElementById("trackDestination")
-        .textContent =
-        activeOrder.destination;
+document.getElementById("trackPayment")
+.textContent=
+activeOrder.paymentMethod+
+" - "+
+activeOrder.paymentStatus;
 
-    document.getElementById("trackPayment")
-        .textContent =
-        activeOrder.paymentMethod +
-        " - " +
-        activeOrder.paymentStatus;
+document.getElementById("trackId")
+.textContent=activeOrder.id;
 
-    document.getElementById("orderId")
-        .textContent =
-        activeOrder.id;
+let message="Your order is being processed.";
 
+switch(activeOrder.status){
 
-    activeRider =
-        riders.find(
-            rider =>
-                rider.id === activeOrder.riderId
-        ) || null;
+case "NEW ORDER":
+message="Your order has been received.";
+break;
 
+case "WAITING FOR RIDER":
+message="Waiting for an available rider.";
+break;
 
-    if(activeRider){
+case "RIDER ASSIGNED":
+message="Rider assigned. Waiting for rider acceptance.";
+break;
 
-        document.getElementById("riderName")
-            .textContent =
-            activeRider.name;
+case "JOB ACCEPTED - EN ROUTE":
+message="Rider accepted the order and is going to pickup.";
+break;
 
-        document.getElementById("riderHeader")
-            .textContent =
-            activeRider.name;
+case "ITEM PICKED UP":
+message="Item picked up. Rider is heading to destination.";
+break;
 
-        document.getElementById("riderPhone")
-            .textContent =
-            "📞 " + activeRider.phone;
+case "DELIVERED":
+message="Delivery completed successfully.";
+break;
 
-        document.getElementById("bike")
-            .textContent =
-            activeRider.bike;
-
-        document.getElementById("plate")
-            .textContent =
-            activeRider.plate;
-
-        document.getElementById("riderPhoto")
-            .src =
-            activeRider.photo ||
-            avatar(activeRider.name);
-
-        document.getElementById("riderBlock")
-            .style.display =
-            "flex";
-
-
-    }else{
-
-        document.getElementById("riderName")
-            .textContent =
-            "No Rider Assigned";
-
-        document.getElementById("riderBlock")
-            .style.display =
-            "none";
-
-        document.getElementById("bike")
-            .textContent = "--";
-
-        document.getElementById("plate")
-            .textContent = "--";
-    }
-
-
-    let message =
-        "Your order is being processed.";
-
-
-    switch(activeOrder.status){
-
-        case "NEW ORDER":
-            message =
-                "Your order has been received.";
-            break;
-
-        case "WAITING FOR RIDER":
-            message =
-                "Waiting for an available rider.";
-            break;
-
-        case "RIDER ASSIGNED":
-            message =
-                "Rider assigned. Waiting for acceptance.";
-            break;
-
-        case "JOB ACCEPTED - EN ROUTE":
-            message =
-                "Rider accepted the order and is going to pickup.";
-            break;
-
-        case "ITEM PICKED UP":
-            message =
-                "Item picked up. Rider is heading to destination.";
-            break;
-
-        case "DELIVERED":
-            message =
-                "Delivery completed successfully.";
-            break;
-
-        case "CANCELLED":
-            message =
-                "This delivery was cancelled.";
-            break;
-
-        case "PROCESSING":
-            message =
-                "Admin is processing your order.";
-            break;
-    }
-
-
-    document.getElementById("statusText")
-        .textContent = message;
-
-
-    renderMap();
+case "CANCELLED":
+message="This delivery was cancelled.";
+break;
 
 }
 
+document.getElementById("statusText")
+.textContent=message;
 
-function clearTrackingFields(){
+const rider=
+riders.find(
+r=>r.id===activeOrder.riderId
+);
 
-    document.getElementById("bike")
-        .textContent = "--";
+if(rider){
 
-    document.getElementById("plate")
-        .textContent = "--";
+activeRider=rider;
 
-    document.getElementById("trackPickup")
-        .textContent = "--";
+document.getElementById("riderName")
+.textContent=rider.name;
 
-    document.getElementById("trackDestination")
-        .textContent = "--";
+document.getElementById("riderHeaderName")
+.textContent=rider.name;
 
-    document.getElementById("trackPayment")
-        .textContent = "--";
+document.getElementById("riderPhone")
+.textContent="📞 "+rider.phone;
 
-    document.getElementById("orderId")
-        .textContent = "--";
+document.getElementById("bike")
+.textContent=rider.bike;
 
-    document.getElementById("riderBlock")
-        .style.display = "none";
+document.getElementById("plate")
+.textContent=rider.plate;
+
+document.getElementById("riderPhoto").src=
+rider.photo||avatar(rider.name);
+
+document.getElementById("riderHeader")
+.style.display="flex";
+
+renderMap();
+
+}
+
+saveActiveOrder();
 
 }
 
@@ -2552,118 +2355,86 @@ function clearTrackingFields(){
 
 function initMap(){
 
-    if(typeof L === "undefined"){
-        return;
-    }
+if(typeof L==="undefined")return;
 
+map=L.map("map")
+.setView([-1.2833,36.8167],13);
 
-    map =
-        L.map("map")
-        .setView(
-            [-1.2833,36.8167],
-            13
-        );
-
-
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            maxZoom:19,
-            attribution:
-                "© OpenStreetMap contributors"
-        }
-    ).addTo(map);
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{
+maxZoom:19,
+attribution:"© OpenStreetMap contributors"
+}
+).addTo(map);
 
 }
-
 
 function renderMap(){
 
-    if(
-        !map ||
-        !activeOrder ||
-        !activeRider
-    ){
-        return;
-    }
+if(!map||!activeOrder||!activeRider)return;
 
+if(riderMarker)
+map.removeLayer(riderMarker);
 
-    if(riderMarker){
-        map.removeLayer(riderMarker);
-    }
+if(pickupMarker)
+map.removeLayer(pickupMarker);
 
-    if(pickupMarker){
-        map.removeLayer(pickupMarker);
-    }
+if(destinationMarker)
+map.removeLayer(destinationMarker);
 
-    if(destinationMarker){
-        map.removeLayer(destinationMarker);
-    }
+const lat=Number(activeRider.lat)||-1.2833;
+const lng=Number(activeRider.lng)||36.8167;
 
+const pickupLat=lat+0.006;
+const pickupLng=lng+0.006;
 
-    const lat =
-        Number(activeRider.lat);
+const destinationLat=lat-0.006;
+const destinationLng=lng+0.010;
 
-    const lng =
-        Number(activeRider.lng);
+riderMarker=
+L.marker([lat,lng])
+.addTo(map)
+.bindPopup(
+"<b>Rider:</b> "+
+escapeHtml(activeRider.name)
+);
 
+pickupMarker=
+L.marker([pickupLat,pickupLng])
+.addTo(map)
+.bindPopup(
+"<b>Pickup:</b> "+
+escapeHtml(activeOrder.pickup)
+);
 
-    riderMarker =
-        L.marker([lat,lng])
-        .addTo(map)
-        .bindPopup(
-            "<b>Rider:</b> " +
-            escapeHTML(activeRider.name)
-        );
+destinationMarker=
+L.marker([destinationLat,destinationLng])
+.addTo(map)
+.bindPopup(
+"<b>Destination:</b> "+
+escapeHtml(activeOrder.destination)
+);
 
-
-    pickupMarker =
-        L.marker(
-            [lat + .006,lng + .006]
-        )
-        .addTo(map)
-        .bindPopup(
-            "<b>Pickup:</b> " +
-            escapeHTML(activeOrder.pickup)
-        );
-
-
-    destinationMarker =
-        L.marker(
-            [lat - .006,lng + .010]
-        )
-        .addTo(map)
-        .bindPopup(
-            "<b>Destination:</b> " +
-            escapeHTML(activeOrder.destination)
-        );
-
-
-    map.fitBounds(
-        L.latLngBounds([
-            [lat,lng],
-            [lat+.006,lng+.006],
-            [lat-.006,lng+.010]
-        ]),
-        {
-            padding:[30,30]
-        }
-    );
+map.fitBounds(
+[
+[lat,lng],
+[pickupLat,pickupLng],
+[destinationLat,destinationLng]
+],
+{padding:[30,30]}
+);
 
 }
 
-
 function refreshTracking(){
 
-    restoreOrder();
+restoreActiveOrder();
 
-    updateTracking();
+if(map)
+map.invalidateSize();
 
-    if(map){
-        map.invalidateSize();
-    }
-
-    showToast("Tracking refreshed.");
+showToast("Tracking refreshed.");
 
 }
 
@@ -2674,443 +2445,768 @@ function refreshTracking(){
 
 function startSimulator(){
 
-    if(
-        !activeRider ||
-        !activeOrder
-    ){
-        return;
-    }
+if(!activeRider||!activeOrder)return;
 
+document.getElementById("simulator")
+.style.display="block";
 
-    document.getElementById("simulator")
-        .style.display = "block";
+document.getElementById("simName")
+.textContent=activeRider.name;
 
-    document.getElementById("simRider")
-        .textContent =
-        activeRider.name;
+document.getElementById("simOrder")
+.textContent="Order: "+activeOrder.id;
 
-    document.getElementById("simJob")
-        .textContent =
-        "Job: " + activeOrder.id;
-
-
-    gpsOn = false;
-
-    document.getElementById("gpsButton")
-        .textContent =
-        "1. Turn GPS ON";
-
-    document.getElementById("gpsButton")
-        .style.background =
-        "#ffc700";
-
-    document.getElementById("gpsButton")
-        .style.color =
-        "#111";
-
-    document.getElementById("acceptButton")
-        .disabled = true;
-
-    document.getElementById("pickupButton")
-        .disabled = true;
-
-    document.getElementById("deliverButton")
-        .disabled = true;
+resetSimulator();
 
 }
 
+function resetSimulator(){
+
+gpsOn=false;
+
+document.getElementById("gpsBtn")
+.textContent="1. Turn GPS ON";
+
+document.getElementById("gpsBtn")
+.style.background="#ffc700";
+
+document.getElementById("acceptBtn")
+.disabled=true;
+
+document.getElementById("pickupBtn")
+.disabled=true;
+
+document.getElementById("deliverBtn")
+.disabled=true;
+
+}
 
 function toggleGPS(){
 
-    gpsOn = !gpsOn;
+gpsOn=!gpsOn;
 
+const btn=
+document.getElementById("gpsBtn");
 
-    const button =
-        document.getElementById("gpsButton");
+if(gpsOn){
 
+btn.textContent="✓ GPS ON";
 
-    if(gpsOn){
+btn.style.background="#0a7c36";
+btn.style.color="#fff";
 
-        button.textContent =
-            "✓ GPS ON";
+document.getElementById("acceptBtn")
+.disabled=false;
 
-        button.style.background =
-            "#0a7c36";
+showToast("Rider GPS is ON.");
 
-        button.style.color =
-            "#fff";
+}else{
 
-        document.getElementById("acceptButton")
-            .disabled = false;
+btn.textContent="1. Turn GPS ON";
 
-        showToast("Rider GPS is ON.");
+btn.style.background="#ffc700";
+btn.style.color="#111";
 
-    }else{
-
-        button.textContent =
-            "1. Turn GPS ON";
-
-        button.style.background =
-            "#ffc700";
-
-        button.style.color =
-            "#111";
-
-        document.getElementById("acceptButton")
-            .disabled = true;
-
-    }
+document.getElementById("acceptBtn")
+.disabled=true;
 
 }
 
+}
 
 function acceptJob(){
 
-    if(!activeOrder || !activeRider){
-        return;
-    }
+if(!activeOrder)return;
 
+activeOrder.status=
+"JOB ACCEPTED - EN ROUTE";
 
-    activeOrder.status =
-        "JOB ACCEPTED - EN ROUTE";
+saveOrders();
 
+updateTracking();
 
-    saveOrders();
+document.getElementById("acceptBtn")
+.disabled=true;
 
-    document.getElementById("pickupButton")
-        .disabled = false;
+document.getElementById("pickupBtn")
+.disabled=false;
 
-    updateTracking();
-
-    renderAdminOrders();
-
-    showToast("Rider accepted the job.");
+showToast("Rider accepted the job.");
 
 }
-
 
 function pickupJob(){
 
-    if(!activeOrder){
-        return;
-    }
+if(!activeOrder)return;
 
+activeOrder.status=
+"ITEM PICKED UP";
 
-    activeOrder.status =
-        "ITEM PICKED UP";
+saveOrders();
 
+updateTracking();
 
-    saveOrders();
+document.getElementById("pickupBtn")
+.disabled=true;
 
-    document.getElementById("deliverButton")
-        .disabled = false;
+document.getElementById("deliverBtn")
+.disabled=false;
 
-    updateTracking();
-
-    renderAdminOrders();
-
-    showToast("Item picked up.");
+showToast("Item picked up.");
 
 }
-
 
 function deliverJob(){
 
-    if(!activeOrder){
-        return;
-    }
+if(!activeOrder)return;
 
+activeOrder.status="DELIVERED";
 
-    activeOrder.status =
-        "DELIVERED";
+if(activeRider){
 
+activeRider.status="available";
 
-    if(activeRider){
+}
 
-        activeRider.status =
-            "available";
+saveOrders();
 
-        saveRiders();
-    }
+saveRiders();
 
+updateTracking();
 
-    saveOrders();
+renderRiders();
 
-    updateTracking();
+renderAdminOrders();
 
-    renderAdminOrders();
+updateStats();
 
-    renderRiders();
+document.getElementById("deliverBtn")
+.disabled=true;
 
-    updateStats();
-
-    document.getElementById("simulator")
-        .style.display = "none";
-
-    showToast(
-        "Delivery completed successfully."
-    );
+showToast("Delivery completed.");
 
 }
 
 
 /* =====================================================
-   ADMIN LOGIN
+   ADMIN
 ===================================================== */
+
+function isAdmin(){
+
+return sessionStorage.getItem("amirAdmin")==="true";
+
+}
 
 function adminLogin(){
 
-    const email =
-        document.getElementById("adminEmail")
-        .value.trim()
-        .toLowerCase();
+const email=
+document.getElementById("adminEmail")
+.value.trim()
+.toLowerCase();
 
+const password=
+document.getElementById("adminPassword")
+.value;
 
-    const password =
-        document.getElementById("adminPassword")
-        .value;
+if(
+email===ADMIN_EMAIL.toLowerCase() &&
+password===ADMIN_PASSWORD
+){
 
+sessionStorage.setItem(
+"amirAdmin",
+"true"
+);
 
-    if(email !== ADMIN_EMAIL.toLowerCase()){
+showAdmin();
 
-        showToast("Incorrect admin email.");
+showToast("Admin login successful.");
 
-        return;
-    }
+}else{
 
-
-    /*
-       Demo/local admin password.
-
-       IMPORTANT:
-       This is NOT secure production authentication.
-       Replace this with Firebase Authentication/backend
-       before going live.
-    */
-
-    if(password !== "Admin1234"){
-
-        showToast(
-            "Incorrect admin password."
-        );
-
-        return;
-    }
-
-
-    sessionStorage.setItem(
-        "amirAdmin",
-        "true"
-    );
-
-
-    showAdminPanel();
-
-    showToast("Admin login successful.");
+showToast("Invalid admin email or password.");
 
 }
 
-
-function showAdminPanel(){
-
-    document.getElementById("adminLogin")
-        .style.display = "none";
-
-    document.getElementById("adminPanel")
-        .style.display = "block";
-
-    renderRiders();
-
-    renderAdminOrders();
-
-    updateStats();
-
 }
 
+function showAdmin(){
+
+document.getElementById("adminLoginBox")
+.style.display="none";
+
+document.getElementById("adminPanel")
+.style.display="block";
+
+renderRiders();
+
+renderAdminOrders();
+
+updateStats();
+
+}
 
 function adminLogout(){
 
-    sessionStorage.removeItem(
-        "amirAdmin"
-    );
+sessionStorage.removeItem("amirAdmin");
 
-    document.getElementById("adminLogin")
-        .style.display = "block";
+document.getElementById("adminLoginBox")
+.style.display="block";
 
-    document.getElementById("adminPanel")
-        .style.display = "none";
+document.getElementById("adminPanel")
+.style.display="none";
+
+showToast("Admin logged out.");
 
 }
 
 
 /* =====================================================
-   ADD RIDER
+   RIDER MANAGEMENT
 ===================================================== */
 
 function addRider(){
 
-    if(!sessionStorage.getItem("amirAdmin")){
+if(!isAdmin()){
 
-        showToast("Login as admin first.");
+showToast("Admin login required.");
 
-        return;
-    }
+return;
+}
 
+const name=
+document.getElementById("riderNameInput")
+.value.trim();
 
-    const name =
-        document.getElementById("riderNameInput")
-        .value.trim();
+const phone=
+document.getElementById("riderPhoneInput")
+.value.trim();
 
-    const phone =
-        document.getElementById("riderPhoneInput")
-        .value.trim();
+const bike=
+document.getElementById("bikeInput")
+.value.trim();
 
-    const bike =
-        document.getElementById("bikeInput")
-        .value.trim();
+const plate=
+document.getElementById("plateInput")
+.value.trim();
 
-    const plate =
-        document.getElementById("plateInput")
-        .value.trim();
+const photo=
+document.getElementById("photoInput")
+.value.trim();
 
-    const photo =
-        document.getElementById("photoInput")
-        .value.trim();
+const status=
+document.getElementById("riderStatusInput")
+.value;
 
-    const status =
-        document.getElementById("riderStatusInput")
-        .value;
+if(!name||!phone||!bike||!plate){
 
+showToast("Complete rider details.");
 
-    if(
-        !name ||
-        !phone ||
-        !bike ||
-        !plate
-    ){
+return;
+}
 
-        showToast(
-            "Complete rider details."
-        );
+const rider={
 
-        return;
-    }
+id:Date.now(),
 
+name:name,
 
-    const rider = {
+phone:phone,
 
-        id:Date.now(),
+bike:bike,
 
-        name:name,
+plate:plate,
 
-        phone:phone,
+photo:photo,
 
-        bike:bike,
+lat:-1.2833,
 
-        plate:plate,
+lng:36.8167,
 
-        photo:photo,
+status:status
 
-        lat:-1.2833,
+};
 
-        lng:36.8167,
+riders.push(rider);
 
-        status:status
+saveRiders();
 
-    };
+document.getElementById("riderNameInput").value="";
+document.getElementById("riderPhoneInput").value="";
+document.getElementById("bikeInput").value="";
+document.getElementById("plateInput").value="";
+document.getElementById("photoInput").value="";
 
+renderRiders();
 
-    riders.push(rider);
+updateStats();
 
-    saveRiders();
+showToast(
+"Rider "+name+" added successfully."
+);
 
-    renderRiders();
+}
 
-    updateStats();
+function renderRiders(){
 
+const table=
+document.getElementById("riderTable");
 
-    document.getElementById("riderNameInput")
-        .value = "";
+if(!table)return;
 
-    document.getElementById("riderPhoneInput")
-        .value = "";
+if(!riders.length){
 
-    document.getElementById("bikeInput")
-        .value = "";
+table.innerHTML=
+`<tr><td colspan="6">No riders.</td></tr>`;
 
-    document.getElementById("plateInput")
-        .value = "";
+return;
+}
 
-    document.getElementById("photoInput")
-        .value = "";
+table.innerHTML=
+riders.map(function(rider){
 
+let statusClass=
+rider.status==="available"
+?"Available"
+:
+rider.status==="assigned"
+?"Assigned"
+:"Offline";
 
-    showToast(
-        "Rider added successfully."
-    );
+return `
+
+<tr>
+
+<td>${escapeHtml(rider.name)}</td>
+
+<td>${escapeHtml(rider.phone)}</td>
+
+<td>${escapeHtml(rider.bike)}</td>
+
+<td>${escapeHtml(rider.plate)}</td>
+
+<td>${statusClass}</td>
+
+<td>
+
+<button
+class="btn red"
+style="padding:7px 10px"
+onclick="deleteRider(${rider.id})">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+function deleteRider(id){
+
+if(!isAdmin())return;
+
+const rider=
+riders.find(r=>r.id===id);
+
+if(!rider)return;
+
+if(!confirm(
+"Delete rider "+rider.name+"?"
+))return;
+
+riders=
+riders.filter(
+r=>r.id!==id
+);
+
+saveRiders();
+
+renderRiders();
+
+updateStats();
+
+showToast("Rider deleted.");
 
 }
 
 
 /* =====================================================
-   RIDER TABLE
+   ADMIN ORDERS
 ===================================================== */
 
-function renderRiders(){
+function renderAdminOrders(){
 
-    const body =
-        document.getElementById(
-            "riderTable"
-        );
+const box=
+document.getElementById("adminOrders");
+
+if(!box)return;
+
+if(!orders.length){
+
+box.innerHTML=
+`<div class="empty">No orders yet.</div>`;
+
+return;
+}
+
+box.innerHTML=
+orders
+.slice()
+.reverse()
+.map(function(order){
+
+return `
+
+<div class="admin-order">
+
+<h4>
+${escapeHtml(order.id)}
+</h4>
+
+<p>
+<strong>Customer:</strong>
+${escapeHtml(order.customerName)}
+</p>
+
+<p>
+<strong>Phone:</strong>
+${escapeHtml(order.customerPhone)}
+</p>
+
+<p>
+<strong>Service:</strong>
+${escapeHtml(order.category)}
+</p>
+
+<p>
+<strong>Pickup:</strong>
+${escapeHtml(order.pickup)}
+</p>
+
+<p>
+<strong>Destination:</strong>
+${escapeHtml(order.destination)}
+</p>
+
+<p>
+<strong>Item:</strong>
+${escapeHtml(order.item)}
+</p>
+
+<p>
+<strong>Amount:</strong>
+KES ${Number(order.amount).toLocaleString()}
+</p>
+
+<p>
+<strong>Payment:</strong>
+${escapeHtml(order.paymentMethod)}
+</p>
+
+<p>
+<strong>M-Pesa Code:</strong>
+${escapeHtml(order.mpesaCode||"N/A")}
+</p>
+
+<p>
+<strong>Status:</strong>
+${escapeHtml(order.status)}
+</p>
+
+<p>
+<strong>Rider:</strong>
+${escapeHtml(order.riderName||"Not assigned")}
+</p>
+
+<div class="admin-actions">
+
+${
+order.paymentMethod==="M-Pesa"
+&&
+order.paymentStatus==="PENDING VERIFICATION"
+
+?
+`
+<button
+style="background:#ffc700"
+onclick="verifyPayment('${order.id}')">
+Verify Payment
+</button>
+`
+:""
+}
+
+${
+!order.riderId
+?
+`
+<button
+style="background:#2196f3;color:white"
+onclick="adminAssignRider('${order.id}')">
+Assign Rider
+</button>
+`
+:""
+}
+
+${
+order.status!=="DELIVERED"
+?
+`
+<button
+style="background:#0a7c36;color:white"
+onclick="adminCompleteOrder('${order.id}')">
+Mark Delivered
+</button>
+`
+:""
+}
+
+<button
+style="background:#d93025;color:white"
+onclick="cancelOrder('${order.id}')">
+Cancel
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
 
 
-    if(!body){
-        return;
-    }
+/* =====================================================
+   ADMIN ORDER ACTIONS
+===================================================== */
+
+function verifyPayment(id){
+
+if(!isAdmin())return;
+
+const order=
+orders.find(o=>o.id===id);
+
+if(!order)return;
+
+order.paymentStatus="VERIFIED";
+
+saveOrders();
+
+renderAdminOrders();
+
+renderCustomerOrders();
+
+if(activeOrder&&activeOrder.id===id)
+updateTracking();
+
+showToast("M-Pesa payment verified.");
+
+}
+
+function adminAssignRider(id){
+
+if(!isAdmin())return;
+
+const order=
+orders.find(o=>o.id===id);
+
+if(!order)return;
+
+const rider=
+riders.find(
+r=>r.status==="available"
+);
+
+if(!rider){
+
+showToast("No available rider.");
+
+return;
+}
+
+rider.status="assigned";
+
+order.riderId=rider.id;
+
+order.riderName=rider.name;
+
+order.status="RIDER ASSIGNED";
+
+activeOrder=order;
+
+activeRider=rider;
+
+saveRiders();
+
+saveOrders();
+
+renderRiders();
+
+renderAdminOrders();
+
+renderCustomerOrders();
+
+updateStats();
+
+updateTracking();
+
+startSimulator();
+
+showToast(
+rider.name+" assigned to "+order.id
+);
+
+}
+
+function adminCompleteOrder(id){
+
+if(!isAdmin())return;
+
+const order=
+orders.find(o=>o.id===id);
+
+if(!order)return;
+
+order.status="DELIVERED";
+
+if(order.riderId){
+
+const rider=
+riders.find(
+r=>r.id===order.riderId
+);
+
+if(rider)
+rider.status="available";
+
+}
+
+saveOrders();
+
+saveRiders();
+
+renderAdminOrders();
+
+renderRiders();
+
+renderCustomerOrders();
+
+updateStats();
+
+if(activeOrder&&activeOrder.id===id)
+updateTracking();
+
+showToast("Order marked delivered.");
+
+}
+
+function cancelOrder(id){
+
+if(!isAdmin())return;
+
+const order=
+orders.find(o=>o.id===id);
+
+if(!order)return;
+
+order.status="CANCELLED";
+
+if(order.riderId){
+
+const rider=
+riders.find(
+r=>r.id===order.riderId
+);
+
+if(rider)
+rider.status="available";
+
+}
+
+saveOrders();
+
+saveRiders();
+
+renderAdminOrders();
+
+renderRiders();
+
+renderCustomerOrders();
+
+updateStats();
+
+if(activeOrder&&activeOrder.id===id)
+updateTracking();
+
+showToast("Order cancelled.");
+
+}
 
 
-    if(riders.length === 0){
+/* =====================================================
+   STATS
+===================================================== */
 
-        body.innerHTML =
-            `<tr>
-                <td colspan="6">
-                    No riders registered.
-                </td>
-             </tr>`;
+function updateStats(){
 
-        return;
-    }
+const total=
+document.getElementById("totalOrders");
+
+const totalRiders=
+document.getElementById("totalRiders");
+
+const mpesa=
+document.getElementById("mpesaOrders");
+
+const cash=
+document.getElementById("cashOrders");
+
+if(total)
+total.textContent=orders.length;
+
+if(totalRiders)
+totalRiders.textContent=riders.length;
+
+if(mpesa)
+mpesa.textContent=
+orders.filter(
+o=>o.paymentMethod==="M-Pesa"
+).length;
+
+if(cash)
+cash.textContent=
+orders.filter(
+o=>o.paymentMethod==="Cash"
+).length;
+
+}
 
 
-    body.innerHTML =
-        riders.map(
-            rider => `
+/* =====================================================
+   AUTO SHOW ADMIN IF SESSION EXISTS
+===================================================== */
 
-                <tr>
+if(isAdmin()){
 
-                    <td>
-                        ${escapeHTML(rider.name)}
-                    </td>
+setTimeout(function(){
 
-                    <td>
-                        ${escapeHTML(rider.phone)}
-                    </td>
+showAdmin();
 
-                    <td>
-                        ${escapeHTML(rider.bike)}
-                    </td>
+},100);
 
-                    <td>
-                        ${escapeHTML(rider.plate)}
-                    </td>
+}
 
-                    <td>
-                        ${escapeHTML(rider.status)}
-                    </td>
+</script>
 
-                    <td>
-
-                        <button
-                            class="btn red"
-                            style="padding:7px"
-                           
+</body>
+</html>
