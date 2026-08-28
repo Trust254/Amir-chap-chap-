@@ -3,3208 +3,2731 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a7c36">
-<meta name="description" content="Amir Chap Chap - Delivery Services in Kenya">
-<title>Amir Chap Chap | Delivery</title>
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<title>Dream Big | Kenya</title>
 
 <style>
-:root{
---green:#0a7c36;
---green2:#0d963f;
---dark:#122018;
---yellow:#ffc700;
---light:#f4f8f5;
---white:#fff;
---gray:#66736b;
---border:#dce7df;
---red:#d93025;
---blue:#1677ff;
---orange:#ff9800;
---shadow:0 10px 30px rgba(0,0,0,.08);
-}
 
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:var(--light);
-color:var(--dark);
-line-height:1.5;
-}
-
-button,input,select,textarea{
-font:inherit;
+    background:#f4f7f6;
+    color:#222;
 }
 
 button{
-cursor:pointer;
-}
-
-button:disabled{
-opacity:.5;
-cursor:not-allowed;
-}
-
-.top-strip{
-height:7px;
-background:linear-gradient(90deg,var(--green) 75%,var(--yellow) 25%);
-}
-
-nav{
-position:sticky;
-top:0;
-z-index:3000;
-background:#fff;
-border-bottom:1px solid var(--border);
-min-height:72px;
-padding:10px 5%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:15px;
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:21px;
-font-weight:900;
-color:var(--green);
-}
-
-.logo img{
-width:48px;
-height:48px;
-border-radius:50%;
-object-fit:cover;
-border:2px solid var(--yellow);
-}
-
-.nav-links{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-}
-
-.nav-links a{
-text-decoration:none;
-color:var(--dark);
-font-weight:bold;
-padding:9px 12px;
-border-radius:9px;
-}
-
-.nav-links a:hover{
-background:#eaf7ee;
-color:var(--green);
-}
-
-.user-area{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.user-badge{
-background:#e7f6ec;
-color:var(--green);
-padding:8px 12px;
-border-radius:20px;
-font-size:13px;
-font-weight:bold;
-}
-
-.btn{
-border:0;
-padding:12px 18px;
-border-radius:11px;
-font-weight:800;
-}
-
-.green{
-background:var(--green);
-color:#fff;
-}
-
-.yellow{
-background:var(--yellow);
-color:#111;
-}
-
-.blue{
-background:var(--blue);
-color:#fff;
-}
-
-.red{
-background:var(--red);
-color:#fff;
-}
-
-.orange{
-background:var(--orange);
-color:#fff;
-}
-
-.dark{
-background:var(--dark);
-color:#fff;
-}
-
-.full{
-width:100%;
-}
-
-.hero{
-min-height:540px;
-padding:60px 6%;
-display:grid;
-grid-template-columns:1fr 1fr;
-align-items:center;
-gap:40px;
-background:
-radial-gradient(circle at 80% 20%,rgba(255,199,0,.25),transparent 30%),
-linear-gradient(135deg,#fff,#eaf8ef);
-}
-
-.hero h1{
-font-size:clamp(40px,5vw,65px);
-line-height:1.05;
-margin:20px 0;
-}
-
-.hero h1 span{
-color:var(--green);
-}
-
-.hero p{
-font-size:18px;
-color:var(--gray);
-max-width:600px;
-margin-bottom:25px;
-}
-
-.hero-buttons{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-}
-
-.hero-logo{
-width:min(420px,100%);
-border-radius:50%;
-border:6px solid white;
-box-shadow:var(--shadow);
-}
-
-.badge{
-display:inline-block;
-background:var(--yellow);
-padding:7px 14px;
-border-radius:20px;
-font-weight:bold;
-font-size:13px;
-}
-
-section{
-padding:65px 6%;
-}
-
-.section-title{
-text-align:center;
-margin-bottom:35px;
-}
-
-.section-title h2{
-font-size:35px;
-margin-bottom:7px;
-}
-
-.section-title p{
-color:var(--gray);
+    cursor:pointer;
 }
 
 .hidden{
-display:none!important;
-}
-
-.auth-section{
-display:none;
-background:#eef8f1;
-}
-
-.card{
-background:#fff;
-padding:25px;
-border-radius:20px;
-box-shadow:var(--shadow);
-}
-
-.auth-box{
-max-width:440px;
-margin:auto;
-}
-
-.tabs{
-display:flex;
-gap:8px;
-margin-bottom:20px;
-}
-
-.tab{
-flex:1;
-padding:11px;
-border:1px solid var(--border);
-background:var(--light);
-border-radius:10px;
-font-weight:bold;
-}
-
-.tab.active{
-background:var(--green);
-color:#fff;
-}
-
-.form-group{
-margin-bottom:16px;
-}
-
-.form-group label{
-display:block;
-font-weight:bold;
-margin-bottom:6px;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea{
-width:100%;
-padding:13px;
-border:1px solid var(--border);
-border-radius:10px;
-outline:none;
-background:#fff;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-border-color:var(--green);
-box-shadow:0 0 0 3px rgba(10,124,54,.1);
-}
-
-.order-layout{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:.75fr 1.25fr;
-gap:25px;
-}
-
-.category{
-width:100%;
-padding:14px;
-border:1px solid var(--border);
-background:var(--light);
-border-radius:12px;
-margin-bottom:10px;
-text-align:left;
-font-weight:bold;
-}
-
-.category.active{
-background:var(--green);
-color:#fff;
-}
-
-.payment-box{
-background:#eef9f1;
-border:1px solid #cce9d4;
-padding:18px;
-border-radius:15px;
-margin-top:20px;
-}
-
-.mpesa-number{
-display:block;
-font-size:25px;
-font-weight:900;
-color:var(--green);
-margin:9px 0;
-}
-
-.payment-methods{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-
-.payment-option{
-border:2px solid var(--border);
-padding:14px;
-border-radius:12px;
-cursor:pointer;
-background:white;
-}
-
-.payment-option.active{
-border-color:var(--green);
-background:#effff3;
-}
-
-.history{
-max-width:1100px;
-margin:25px auto 0;
-}
-
-.history-item{
-border:1px solid var(--border);
-padding:15px;
-border-radius:13px;
-margin-top:10px;
-}
-
-.history-item strong{
-color:var(--green);
-}
-
-.empty{
-text-align:center;
-padding:20px;
-color:var(--gray);
-}
-
-.tracking{
-background:#eef9f1;
-}
-
-.tracker{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:1fr 1.2fr;
-gap:25px;
-}
-
-.info-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:20px;
-background:var(--light);
-padding:18px;
-border-radius:15px;
-}
-
-.info-item label{
-display:block;
-font-size:12px;
-color:var(--gray);
-}
-
-.info-item strong{
-word-break:break-word;
-}
-
-.rider-header{
-display:none;
-align-items:center;
-gap:15px;
-margin:20px 0;
-}
-
-.rider-photo{
-width:80px;
-height:80px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid var(--green);
-}
-
-#map{
-height:400px;
-border-radius:18px;
-overflow:hidden;
-}
-
-.simulator{
-display:none;
-position:fixed;
-right:15px;
-bottom:15px;
-width:320px;
-background:var(--dark);
-color:#fff;
-padding:20px;
-border-radius:18px;
-z-index:4000;
-box-shadow:0 10px 30px rgba(0,0,0,.3);
-}
-
-.simulator h3{
-color:var(--yellow);
-margin-bottom:10px;
-}
-
-.simulator button{
-width:100%;
-padding:10px;
-margin-top:8px;
-border:0;
-border-radius:8px;
-font-weight:bold;
-}
-
-.admin-section{
-background:var(--dark);
-color:#fff;
-}
-
-.admin-login{
-max-width:450px;
-margin:auto;
-background:#173025;
-padding:25px;
-border-radius:20px;
-}
-
-.admin-panel{
-display:none;
-max-width:1100px;
-margin:auto;
-}
-
-.admin-card{
-background:#173025;
-padding:25px;
-border-radius:20px;
-margin-bottom:20px;
-}
-
-.admin-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.admin-card input,
-.admin-card select{
-width:100%;
-padding:12px;
-border:0;
-border-radius:9px;
-margin-bottom:10px;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-margin-top:20px;
-}
-
-.stat{
-background:#0e2117;
-padding:18px;
-border-radius:13px;
-border:1px solid #31553f;
-}
-
-.stat span{
-display:block;
-font-size:12px;
-color:#aebdb4;
-}
-
-.stat strong{
-font-size:25px;
-}
-
-.table-wrap{
-overflow-x:auto;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-min-width:650px;
-}
-
-th,td{
-padding:11px;
-text-align:left;
-border-bottom:1px solid #31553f;
-}
-
-th{
-color:var(--yellow);
-}
-
-.admin-order{
-background:#0e2117;
-padding:16px;
-border-radius:12px;
-margin-top:10px;
-border:1px solid #31553f;
-}
-
-.admin-order h4{
-color:var(--yellow);
-}
-
-.admin-actions{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-margin-top:10px;
-}
-
-.admin-actions button{
-border:0;
-padding:8px 11px;
-border-radius:7px;
-font-weight:bold;
-}
-
-footer{
-background:#061a0d;
-color:#fff;
-text-align:center;
-padding:30px;
-}
-
-footer p{
-color:#c8d7ce;
-margin:5px;
-}
-
-.toast{
-display:none;
-position:fixed;
-left:20px;
-bottom:20px;
-z-index:6000;
-background:var(--dark);
-color:white;
-padding:14px 18px;
-border-radius:10px;
-box-shadow:var(--shadow);
-max-width:350px;
-}
-
-.toast.show{
-display:block;
-}
-
-@media(max-width:900px){
-
-.hero,
-.order-layout,
-.tracker{
-grid-template-columns:1fr;
-}
-
-.hero{
-text-align:center;
-}
-
-.hero p{
-margin-left:auto;
-margin-right:auto;
-}
-
-.hero-buttons{
-justify-content:center;
-}
-
-nav{
-flex-wrap:wrap;
-}
-
-.nav-links{
-order:3;
-width:100%;
-justify-content:center;
-}
-
-}
-
-@media(max-width:600px){
-
-section{
-padding:50px 4%;
-}
-
-.admin-grid,
-.info-grid,
-.stats,
-.payment-methods{
-grid-template-columns:1fr;
+    display:none !important;
+}
+
+header{
+    background:#075e54;
+    color:white;
+    padding:15px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .logo{
-font-size:17px;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.logo img{
-width:40px;
-height:40px;
+.logo-icon{
+    width:42px;
+    height:42px;
+    background:white;
+    color:#075e54;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
 }
 
-#map{
-height:320px;
+.logo h1{
+    font-size:21px;
 }
 
-.simulator{
-left:10px;
-right:10px;
-width:auto;
+.logo small{
+    font-size:11px;
+    opacity:.85;
 }
 
+.logout-btn{
+    background:white;
+    color:#075e54;
+    border:0;
+    padding:9px 15px;
+    border-radius:8px;
+    font-weight:bold;
 }
+
+.container{
+    width:94%;
+    max-width:1150px;
+    margin:25px auto;
+}
+
+.hero{
+    background:linear-gradient(135deg,#075e54,#0b907e);
+    color:white;
+    padding:35px 25px;
+    border-radius:17px;
+    margin-bottom:20px;
+}
+
+.hero h2{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.07);
+}
+
+.auth{
+    max-width:470px;
+    margin:35px auto;
+}
+
+.subtitle{
+    color:#777;
+    margin:7px 0 15px;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin:7px 0 13px;
+    border:1px solid #d9d9d9;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#075e54;
+}
+
+.primary{
+    width:100%;
+    background:#075e54;
+    color:white;
+    border:0;
+    border-radius:8px;
+    padding:13px;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.secondary{
+    background:#eee;
+    color:#333;
+    border:0;
+    border-radius:8px;
+    padding:11px 15px;
+}
+
+.link{
+    color:#075e54;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.terms-check{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    margin:10px 0 15px;
+    font-size:13px;
+    color:#555;
+}
+
+.terms-check input{
+    width:auto;
+    margin-top:3px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:19px;
+    border-radius:13px;
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+
+.stat h4{
+    color:#777;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.stat strong{
+    color:#075e54;
+    font-size:23px;
+}
+
+.notice{
+    background:#fff7df;
+    border-left:5px solid #e0a500;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.success{
+    background:#e7f8ef;
+    color:#087441;
+    padding:13px;
+    border-radius:8px;
+    margin:12px 0;
+}
+
+.error{
+    background:#fdeaea;
+    color:#a00000;
+    padding:13px;
+    border-radius:8px;
+    margin:12px 0;
+}
+
+.level-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.level{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:13px;
+    padding:17px;
+}
+
+.level.active{
+    border:2px solid #075e54;
+}
+
+.level.locked{
+    opacity:.62;
+}
+
+.item{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.level-name{
+    font-weight:bold;
+    color:#075e54;
+}
+
+.level p{
+    color:#666;
+    font-size:14px;
+    margin:7px 0;
+}
+
+.level-btn{
+    width:100%;
+    border:0;
+    border-radius:8px;
+    padding:11px;
+    background:#075e54;
+    color:white;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+.level.locked .level-btn{
+    background:#999;
+}
+
+.referral-box{
+    display:flex;
+    gap:10px;
+}
+
+.referral-box input{
+    margin:0;
+}
+
+.referral-box button{
+    border:0;
+    border-radius:8px;
+    background:#075e54;
+    color:white;
+    padding:0 17px;
+}
+
+.till{
+    background:#f0f6f5;
+    border-radius:12px;
+    padding:22px;
+    text-align:center;
+    margin:17px 0;
+}
+
+.till-title{
+    color:#555;
+}
+
+.till-number{
+    font-size:36px;
+    color:#075e54;
+    font-weight:bold;
+    margin:8px 0;
+}
+
+.copy-btn{
+    background:#075e54;
+    color:white;
+    border:0;
+    border-radius:8px;
+    padding:9px 15px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:left;
+    white-space:nowrap;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:700px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:15px;
+    padding:25px;
+}
+
+.modal-box h2{
+    color:#075e54;
+    margin-bottom:7px;
+}
+
+.modal-box h3{
+    margin-top:18px;
+    margin-bottom:7px;
+}
+
+.modal-box p,
+.modal-box li{
+    color:#555;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.modal-box ul{
+    padding-left:20px;
+}
+
+.modal-close{
+    margin-top:15px;
+}
+
+footer{
+    text-align:center;
+    padding:30px 15px;
+    color:#777;
+}
+
+footer a{
+    color:#075e54;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+@media(max-width:850px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .level-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:520px){
+
+    .level-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h2{
+        font-size:24px;
+    }
+
+    .referral-box{
+        flex-direction:column;
+    }
+
+    .referral-box button{
+        padding:12px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="top-strip"></div>
+<!-- HEADER -->
 
-<nav>
+<header>
 
-<div class="logo">
-<img src="1000369432.png"
-alt="Amir Chap Chap Logo"
-onerror="this.style.display='none'">
-Amir Chap Chap
-</div>
+    <div class="logo">
 
-<div class="nav-links">
-<a href="#order">Order</a>
-<a href="#tracking">Tracking</a>
-<a href="#admin">Admin</a>
-</div>
+        <div class="logo-icon">
+            ★
+        </div>
 
-<div id="navAuth" class="user-area"></div>
+        <div>
+            <h1>Dream Big</h1>
+            <small>Kenya</small>
+        </div>
 
-</nav>
+    </div>
 
-<header class="hero">
+    <button
+        id="logoutBtn"
+        class="logout-btn hidden"
+        onclick="logout()">
 
-<div>
+        Logout
 
-<span class="badge">⚡ FAST DELIVERY</span>
-
-<h1>
-Fast pickup,
-<span>safe delivery.</span>
-</h1>
-
-<p>
-Amir Chap Chap connects customers,
-riders and delivery management in one
-simple platform across Kenya.
-</p>
-
-<div class="hero-buttons">
-
-<button class="btn green"
-onclick="openOrder()">
-Request Delivery 🛵
-</button>
-
-<button class="btn yellow"
-onclick="openTracking()">
-Track Delivery 📍
-</button>
-
-</div>
-
-</div>
-
-<div style="text-align:center">
-
-<img src="1000369432.png"
-class="hero-logo"
-alt="Amir Chap Chap"
-onerror="this.style.display='none'">
-
-</div>
+    </button>
 
 </header>
 
+
 <!-- AUTH -->
 
-<section id="authSection" class="auth-section">
+<section id="authSection" class="container">
 
-<div class="auth-box card">
+    <div class="hero">
 
-<div class="tabs">
+        <h2>Dream Big</h2>
 
-<button id="loginTab"
-class="tab active"
-onclick="switchAuth('login')">
-Login
-</button>
+        <p>
+            Dream Big. Build Bigger.
+            Welcome to the Dream Big member platform.
+        </p>
 
-<button id="registerTab"
-class="tab"
-onclick="switchAuth('register')">
-Register
-</button>
+    </div>
 
-</div>
 
-<form onsubmit="handleAuth(event)">
+    <div class="card auth">
 
-<div id="nameGroup" class="form-group"
-style="display:none">
+        <!-- REGISTER -->
 
-<label>Full Name</label>
+        <div id="registerBox">
 
-<input id="authName"
-type="text"
-placeholder="Enter full name">
+            <h2>Create Account</h2>
 
-</div>
+            <p class="subtitle">
+                Register once using your details.
+            </p>
 
-<div class="form-group">
+            <input
+                id="regName"
+                type="text"
+                placeholder="Full name">
 
-<label>Phone Number</label>
+            <input
+                id="regPhone"
+                type="tel"
+                placeholder="Phone number">
 
-<input id="authPhone"
-type="tel"
-placeholder="07XXXXXXXX"
-required>
+            <input
+                id="regEmail"
+                type="email"
+                placeholder="Email address">
 
-</div>
+            <input
+                id="regPassword"
+                type="password"
+                placeholder="Password">
 
-<button id="authButton"
-class="btn green full"
-type="submit">
-Login
-</button>
+            <input
+                id="refCode"
+                type="text"
+                placeholder="Referral code (optional)">
 
-</form>
 
-</div>
+            <label class="terms-check">
+
+                <input
+                    id="agreeTerms"
+                    type="checkbox">
+
+                <span>
+
+                    I agree to the
+
+                    <span
+                        class="link"
+                        onclick="openTerms()">
+
+                        Terms & Conditions
+
+                    </span>
+
+                    and
+
+                    <span
+                        class="link"
+                        onclick="openPrivacy()">
+
+                        Privacy Policy
+
+                    </span>.
+
+                </span>
+
+            </label>
+
+
+            <button
+                class="primary"
+                onclick="register()">
+
+                Register
+
+            </button>
+
+
+            <p style="text-align:center;margin-top:15px;">
+
+                Already registered?
+
+                <span
+                    class="link"
+                    onclick="showLogin()">
+
+                    Login
+
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div
+            id="loginBox"
+            class="hidden">
+
+            <h2>Login</h2>
+
+            <p class="subtitle">
+                Login to your Dream Big account.
+            </p>
+
+            <input
+                id="loginPhone"
+                type="tel"
+                placeholder="Phone number">
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Password">
+
+            <button
+                class="primary"
+                onclick="login()">
+
+                Login
+
+            </button>
+
+
+            <p style="text-align:center;margin-top:15px;">
+
+                New member?
+
+                <span
+                    class="link"
+                    onclick="showRegister()">
+
+                    Register
+
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div id="authMessage"></div>
+
+    </div>
 
 </section>
 
-<!-- ORDER -->
 
-<section id="order">
+<!-- DASHBOARD -->
 
-<div class="section-title">
+<section id="dashboard" class="container hidden">
 
-<h2>1. Request a Delivery</h2>
 
-<p>
-Tell us what you need delivered.
-</p>
+    <div class="hero">
 
-</div>
+        <h2>
+            Welcome,
+            <span id="userName"></span> 👋
+        </h2>
 
-<div class="order-layout">
+        <p>
+            Your Dream Big dashboard.
+        </p>
 
-<div class="card">
+    </div>
 
-<h3>Select Service</h3>
 
-<br>
+    <div class="notice">
 
-<button class="category active"
-onclick="selectCategory(this,'Food')">
-🍔 Food Delivery
-</button>
+        <strong>Important:</strong>
 
-<button class="category"
-onclick="selectCategory(this,'Parcel')">
-📦 Parcel Delivery
-</button>
+        Rewards, activities and withdrawals
+        are subject to eligibility, verification
+        and applicable rules. Unlocking a level
+        does not guarantee profits or investment
+        returns.
 
-<button class="category"
-onclick="selectCategory(this,'Shopping')">
-🛒 Shopping
-</button>
+    </div>
 
-<button class="category"
-onclick="selectCategory(this,'Documents')">
-📄 Documents
-</button>
 
-<button class="category"
-onclick="selectCategory(this,'Other')">
-🚚 Other Delivery
-</button>
+    <!-- STATS -->
 
-<div class="payment-box">
+    <div class="stats">
 
-<strong>💰 Payment</strong>
+        <div class="stat">
 
-<p>
-Cash or M-Pesa accepted.
-</p>
+            <h4>Available Balance</h4>
 
-<span class="mpesa-number">
-0792 102 645
-</span>
+            <strong>
+                KSh
+                <span id="balance">0</span>
+            </strong>
 
-<small>
-For M-Pesa, enter your transaction code
-when submitting your order.
-</small>
+        </div>
 
-</div>
 
-</div>
+        <div class="stat">
 
-<form id="deliveryForm"
-class="card"
-onsubmit="submitOrder(event)">
+            <h4>Current Level</h4>
 
-<h3>Pickup + Destination</h3>
+            <strong>
+                Level
+                <span id="currentLevel">1</span>
+            </strong>
 
-<br>
+        </div>
 
-<div class="form-group">
-<label>Customer Name</label>
-<input id="custName"
-type="text"
-required
-placeholder="Your name">
-</div>
 
-<div class="form-group">
-<label>Customer Phone</label>
-<input id="custPhone"
-type="tel"
-required
-placeholder="07XXXXXXXX">
-</div>
+        <div class="stat">
 
-<div class="form-group">
-<label>Pickup Location</label>
-<input id="pickup"
-type="text"
-required
-placeholder="Where should we collect it?">
-</div>
+            <h4>Referrals</h4>
 
-<div class="form-group">
-<label>Destination</label>
-<input id="destination"
-type="text"
-required
-placeholder="Where should we deliver it?">
-</div>
+            <strong id="referrals">
+                0
+            </strong>
 
-<div class="form-group">
-<label>Item / Instructions</label>
-<textarea id="item"
-rows="3"
-required
-placeholder="What are we picking up?"></textarea>
-</div>
+        </div>
 
-<div class="form-group">
-<label>Delivery Amount (KES)</label>
-<input id="amount"
-type="number"
-min="0"
-required
-placeholder="e.g. 300">
-</div>
 
-<div class="form-group">
+        <div class="stat">
 
-<label>Payment Method</label>
+            <h4>Activities</h4>
 
-<div class="payment-methods">
+            <strong id="tasksCompleted">
+                0
+            </strong>
 
-<label id="cashOption"
-class="payment-option active">
+        </div>
 
-<input type="radio"
-name="payment"
-value="Cash"
-checked
-onchange="changePayment()">
+    </div>
 
-💵 Cash
 
-</label>
+    <!-- DEPOSIT -->
 
-<label id="mpesaOption"
-class="payment-option">
+    <div class="card">
 
-<input type="radio"
-name="payment"
-value="M-Pesa"
-onchange="changePayment()">
+        <h2>💰 Deposit</h2>
 
-📱 M-Pesa
+        <p
+            style="color:#777;margin:8px 0 15px;">
 
-</label>
+            Deposit using M-Pesa Till Number
+            <strong>555122</strong>.
 
-</div>
+        </p>
 
-</div>
+        <button
+            class="primary"
+            onclick="openDeposit()">
 
-<div id="mpesaDetails"
-class="payment-box"
-style="display:none">
+            💰 Deposit via M-Pesa
 
-<strong>Send M-Pesa to:</strong>
+        </button>
 
-<span class="mpesa-number">
-0792 102 645
-</span>
+    </div>
 
-<p>
-Enter the M-Pesa transaction code below.
-</p>
 
-<div class="form-group">
-<label>Transaction Code</label>
-<input id="mpesaCode"
-type="text"
-maxlength="30"
-placeholder="e.g. QGH7ABC123">
-</div>
+    <!-- ACCOUNT -->
 
-</div>
+    <div class="card">
 
-<button class="btn green full"
-type="submit">
-Submit Delivery Request 🚀
-</button>
+        <h2>My Account</h2>
 
-</form>
+        <p style="margin-top:12px;">
 
-</div>
+            <b>Name:</b>
+            <span id="profileName"></span>
 
-<div class="history card">
+        </p>
 
-<div style="display:flex;
-justify-content:space-between;
-gap:10px;
-flex-wrap:wrap">
+        <p style="margin-top:8px;">
 
-<h3>My Orders</h3>
+            <b>Phone:</b>
+            <span id="profilePhone"></span>
 
-<button class="btn blue"
-onclick="openTracking()">
-View Tracking
-</button>
+        </p>
 
-</div>
+        <p style="margin-top:8px;">
 
-<div id="customerOrders">
-<div class="empty">
-Login to view your orders.
-</div>
-</div>
+            <b>Email:</b>
+            <span id="profileEmail"></span>
 
-</div>
+        </p>
+
+    </div>
+
+
+    <!-- REFERRAL -->
+
+    <div class="card">
+
+        <h2>Invite Friends</h2>
+
+        <p
+            style="color:#777;margin:8px 0 15px;">
+
+            Your referral code:
+
+        </p>
+
+        <div class="referral-box">
+
+            <input
+                id="myReferralCode"
+                readonly>
+
+            <button
+                onclick="copyReferral()">
+
+                Copy
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LEVELS -->
+
+    <div class="card">
+
+        <h2>Dream Big Levels</h2>
+
+        <p
+            style="color:#777;margin:8px 0 18px;">
+
+            Start with Level 1 or unlock the
+            next available level.
+
+        </p>
+
+        <div
+            id="levels"
+            class="level-grid">
+
+        </div>
+
+    </div>
+
+
+    <!-- EARNING -->
+
+    <div
+        id="taskSection"
+        class="card hidden">
+
+        <h2 id="taskTitle">
+            Level 1 Activities
+        </h2>
+
+        <p
+            id="taskDescription"
+            style="color:#777;margin:10px 0;">
+
+        </p>
+
+        <div class="success">
+
+            Today's activities:
+
+            <b>
+                <span id="taskCount">0</span>
+                /10
+            </b>
+
+        </div>
+
+        <button
+            class="primary"
+            onclick="completeTask()">
+
+            ▶ Complete Activity
+
+        </button>
+
+    </div>
+
+
+    <!-- DEPOSIT / PAYMENT -->
+
+    <div
+        id="paymentSection"
+        class="card hidden">
+
+        <h2>
+            💰 Deposit via M-Pesa
+        </h2>
+
+        <p style="color:#777;margin-top:8px;">
+
+            Enter the amount you want to deposit.
+
+        </p>
+
+        <input
+            id="depositAmount"
+            type="number"
+            min="1"
+            placeholder="Deposit amount in KSh">
+
+
+        <div class="till">
+
+            <div class="till-title">
+
+                M-Pesa Till Number
+
+            </div>
+
+            <div class="till-number">
+
+                555122
+
+            </div>
+
+            <button
+                class="copy-btn"
+                onclick="copyTill()">
+
+                Copy Till Number
+
+            </button>
+
+        </div>
+
+
+        <p style="color:#555;">
+
+            After making your M-Pesa payment,
+            enter the transaction code below.
+            Your deposit will remain pending
+            until it is verified.
+
+        </p>
+
+
+        <input
+            id="mpesaCode"
+            type="text"
+            placeholder="M-Pesa transaction code">
+
+
+        <button
+            class="primary"
+            onclick="submitDeposit()">
+
+            Submit Deposit
+
+        </button>
+
+
+        <div id="paymentMessage"></div>
+
+    </div>
+
+
+    <!-- LEVEL UNLOCK -->
+
+    <div
+        id="unlockSection"
+        class="card hidden">
+
+        <h2>
+            🔓 Unlock Next Level
+        </h2>
+
+        <p style="margin:10px 0;">
+
+            Required amount:
+
+            <strong>
+                KSh
+                <span id="unlockAmount">0</span>
+            </strong>
+
+        </p>
+
+
+        <div class="till">
+
+            <div class="till-title">
+                M-Pesa Till Number
+            </div>
+
+            <div class="till-number">
+                555122
+            </div>
+
+            <button
+                class="copy-btn"
+                onclick="copyTill()">
+
+                Copy Till Number
+
+            </button>
+
+        </div>
+
+
+        <input
+            id="unlockCode"
+            type="text"
+            placeholder="Enter M-Pesa transaction code">
+
+
+        <button
+            class="primary"
+            onclick="submitUnlock()">
+
+            Submit Level Payment
+
+        </button>
+
+
+        <div id="unlockMessage"></div>
+
+    </div>
+
+
+    <!-- WITHDRAW -->
+
+    <div class="card">
+
+        <h2>Withdraw</h2>
+
+        <div id="withdrawMessage"></div>
+
+        <input
+            id="withdrawAmount"
+            type="number"
+            min="1"
+            placeholder="Amount">
+
+        <input
+            id="withdrawPhone"
+            type="tel"
+            placeholder="M-Pesa phone number">
+
+        <button
+            class="primary"
+            onclick="withdraw()">
+
+            Request Withdrawal
+
+        </button>
+
+        <p
+            style="font-size:13px;color:#777;margin-top:10px;">
+
+            Weekend withdrawals are unavailable.
+            Requests can be submitted Monday to Friday.
+
+        </p>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div class="card">
+
+        <h2>Transaction History</h2>
+
+        <div
+            class="table-wrapper"
+            style="margin-top:15px;">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="history"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </section>
 
-<!-- TRACKING -->
 
-<section id="tracking" class="tracking">
-
-<div class="section-title">
-
-<h2>2. Delivery Tracking</h2>
-
-<p>
-Track your current delivery.
-</p>
-
-</div>
-
-<div class="tracker">
-
-<div class="card">
-
-<span id="statusBadge"
-class="badge">
-AWAITING REQUEST
-</span>
-
-<h3 id="riderName"
-style="margin-top:12px">
-No Rider Assigned
-</h3>
-
-<p id="statusText"
-style="color:var(--gray)">
-Submit an order to start dispatch.
-</p>
-
-<div id="riderHeader"
-class="rider-header">
-
-<img id="riderPhoto"
-class="rider-photo"
-alt="Rider">
-
-<div>
-
-<h4 id="riderHeaderName">--</h4>
-
-<p id="riderPhone"
-style="color:var(--green)">
---</p>
-
-</div>
-
-</div>
-
-<div class="info-grid">
-
-<div class="info-item">
-<label>Bike Model</label>
-<strong id="bike">--</strong>
-</div>
-
-<div class="info-item">
-<label>Number Plate</label>
-<strong id="plate">--</strong>
-</div>
-
-<div class="info-item">
-<label>Pickup</label>
-<strong id="trackPickup">--</strong>
-</div>
-
-<div class="info-item">
-<label>Destination</label>
-<strong id="trackDestination">--</strong>
-</div>
-
-<div class="info-item">
-<label>Payment</label>
-<strong id="trackPayment">--</strong>
-</div>
-
-<div class="info-item">
-<label>Order ID</label>
-<strong id="trackId">--</strong>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div id="map"></div>
-
-<button class="btn green full"
-style="margin-top:10px"
-onclick="refreshTracking()">
-🔄 Refresh Tracking
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- RIDER SIMULATOR -->
-
-<div id="simulator" class="simulator">
-
-<h3>📱 Rider App</h3>
-
-<p>
-Rider:
-<strong id="simName">--</strong>
-</p>
-
-<p id="simOrder">
--- 
-</p>
-
-<button id="gpsBtn"
-style="background:#ffc700"
-onclick="toggleGPS()">
-1. Turn GPS ON
-</button>
-
-<button id="acceptBtn"
-style="background:#2196f3;color:#fff"
-onclick="acceptJob()"
-disabled>
-2. Accept Job
-</button>
-
-<button id="pickupBtn"
-style="background:#ff9800;color:#fff"
-onclick="pickupJob()"
-disabled>
-3. Pickup Item
-</button>
-
-<button id="deliverBtn"
-style="background:#0a7c36;color:#fff"
-onclick="deliverJob()"
-disabled>
-4. Complete Delivery
-</button>
-
-</div>
-
-<!-- ADMIN -->
-
-<section id="admin" class="admin-section">
-
-<div class="section-title">
-
-<h2>3. Admin Dashboard</h2>
-
-<p>
-Manage riders and customer orders.
-</p>
-
-</div>
-
-<div id="adminLoginBox"
-class="admin-login">
-
-<h3>🔐 Admin Login</h3>
-
-<br>
-
-<p style="font-size:13px;color:#c8d7ce">
-Authorized administrator:
-<strong>
-abdiabdulmohammed50@gmail.com
-</strong>
-</p>
-
-<br>
-
-<div class="form-group">
-<label>Admin Email</label>
-<input id="adminEmail"
-type="email"
-placeholder="Admin email">
-</div>
-
-<div class="form-group">
-<label>Admin Password</label>
-<input id="adminPassword"
-type="password"
-placeholder="Admin password">
-</div>
-
-<button class="btn green full"
-onclick="adminLogin()">
-Login to Admin
-</button>
-
-<p style="font-size:11px;
-color:#aebdb4;
-margin-top:10px">
-For production, admin authentication
-must be moved to a secure backend.
-</p>
-
-</div>
-
-<div id="adminPanel" class="admin-panel">
-
-<div class="admin-card">
-
-<div style="display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-flex-wrap:wrap">
-
-<div>
-<h3>📊 Admin Dashboard</h3>
-<p style="color:#aebdb4">
-Manage Amir Chap Chap.
-</p>
-</div>
-
-<button class="btn yellow"
-onclick="adminLogout()">
-Logout Admin
-</button>
-
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<span>Total Orders</span>
-<strong id="totalOrders">0</strong>
-</div>
-
-<div class="stat">
-<span>Riders</span>
-<strong id="totalRiders">0</strong>
-</div>
-
-<div class="stat">
-<span>M-Pesa Orders</span>
-<strong id="mpesaOrders">0</strong>
-</div>
-
-<div class="stat">
-<span>Cash Orders</span>
-<strong id="cashOrders">0</strong>
-</div>
-
-</div>
-
-</div>
-
-<!-- RIDERS -->
-
-<div class="admin-card">
-
-<h3>➕ Register Rider</h3>
-
-<br>
-
-<div class="admin-grid">
-
-<div>
-<label>Rider Name</label>
-<input id="riderNameInput"
-placeholder="John Kamau">
-</div>
-
-<div>
-<label>Phone</label>
-<input id="riderPhoneInput"
-placeholder="0712345678">
-</div>
-
-<div>
-<label>Motorbike</label>
-<input id="bikeInput"
-placeholder="Boxer 150">
-</div>
-
-<div>
-<label>Number Plate</label>
-<input id="plateInput"
-placeholder="KMD 123A">
-</div>
-
-<div>
-<label>Photo URL</label>
-<input id="photoInput"
-placeholder="Optional">
-</div>
-
-<div>
-<label>Status</label>
-<select id="riderStatusInput">
-<option value="available">Available</option>
-<option value="offline">Offline</option>
-</select>
-</div>
-
-</div>
-
-<button class="btn green full"
-onclick="addRider()">
-➕ Add Verified Rider
-</button>
-
-</div>
-
-<div class="admin-card">
-
-<h3>🛵 Registered Riders</h3>
-
-<div class="table-wrap"
-style="margin-top:15px">
-
-<table>
-
-<thead>
-<tr>
-<th>Name</th>
-<th>Phone</th>
-<th>Bike</th>
-<th>Plate</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="riderTable">
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-<!-- ORDERS -->
-
-<div class="admin-card">
-
-<div style="display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:10px">
-
-<h3>📦 Customer Orders</h3>
-
-<button class="btn blue"
-onclick="renderAdminOrders()">
-🔄 Refresh
-</button>
-
-</div>
-
-<div id="adminOrders"
-style="margin-top:15px">
-</div>
-
-</div>
-
-</div>
-
-</section>
+<!-- FOOTER -->
 
 <footer>
 
-<h3>Amir Chap Chap</h3>
+    <p>
+        © 2026 Dream Big
+    </p>
 
-<p>Fast. Simple. Reliable.</p>
+    <p style="margin-top:7px;">
 
-<p>
-M-Pesa:
-<strong>0792 102 645</strong>
-</p>
+        Published:
+        <strong>28 August 2026</strong>
 
-<p>
-© <span id="year"></span>
-Amir Chap Chap
-</p>
+    </p>
+
+    <p style="margin-top:10px;">
+
+        <a onclick="openTerms()">
+            Terms & Conditions
+        </a>
+
+        &nbsp; | &nbsp;
+
+        <a onclick="openPrivacy()">
+            Privacy Policy
+        </a>
+
+    </p>
 
 </footer>
 
-<div id="toast" class="toast"></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- TERMS -->
+
+<div
+    id="termsModal"
+    class="modal hidden">
+
+    <div class="modal-box">
+
+        <h2>
+            Dream Big — Terms & Conditions
+        </h2>
+
+        <p>
+            <strong>
+                Published date: 28 August 2026
+            </strong>
+        </p>
+
+
+        <h3>1. Acceptance</h3>
+
+        <p>
+            By creating an account or using Dream Big,
+            you agree to these Terms & Conditions.
+        </p>
+
+
+        <h3>2. Account Registration</h3>
+
+        <p>
+            Members must provide accurate information.
+            Each phone number and email address may
+            only be used for one account.
+        </p>
+
+
+        <h3>3. Activities and Rewards</h3>
+
+        <p>
+            Activities and rewards are subject to
+            eligibility, verification and availability.
+            Displayed rewards are not guaranteed
+            investment returns.
+        </p>
+
+
+        <h3>4. Deposits</h3>
+
+        <p>
+            Deposits should only be made through the
+            official payment instructions displayed
+            on the website.
+        </p>
+
+
+        <h3>5. Payment Verification</h3>
+
+        <p>
+            Submitting an M-Pesa transaction code does
+            not automatically confirm a payment.
+            Transactions may require verification.
+        </p>
+
+
+        <h3>6. Withdrawals</h3>
+
+        <p>
+            Withdrawal requests are subject to
+            verification and processing procedures.
+            Weekend withdrawals may be unavailable.
+        </p>
+
+
+        <h3>7. Prohibited Activity</h3>
+
+        <p>
+            Users must not attempt to hack, manipulate
+            or interfere with accounts, balances,
+            payment records or platform systems.
+        </p>
+
+
+        <h3>8. Changes</h3>
+
+        <p>
+            Dream Big may update these Terms when
+            necessary. Updated terms should be
+            published on the platform.
+        </p>
+
+
+        <button
+            class="primary modal-close"
+            onclick="closeModals()">
+
+            Close
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- PRIVACY -->
+
+<div
+    id="privacyModal"
+    class="modal hidden">
+
+    <div class="modal-box">
+
+        <h2>
+            Dream Big — Privacy Policy
+        </h2>
+
+        <p>
+            <strong>
+                Published date: 28 August 2026
+            </strong>
+        </p>
+
+
+        <h3>Information We Collect</h3>
+
+        <p>
+            Dream Big may collect information such as
+            name, phone number, email address and
+            account information.
+        </p>
+
+
+        <h3>How Information Is Used</h3>
+
+        <p>
+            Information may be used to manage accounts,
+            provide platform services, process requests
+            and communicate with members.
+        </p>
+
+
+        <h3>Payment Information</h3>
+
+        <p>
+            M-Pesa transaction codes submitted for
+            verification may be recorded for payment
+            review.
+        </p>
+
+
+        <h3>Security</h3>
+
+        <p>
+            A production version should use secure
+            server-side authentication and a protected
+            database rather than browser storage.
+        </p>
+
+
+        <h3>Updates</h3>
+
+        <p>
+            This Privacy Policy may be updated when
+            necessary.
+        </p>
+
+
+        <button
+            class="primary modal-close"
+            onclick="closeModals()">
+
+            Close
+
+        </button>
+
+    </div>
+
+</div>
+
 
 <script>
 
-/* =====================================================
-   CONFIG
-===================================================== */
+/* ==========================================
+   LEVELS
+========================================== */
 
-const ADMIN_EMAIL =
-"abdiabdulmohammed50@gmail.com";
+const LEVELS = [
 
-const ADMIN_PASSWORD =
-"Scott@254";
+    {
+        level:1,
+        name:"Starter Phone",
+        item:"📱",
+        unlock:0,
+        reward:5,
+        description:
+        "Free starter activities for new members."
+    },
 
+    {
+        level:2,
+        name:"Mobile Phone",
+        item:"📲",
+        unlock:500,
+        reward:10,
+        description:
+        "Mobile promotional activities."
+    },
 
-const MPESA_NUMBER =
-"0792102645";
+    {
+        level:3,
+        name:"Sound Woofer",
+        item:"🔊",
+        unlock:1000,
+        reward:20,
+        description:
+        "Audio promotional activities."
+    },
 
+    {
+        level:4,
+        name:"Smart TV",
+        item:"📺",
+        unlock:2000,
+        reward:30,
+        description:
+        "Digital promotional activities."
+    },
 
-/* =====================================================
-   STATE
-===================================================== */
+    {
+        level:5,
+        name:"Laptop",
+        item:"💻",
+        unlock:3500,
+        reward:40,
+        description:
+        "Technology-related activities."
+    },
 
-let currentUser =
-JSON.parse(localStorage.getItem("amirUser")) || null;
+    {
+        level:6,
+        name:"Motorbike",
+        item:"🏍️",
+        unlock:5000,
+        reward:50,
+        description:
+        "Advanced promotional activities."
+    },
 
-let users =
-JSON.parse(localStorage.getItem("amirUsers")) || [];
+    {
+        level:7,
+        name:"Business",
+        item:"🏪",
+        unlock:7500,
+        reward:70,
+        description:
+        "Business-related activities."
+    },
 
-let orders =
-JSON.parse(localStorage.getItem("amirOrders")) || [];
+    {
+        level:8,
+        name:"Premium",
+        item:"🏆",
+        unlock:10000,
+        reward:100,
+        description:
+        "Highest available activity level."
+    }
 
-let riders =
-JSON.parse(localStorage.getItem("amirRiders")) || [
-{
-id:101,
-name:"John Kamau",
-phone:"0712345678",
-bike:"TVS HLX 150",
-plate:"KMD 452X",
-photo:"",
-lat:-1.2833,
-lng:36.8167,
-status:"available"
-},
-{
-id:102,
-name:"Peter Kiprono",
-phone:"0722987654",
-bike:"Bajaj Boxer 150",
-plate:"KMC 891B",
-photo:"",
-lat:-1.2880,
-lng:36.8200,
-status:"available"
-}
 ];
 
-let selectedCategory="Food";
-let authMode="login";
-let activeOrder=null;
-let activeRider=null;
 
-let map=null;
-let riderMarker=null;
-let pickupMarker=null;
-let destinationMarker=null;
+/* ==========================================
+   STORAGE
+========================================== */
 
-let gpsOn=false;
+function getUsers(){
 
-
-/* =====================================================
-   START
-===================================================== */
-
-document.addEventListener("DOMContentLoaded",function(){
-
-document.getElementById("year").textContent =
-new Date().getFullYear();
-
-updateAuthUI();
-
-initMap();
-
-renderCustomerOrders();
-
-renderAdminOrders();
-
-renderRiders();
-
-updateStats();
-
-restoreActiveOrder();
-
-});
-
-
-/* =====================================================
-   UTILITIES
-===================================================== */
-
-function saveUsers(){
-localStorage.setItem(
-"amirUsers",
-JSON.stringify(users)
-);
-}
-
-function saveOrders(){
-localStorage.setItem(
-"amirOrders",
-JSON.stringify(orders)
-);
-}
-
-function saveRiders(){
-localStorage.setItem(
-"amirRiders",
-JSON.stringify(riders)
-);
-}
-
-function escapeHtml(value){
-
-return String(value ?? "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+    return JSON.parse(
+        localStorage.getItem("dreamBigUsers") || "[]"
+    );
 
 }
 
-function showToast(message){
+function saveUsers(users){
 
-const toast=document.getElementById("toast");
-
-toast.textContent=message;
-toast.classList.add("show");
-
-clearTimeout(window.toastTimer);
-
-window.toastTimer=setTimeout(function(){
-toast.classList.remove("show");
-},3000);
+    localStorage.setItem(
+        "dreamBigUsers",
+        JSON.stringify(users)
+    );
 
 }
 
-function avatar(name){
+function getCurrentUser(){
 
-return "https://ui-avatars.com/api/?name="+
-encodeURIComponent(name)+
-"&background=0a7c36&color=fff";
+    const phone =
+        localStorage.getItem(
+            "dreamBigCurrentUser"
+        );
+
+    if(!phone){
+        return null;
+    }
+
+    return getUsers().find(
+        user => user.phone === phone
+    ) || null;
 
 }
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+/* ==========================================
+   AUTH SCREEN
+========================================== */
 
-function openOrder(){
+function showLogin(){
 
-document.getElementById("order")
-.scrollIntoView({behavior:"smooth"});
+    document
+    .getElementById("registerBox")
+    .classList.add("hidden");
 
-}
+    document
+    .getElementById("loginBox")
+    .classList.remove("hidden");
 
-function openTracking(){
-
-document.getElementById("tracking")
-.scrollIntoView({behavior:"smooth"});
-
-setTimeout(function(){
-
-if(map){
-map.invalidateSize();
-}
-
-},400);
+    document
+    .getElementById("authMessage")
+    .innerHTML = "";
 
 }
 
+function showRegister(){
 
-/* =====================================================
-   AUTH
-===================================================== */
+    document
+    .getElementById("loginBox")
+    .classList.add("hidden");
 
-function switchAuth(mode){
+    document
+    .getElementById("registerBox")
+    .classList.remove("hidden");
 
-authMode=mode;
-
-document.getElementById("loginTab")
-.classList.toggle("active",mode==="login");
-
-document.getElementById("registerTab")
-.classList.toggle("active",mode==="register");
-
-document.getElementById("nameGroup")
-.style.display=
-mode==="register"?"block":"none";
-
-document.getElementById("authButton")
-.textContent=
-mode==="register"
-?"Create Account"
-:"Login";
-
-}
-
-function openAuth(){
-
-document.getElementById("authSection").style.display="block";
-
-document.getElementById("authSection")
-.scrollIntoView({behavior:"smooth"});
-
-}
-
-function handleAuth(event){
-
-event.preventDefault();
-
-const phone=
-document.getElementById("authPhone")
-.value.trim();
-
-const name=
-document.getElementById("authName")
-.value.trim();
-
-if(!phone){
-showToast("Enter your phone number.");
-return;
-}
-
-
-/* REGISTER */
-
-if(authMode==="register"){
-
-if(!name){
-showToast("Enter your full name.");
-return;
-}
-
-const exists=users.find(
-u=>u.phone===phone
-);
-
-if(exists){
-
-showToast(
-"This phone number is already registered. Please login."
-);
-
-switchAuth("login");
-
-return;
-}
-
-const user={
-id:Date.now(),
-name:name,
-phone:phone
-};
-
-users.push(user);
-
-saveUsers();
-
-currentUser=user;
-
-localStorage.setItem(
-"amirUser",
-JSON.stringify(user)
-);
-
-showToast(
-"Account created successfully. You are now logged in."
-);
-
-}
-
-/* LOGIN */
-
-else{
-
-const user=users.find(
-u=>u.phone===phone
-);
-
-if(!user){
-
-showToast(
-"Account not found. Please register first."
-);
-
-switchAuth("register");
-
-return;
-}
-
-currentUser=user;
-
-localStorage.setItem(
-"amirUser",
-JSON.stringify(user)
-);
-
-showToast(
-"Login successful. Welcome "+user.name+"!"
-);
-
-}
-
-document.getElementById("authSection")
-.style.display="none";
-
-updateAuthUI();
+    document
+    .getElementById("authMessage")
+    .innerHTML = "";
 
 }
 
 
-/* =====================================================
-   AUTH UI
-===================================================== */
+/* ==========================================
+   REGISTER
+========================================== */
 
-function updateAuthUI(){
+function register(){
 
-const area=
-document.getElementById("navAuth");
+    const name =
+        document.getElementById("regName")
+        .value.trim();
 
-if(currentUser){
+    const phone =
+        document.getElementById("regPhone")
+        .value.trim();
 
-area.innerHTML=`
+    const email =
+        document.getElementById("regEmail")
+        .value.trim()
+        .toLowerCase();
 
-<span class="user-badge">
-👤 ${escapeHtml(currentUser.name)}
-</span>
+    const password =
+        document.getElementById("regPassword")
+        .value;
 
-<button class="btn red"
-onclick="logout()">
-Logout
-</button>
-`;
+    const referral =
+        document.getElementById("refCode")
+        .value.trim();
 
-document.getElementById("custName").value=
-currentUser.name;
+    const terms =
+        document.getElementById("agreeTerms")
+        .checked;
 
-document.getElementById("custPhone").value=
-currentUser.phone;
+    const message =
+        document.getElementById("authMessage");
 
-}else{
 
-area.innerHTML=`
+    if(
+        !name ||
+        !phone ||
+        !email ||
+        !password
+    ){
 
-<button class="btn green"
-onclick="openAuth()">
-Register / Login
-</button>
-`;
+        message.innerHTML =
+        '<div class="error">' +
+        'Please complete all required fields.' +
+        '</div>';
+
+        return;
+    }
+
+
+    if(!terms){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Please agree to the Terms & Conditions ' +
+        'and Privacy Policy.' +
+        '</div>';
+
+        return;
+    }
+
+
+    const users = getUsers();
+
+
+    const existing =
+        users.find(
+            user =>
+            user.phone === phone ||
+            user.email === email
+        );
+
+
+    if(existing){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'These details are already registered. ' +
+        'Please login instead.' +
+        '</div>';
+
+        return;
+    }
+
+
+    let referrer = null;
+
+    if(referral){
+
+        referrer =
+            users.find(
+                user =>
+                user.referralCode === referral
+            );
+
+    }
+
+
+    const referralCode =
+        "DB" +
+        Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+
+
+    const user = {
+
+        name:name,
+        phone:phone,
+        email:email,
+        password:password,
+
+        balance:0,
+
+        level:1,
+
+        referrals:0,
+
+        tasksCompleted:0,
+
+        taskProgress:0,
+
+        referralCode:referralCode,
+
+        referredBy:
+            referrer
+            ? referrer.phone
+            : null,
+
+        history:[],
+
+        deposits:[],
+
+        unlockPayments:[],
+
+        agreedTerms:true,
+
+        termsDate:
+            new Date().toLocaleString()
+
+    };
+
+
+    users.push(user);
+
+
+    if(referrer){
+
+        referrer.referrals += 1;
+
+    }
+
+
+    saveUsers(users);
+
+
+    localStorage.setItem(
+        "dreamBigCurrentUser",
+        phone
+    );
+
+
+    showDashboard();
 
 }
 
-renderCustomerOrders();
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+function login(){
+
+    const phone =
+        document.getElementById("loginPhone")
+        .value.trim();
+
+    const password =
+        document.getElementById("loginPassword")
+        .value;
+
+
+    const user =
+        getUsers().find(
+            u =>
+            u.phone === phone &&
+            u.password === password
+        );
+
+
+    if(!user){
+
+        document
+        .getElementById("authMessage")
+        .innerHTML =
+        '<div class="error">' +
+        'Incorrect phone number or password.' +
+        '</div>';
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "dreamBigCurrentUser",
+        phone
+    );
+
+
+    showDashboard();
 
 }
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
 
 function logout(){
 
-localStorage.removeItem("amirUser");
+    localStorage.removeItem(
+        "dreamBigCurrentUser"
+    );
 
-currentUser=null;
+    document
+    .getElementById("dashboard")
+    .classList.add("hidden");
 
-updateAuthUI();
+    document
+    .getElementById("authSection")
+    .classList.remove("hidden");
 
-showToast("You have logged out.");
+    document
+    .getElementById("logoutBtn")
+    .classList.add("hidden");
+
+    showLogin();
 
 }
 
 
-/* =====================================================
-   CATEGORY
-===================================================== */
+/* ==========================================
+   DASHBOARD
+========================================== */
 
-function selectCategory(button,category){
+function showDashboard(){
+
+    const user = getCurrentUser();
+
+    if(!user){
+        return;
+    }
+
+
+    document
+    .getElementById("authSection")
+    .classList.add("hidden");
+
+    document
+    .getElementById("dashboard")
+    .classList.remove("hidden");
+
+    document
+    .getElementById("logoutBtn")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("userName")
+    .textContent = user.name;
+
+    document
+    .getElementById("profileName")
+    .textContent = user.name;
+
+    document
+    .getElementById("profilePhone")
+    .textContent = user.phone;
+
+    document
+    .getElementById("profileEmail")
+    .textContent = user.email;
+
+    document
+    .getElementById("balance")
+    .textContent =
+        Number(user.balance)
+        .toLocaleString();
+
+    document
+    .getElementById("currentLevel")
+    .textContent = user.level;
+
+    document
+    .getElementById("referrals")
+    .textContent = user.referrals;
+
+    document
+    .getElementById("tasksCompleted")
+    .textContent =
+        user.tasksCompleted;
+
+    document
+    .getElementById("myReferralCode")
+    .value =
+        user.referralCode;
+
+
+    renderLevels();
+    renderHistory();
+
+}
+
+
+/* ==========================================
+   LEVELS
+========================================== */
+
+function renderLevels(){
+
+    const user = getCurrentUser();
+
+    const container =
+        document.getElementById("levels");
+
+    container.innerHTML = "";
+
+
+    LEVELS.forEach(level => {
+
+        const unlocked =
+            level.level <= user.level;
+
+
+        let buttonText;
+
+
+        if(unlocked){
+
+            buttonText =
+                "▶ Start Earning";
+
+        }
+        else if(
+            level.level === user.level + 1
+        ){
+
+            buttonText =
+                "🔓 Unlock Level";
+
+        }
+        else{
+
+            buttonText =
+                "🔒 Locked";
+
+        }
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "level " +
+            (
+                unlocked
+                ? "active"
+                : "locked"
+            );
+
+
+        div.innerHTML = `
+
+            <div class="item">
+                ${level.item}
+            </div>
+
+            <h3>
+                Level ${level.level}
+            </h3>
+
+            <div class="level-name">
+                ${level.name}
+            </div>
+
+            <p>
+                ${level.description}
+            </p>
+
+            <p>
+                Unlock:
+                <b>
+                    KSh
+                    ${level.unlock.toLocaleString()}
+                </b>
+            </p>
+
+            <p>
+                Activity reward:
+                <b>
+                    KSh ${level.reward}
+                </b>
+            </p>
+
+            <button
+                class="level-btn"
+                onclick="levelAction(${level.level})">
+
+                ${buttonText}
+
+            </button>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* ==========================================
+   LEVEL ACTION
+========================================== */
+
+function levelAction(levelNumber){
+
+    const user = getCurrentUser();
+
+
+    if(levelNumber <= user.level){
+
+        openTasks(levelNumber);
+
+        return;
+    }
+
+
+    if(
+        levelNumber !== user.level + 1
+    ){
+
+        alert(
+            "Please unlock the previous level first."
+        );
+
+        return;
+    }
+
+
+    const level =
+        LEVELS.find(
+            item =>
+            item.level === levelNumber
+        );
+
+
+    document
+    .getElementById("unlockSection")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("unlockAmount")
+    .textContent =
+        level.unlock.toLocaleString();
+
+
+    document
+    .getElementById("unlockMessage")
+    .innerHTML = "";
+
+
+    document
+    .getElementById("unlockSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==========================================
+   EARNING
+========================================== */
+
+function openTasks(levelNumber){
+
+    const user = getCurrentUser();
+
+    const level =
+        LEVELS.find(
+            item =>
+            item.level === levelNumber
+        );
+
+
+    if(!level){
+        return;
+    }
+
+
+    document
+    .getElementById("taskSection")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("taskTitle")
+    .textContent =
+        "Level " +
+        level.level +
+        " - " +
+        level.name;
+
+
+    document
+    .getElementById("taskDescription")
+    .textContent =
+        level.description +
+        " Complete up to 10 eligible activities.";
+
+
+    document
+    .getElementById("taskCount")
+    .textContent =
+        user.taskProgress;
+
+
+    document
+    .getElementById("taskSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==========================================
+   ACTIVITY
+========================================== */
+
+function completeTask(){
+
+    const users = getUsers();
+
+    const phone =
+        localStorage.getItem(
+            "dreamBigCurrentUser"
+        );
+
+
+    const user =
+        users.find(
+            item =>
+            item.phone === phone
+        );
+
+
+    if(!user){
+        return;
+    }
+
+
+    if(user.taskProgress >= 10){
+
+        alert(
+            "You have completed today's 10 activities."
+        );
+
+        return;
+    }
+
+
+    const level =
+        LEVELS.find(
+            item =>
+            item.level === user.level
+        );
+
+
+    if(!level){
+        return;
+    }
+
+
+    user.taskProgress += 1;
+
+    user.tasksCompleted += 1;
+
+
+    /*
+      Preview-only reward logic.
+      Real rewards must be server verified.
+    */
+
+    user.balance += level.reward;
+
+
+    user.history.push({
+
+        date:
+            new Date().toLocaleString(),
+
+        type:
+            "Activity reward",
+
+        amount:
+            level.reward,
+
+        status:
+            "Completed"
+
+    });
+
+
+    saveUsers(users);
+
+
+    showDashboard();
+
+    openTasks(user.level);
+
+}
+
+
+/* ==========================================
+   OPEN DEPOSIT
+========================================== */
+
+function openDeposit(){
+
+    document
+    .getElementById("paymentSection")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("paymentMessage")
+    .innerHTML = "";
+
+
+    document
+    .getElementById("paymentSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==========================================
+   COPY TILL
+========================================== */
+
+function copyTill(){
+
+    navigator.clipboard
+    .writeText("555122")
+    .then(() => {
+
+        alert(
+            "Till number 555122 copied."
+        );
+
+    })
+    .catch(() => {
+
+        alert(
+            "M-Pesa Till Number: 555122"
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   SUBMIT DEPOSIT
+========================================== */
+
+function submitDeposit(){
+
+    const amount =
+        Number(
+            document
+            .getElementById("depositAmount")
+            .value
+        );
+
+
+    const code =
+        document
+        .getElementById("mpesaCode")
+        .value.trim();
+
+
+    const message =
+        document
+        .getElementById("paymentMessage");
+
+
+    if(
+        !amount ||
+        amount <= 0
+    ){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Enter a valid deposit amount.' +
+        '</div>';
+
+        return;
+    }
+
+
+    if(!code){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Enter the M-Pesa transaction code.' +
+        '</div>';
+
+        return;
+    }
+
+
+    const users = getUsers();
+
+    const phone =
+        localStorage.getItem(
+            "dreamBigCurrentUser"
+        );
+
+
+    const user =
+        users.find(
+            item =>
+            item.phone === phone
+        );
+
+
+    if(!user){
+        return;
+    }
+
+
+    const duplicate =
+        user.deposits.find(
+            deposit =>
+            deposit.code === code
+        );
+
+
+    if(duplicate){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'This transaction code has already been submitted.' +
+        '</div>';
+
+        return;
+    }
+
+
+    user.deposits.push({
+
+        amount:amount,
+
+        code:code,
+
+        date:
+            new Date().toLocaleString(),
+
+        status:
+            "Pending verification"
+
+    });
+
+
+    user.history.push({
+
+        date:
+            new Date().toLocaleString(),
+
+        type:
+            "Deposit",
+
+        amount:
+            amount,
+
+        status:
+            "Pending verification"
+
+    });
+
+
+    saveUsers(users);
+
+
+    message.innerHTML =
+    '<div class="success">' +
+    'Deposit submitted successfully. ' +
+    'Status: Pending verification.' +
+    '</div>';
+
+
+    document
+    .getElementById("depositAmount")
+    .value = "";
+
+    document
+    .getElementById("mpesaCode")
+    .value = "";
+
+
+    renderHistory();
+
+}
+
+
+/* ==========================================
+   LEVEL PAYMENT
+========================================== */
+
+function submitUnlock(){
+
+    const code =
+        document
+        .getElementById("unlockCode")
+        .value.trim();
+
+
+    const message =
+        document
+        .getElementById("unlockMessage");
+
+
+    if(!code){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Enter the M-Pesa transaction code.' +
+        '</div>';
+
+        return;
+    }
+
+
+    const users = getUsers();
+
+    const phone =
+        localStorage.getItem(
+            "dreamBigCurrentUser"
+        );
+
+
+    const user =
+        users.find(
+            item =>
+            item.phone === phone
+        );
+
+
+    if(!user){
+        return;
+    }
+
+
+    const nextLevel =
+        LEVELS.find(
+            item =>
+            item.level === user.level + 1
+        );
+
+
+    if(!nextLevel){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'You have reached the highest level.' +
+        '</div>';
+
+        return;
+    }
+
+
+    const duplicate =
+        user.unlockPayments.find(
+            payment =>
+            payment.code === code
+        );
+
+
+    if(duplicate){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'This transaction code has already been submitted.' +
+        '</div>';
+
+        return;
+    }
+
+
+    user.unlockPayments.push({
+
+        level:
+            nextLevel.level,
+
+        amount:
+            nextLevel.unlock,
+
+        code:code,
+
+        date:
+            new Date().toLocaleString(),
+
+        status:
+            "Pending verification"
+
+    });
+
+
+    user.history.push({
+
+        date:
+            new Date().toLocaleString(),
+
+        type:
+            "Level " +
+            nextLevel.level +
+            " payment",
+
+        amount:
+            nextLevel.unlock,
+
+        status:
+            "Pending verification"
+
+    });
+
+
+    saveUsers(users);
+
+
+    message.innerHTML =
+    '<div class="success">' +
+    'Level payment submitted. ' +
+    'Your payment must be verified before the level is activated.' +
+    '</div>';
+
+
+    document
+    .getElementById("unlockCode")
+    .value = "";
+
+
+    renderHistory();
+
+}
+
+
+/* ==========================================
+   REFERRAL
+========================================== */
+
+function copyReferral(){
+
+    const code =
+        document
+        .getElementById("myReferralCode")
+        .value;
+
+
+    navigator.clipboard
+    .writeText(code)
+    .then(() => {
+
+        alert(
+            "Referral code copied."
+        );
+
+    })
+    .catch(() => {
+
+        alert(
+            "Referral code: " + code
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   WITHDRAWAL
+========================================== */
+
+function withdraw(){
+
+    const amount =
+        Number(
+            document
+            .getElementById("withdrawAmount")
+            .value
+        );
+
+
+    const phone =
+        document
+        .getElementById("withdrawPhone")
+        .value.trim();
+
+
+    const message =
+        document
+        .getElementById("withdrawMessage");
+
+
+    const day =
+        new Date().getDay();
+
+
+    if(
+        day === 0 ||
+        day === 6
+    ){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Weekend withdrawals are unavailable. ' +
+        'Please submit your request Monday to Friday.' +
+        '</div>';
+
+        return;
+    }
+
+
+    const user = getCurrentUser();
+
+
+    if(!user){
+        return;
+    }
+
+
+    if(
+        !amount ||
+        amount <= 0
+    ){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Enter a valid withdrawal amount.' +
+        '</div>';
+
+        return;
+    }
+
+
+    if(amount > user.balance){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Insufficient available balance.' +
+        '</div>';
+
+        return;
+    }
+
+
+    if(!phone){
+
+        message.innerHTML =
+        '<div class="error">' +
+        'Enter the M-Pesa phone number.' +
+        '</div>';
+
+        return;
+    }
+
+
+    const users = getUsers();
+
+    const current =
+        users.find(
+            item =>
+            item.phone === user.phone
+        );
+
+
+    current.balance -= amount;
+
+
+    current.history.push({
+
+        date:
+            new Date().toLocaleString(),
+
+        type:
+            "Withdrawal",
+
+        amount:
+            amount,
+
+        status:
+            "Pending"
+
+    });
+
+
+    saveUsers(users);
+
+
+    showDashboard();
+
+
+    document
+    .getElementById("withdrawMessage")
+    .innerHTML =
+    '<div class="success">' +
+    'Withdrawal request submitted. Status: Pending.' +
+    '</div>';
+
+}
+
+
+/* ==========================================
+   HISTORY
+========================================== */
+
+function renderHistory(){
+
+    const user = getCurrentUser();
+
+    const tbody =
+        document.getElementById("history");
+
+
+    tbody.innerHTML = "";
+
+
+    if(
+        !user.history ||
+        user.history.length === 0
+    ){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+                    No transactions yet.
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+    }
+
+
+    [...user.history]
+    .reverse()
+    .forEach(item => {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                ${item.date}
+            </td>
+
+            <td>
+                ${item.type}
+            </td>
+
+            <td>
+                KSh
+                ${Number(item.amount)
+                .toLocaleString()}
+            </td>
+
+            <td>
+                ${item.status}
+            </td>
+
+        `;
+
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* ==========================================
+   MODALS
+========================================== */
+
+function openTerms(){
+
+    document
+    .getElementById("termsModal")
+    .classList.remove("hidden");
+
+}
+
+function openPrivacy(){
+
+    document
+    .getElementById("privacyModal")
+    .classList.remove("hidden");
+
+}
+
+function closeModals(){
+
+    document
+    .getElementById("termsModal")
+    .classList.add("hidden");
+
+    document
+    .getElementById("privacyModal")
+    .classList.add("hidden");
+
+}
+
+
+/* ==========================================
+   MODAL OUTSIDE CLICK
+========================================== */
 
 document
-.querySelectorAll(".category")
-.forEach(function(btn){
-btn.classList.remove("active");
-});
+.getElementById("termsModal")
+.addEventListener(
+    "click",
+    function(event){
 
-button.classList.add("active");
+        if(event.target === this){
+            closeModals();
+        }
 
-selectedCategory=category;
-
-}
-
-
-/* =====================================================
-   PAYMENT
-===================================================== */
-
-function changePayment(){
-
-const selected=
-document.querySelector(
-'input[name="payment"]:checked'
+    }
 );
 
-if(!selected)return;
 
-const mpesa=
-selected.value==="M-Pesa";
+document
+.getElementById("privacyModal")
+.addEventListener(
+    "click",
+    function(event){
 
-document.getElementById("cashOption")
-.classList.toggle("active",!mpesa);
+        if(event.target === this){
+            closeModals();
+        }
 
-document.getElementById("mpesaOption")
-.classList.toggle("active",mpesa);
-
-document.getElementById("mpesaDetails")
-.style.display=mpesa?"block":"none";
-
-}
-
-
-/* =====================================================
-   ORDER SUBMISSION
-===================================================== */
-
-function submitOrder(event){
-
-event.preventDefault();
-
-if(!currentUser){
-
-showToast(
-"Please register or login before placing an order."
+    }
 );
 
-openAuth();
 
-return;
-}
+/* ==========================================
+   AUTO LOGIN
+========================================== */
 
-const name=
-document.getElementById("custName")
-.value.trim();
+window.onload = function(){
 
-const phone=
-document.getElementById("custPhone")
-.value.trim();
+    const user = getCurrentUser();
 
-const pickup=
-document.getElementById("pickup")
-.value.trim();
+    if(user){
 
-const destination=
-document.getElementById("destination")
-.value.trim();
+        showDashboard();
 
-const item=
-document.getElementById("item")
-.value.trim();
-
-const amount=
-Number(document.getElementById("amount").value);
-
-const payment=
-document.querySelector(
-'input[name="payment"]:checked'
-).value;
-
-const mpesaCode=
-document.getElementById("mpesaCode")
-.value.trim();
-
-if(!name||!phone||!pickup||!destination||!item){
-
-showToast("Please complete all details.");
-
-return;
-}
-
-if(amount<0||isNaN(amount)){
-
-showToast("Enter a valid amount.");
-
-return;
-}
-
-if(payment==="M-Pesa"&&!mpesaCode){
-
-showToast("Enter your M-Pesa transaction code.");
-
-return;
-}
-
-const order={
-
-id:
-"ACC-"+Date.now().toString().slice(-8),
-
-userId:currentUser.id,
-
-category:selectedCategory,
-
-customerName:name,
-
-customerPhone:phone,
-
-pickup:pickup,
-
-destination:destination,
-
-item:item,
-
-amount:amount,
-
-paymentMethod:payment,
-
-mpesaCode:
-payment==="M-Pesa"?mpesaCode:"",
-
-paymentStatus:
-payment==="M-Pesa"
-?"PENDING VERIFICATION"
-:"CASH ON DELIVERY",
-
-status:"NEW ORDER",
-
-riderId:null,
-
-riderName:null,
-
-createdAt:new Date().toISOString()
+    }
 
 };
-
-orders.push(order);
-
-saveOrders();
-
-activeOrder=order;
-
-showToast(
-"Order "+order.id+" received successfully."
-);
-
-document.getElementById("deliveryForm").reset();
-
-document.getElementById("custName").value=
-currentUser.name;
-
-document.getElementById("custPhone").value=
-currentUser.phone;
-
-changePayment();
-
-renderCustomerOrders();
-
-renderAdminOrders();
-
-updateStats();
-
-openTracking();
-
-setTimeout(assignRider,700);
-
-}
-
-
-/* =====================================================
-   RIDER ASSIGNMENT
-===================================================== */
-
-function assignRider(){
-
-if(!activeOrder)return;
-
-if(activeOrder.riderId)return;
-
-const available=
-riders.filter(
-r=>r.status==="available"
-);
-
-if(!available.length){
-
-activeOrder.status=
-"WAITING FOR RIDER";
-
-saveOrders();
-
-updateTracking();
-
-renderAdminOrders();
-
-showToast(
-"No rider available. Admin can assign one later."
-);
-
-return;
-}
-
-const rider=available[0];
-
-rider.status="assigned";
-
-activeRider=rider;
-
-activeOrder.riderId=rider.id;
-
-activeOrder.riderName=rider.name;
-
-activeOrder.status="RIDER ASSIGNED";
-
-saveRiders();
-
-saveOrders();
-
-updateTracking();
-
-renderCustomerOrders();
-
-renderAdminOrders();
-
-renderRiders();
-
-updateStats();
-
-showToast(
-"Rider "+rider.name+" assigned."
-);
-
-startSimulator();
-
-}
-
-
-/* =====================================================
-   CUSTOMER ORDERS
-===================================================== */
-
-function renderCustomerOrders(){
-
-const box=
-document.getElementById("customerOrders");
-
-if(!currentUser){
-
-box.innerHTML=
-`<div class="empty">
-Login to view your orders.
-</div>`;
-
-return;
-}
-
-const myOrders=
-orders.filter(
-o=>o.userId===currentUser.id
-);
-
-if(!myOrders.length){
-
-box.innerHTML=
-`<div class="empty">
-You have no orders yet.
-</div>`;
-
-return;
-}
-
-box.innerHTML=
-myOrders
-.slice()
-.reverse()
-.map(function(order){
-
-return `
-
-<div class="history-item">
-
-<strong>${escapeHtml(order.id)}</strong>
-
-<p>
-${escapeHtml(order.category)}
-</p>
-
-<p>
-${escapeHtml(order.pickup)}
- →
-${escapeHtml(order.destination)}
-</p>
-
-<p>
-KES ${Number(order.amount).toLocaleString()}
-</p>
-
-<p>
-Payment:
-${escapeHtml(order.paymentMethod)}
-</p>
-
-<p>
-Status:
-<strong>
-${escapeHtml(order.status)}
-</strong>
-</p>
-
-<button
-class="btn blue"
-style="margin-top:8px"
-onclick="selectOrder('${order.id}')">
-Track
-</button>
-
-</div>
-`;
-
-})
-.join("");
-
-}
-
-function selectOrder(id){
-
-const order=orders.find(
-o=>o.id===id
-);
-
-if(!order)return;
-
-activeOrder=order;
-
-activeRider=
-riders.find(
-r=>r.id===order.riderId
-)||null;
-
-localStorage.setItem(
-"amirActiveOrder",
-JSON.stringify(order)
-);
-
-updateTracking();
-
-openTracking();
-
-}
-
-
-/* =====================================================
-   ACTIVE ORDER
-===================================================== */
-
-function restoreActiveOrder(){
-
-if(currentUser){
-
-const saved=
-localStorage.getItem(
-"amirActiveOrder"
-);
-
-if(saved){
-
-try{
-
-const savedOrder=
-JSON.parse(saved);
-
-const found=
-orders.find(
-o=>o.id===savedOrder.id
-);
-
-if(found&&found.userId===currentUser.id){
-
-activeOrder=found;
-
-activeRider=
-riders.find(
-r=>r.id===found.riderId
-)||null;
-
-}
-
-}catch(e){}
-
-}
-
-}
-
-updateTracking();
-
-}
-
-function saveActiveOrder(){
-
-if(activeOrder){
-
-localStorage.setItem(
-"amirActiveOrder",
-JSON.stringify(activeOrder)
-);
-
-}
-
-}
-
-
-/* =====================================================
-   TRACKING
-===================================================== */
-
-function updateTracking(){
-
-if(!activeOrder){
-
-document.getElementById("statusBadge")
-.textContent="AWAITING REQUEST";
-
-document.getElementById("riderName")
-.textContent="No Rider Assigned";
-
-document.getElementById("statusText")
-.textContent=
-"Submit an order to start dispatch.";
-
-document.getElementById("bike").textContent="--";
-document.getElementById("plate").textContent="--";
-document.getElementById("trackPickup").textContent="--";
-document.getElementById("trackDestination").textContent="--";
-document.getElementById("trackPayment").textContent="--";
-document.getElementById("trackId").textContent="--";
-
-document.getElementById("riderHeader")
-.style.display="none";
-
-return;
-}
-
-document.getElementById("statusBadge")
-.textContent=activeOrder.status;
-
-document.getElementById("trackPickup")
-.textContent=activeOrder.pickup;
-
-document.getElementById("trackDestination")
-.textContent=activeOrder.destination;
-
-document.getElementById("trackPayment")
-.textContent=
-activeOrder.paymentMethod+
-" - "+
-activeOrder.paymentStatus;
-
-document.getElementById("trackId")
-.textContent=activeOrder.id;
-
-let message="Your order is being processed.";
-
-switch(activeOrder.status){
-
-case "NEW ORDER":
-message="Your order has been received.";
-break;
-
-case "WAITING FOR RIDER":
-message="Waiting for an available rider.";
-break;
-
-case "RIDER ASSIGNED":
-message="Rider assigned. Waiting for rider acceptance.";
-break;
-
-case "JOB ACCEPTED - EN ROUTE":
-message="Rider accepted the order and is going to pickup.";
-break;
-
-case "ITEM PICKED UP":
-message="Item picked up. Rider is heading to destination.";
-break;
-
-case "DELIVERED":
-message="Delivery completed successfully.";
-break;
-
-case "CANCELLED":
-message="This delivery was cancelled.";
-break;
-
-}
-
-document.getElementById("statusText")
-.textContent=message;
-
-const rider=
-riders.find(
-r=>r.id===activeOrder.riderId
-);
-
-if(rider){
-
-activeRider=rider;
-
-document.getElementById("riderName")
-.textContent=rider.name;
-
-document.getElementById("riderHeaderName")
-.textContent=rider.name;
-
-document.getElementById("riderPhone")
-.textContent="📞 "+rider.phone;
-
-document.getElementById("bike")
-.textContent=rider.bike;
-
-document.getElementById("plate")
-.textContent=rider.plate;
-
-document.getElementById("riderPhoto").src=
-rider.photo||avatar(rider.name);
-
-document.getElementById("riderHeader")
-.style.display="flex";
-
-renderMap();
-
-}
-
-saveActiveOrder();
-
-}
-
-
-/* =====================================================
-   MAP
-===================================================== */
-
-function initMap(){
-
-if(typeof L==="undefined")return;
-
-map=L.map("map")
-.setView([-1.2833,36.8167],13);
-
-L.tileLayer(
-"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-{
-maxZoom:19,
-attribution:"© OpenStreetMap contributors"
-}
-).addTo(map);
-
-}
-
-function renderMap(){
-
-if(!map||!activeOrder||!activeRider)return;
-
-if(riderMarker)
-map.removeLayer(riderMarker);
-
-if(pickupMarker)
-map.removeLayer(pickupMarker);
-
-if(destinationMarker)
-map.removeLayer(destinationMarker);
-
-const lat=Number(activeRider.lat)||-1.2833;
-const lng=Number(activeRider.lng)||36.8167;
-
-const pickupLat=lat+0.006;
-const pickupLng=lng+0.006;
-
-const destinationLat=lat-0.006;
-const destinationLng=lng+0.010;
-
-riderMarker=
-L.marker([lat,lng])
-.addTo(map)
-.bindPopup(
-"<b>Rider:</b> "+
-escapeHtml(activeRider.name)
-);
-
-pickupMarker=
-L.marker([pickupLat,pickupLng])
-.addTo(map)
-.bindPopup(
-"<b>Pickup:</b> "+
-escapeHtml(activeOrder.pickup)
-);
-
-destinationMarker=
-L.marker([destinationLat,destinationLng])
-.addTo(map)
-.bindPopup(
-"<b>Destination:</b> "+
-escapeHtml(activeOrder.destination)
-);
-
-map.fitBounds(
-[
-[lat,lng],
-[pickupLat,pickupLng],
-[destinationLat,destinationLng]
-],
-{padding:[30,30]}
-);
-
-}
-
-function refreshTracking(){
-
-restoreActiveOrder();
-
-if(map)
-map.invalidateSize();
-
-showToast("Tracking refreshed.");
-
-}
-
-
-/* =====================================================
-   RIDER SIMULATOR
-===================================================== */
-
-function startSimulator(){
-
-if(!activeRider||!activeOrder)return;
-
-document.getElementById("simulator")
-.style.display="block";
-
-document.getElementById("simName")
-.textContent=activeRider.name;
-
-document.getElementById("simOrder")
-.textContent="Order: "+activeOrder.id;
-
-resetSimulator();
-
-}
-
-function resetSimulator(){
-
-gpsOn=false;
-
-document.getElementById("gpsBtn")
-.textContent="1. Turn GPS ON";
-
-document.getElementById("gpsBtn")
-.style.background="#ffc700";
-
-document.getElementById("acceptBtn")
-.disabled=true;
-
-document.getElementById("pickupBtn")
-.disabled=true;
-
-document.getElementById("deliverBtn")
-.disabled=true;
-
-}
-
-function toggleGPS(){
-
-gpsOn=!gpsOn;
-
-const btn=
-document.getElementById("gpsBtn");
-
-if(gpsOn){
-
-btn.textContent="✓ GPS ON";
-
-btn.style.background="#0a7c36";
-btn.style.color="#fff";
-
-document.getElementById("acceptBtn")
-.disabled=false;
-
-showToast("Rider GPS is ON.");
-
-}else{
-
-btn.textContent="1. Turn GPS ON";
-
-btn.style.background="#ffc700";
-btn.style.color="#111";
-
-document.getElementById("acceptBtn")
-.disabled=true;
-
-}
-
-}
-
-function acceptJob(){
-
-if(!activeOrder)return;
-
-activeOrder.status=
-"JOB ACCEPTED - EN ROUTE";
-
-saveOrders();
-
-updateTracking();
-
-document.getElementById("acceptBtn")
-.disabled=true;
-
-document.getElementById("pickupBtn")
-.disabled=false;
-
-showToast("Rider accepted the job.");
-
-}
-
-function pickupJob(){
-
-if(!activeOrder)return;
-
-activeOrder.status=
-"ITEM PICKED UP";
-
-saveOrders();
-
-updateTracking();
-
-document.getElementById("pickupBtn")
-.disabled=true;
-
-document.getElementById("deliverBtn")
-.disabled=false;
-
-showToast("Item picked up.");
-
-}
-
-function deliverJob(){
-
-if(!activeOrder)return;
-
-activeOrder.status="DELIVERED";
-
-if(activeRider){
-
-activeRider.status="available";
-
-}
-
-saveOrders();
-
-saveRiders();
-
-updateTracking();
-
-renderRiders();
-
-renderAdminOrders();
-
-updateStats();
-
-document.getElementById("deliverBtn")
-.disabled=true;
-
-showToast("Delivery completed.");
-
-}
-
-
-/* =====================================================
-   ADMIN
-===================================================== */
-
-function isAdmin(){
-
-return sessionStorage.getItem("amirAdmin")==="true";
-
-}
-
-function adminLogin(){
-
-const email=
-document.getElementById("adminEmail")
-.value.trim()
-.toLowerCase();
-
-const password=
-document.getElementById("adminPassword")
-.value;
-
-if(
-email===ADMIN_EMAIL.toLowerCase() &&
-password===ADMIN_PASSWORD
-){
-
-sessionStorage.setItem(
-"amirAdmin",
-"true"
-);
-
-showAdmin();
-
-showToast("Admin login successful.");
-
-}else{
-
-showToast("Invalid admin email or password.");
-
-}
-
-}
-
-function showAdmin(){
-
-document.getElementById("adminLoginBox")
-.style.display="none";
-
-document.getElementById("adminPanel")
-.style.display="block";
-
-renderRiders();
-
-renderAdminOrders();
-
-updateStats();
-
-}
-
-function adminLogout(){
-
-sessionStorage.removeItem("amirAdmin");
-
-document.getElementById("adminLoginBox")
-.style.display="block";
-
-document.getElementById("adminPanel")
-.style.display="none";
-
-showToast("Admin logged out.");
-
-}
-
-
-/* =====================================================
-   RIDER MANAGEMENT
-===================================================== */
-
-function addRider(){
-
-if(!isAdmin()){
-
-showToast("Admin login required.");
-
-return;
-}
-
-const name=
-document.getElementById("riderNameInput")
-.value.trim();
-
-const phone=
-document.getElementById("riderPhoneInput")
-.value.trim();
-
-const bike=
-document.getElementById("bikeInput")
-.value.trim();
-
-const plate=
-document.getElementById("plateInput")
-.value.trim();
-
-const photo=
-document.getElementById("photoInput")
-.value.trim();
-
-const status=
-document.getElementById("riderStatusInput")
-.value;
-
-if(!name||!phone||!bike||!plate){
-
-showToast("Complete rider details.");
-
-return;
-}
-
-const rider={
-
-id:Date.now(),
-
-name:name,
-
-phone:phone,
-
-bike:bike,
-
-plate:plate,
-
-photo:photo,
-
-lat:-1.2833,
-
-lng:36.8167,
-
-status:status
-
-};
-
-riders.push(rider);
-
-saveRiders();
-
-document.getElementById("riderNameInput").value="";
-document.getElementById("riderPhoneInput").value="";
-document.getElementById("bikeInput").value="";
-document.getElementById("plateInput").value="";
-document.getElementById("photoInput").value="";
-
-renderRiders();
-
-updateStats();
-
-showToast(
-"Rider "+name+" added successfully."
-);
-
-}
-
-function renderRiders(){
-
-const table=
-document.getElementById("riderTable");
-
-if(!table)return;
-
-if(!riders.length){
-
-table.innerHTML=
-`<tr><td colspan="6">No riders.</td></tr>`;
-
-return;
-}
-
-table.innerHTML=
-riders.map(function(rider){
-
-let statusClass=
-rider.status==="available"
-?"Available"
-:
-rider.status==="assigned"
-?"Assigned"
-:"Offline";
-
-return `
-
-<tr>
-
-<td>${escapeHtml(rider.name)}</td>
-
-<td>${escapeHtml(rider.phone)}</td>
-
-<td>${escapeHtml(rider.bike)}</td>
-
-<td>${escapeHtml(rider.plate)}</td>
-
-<td>${statusClass}</td>
-
-<td>
-
-<button
-class="btn red"
-style="padding:7px 10px"
-onclick="deleteRider(${rider.id})">
-Delete
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-}).join("");
-
-}
-
-function deleteRider(id){
-
-if(!isAdmin())return;
-
-const rider=
-riders.find(r=>r.id===id);
-
-if(!rider)return;
-
-if(!confirm(
-"Delete rider "+rider.name+"?"
-))return;
-
-riders=
-riders.filter(
-r=>r.id!==id
-);
-
-saveRiders();
-
-renderRiders();
-
-updateStats();
-
-showToast("Rider deleted.");
-
-}
-
-
-/* =====================================================
-   ADMIN ORDERS
-===================================================== */
-
-function renderAdminOrders(){
-
-const box=
-document.getElementById("adminOrders");
-
-if(!box)return;
-
-if(!orders.length){
-
-box.innerHTML=
-`<div class="empty">No orders yet.</div>`;
-
-return;
-}
-
-box.innerHTML=
-orders
-.slice()
-.reverse()
-.map(function(order){
-
-return `
-
-<div class="admin-order">
-
-<h4>
-${escapeHtml(order.id)}
-</h4>
-
-<p>
-<strong>Customer:</strong>
-${escapeHtml(order.customerName)}
-</p>
-
-<p>
-<strong>Phone:</strong>
-${escapeHtml(order.customerPhone)}
-</p>
-
-<p>
-<strong>Service:</strong>
-${escapeHtml(order.category)}
-</p>
-
-<p>
-<strong>Pickup:</strong>
-${escapeHtml(order.pickup)}
-</p>
-
-<p>
-<strong>Destination:</strong>
-${escapeHtml(order.destination)}
-</p>
-
-<p>
-<strong>Item:</strong>
-${escapeHtml(order.item)}
-</p>
-
-<p>
-<strong>Amount:</strong>
-KES ${Number(order.amount).toLocaleString()}
-</p>
-
-<p>
-<strong>Payment:</strong>
-${escapeHtml(order.paymentMethod)}
-</p>
-
-<p>
-<strong>M-Pesa Code:</strong>
-${escapeHtml(order.mpesaCode||"N/A")}
-</p>
-
-<p>
-<strong>Status:</strong>
-${escapeHtml(order.status)}
-</p>
-
-<p>
-<strong>Rider:</strong>
-${escapeHtml(order.riderName||"Not assigned")}
-</p>
-
-<div class="admin-actions">
-
-${
-order.paymentMethod==="M-Pesa"
-&&
-order.paymentStatus==="PENDING VERIFICATION"
-
-?
-`
-<button
-style="background:#ffc700"
-onclick="verifyPayment('${order.id}')">
-Verify Payment
-</button>
-`
-:""
-}
-
-${
-!order.riderId
-?
-`
-<button
-style="background:#2196f3;color:white"
-onclick="adminAssignRider('${order.id}')">
-Assign Rider
-</button>
-`
-:""
-}
-
-${
-order.status!=="DELIVERED"
-?
-`
-<button
-style="background:#0a7c36;color:white"
-onclick="adminCompleteOrder('${order.id}')">
-Mark Delivered
-</button>
-`
-:""
-}
-
-<button
-style="background:#d93025;color:white"
-onclick="cancelOrder('${order.id}')">
-Cancel
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-
-/* =====================================================
-   ADMIN ORDER ACTIONS
-===================================================== */
-
-function verifyPayment(id){
-
-if(!isAdmin())return;
-
-const order=
-orders.find(o=>o.id===id);
-
-if(!order)return;
-
-order.paymentStatus="VERIFIED";
-
-saveOrders();
-
-renderAdminOrders();
-
-renderCustomerOrders();
-
-if(activeOrder&&activeOrder.id===id)
-updateTracking();
-
-showToast("M-Pesa payment verified.");
-
-}
-
-function adminAssignRider(id){
-
-if(!isAdmin())return;
-
-const order=
-orders.find(o=>o.id===id);
-
-if(!order)return;
-
-const rider=
-riders.find(
-r=>r.status==="available"
-);
-
-if(!rider){
-
-showToast("No available rider.");
-
-return;
-}
-
-rider.status="assigned";
-
-order.riderId=rider.id;
-
-order.riderName=rider.name;
-
-order.status="RIDER ASSIGNED";
-
-activeOrder=order;
-
-activeRider=rider;
-
-saveRiders();
-
-saveOrders();
-
-renderRiders();
-
-renderAdminOrders();
-
-renderCustomerOrders();
-
-updateStats();
-
-updateTracking();
-
-startSimulator();
-
-showToast(
-rider.name+" assigned to "+order.id
-);
-
-}
-
-function adminCompleteOrder(id){
-
-if(!isAdmin())return;
-
-const order=
-orders.find(o=>o.id===id);
-
-if(!order)return;
-
-order.status="DELIVERED";
-
-if(order.riderId){
-
-const rider=
-riders.find(
-r=>r.id===order.riderId
-);
-
-if(rider)
-rider.status="available";
-
-}
-
-saveOrders();
-
-saveRiders();
-
-renderAdminOrders();
-
-renderRiders();
-
-renderCustomerOrders();
-
-updateStats();
-
-if(activeOrder&&activeOrder.id===id)
-updateTracking();
-
-showToast("Order marked delivered.");
-
-}
-
-function cancelOrder(id){
-
-if(!isAdmin())return;
-
-const order=
-orders.find(o=>o.id===id);
-
-if(!order)return;
-
-order.status="CANCELLED";
-
-if(order.riderId){
-
-const rider=
-riders.find(
-r=>r.id===order.riderId
-);
-
-if(rider)
-rider.status="available";
-
-}
-
-saveOrders();
-
-saveRiders();
-
-renderAdminOrders();
-
-renderRiders();
-
-renderCustomerOrders();
-
-updateStats();
-
-if(activeOrder&&activeOrder.id===id)
-updateTracking();
-
-showToast("Order cancelled.");
-
-}
-
-
-/* =====================================================
-   STATS
-===================================================== */
-
-function updateStats(){
-
-const total=
-document.getElementById("totalOrders");
-
-const totalRiders=
-document.getElementById("totalRiders");
-
-const mpesa=
-document.getElementById("mpesaOrders");
-
-const cash=
-document.getElementById("cashOrders");
-
-if(total)
-total.textContent=orders.length;
-
-if(totalRiders)
-totalRiders.textContent=riders.length;
-
-if(mpesa)
-mpesa.textContent=
-orders.filter(
-o=>o.paymentMethod==="M-Pesa"
-).length;
-
-if(cash)
-cash.textContent=
-orders.filter(
-o=>o.paymentMethod==="Cash"
-).length;
-
-}
-
-
-/* =====================================================
-   AUTO SHOW ADMIN IF SESSION EXISTS
-===================================================== */
-
-if(isAdmin()){
-
-setTimeout(function(){
-
-showAdmin();
-
-},100);
-
-}
 
 </script>
 
