@@ -5,6 +5,10 @@ const admin = require("firebase-admin");
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+/* =========================
+   MIDDLEWARE
+========================= */
+
 app.use(cors());
 app.use(express.json());
 
@@ -25,125 +29,91 @@ if (
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey
+      privateKey: privateKey
     })
   });
 
   console.log("Firebase Admin initialized successfully.");
 } else {
-  console.warn("Firebase environment variables are missing.");
+  console.warn(
+    "Firebase environment variables are missing or incomplete."
+  );
 }
 
 const db = admin.firestore();
-const auth = admin.auth();
 
 /* =========================
-   ROOT / HEALTH
+   ROOT ROUTE
 ========================= */
 
 app.get("/", (req, res) => {
-  res.status(200).send("Amir Chap Chap Backend is running.");
+  res.status(200).send(
+    "Amir Chap Chap Backend is running."
+  );
 });
+
+/* =========================
+   HEALTH CHECK
+========================= */
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     status: "OK",
     service: "Amir Chap Chap Backend",
-    time: new Date().toISOString()
+    timestamp: new Date().toISOString()
   });
 });
 
 /* =========================
-   VERIFY MODERATOR
+   VERIFY ADMIN
 ========================= */
 
-async function verifyAdmin(req, res, next) {
+const verifyAdmin = async (req, res, next) => {
   try {
-    const header = req.headers.authorization || "";
+    const authorization =
+      req.headers.authorization || "";
 
-    if (!header.startsWith("Bearer ")) {
+    if (!authorization.startsWith("Bearer ")) {
       return res.status(401).json({
-        error: "Authorization token required."
+        error: "Unauthorized: No valid token provided."
       });
     }
 
-    const token = header.substring(7);
+    const token = authorization.substring(7);
 
-    const decoded = await auth.verifyIdToken(token);
+    const decodedToken =
+      await admin.auth().verifyIdToken(token);
 
-    if (decoded.admin !== true) {
+    if (decodedToken.admin !== true) {
       return res.status(403).json({
-        error: "Moderator permission required."
+        error: "Forbidden: Moderator privilege required."
       });
     }
 
-    req.user = decoded;
+    req.user = decodedToken;
     next();
 
   } catch (error) {
     console.error("Admin verification error:", error);
 
     return res.status(401).json({
-      error: "Invalid or expired Firebase login."
+      error: "Unauthorized: Invalid token."
     });
   }
-}
+};
 
 /* =========================
    BOOTSTRAP FIRST MODERATOR
+   =========================
+   One-time setup endpoint.
 ========================= */
 
 app.post("/api/bootstrap-admin", async (req, res) => {
 
   try {
-app.post("/api/set-moderator", async (req, res) => {
-  try {
-    const setupSecret = req.headers["x-setup-secret"];
 
-    if (
-      !setupSecret ||
-      setupSecret !== process.env.BOOTSTRAP_SECRET
-    ) {
-      return res.status(403).json({
-        error: "Invalid setup secret."
-      });
-    }
-
-    const { uid } = req.body;
-
-    if (!uid) {
-      return res.status(400).json({
-        error: "Firebase UID is required."
-      });
-    }
-
-    await admin.auth().setCustomUserClaims(uid, {
-      admin: true
-    });
-
-    await admin.firestore()
-      .collection("users")
-      .doc(uid)
-      .set({
-        uid,
-        role: "admin",
-        updatedAt:
-          admin.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
-
-    res.json({
-      message: "Moderator role assigned successfully."
-    });
-
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: error.message
-    });
-  }
-});
-    const secret = req.headers["x-bootstrap-secret"];
+    const secret =
+      req.headers["x-bootstrap-secret"];
 
     if (
       !secret ||
@@ -171,21 +141,33 @@ app.post("/api/set-moderator", async (req, res) => {
 
     try {
 
-      userRecord = await auth.getUserByEmail(email);
+      userRecord =
+        await admin.auth().getUserByEmail(email);
 
     } catch (error) {
 
-      userRecord = await auth.createUser({
-        email,
-        password,
-        displayName: displayName || "Amir Chap Chap Moderator"
-      });
+      if (error.code === "auth/user-not-found") {
 
+        userRecord =
+          await admin.auth().createUser({
+            email,
+            password,
+            displayName:
+              displayName ||
+              "Amir Chap Chap Moderator"
+          });
+
+      } else {
+        throw error;
+      }
     }
 
-    await auth.setCustomUserClaims(userRecord.uid, {
-      admin: true
-    });
+    await admin.auth().setCustomUserClaims(
+      userRecord.uid,
+      {
+        admin: true
+      }
+    );
 
     await db
       .collection("users")
@@ -194,313 +176,358 @@ app.post("/api/set-moderator", async (req, res) => {
         {
           uid: userRecord.uid,
           email: userRecord.email,
-          name:
+          role: "admin",
+          displayName:
             displayName ||
             userRecord.displayName ||
-            "Moderator",
-          role: "admin",
+            "Amir Chap Chap Moderator",
           updatedAt:
             admin.firestore.FieldValue.serverTimestamp()
         },
         { merge: true }
       );
 
-    res.status(200).json({
-      message: "Moderator account is ready.",
+    return res.status(200).json({
+      message:
+        "Moderator account is ready.",
       uid: userRecord.uid,
       email: userRecord.email
     });
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Bootstrap moderator error:",
+      error
+    );
 
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message
     });
   }
 });
 
 /* =========================
-   GENERATE RIDER ID
+   SET EXISTING USER AS MODERATOR
 ========================= */
 
-async function generateRiderId() {
+app.post("/api/set-moderator", async (req, res) => {
 
-  const counterRef =
-    db.collection("counters").doc("riders");
+  try {
 
-  return await db.runTransaction(async transaction => {
+    const setupSecret =
+      req.headers["x-setup-secret"];
 
-    const snapshot =
-      await transaction.get(counterRef);
-
-    let count = 1;
-
-    if (snapshot.exists) {
-
-      const oldCount =
-        Number(snapshot.data().count || 0);
-
-      count = oldCount + 1;
+    if (
+      !setupSecret ||
+      setupSecret !== process.env.BOOTSTRAP_SECRET
+    ) {
+      return res.status(403).json({
+        error: "Invalid setup secret."
+      });
     }
 
-    transaction.set(
-      counterRef,
+    const { uid } = req.body;
+
+    if (!uid) {
+      return res.status(400).json({
+        error: "Firebase UID is required."
+      });
+    }
+
+    const userRecord =
+      await admin.auth().getUser(uid);
+
+    await admin.auth().setCustomUserClaims(
+      uid,
       {
-        count
-      },
-      {
-        merge: true
+        admin: true
       }
     );
 
-    return `RIDER-${String(count).padStart(4, "0")}`;
-  });
-}
+    await db
+      .collection("users")
+      .doc(uid)
+      .set(
+        {
+          uid,
+          email: userRecord.email || "",
+          role: "admin",
+          displayName:
+            userRecord.displayName ||
+            "Amir Chap Chap Moderator",
+          updatedAt:
+            admin.firestore.FieldValue.serverTimestamp()
+        },
+        { merge: true }
+      );
+
+    return res.status(200).json({
+      message:
+        "Moderator role assigned successfully.",
+      uid: uid
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Set moderator error:",
+      error
+    );
+
+    return res.status(500).json({
+      error: error.message
+    });
+  }
+});
 
 /* =========================
    CREATE RIDER
 ========================= */
 
-app.post("/api/createRider", verifyAdmin, async (req, res) => {
+app.post(
+  "/api/create-rider",
+  verifyAdmin,
+  async (req, res) => {
 
-  try {
+    try {
 
-    const {
-      name,
-      phone,
-      email,
-      password,
-      motorbikeType,
-      motorbikeModel
-    } = req.body;
-
-    if (!name || !phone || !email || !password) {
-
-      return res.status(400).json({
-        error:
-          "Name, phone, email and password are required."
-      });
-    }
-
-    const riderId =
-      await generateRiderId();
-
-    const userRecord =
-      await auth.createUser({
+      const {
+        name,
+        phone,
         email,
         password,
-        displayName: name
+        motorbikeType,
+        motorbikeModel
+      } = req.body;
+
+      if (
+        !name ||
+        !phone ||
+        !email ||
+        !password
+      ) {
+        return res.status(400).json({
+          error:
+            "Name, phone, email and password are required."
+        });
+      }
+
+      const userRecord =
+        await admin.auth().createUser({
+          email,
+          password,
+          displayName: name
+        });
+
+      const counterRef =
+        db.collection("counters")
+          .doc("riders");
+
+      const riderId =
+        await db.runTransaction(
+          async (transaction) => {
+
+            const counterDoc =
+              await transaction.get(
+                counterRef
+              );
+
+            let count = 1;
+
+            if (counterDoc.exists) {
+              count =
+                Number(
+                  counterDoc.data().count || 0
+                ) + 1;
+            }
+
+            transaction.set(
+              counterRef,
+              { count },
+              { merge: true }
+            );
+
+            return `RIDER-${String(count)
+              .padStart(4, "0")}`;
+          }
+        );
+
+      await db
+        .collection("riders")
+        .doc(userRecord.uid)
+        .set({
+          uid: userRecord.uid,
+          riderId,
+          name,
+          phone,
+          email,
+          motorbikeType:
+            motorbikeType || "N/A",
+          motorbikeModel:
+            motorbikeModel || "N/A",
+          status: "active",
+          createdAt:
+            admin.firestore.FieldValue.serverTimestamp()
+        });
+
+      return res.status(201).json({
+        message:
+          "Rider account created successfully.",
+        uid: userRecord.uid,
+        riderId
       });
 
-    const riderData = {
+    } catch (error) {
 
-      uid: userRecord.uid,
+      console.error(
+        "Create rider error:",
+        error
+      );
 
-      riderId,
-
-      name,
-
-      phone,
-
-      email,
-
-      motorbikeType:
-        motorbikeType || "Not specified",
-
-      motorbikeModel:
-        motorbikeModel || "Not specified",
-
-      status: "active",
-
-      role: "rider",
-
-      createdAt:
-        admin.firestore.FieldValue.serverTimestamp(),
-
-      createdBy:
-        req.user.uid
-    };
-
-    await db
-      .collection("riders")
-      .doc(userRecord.uid)
-      .set(riderData);
-
-    res.status(201).json({
-
-      message:
-        "Rider account created successfully.",
-
-      riderId,
-
-      uid: userRecord.uid,
-
-      rider: riderData
-    });
-
-  } catch (error) {
-
-    console.error("Create rider error:", error);
-
-    res.status(500).json({
-      error: error.message
-    });
+      return res.status(500).json({
+        error: error.message
+      });
+    }
   }
-});
-
-/* =========================
-   LIST RIDERS
-========================= */
-
-app.get("/api/riders", verifyAdmin, async (req, res) => {
-
-  try {
-
-    const snapshot =
-      await db.collection("riders").get();
-
-    const riders =
-      snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-    res.json({
-      riders
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      error: error.message
-    });
-  }
-});
+);
 
 /* =========================
    DISABLE RIDER
 ========================= */
 
-app.post("/api/disableRider", verifyAdmin, async (req, res) => {
+app.post(
+  "/api/disable-rider",
+  verifyAdmin,
+  async (req, res) => {
 
-  try {
+    try {
 
-    const { uid } = req.body;
+      const { uid } = req.body;
 
-    if (!uid) {
+      if (!uid) {
+        return res.status(400).json({
+          error: "Rider UID is required."
+        });
+      }
 
-      return res.status(400).json({
-        error: "Rider UID is required."
+      await admin.auth().updateUser(
+        uid,
+        {
+          disabled: true
+        }
+      );
+
+      await db
+        .collection("riders")
+        .doc(uid)
+        .set(
+          {
+            status: "disabled"
+          },
+          { merge: true }
+        );
+
+      res.json({
+        message: "Rider disabled successfully."
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message
       });
     }
-
-    await auth.updateUser(uid, {
-      disabled: true
-    });
-
-    await db
-      .collection("riders")
-      .doc(uid)
-      .update({
-        status: "inactive",
-        updatedAt:
-          admin.firestore.FieldValue.serverTimestamp()
-      });
-
-    res.json({
-      message: "Rider account disabled."
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      error: error.message
-    });
   }
-});
+);
 
 /* =========================
    ENABLE RIDER
 ========================= */
 
-app.post("/api/enableRider", verifyAdmin, async (req, res) => {
+app.post(
+  "/api/enable-rider",
+  verifyAdmin,
+  async (req, res) => {
 
-  try {
+    try {
 
-    const { uid } = req.body;
+      const { uid } = req.body;
 
-    if (!uid) {
+      if (!uid) {
+        return res.status(400).json({
+          error: "Rider UID is required."
+        });
+      }
 
-      return res.status(400).json({
-        error: "Rider UID is required."
+      await admin.auth().updateUser(
+        uid,
+        {
+          disabled: false
+        }
+      );
+
+      await db
+        .collection("riders")
+        .doc(uid)
+        .set(
+          {
+            status: "active"
+          },
+          { merge: true }
+        );
+
+      res.json({
+        message: "Rider enabled successfully."
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message
       });
     }
-
-    await auth.updateUser(uid, {
-      disabled: false
-    });
-
-    await db
-      .collection("riders")
-      .doc(uid)
-      .update({
-        status: "active",
-        updatedAt:
-          admin.firestore.FieldValue.serverTimestamp()
-      });
-
-    res.json({
-      message: "Rider account activated."
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      error: error.message
-    });
   }
-});
+);
 
 /* =========================
    DELETE RIDER
 ========================= */
 
-app.post("/api/deleteRider", verifyAdmin, async (req, res) => {
+app.post(
+  "/api/delete-rider",
+  verifyAdmin,
+  async (req, res) => {
 
-  try {
+    try {
 
-    const { uid } = req.body;
+      const { uid } = req.body;
 
-    if (!uid) {
+      if (!uid) {
+        return res.status(400).json({
+          error: "Rider UID is required."
+        });
+      }
 
-      return res.status(400).json({
-        error: "Rider UID is required."
+      await admin.auth().deleteUser(uid);
+
+      await db
+        .collection("riders")
+        .doc(uid)
+        .delete();
+
+      res.json({
+        message: "Rider deleted successfully."
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message
       });
     }
-
-    await auth.deleteUser(uid);
-
-    await db
-      .collection("riders")
-      .doc(uid)
-      .delete();
-
-    res.json({
-      message:
-        "Rider account and rider record deleted."
-    });
-
-  } catch (error) {
-
-    console.error("Delete rider error:", error);
-
-    res.status(500).json({
-      error: error.message
-    });
   }
-});
+);
 
 /* =========================
    SERVER
