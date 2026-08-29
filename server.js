@@ -96,7 +96,53 @@ async function verifyAdmin(req, res, next) {
 app.post("/api/bootstrap-admin", async (req, res) => {
 
   try {
+app.post("/api/set-moderator", async (req, res) => {
+  try {
+    const setupSecret = req.headers["x-setup-secret"];
 
+    if (
+      !setupSecret ||
+      setupSecret !== process.env.BOOTSTRAP_SECRET
+    ) {
+      return res.status(403).json({
+        error: "Invalid setup secret."
+      });
+    }
+
+    const { uid } = req.body;
+
+    if (!uid) {
+      return res.status(400).json({
+        error: "Firebase UID is required."
+      });
+    }
+
+    await admin.auth().setCustomUserClaims(uid, {
+      admin: true
+    });
+
+    await admin.firestore()
+      .collection("users")
+      .doc(uid)
+      .set({
+        uid,
+        role: "admin",
+        updatedAt:
+          admin.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+    res.json({
+      message: "Moderator role assigned successfully."
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
     const secret = req.headers["x-bootstrap-secret"];
 
     if (
