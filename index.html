@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Amir Chap Chap Delivery</title>
+<title>Amir Chap Chap | Delivery & Passenger Transport</title>
 
 <style>
-
-/* =====================================================
-   GENERAL
-===================================================== */
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -26,84 +17,58 @@ content="width=device-width, initial-scale=1.0">
 body{
     background:#f4f6f8;
     color:#222;
-    line-height:1.5;
+}
+
+.hidden{
+    display:none!important;
 }
 
 button{
     cursor:pointer;
 }
 
-.hidden{
-    display:none !important;
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
 header{
     background:#087a3d;
     color:white;
     text-align:center;
-    padding:20px 15px;
+    padding:18px;
 }
 
 header h1{
     font-size:30px;
-    margin-bottom:5px;
 }
 
 header p{
-    font-size:15px;
+    margin-top:6px;
 }
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
 
 nav{
     background:white;
-    padding:12px;
     display:flex;
-    justify-content:center;
     flex-wrap:wrap;
-    gap:8px;
+    justify-content:center;
+    gap:7px;
+    padding:10px;
     position:sticky;
     top:0;
     z-index:1000;
-    box-shadow:0 2px 7px rgba(0,0,0,.12);
+    box-shadow:0 2px 8px #0002;
 }
 
 nav button{
-    border:none;
+    border:0;
     background:#087a3d;
     color:white;
-    padding:10px 14px;
+    padding:10px 13px;
     border-radius:7px;
     font-weight:bold;
 }
 
-nav button:hover{
-    background:#075d2e;
-}
-
-
-/* =====================================================
-   HERO
-===================================================== */
-
 .hero{
-    background:linear-gradient(
-        135deg,
-        #087a3d,
-        #12a653
-    );
-
+    background:linear-gradient(135deg,#087a3d,#18a95c);
     color:white;
     text-align:center;
-    padding:60px 20px;
+    padding:55px 18px;
 }
 
 .hero h2{
@@ -113,1334 +78,1750 @@ nav button:hover{
 
 .hero p{
     font-size:18px;
-    margin-bottom:22px;
 }
-
-
-/* =====================================================
-   CONTAINER
-===================================================== */
 
 .container{
+    max-width:1150px;
     width:100%;
-    max-width:1050px;
-    margin:25px auto;
-    padding:15px;
+    margin:auto;
+    padding:18px;
 }
-
-
-/* =====================================================
-   CARDS
-===================================================== */
 
 .card{
     background:white;
-    padding:23px;
-    border-radius:13px;
+    border-radius:14px;
+    padding:22px;
     margin-bottom:20px;
-    box-shadow:0 2px 9px rgba(0,0,0,.08);
+    box-shadow:0 2px 9px #00000012;
 }
 
 .card h2{
     color:#087a3d;
-    margin-bottom:15px;
+    margin-bottom:14px;
 }
 
 .card h3{
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:15px;
+}
 
-/* =====================================================
-   FORMS
-===================================================== */
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.stat h3{
+    color:#087a3d;
+    font-size:28px;
+}
 
 label{
     display:block;
     font-weight:bold;
-    margin-top:13px;
+    margin-top:12px;
 }
 
 input,
 select,
 textarea{
-
     width:100%;
-
     padding:12px;
-
     margin-top:6px;
-
     border:1px solid #ccc;
-
-    border-radius:7px;
-
+    border-radius:8px;
     font-size:15px;
-
-    outline:none;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-
-    border-color:#087a3d;
-
 }
 
 textarea{
     min-height:90px;
-    resize:vertical;
 }
 
-
-/* =====================================================
-   BUTTONS
-===================================================== */
-
 .btn{
-
-    border:none;
-
-    background:#087a3d;
-
+    border:0;
     color:white;
-
-    padding:12px 17px;
-
-    margin-top:12px;
-
-    border-radius:7px;
-
-    font-size:14px;
-
+    background:#087a3d;
+    padding:11px 16px;
+    border-radius:8px;
     font-weight:bold;
-
+    margin-top:10px;
 }
 
 .btn:hover{
     opacity:.9;
 }
 
-.green{
-    background:#087a3d;
-}
+.green{background:#087a3d}
+.blue{background:#2563eb}
+.call{background:#1565c0}
+.whatsapp{background:#25d366}
+.orange{background:#f59e0b}
+.red{background:#d62828}
+.gray{background:#6c757d}
+.dark{background:#333}
+.purple{background:#7c3aed}
 
-.whatsapp{
-    background:#25d366;
-}
-
-.call{
-    background:#1565c0;
-}
-
-.danger{
-    background:#d62828;
-}
-
-.orange{
-    background:#f59e0b;
-}
-
-.dark{
-    background:#333;
-}
-
-.gray{
-    background:#6c757d;
-}
-
-
-/* =====================================================
-   GRID
-===================================================== */
-
-.grid{
-
+.choice{
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
-    gap:15px;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+    margin:15px 0;
 }
 
-.stat{
-
+.choice button{
     background:white;
-
+    border:2px solid #ddd;
+    border-radius:10px;
     padding:20px;
-
-    border-radius:10px;
-
-    text-align:center;
-
-    box-shadow:
-    0 2px 8px rgba(0,0,0,.07);
-
+    font-size:17px;
+    font-weight:bold;
 }
 
-.stat h3{
-
-    color:#087a3d;
-
-    font-size:28px;
-
+.choice button.selected{
+    border-color:#087a3d;
+    background:#effdf5;
 }
 
-
-/* =====================================================
-   ORDER CARD
-===================================================== */
-
-.order{
-
-    background:#fafafa;
-
+.order,
+.rider,
+.offer,
+.notification,
+.route{
     border:1px solid #ddd;
-
-    border-radius:10px;
-
-    padding:17px;
-
-    margin-top:15px;
-
-}
-
-.order p{
-
-    margin-top:6px;
-
-}
-
-.order-actions{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:6px;
-
-    margin-top:10px;
-
-}
-
-.order-actions .btn{
-
-    margin-top:0;
-
-}
-
-
-/* =====================================================
-   RIDER CARD
-===================================================== */
-
-.rider{
-
     background:#fafafa;
-
-    border:1px solid #ddd;
-
     border-radius:10px;
-
     padding:17px;
-
-    margin-top:15px;
-
+    margin-top:14px;
 }
 
-.rider p{
-
-    margin-top:6px;
-
+.order p,
+.rider p,
+.route p,
+.offer p{
+    margin-top:7px;
 }
-
-
-/* =====================================================
-   STATUS
-===================================================== */
 
 .status{
-
     display:inline-block;
-
     padding:5px 10px;
-
     border-radius:20px;
-
     background:#e9ecef;
-
     font-size:13px;
-
     font-weight:bold;
-
-    margin-top:5px;
-
 }
 
-.status.pending{
-    background:#fff3cd;
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
 }
 
-.status.accepted{
-    background:#d1ecf1;
+.actions .btn{
+    margin-top:7px;
 }
-
-.status.pickup{
-    background:#cfe2ff;
-}
-
-.status.transit{
-    background:#e2d9f3;
-}
-
-.status.delivered{
-    background:#d1e7dd;
-}
-
-.status.cancelled{
-    background:#f8d7da;
-}
-
-
-/* =====================================================
-   MESSAGES
-===================================================== */
 
 .success{
-
     color:#087a3d;
-
     font-weight:bold;
-
-    margin-top:12px;
-
+    margin-top:10px;
 }
 
 .error{
-
     color:#d62828;
-
     font-weight:bold;
-
-    margin-top:12px;
-
+    margin-top:10px;
 }
 
 .info{
-
-    color:#555;
-
+    color:#666;
     margin-top:7px;
-
 }
 
 .small{
-
-    color:#777;
-
     font-size:13px;
-
-}
-
-
-/* =====================================================
-   RIDER BADGE
-===================================================== */
-
-.available{
-    color:#087a3d;
-    font-weight:bold;
-}
-
-.busy{
-    color:#d97706;
-    font-weight:bold;
-}
-
-.offline{
     color:#777;
-    font-weight:bold;
 }
 
+.badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#d62828;
+    color:white;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    font-size:12px;
+}
 
-/* =====================================================
-   FOOTER
-===================================================== */
+.notification-bell{
+    border:0;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:#087a3d;
+    color:white;
+    font-size:25px;
+}
+
+.points-box{
+    background:#effdf5;
+    border:2px solid #087a3d;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.points-box strong{
+    font-size:30px;
+    color:#087a3d;
+}
+
+.stars{
+    font-size:30px;
+    letter-spacing:4px;
+}
+
+.star{
+    cursor:pointer;
+    color:#ccc;
+}
+
+.star.active{
+    color:#f5b400;
+}
+
+.terms{
+    max-height:350px;
+    overflow:auto;
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:8px;
+    background:#fafafa;
+    line-height:1.6;
+}
 
 footer{
-
     background:#222;
-
     color:white;
-
     text-align:center;
-
     padding:30px 15px;
-
-    margin-top:40px;
-
+    margin-top:35px;
 }
 
 footer p{
     margin-top:7px;
 }
 
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
 @media(max-width:600px){
 
-    header h1{
-        font-size:25px;
-    }
-
-    .hero{
-        padding:45px 15px;
-    }
-
     .hero h2{
-        font-size:28px;
+        font-size:29px;
     }
 
     nav button{
         font-size:12px;
-        padding:9px 10px;
     }
 
-    .order-actions{
+    .actions{
         flex-direction:column;
     }
 
-    .order-actions .btn{
+    .actions .btn{
         width:100%;
     }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
 <header>
-
-    <h1>🚚 Amir Chap Chap</h1>
-
-    <p>
-        Fast • Safe • Reliable Door-to-Door Delivery
-    </p>
-
+<h1>🚚 Amir Chap Chap</h1>
+<p>Fast • Safe • Reliable Delivery & Passenger Transport</p>
 </header>
 
-
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
-
 <nav>
-
-    <button onclick="showSection('home')">
-        🏠 Home
-    </button>
-
-    <button onclick="showSection('delivery')">
-        📦 Request Delivery
-    </button>
-
-    <button onclick="showSection('track')">
-        🔎 Track Order
-    </button>
-
-    <button onclick="showSection('riderLogin')">
-        🏍️ Rider Portal
-    </button>
-
-    <button onclick="showSection('adminLogin')">
-        🔐 Moderator
-    </button>
-
+<button onclick="showSection('home')">🏠 Home</button>
+<button onclick="showSection('request')">📦 Book</button>
+<button onclick="showSection('customerPortal')">👤 Customer</button>
+<button onclick="showSection('track')">🔎 Track</button>
+<button onclick="showSection('riderLogin')">🏍️ Rider</button>
+<button onclick="showSection('moderatorLogin')">🔐 Moderator</button>
+<button onclick="showSection('terms')">📜 Terms</button>
 </nav>
 
 
-<!-- =====================================================
-     HOME
-===================================================== -->
+<!-- HOME -->
 
 <section id="home">
 
-    <div class="hero">
+<div class="hero">
 
-        <h2>
-            Delivery Chap Chap!
-        </h2>
+<h2>Delivery Chap Chap!</h2>
 
-        <p>
-            From pickup to your doorstep —
-            we are here for you.
-        </p>
+<p>
+We deliver. We ride. We are here for you.
+</p>
 
-        <button
-            class="btn"
-            onclick="showSection('delivery')">
+<button
+class="btn"
+onclick="showSection('request')">
 
-            🚚 Request a Delivery
+🚀 Book Now
 
-        </button>
+</button>
 
-    </div>
+</div>
 
 
-    <div class="container">
+<div class="container">
+
+<div class="grid">
+
+<div class="stat">
+<h3>📦</h3>
+<p>Parcel Delivery</p>
+</div>
+
+<div class="stat">
+<h3>🏍️</h3>
+<p>Passenger Transport</p>
+</div>
+
+<div class="stat">
+<h3>⭐</h3>
+<p>Customer Rewards</p>
+</div>
+
+<div class="stat">
+<h3>🗺️</h3>
+<p>Easy Navigation</p>
+</div>
+
+</div>
 
 
-        <div class="grid">
+<div class="card">
+
+<h2>🎁 Customer Offers</h2>
+
+<div id="homeOffers"></div>
+
+</div>
 
 
-            <div class="stat">
+<div class="card">
 
-                <h3>📦</h3>
+<h2>💰 Managed Transport Fares</h2>
 
-                <p>
-                    Easy Booking
-                </p>
+<p>
+Amir Chap Chap manages the transport price.
+Customers do <strong>not</strong> enter their own fare.
+</p>
 
-            </div>
+<p>
+Managed routes have fixed prices.
+Other locations can use kilometer pricing.
+</p>
 
-
-            <div class="stat">
-
-                <h3>🏍️</h3>
-
-                <p>
-                    Trusted Riders
-                </p>
-
-            </div>
+</div>
 
 
-            <div class="stat">
+<div class="card">
 
-                <h3>📍</h3>
+<h2>📞 Customer Care</h2>
 
-                <p>
-                    Door-to-Door
-                </p>
+<p>
+<strong>0795653284</strong>
+</p>
 
-            </div>
+<div class="actions">
 
+<button
+class="btn call"
+onclick="callNumber('0795653284')">
 
-            <div class="stat">
+📞 Call
 
-                <h3>📱</h3>
+</button>
 
-                <p>
-                    Easy Tracking
-                </p>
+<button
+class="btn whatsapp"
+onclick="whatsappNumber(
+'0795653284',
+'Hello Amir Chap Chap Customer Care, I need assistance.'
+)">
 
-            </div>
+💬 WhatsApp
 
+</button>
 
-        </div>
+</div>
 
+</div>
 
-        <div class="card">
-
-            <h2>
-                📦 Our Services
-            </h2>
-
-            <p>
-                • Food delivery
-            </p>
-
-            <p>
-                • Documents
-            </p>
-
-            <p>
-                • Shopping
-            </p>
-
-            <p>
-                • Clothes
-            </p>
-
-            <p>
-                • Parcels
-            </p>
-
-            <p>
-                • Other permitted items
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                📞 Customer Care
-            </h2>
-
-            <p>
-                Need assistance with your delivery?
-            </p>
-
-            <p>
-                Customer Care:
-                <strong>0795653284</strong>
-            </p>
-
-
-            <button
-                class="btn call"
-                onclick="callCustomerCare()">
-
-                📞 Call Customer Care
-
-            </button>
-
-
-            <button
-                class="btn whatsapp"
-                onclick="whatsappCustomerCare()">
-
-                💬 WhatsApp Customer Care
-
-            </button>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     DELIVERY REQUEST
-===================================================== -->
+<!-- BOOKING -->
 
-<section
-    id="delivery"
-    class="hidden">
+<section id="request" class="hidden">
 
-    <div class="container">
+<div class="container">
 
-        <div class="card">
+<div class="card">
 
-            <h2>
-                📦 Request a Delivery
-            </h2>
+<h2>📦 Book Amir Chap Chap</h2>
 
-            <p class="info">
-                Fill in your details below.
-            </p>
+<p class="info">
+Choose your service.
+</p>
 
 
-            <form id="deliveryForm">
+<div class="choice">
+
+<button
+id="deliveryChoice"
+onclick="selectBookingType('Delivery')">
+
+📦<br>
+Delivery
+
+</button>
 
 
-                <label>
-                    Customer Name
-                </label>
+<button
+id="rideChoice"
+onclick="selectBookingType('Passenger Ride')">
 
-                <input
-                    type="text"
-                    id="customerName"
-                    placeholder="Enter your full name"
-                    required>
+🏍️<br>
+Passenger Ride
 
+</button>
 
-                <label>
-                    Phone Number
-                </label>
-
-                <input
-                    type="tel"
-                    id="customerPhone"
-                    placeholder="07XXXXXXXX"
-                    required>
+</div>
 
 
-                <label>
-                    Pickup Location
-                </label>
+<form id="bookingForm">
 
-                <input
-                    type="text"
-                    id="pickup"
-                    placeholder="Where should we collect?"
-                    required>
+<input
+type="hidden"
+id="bookingType">
 
 
-                <label>
-                    Destination
-                </label>
+<label>Customer Name</label>
 
-                <input
-                    type="text"
-                    id="destination"
-                    placeholder="Where should we deliver?"
-                    required>
+<input
+id="customerName"
+required
+placeholder="Full name">
 
 
-                <label>
-                    Item Type
-                </label>
+<label>Phone Number</label>
 
-                <select
-                    id="itemType"
-                    required>
-
-                    <option value="">
-                        Select item
-                    </option>
-
-                    <option>
-                        Food
-                    </option>
-
-                    <option>
-                        Documents
-                    </option>
-
-                    <option>
-                        Clothes
-                    </option>
-
-                    <option>
-                        Electronics
-                    </option>
-
-                    <option>
-                        Shopping
-                    </option>
-
-                    <option>
-                        Parcel
-                    </option>
-
-                    <option>
-                        Other
-                    </option>
-
-                </select>
+<input
+id="customerPhone"
+required
+placeholder="07XXXXXXXX">
 
 
-                <label>
-                    Item Description
-                </label>
+<label>Pickup Location</label>
 
-                <textarea
-                    id="description"
-                    placeholder="Describe the item"></textarea>
-
-
-                <label>
-                    Delivery Instructions
-                </label>
-
-                <textarea
-                    id="instructions"
-                    placeholder="Special instructions"></textarea>
+<input
+id="pickup"
+required
+placeholder="Example Lenana">
 
 
-                <button
-                    class="btn green"
-                    type="submit">
+<label>Destination</label>
 
-                    🚚 Submit Delivery Request
+<input
+id="destination"
+required
+placeholder="Example Naivas">
 
-                </button>
+
+<label>Fare Method</label>
+
+<select
+id="fareMethod"
+onchange="calculateFare()"
+required>
+
+<option value="">
+Select fare method
+</option>
+
+<option value="managed">
+Managed Route Fare
+</option>
+
+<option value="kilometer">
+Distance / Kilometer Fare
+</option>
+
+</select>
 
 
-                <div
-                    id="formMessage">
-                </div>
+<div id="distanceBox" class="hidden">
 
-            </form>
+<label>
+Distance in Kilometers
+</label>
 
-        </div>
+<input
+type="number"
+id="distanceKm"
+min="0.1"
+step="0.1"
+placeholder="Enter calculated road distance"
+oninput="calculateFare()">
 
-    </div>
+<p class="small">
+Current standard: KSh 45 per kilometer.
+</p>
 
+</div>
+
+
+<div id="deliveryFields">
+
+<label>Item Type</label>
+
+<select id="itemType">
+
+<option value="">Select item</option>
+<option>Food</option>
+<option>Documents</option>
+<option>Clothes</option>
+<option>Electronics</option>
+<option>Shopping</option>
+<option>Parcel</option>
+<option>Other permitted item</option>
+
+</select>
+
+
+<label>Item Description</label>
+
+<textarea
+id="description"
+placeholder="Describe the item"></textarea>
+
+</div>
+
+
+<div id="passengerFields" class="hidden">
+
+<label>
+Number of Passengers
+</label>
+
+<input
+type="number"
+id="passengers"
+min="1"
+max="4"
+value="1">
+
+
+<label>
+Passenger Instructions
+</label>
+
+<textarea
+id="passengerInstructions"
+placeholder="Any special instructions?"></textarea>
+
+</div>
+
+
+<label>
+Additional Instructions
+</label>
+
+<textarea
+id="instructions"
+placeholder="Anything the rider should know?"></textarea>
+
+
+<div class="card">
+
+<h3>💰 Your Fare</h3>
+
+<div id="fareDisplay">
+
+<p class="info">
+Select a fare method and route.
+</p>
+
+</div>
+
+</div>
+
+
+<label>
+Payment Method
+</label>
+
+<select
+id="paymentMethod"
+onchange="updatePaymentInfo()"
+required>
+
+<option value="">
+Select payment method
+</option>
+
+<option value="points">
+⭐ Pay With Points
+</option>
+
+<option value="mpesa">
+📱 M-Pesa
+</option>
+
+<option value="cash">
+💵 Cash
+</option>
+
+</select>
+
+
+<div id="paymentInfo"></div>
+
+
+<div class="card">
+
+<h3>📜 Terms & Conditions</h3>
+
+<div class="terms">
+
+<strong>Amir Chap Chap Terms</strong>
+
+<p>
+By requesting our services, the customer agrees that the information provided is accurate.
+</p>
+
+<p>
+Customers must provide safe and accurate pickup and destination information.
+</p>
+
+<p>
+Prohibited, illegal, dangerous or unsafe items must not be submitted for delivery.
+</p>
+
+<p>
+Passengers must follow rider safety instructions and applicable transport laws.
+</p>
+
+<p>
+The displayed fare is the fare managed by Amir Chap Chap.
+Customers cannot manually change the fare.
+</p>
+
+<p>
+Managed routes use the published route fare. Other routes may use the applicable kilometer rate.
+</p>
+
+<p>
+Points are promotional/reward credits issued according to Amir Chap Chap rules. Points have no cash value outside the platform and may be changed or withdrawn according to the published rules.
+</p>
+
+<p>
+Offers may have individual eligibility requirements and expiry dates.
+</p>
+
+<p>
+A customer may be asked to confirm delivery or rate a rider after a completed service.
+</p>
+
+<p>
+Amir Chap Chap may refuse or cancel a request where safety, legality, fraud or operational concerns exist.
+</p>
+
+<p>
+Customer and rider contact details should be used only for legitimate booking communication.
+</p>
+
+</div>
+
+
+<label>
+
+<input
+type="checkbox"
+id="termsAgreement"
+style="width:auto">
+
+I have read and agree to the Terms & Conditions.
+
+</label>
+
+</div>
+
+
+<button
+class="btn green"
+type="submit">
+
+🚀 Submit Booking
+
+</button>
+
+</form>
+
+
+<div id="bookingMessage"></div>
+
+</div>
+
+</div>
 </section>
 
 
-<!-- =====================================================
-     TRACKING
-===================================================== -->
+<!-- CUSTOMER PORTAL -->
 
-<section
-    id="track"
-    class="hidden">
+<section id="customerPortal" class="hidden">
 
-    <div class="container">
+<div class="container">
 
-        <div class="card">
+<div class="card">
 
-            <h2>
-                🔎 Track Your Delivery
-            </h2>
+<h2>👤 Customer Rewards Portal</h2>
 
-            <p class="info">
-                Enter your Order ID.
-            </p>
+<label>
+Enter your phone number
+</label>
 
+<input
+id="customerPortalPhone"
+placeholder="07XXXXXXXX">
 
-            <label>
-                Order ID
-            </label>
+<button
+class="btn"
+onclick="loadCustomerPortal()">
 
-            <input
-                type="text"
-                id="trackingId"
-                placeholder="Example: AC123456">
+🔎 View My Account
+
+</button>
+
+</div>
 
 
-            <button
-                class="btn"
-                onclick="trackOrder()">
+<div id="customerAccount"></div>
 
-                🔎 Track Order
-
-            </button>
-
-
-            <div id="trackingResult">
-            </div>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     RIDER LOGIN
-===================================================== -->
+<!-- TRACK -->
 
-<section
-    id="riderLogin"
-    class="hidden">
+<section id="track" class="hidden">
 
-    <div class="container">
+<div class="container">
 
-        <div class="card">
+<div class="card">
 
-            <h2>
-                🏍️ Rider Portal
-            </h2>
+<h2>🔎 Track Booking</h2>
 
-            <p class="info">
-                Riders can log in using their Rider ID
-                and registered phone number.
-            </p>
+<label>Booking ID</label>
 
+<input
+id="trackingId"
+placeholder="Example AC123456">
 
-            <label>
-                Rider ID
-            </label>
+<button
+class="btn"
+onclick="trackBooking()">
 
-            <input
-                type="text"
-                id="riderLoginId"
-                placeholder="Example: RID001">
+🔎 Track
 
+</button>
 
-            <label>
-                Phone Number
-            </label>
+<div id="trackingResult"></div>
 
-            <input
-                type="tel"
-                id="riderLoginPhone"
-                placeholder="07XXXXXXXX">
+</div>
 
-
-            <button
-                class="btn"
-                onclick="riderLogin()">
-
-                🏍️ Rider Sign In
-
-            </button>
-
-
-            <div id="riderLoginMessage">
-            </div>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     RIDER DASHBOARD
-===================================================== -->
+<!-- RIDER LOGIN -->
 
-<section
-    id="riderDashboard"
-    class="hidden">
+<section id="riderLogin" class="hidden">
 
-    <div class="container">
+<div class="container">
 
+<div class="card">
 
-        <div class="card">
+<h2>🏍️ Rider Portal</h2>
 
-            <h2>
-                🏍️ Rider Dashboard
-            </h2>
-
-            <div id="riderInformation">
-            </div>
+<p class="info">
+Use the Rider ID and registered phone given to you by the Moderator.
+</p>
 
 
-            <button
-                class="btn danger"
-                onclick="riderLogout()">
+<label>Rider ID</label>
 
-                🚪 Log Out
-
-            </button>
-
-        </div>
+<input
+id="riderIdLogin"
+placeholder="AC-RID-001">
 
 
-        <div class="card">
+<label>Registered Phone</label>
 
-            <h2>
-                📦 My Assigned Deliveries
-            </h2>
+<input
+id="riderPhoneLogin"
+placeholder="07XXXXXXXX">
 
-            <div id="riderOrders">
-            </div>
 
-        </div>
+<button
+class="btn"
+onclick="riderLogin()">
 
-    </div>
+🏍️ Sign In
 
+</button>
+
+
+<div id="riderLoginMessage"></div>
+
+</div>
+
+</div>
 </section>
 
 
-<!-- =====================================================
-     MODERATOR LOGIN
-===================================================== -->
+<!-- RIDER DASHBOARD -->
 
-<section
-    id="adminLogin"
-    class="hidden">
+<section id="riderDashboard" class="hidden">
 
-    <div class="container">
+<div class="container">
 
-        <div class="card">
+<div class="card">
 
-            <h2>
-                🔐 Moderator / Customer Care
-            </h2>
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+">
 
-            <p class="info">
-                Authorized staff only.
-            </p>
+<div>
 
+<h2>🏍️ Rider Dashboard</h2>
 
-            <label>
-                Moderator Password
-            </label>
+<p id="riderWelcome"></p>
 
-            <input
-                type="password"
-                id="adminPassword"
-                placeholder="Enter password">
+</div>
 
 
-            <button
-                class="btn"
-                onclick="adminLogin()">
+<button
+class="notification-bell"
+onclick="showNotifications()">
 
-                🔐 Sign In
+🔔
 
-            </button>
+<span
+id="notificationCount"
+class="badge">
+
+0
+
+</span>
+
+</button>
+
+</div>
+
+</div>
 
 
-            <div id="loginMessage">
-            </div>
+<div
+id="notificationsArea"
+class="card hidden">
 
-        </div>
+<h2>🔔 Notifications</h2>
 
-    </div>
+<div id="notificationsList"></div>
 
+</div>
+
+
+<div class="card">
+
+<h2>👤 My Rider Details</h2>
+
+<div id="myRiderDetails"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>⭐ My Performance</h2>
+
+<div id="riderRating"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📦 My Requests</h2>
+
+<div id="riderBookings"></div>
+
+</div>
+
+
+<button
+class="btn red"
+onclick="riderLogout()">
+
+🚪 Log Out
+
+</button>
+
+</div>
 </section>
 
 
-<!-- =====================================================
-     MODERATOR DASHBOARD
-===================================================== -->
+<!-- MODERATOR LOGIN -->
 
-<section
-    id="adminPanel"
-    class="hidden">
+<section id="moderatorLogin" class="hidden">
 
-    <div class="container">
+<div class="container">
 
+<div class="card">
 
-        <!-- DASHBOARD STATS -->
+<h2>🔐 Moderator Portal</h2>
 
-        <div class="grid">
+<p class="info">
+Authorized Moderator / Customer Care only.
+</p>
 
+<label>
+Password
+</label>
 
-            <div class="stat">
+<input
+type="password"
+id="adminPassword"
+placeholder="Enter moderator password">
 
-                <h3 id="totalOrders">
-                    0
-                </h3>
+<button
+class="btn"
+onclick="adminLogin()">
 
-                <p>
-                    Total Orders
-                </p>
+🔐 Sign In
 
-            </div>
+</button>
 
+<div id="loginMessage"></div>
 
-            <div class="stat">
+</div>
 
-                <h3 id="pendingOrders">
-                    0
-                </h3>
-
-                <p>
-                    Pending
-                </p>
-
-            </div>
-
-
-            <div class="stat">
-
-                <h3 id="activeOrders">
-                    0
-                </h3>
-
-                <p>
-                    Active Deliveries
-                </p>
-
-            </div>
-
-
-            <div class="stat">
-
-                <h3 id="completedOrders">
-                    0
-                </h3>
-
-                <p>
-                    Delivered
-                </p>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- MODERATOR -->
-
-        <div class="card">
-
-            <h2>
-                👨‍💼 Moderator Dashboard
-            </h2>
-
-            <p>
-                Welcome to Amir Chap Chap Customer Care.
-            </p>
-
-
-            <button
-                class="btn danger"
-                onclick="adminLogout()">
-
-                🚪 Log Out
-
-            </button>
-
-        </div>
-
-
-        <!-- ADD RIDER -->
-
-        <div class="card">
-
-            <h2>
-                🏍️ Add New Rider
-            </h2>
-
-            <form id="riderForm">
-
-
-                <label>
-                    Rider Name
-                </label>
-
-                <input
-                    type="text"
-                    id="riderName"
-                    placeholder="Full rider name"
-                    required>
-
-
-                <label>
-                    Rider Phone
-                </label>
-
-                <input
-                    type="tel"
-                    id="riderPhone"
-                    placeholder="07XXXXXXXX"
-                    required>
-
-
-                <label>
-                    WhatsApp Number
-                </label>
-
-                <input
-                    type="tel"
-                    id="riderWhatsApp"
-                    placeholder="07XXXXXXXX"
-                    required>
-
-
-                <label>
-                    Motorcycle Type
-                </label>
-
-                <select
-                    id="bikeType"
-                    required>
-
-                    <option value="">
-                        Select motorcycle type
-                    </option>
-
-                    <option>
-                        Motorbike
-                    </option>
-
-                    <option>
-                        Scooter
-                    </option>
-
-                    <option>
-                        Motorcycle
-                    </option>
-
-                    <option>
-                        Electric Bike
-                    </option>
-
-                    <option>
-                        Other
-                    </option>
-
-                </select>
-
-
-                <label>
-                    Motorcycle Model
-                </label>
-
-                <input
-                    type="text"
-                    id="bikeModel"
-                    placeholder="Example: Boxer 150"
-                    required>
-
-
-                <label>
-                    Registration / Number Plate
-                </label>
-
-                <input
-                    type="text"
-                    id="bikePlate"
-                    placeholder="Example: KDA 123A"
-                    required>
-
-
-                <button
-                    class="btn"
-                    type="submit">
-
-                    ➕ Add Rider
-
-                </button>
-
-
-                <div
-                    id="riderMessage">
-                </div>
-
-            </form>
-
-        </div>
-
-
-        <!-- RIDER LIST -->
-
-        <div class="card">
-
-            <h2>
-                🏍️ Rider Management
-            </h2>
-
-            <div id="ridersList">
-            </div>
-
-        </div>
-
-
-        <!-- DELIVERY REQUESTS -->
-
-        <div class="card">
-
-            <h2>
-                📦 Delivery Requests
-            </h2>
-
-            <div id="ordersList">
-            </div>
-
-        </div>
-
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+<!-- MODERATOR PANEL -->
+
+<section id="moderatorPanel" class="hidden">
+
+<div class="container">
+
+<div class="card">
+
+<h2>👨‍💼 Moderator Dashboard</h2>
+
+<p>
+Manage riders, fares, bookings, offers,
+points and customer ratings.
+</p>
+
+<button
+class="btn red"
+onclick="adminLogout()">
+
+🚪 Log Out
+
+</button>
+
+</div>
+
+
+<div class="grid">
+
+<div class="stat">
+<h3 id="statBookings">0</h3>
+<p>Total Bookings</p>
+</div>
+
+<div class="stat">
+<h3 id="statPending">0</h3>
+<p>Pending</p>
+</div>
+
+<div class="stat">
+<h3 id="statActive">0</h3>
+<p>Active</p>
+</div>
+
+<div class="stat">
+<h3 id="statCompleted">0</h3>
+<p>Completed</p>
+</div>
+
+<div class="stat">
+<h3 id="statRiders">0</h3>
+<p>Riders</p>
+</div>
+
+</div>
+
+
+<!-- ROUTE MANAGEMENT -->
+
+<div class="card">
+
+<h2>💰 Managed Route Fares</h2>
+
+<p class="info">
+Add official routes and prices.
+Customers cannot change these prices.
+</p>
+
+
+<form id="routeForm">
+
+<label>Pickup</label>
+
+<input
+id="routePickup"
+required
+placeholder="Example Lenana">
+
+
+<label>Destination</label>
+
+<input
+id="routeDestination"
+required
+placeholder="Example Naivas">
+
+
+<label>Fare KSh</label>
+
+<input
+type="number"
+id="routeFare"
+required
+min="0"
+placeholder="90">
+
+
+<button
+class="btn green"
+type="submit">
+
+➕ Add Managed Route
+
+</button>
+
+</form>
+
+
+<div id="routeList"></div>
+
+</div>
+
+
+<!-- KM PRICE -->
+
+<div class="card">
+
+<h2>📍 Kilometer Fare</h2>
+
+<label>
+Current KSh per Kilometer
+</label>
+
+<input
+type="number"
+id="kmRate"
+min="0"
+step="1">
+
+<button
+class="btn"
+onclick="saveKmRate()">
+
+💾 Save Kilometer Rate
+
+</button>
+
+<p class="info">
+Current standard: KSh 45/km
+</p>
+
+</div>
+
+
+<!-- RIDER REGISTRATION -->
+
+<div class="card">
+
+<h2>🏍️ Register New Rider</h2>
+
+<p class="info">
+Moderator registers the rider and the system gives the Rider ID.
+</p>
+
+
+<form id="riderForm">
+
+<label>Full Name</label>
+
+<input
+id="riderName"
+required>
+
+
+<label>Phone Number</label>
+
+<input
+id="riderPhone"
+required>
+
+
+<label>WhatsApp Number</label>
+
+<input
+id="riderWhatsApp"
+required>
+
+
+<label>ID / Passport Number</label>
+
+<input
+id="riderNationalId"
+required>
+
+
+<label>Motorcycle Type</label>
+
+<select
+id="bikeType"
+required>
+
+<option value="">
+Select type
+</option>
+
+<option>Motorbike</option>
+<option>Scooter</option>
+<option>Electric Bike</option>
+<option>Motorcycle</option>
+
+</select>
+
+
+<label>Motorcycle Model</label>
+
+<input
+id="bikeModel"
+required
+placeholder="Example Boxer 150">
+
+
+<label>Number Plate</label>
+
+<input
+id="bikePlate"
+required>
+
+
+<label>Rider Area</label>
+
+<input
+id="riderArea"
+placeholder="Example Narok Town">
+
+
+<button
+class="btn green"
+type="submit">
+
+➕ Register Rider & Generate ID
+
+</button>
+
+</form>
+
+
+<div id="riderMessage"></div>
+
+</div>
+
+
+<!-- RIDERS -->
+
+<div class="card">
+
+<h2>🏍️ Registered Riders</h2>
+
+<div id="moderatorRiders"></div>
+
+</div>
+
+
+<!-- BOOKINGS -->
+
+<div class="card">
+
+<h2>📦 Booking Requests</h2>
+
+<div id="moderatorBookings"></div>
+
+</div>
+
+
+<!-- OFFERS -->
+
+<div class="card">
+
+<h2>🎁 Manage Customer Offers</h2>
+
+<form id="offerForm">
+
+<label>Offer Title</label>
+
+<input
+id="offerTitle"
+required
+placeholder="Example Bonus Ride">
+
+
+<label>Offer Description</label>
+
+<textarea
+id="offerDescription"
+required
+placeholder="Example Get 100 bonus points after your next completed ride."></textarea>
+
+
+<label>Bonus Points</label>
+
+<input
+type="number"
+id="offerPoints"
+min="0"
+value="0">
+
+
+<label>Expiry Date</label>
+
+<input
+type="date"
+id="offerExpiry">
+
+
+<button
+class="btn green"
+type="submit">
+
+➕ Publish Offer
+
+</button>
+
+</form>
+
+
+<div id="moderatorOffers"></div>
+
+</div>
+
+
+<!-- POINTS -->
+
+<div class="card">
+
+<h2>⭐ Customer Points</h2>
+
+<p class="info">
+Points can be automatically awarded after completed services.
+</p>
+
+<label>
+Points per KSh spent
+</label>
+
+<input
+type="number"
+id="pointsRate"
+min="0"
+step="0.1">
+
+<button
+class="btn"
+onclick="savePointsRate()">
+
+💾 Save Points Rate
+
+</button>
+
+
+<div id="customerPointsList"></div>
+
+</div>
+
+
+<!-- RATINGS -->
+
+<div class="card">
+
+<h2>⭐ Customer Rider Ratings</h2>
+
+<div id="moderatorRatings"></div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- TERMS -->
+
+<section id="terms" class="hidden">
+
+<div class="container">
+
+<div class="card">
+
+<h2>📜 Amir Chap Chap Terms & Conditions</h2>
+
+<p>
+<strong>Published:</strong>
+29 August 2026
+</p>
+
+<p>
+<strong>Last Updated:</strong>
+29 August 2026
+</p>
+
+
+<div class="terms">
+
+<h3>1. Service</h3>
+
+<p>
+Amir Chap Chap provides managed delivery and passenger transport services.
+</p>
+
+
+<h3>2. Managed Fares</h3>
+
+<p>
+Fares for published routes are controlled by Amir Chap Chap.
+Customers cannot manually enter or alter the official fare.
+</p>
+
+
+<h3>3. Kilometer Pricing</h3>
+
+<p>
+Where a managed route is unavailable, a kilometer-based fare may apply.
+The applicable rate is published by Amir Chap Chap.
+</p>
+
+
+<h3>4. Customer Responsibilities</h3>
+
+<p>
+Customers must provide accurate names, phone numbers, pickup locations and destinations.
+</p>
+
+
+<h3>5. Rider Responsibilities</h3>
+
+<p>
+Riders must follow applicable laws and Amir Chap Chap operational and safety requirements.
+</p>
+
+
+<h3>6. Prohibited Items</h3>
+
+<p>
+Illegal, dangerous or prohibited items must not be submitted for delivery.
+</p>
+
+
+<h3>7. Passenger Safety</h3>
+
+<p>
+Passengers must follow reasonable rider safety instructions and applicable transport rules.
+</p>
+
+
+<h3>8. Points</h3>
+
+<p>
+Points are rewards provided under the Amir Chap Chap rewards program.
+The conversion rate and eligibility rules may be changed by the platform.
+</p>
+
+
+<h3>9. Points Payments</h3>
+
+<p>
+Where the customer has enough eligible points, the platform may allow points to be used toward payment.
+Points are not cash and cannot automatically be redeemed outside the platform.
+</p>
+
+
+<h3>10. Offers</h3>
+
+<p>
+Offers may have expiry dates, eligibility conditions and maximum usage limits.
+</p>
+
+
+<h3>11. Ratings</h3>
+
+<p>
+Customers may rate a rider after a completed booking.
+Ratings should be honest and respectful.
+</p>
+
+
+<h3>12. Cancellation</h3>
+
+<p>
+Bookings may be cancelled or rejected where operational, safety, legal or fraud concerns exist.
+</p>
+
+
+<h3>13. Communication</h3>
+
+<p>
+Customers and riders may use phone, WhatsApp and optional navigation tools for legitimate booking communication.
+</p>
+
+
+<h3>14. Waze Navigation</h3>
+
+<p>
+Waze is an optional external navigation service. Amir Chap Chap does not control external navigation services.
+</p>
+
+
+<h3>15. Customer Care</h3>
+
+<p>
+Customer Care:
+<strong>0795653284</strong>
+</p>
+
+
+<h3>16. Changes</h3>
+
+<p>
+Amir Chap Chap may update these Terms & Conditions. The latest published version will be displayed on the platform.
+</p>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
 
 <footer>
 
-    <h3>
-        🚚 Amir Chap Chap
-    </h3>
+<h3>🚚 Amir Chap Chap</h3>
 
-    <p>
-        Fast • Safe • Reliable Delivery
-    </p>
+<p>
+Fast • Safe • Reliable
+</p>
 
-    <p>
-        Customer Care:
-        <strong>0795653284</strong>
-    </p>
+<p>
+Customer Care:
+<strong>0795653284</strong>
+</p>
 
-    <p class="small">
-        © 2026 Amir Chap Chap.
-        All rights reserved.
-    </p>
+<p class="small">
+Terms Published: 29 August 2026
+</p>
+
+<p class="small">
+© 2026 Amir Chap Chap
+</p>
 
 </footer>
 
 
 <script>
 
-/* =====================================================
+/* ==========================================================
    SETTINGS
-===================================================== */
-
-
-/*
-   CUSTOMER CARE NUMBER
-
-   Kenyan format:
-   0795653284
-
-   International format:
-   254795653284
-*/
-
-const CUSTOMER_CARE_NUMBER = "254795653284";
-
-
-/*
-   MODERATOR PASSWORD
-
-   Password:
-   Scott@254
-*/
+========================================================== */
 
 const ADMIN_PASSWORD = "Scott@254";
 
+const CUSTOMER_CARE = "254795653284";
 
-/*
-   Currently logged-in rider
-*/
+const WAZE_BASE =
+"https://www.waze.com/ul?q=";
+
+
+/* ==========================================================
+   DEFAULT DATA
+========================================================== */
+
+const DEFAULT_ROUTES = [
+
+{
+pickup:"Lenana",
+destination:"Naivas",
+fare:90
+},
+
+{
+pickup:"Naivas",
+destination:"Lenana",
+fare:90
+},
+
+{
+pickup:"Lenana",
+destination:"Total Petrol Station",
+fare:140
+},
+
+{
+pickup:"Total Petrol Station",
+destination:"Lenana",
+fare:140
+}
+
+];
+
+
+function initializeData(){
+
+    if(!localStorage.getItem("amirRoutes")){
+
+        localStorage.setItem(
+            "amirRoutes",
+            JSON.stringify(DEFAULT_ROUTES)
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirKmRate")){
+
+        localStorage.setItem(
+            "amirKmRate",
+            "45"
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirPointsRate")){
+
+        /*
+           Example:
+           1 KSh spent = 1 point
+        */
+
+        localStorage.setItem(
+            "amirPointsRate",
+            "1"
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirBookings")){
+
+        localStorage.setItem(
+            "amirBookings",
+            "[]"
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirRiders")){
+
+        localStorage.setItem(
+            "amirRiders",
+            "[]"
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirOffers")){
+
+        localStorage.setItem(
+            "amirOffers",
+            "[]"
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirCustomers")){
+
+        localStorage.setItem(
+            "amirCustomers",
+            "[]"
+        );
+
+    }
+
+
+    if(!localStorage.getItem("amirRatings")){
+
+        localStorage.setItem(
+            "amirRatings",
+            "[]"
+        );
+
+    }
+
+}
+
+
+initializeData();
+
 
 let currentRider = null;
 
+let bookingType = "";
 
-/* =====================================================
+let selectedRating = 0;
+
+
+/* ==========================================================
+   STORAGE
+========================================================== */
+
+function getData(key){
+
+    return JSON.parse(
+        localStorage.getItem(key) || "[]"
+    );
+
+}
+
+
+function saveData(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
+}
+
+
+function getRoutes(){
+
+    return getData("amirRoutes");
+
+}
+
+
+function getBookings(){
+
+    return getData("amirBookings");
+
+}
+
+
+function getRiders(){
+
+    return getData("amirRiders");
+
+}
+
+
+function getOffers(){
+
+    return getData("amirOffers");
+
+}
+
+
+function getCustomers(){
+
+    return getData("amirCustomers");
+
+}
+
+
+function getRatings(){
+
+    return getData("amirRatings");
+
+}
+
+
+/* ==========================================================
    NAVIGATION
-===================================================== */
+========================================================== */
 
-function showSection(section){
+function showSection(id){
 
     const sections = [
 
         "home",
-        "delivery",
+        "request",
+        "customerPortal",
         "track",
         "riderLogin",
-        "adminLogin"
+        "riderDashboard",
+        "moderatorLogin",
+        "moderatorPanel",
+        "terms"
 
     ];
 
 
-    sections.forEach(function(id){
+    sections.forEach(function(section){
 
-        const element =
-            document.getElementById(id);
+        const el =
+            document.getElementById(section);
 
-        if(element){
+        if(el){
 
-            element.classList.add("hidden");
+            el.classList.add("hidden");
 
         }
 
     });
 
 
-    document
-        .getElementById("riderDashboard")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("adminPanel")
-        .classList.add("hidden");
-
-
     const target =
-        document.getElementById(section);
+        document.getElementById(id);
 
 
     if(target){
@@ -1450,122 +1831,973 @@ function showSection(section){
     }
 
 
+    if(id === "home"){
+
+        loadHomeOffers();
+
+    }
+
+
+    if(id === "moderatorPanel"){
+
+        loadModerator();
+
+    }
+
+
     window.scrollTo({
-
         top:0,
-
         behavior:"smooth"
+    });
+
+}
+
+
+/* ==========================================================
+   BOOKING TYPE
+========================================================== */
+
+function selectBookingType(type){
+
+    bookingType = type;
+
+
+    document
+    .getElementById("bookingType")
+    .value = type;
+
+
+    document
+    .getElementById("deliveryChoice")
+    .classList.remove("selected");
+
+
+    document
+    .getElementById("rideChoice")
+    .classList.remove("selected");
+
+
+    if(type === "Delivery"){
+
+        document
+        .getElementById("deliveryChoice")
+        .classList.add("selected");
+
+
+        document
+        .getElementById("deliveryFields")
+        .classList.remove("hidden");
+
+
+        document
+        .getElementById("passengerFields")
+        .classList.add("hidden");
+
+    }
+
+
+    if(type === "Passenger Ride"){
+
+        document
+        .getElementById("rideChoice")
+        .classList.add("selected");
+
+
+        document
+        .getElementById("deliveryFields")
+        .classList.add("hidden");
+
+
+        document
+        .getElementById("passengerFields")
+        .classList.remove("hidden");
+
+    }
+
+}
+
+
+/* ==========================================================
+   FARE CALCULATION
+========================================================== */
+
+function normalizeLocation(value){
+
+    return String(value)
+        .trim()
+        .toLowerCase();
+
+}
+
+
+function findManagedRoute(
+    pickup,
+    destination
+){
+
+    const p =
+        normalizeLocation(pickup);
+
+    const d =
+        normalizeLocation(destination);
+
+
+    return getRoutes().find(function(route){
+
+        return (
+
+            normalizeLocation(
+                route.pickup
+            ) === p &&
+
+            normalizeLocation(
+                route.destination
+            ) === d
+
+        );
 
     });
 
 }
 
 
-/* =====================================================
-   STORAGE HELPERS
-===================================================== */
+function calculateFare(){
 
-function getOrders(){
+    const pickup =
+        document
+        .getElementById("pickup")
+        .value;
 
-    return JSON.parse(
 
-        localStorage.getItem("amirOrders")
+    const destination =
+        document
+        .getElementById("destination")
+        .value;
 
-    ) || [];
+
+    const method =
+        document
+        .getElementById("fareMethod")
+        .value;
+
+
+    const display =
+        document
+        .getElementById("fareDisplay");
+
+
+    const distanceBox =
+        document
+        .getElementById("distanceBox");
+
+
+    if(method === "kilometer"){
+
+        distanceBox
+        .classList
+        .remove("hidden");
+
+
+        const km =
+            parseFloat(
+                document
+                .getElementById("distanceKm")
+                .value
+            );
+
+
+        if(!km || km <= 0){
+
+            display.innerHTML =
+            `<p class="info">
+            Enter the road distance in kilometers.
+            </p>`;
+
+            return;
+
+        }
+
+
+        const rate =
+            parseFloat(
+                localStorage
+                .getItem("amirKmRate") || "45"
+            );
+
+
+        const fare =
+            Math.ceil(km * rate);
+
+
+        display.innerHTML = `
+
+            <div class="points-box">
+
+                <p>
+                    ${km} km × KSh ${rate}
+                </p>
+
+                <strong>
+                    KSh ${fare}
+                </strong>
+
+                <p class="small">
+                    Automatic kilometer fare
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    distanceBox
+    .classList
+    .add("hidden");
+
+
+    if(method === "managed"){
+
+        const route =
+            findManagedRoute(
+                pickup,
+                destination
+            );
+
+
+        if(!route){
+
+            display.innerHTML = `
+
+                <p class="error">
+                    ❌ This is not currently a managed route.
+                </p>
+
+                <p class="info">
+                    Choose Kilometer Fare for this route.
+                </p>
+
+            `;
+
+            return;
+
+        }
+
+
+        display.innerHTML = `
+
+            <div class="points-box">
+
+                <p>
+                    ${escapeHTML(
+                        route.pickup
+                    )}
+                    →
+                    ${escapeHTML(
+                        route.destination
+                    )}
+                </p>
+
+                <strong>
+                    KSh ${route.fare}
+                </strong>
+
+                <p class="small">
+                    Official Amir Chap Chap managed fare
+                </p>
+
+            </div>
+
+        `;
+
+    }
 
 }
 
 
-function saveOrders(orders){
+function getCurrentFare(){
 
-    localStorage.setItem(
+    const pickup =
+        document
+        .getElementById("pickup")
+        .value;
 
-        "amirOrders",
 
-        JSON.stringify(orders)
+    const destination =
+        document
+        .getElementById("destination")
+        .value;
 
+
+    const method =
+        document
+        .getElementById("fareMethod")
+        .value;
+
+
+    if(method === "managed"){
+
+        const route =
+            findManagedRoute(
+                pickup,
+                destination
+            );
+
+
+        if(!route)
+            return 0;
+
+
+        return Number(route.fare);
+
+    }
+
+
+    if(method === "kilometer"){
+
+        const km =
+            parseFloat(
+                document
+                .getElementById("distanceKm")
+                .value
+            );
+
+
+        const rate =
+            parseFloat(
+                localStorage
+                .getItem("amirKmRate") || "45"
+            );
+
+
+        if(!km)
+            return 0;
+
+
+        return Math.ceil(
+            km * rate
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================================
+   PAYMENT
+========================================================== */
+
+function updatePaymentInfo(){
+
+    const method =
+        document
+        .getElementById("paymentMethod")
+        .value;
+
+
+    const fare =
+        getCurrentFare();
+
+
+    const info =
+        document
+        .getElementById("paymentInfo");
+
+
+    if(method === "points"){
+
+        const phone =
+            document
+            .getElementById("customerPhone")
+            .value;
+
+
+        const customer =
+            findCustomer(phone);
+
+
+        const balance =
+            customer
+            ?
+            Number(customer.points || 0)
+            :
+            0;
+
+
+        const pointsNeeded =
+            fare;
+
+
+        info.innerHTML = `
+
+            <div class="points-box">
+
+                <p>
+                    ⭐ Your Points:
+                </p>
+
+                <strong>
+                    ${balance}
+                </strong>
+
+                <p>
+                    Points required:
+                    <strong>
+                        ${pointsNeeded}
+                    </strong>
+                </p>
+
+                ${
+                    balance >= pointsNeeded
+
+                    ?
+
+                    `<p class="success">
+                        ✅ You have enough points.
+                    </p>`
+
+                    :
+
+                    `<p class="error">
+                        ❌ Not enough points.
+                        You need ${pointsNeeded - balance} more.
+                    </p>`
+
+                }
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(method === "mpesa"){
+
+        info.innerHTML =
+        `<p class="info">
+        M-Pesa payment will be processed through the connected payment system.
+        </p>`;
+
+    }
+
+
+    if(method === "cash"){
+
+        info.innerHTML =
+        `<p class="info">
+        Pay the applicable fare as instructed by Amir Chap Chap.
+        </p>`;
+
+    }
+
+}
+
+
+/* ==========================================================
+   CUSTOMER
+========================================================== */
+
+function findCustomer(phone){
+
+    const normalized =
+        normalizePhone(phone);
+
+
+    return getCustomers().find(
+        c =>
+        normalizePhone(c.phone) ===
+        normalized
     );
 
 }
 
 
-function getRiders(){
+function createOrGetCustomer(
+    name,
+    phone
+){
 
-    return JSON.parse(
+    const customers =
+        getCustomers();
 
-        localStorage.getItem("amirRiders")
 
-    ) || [];
+    let customer =
+        customers.find(
+            c =>
+            normalizePhone(c.phone) ===
+            normalizePhone(phone)
+        );
+
+
+    if(!customer){
+
+        customer = {
+
+            id:
+                "CUS-" +
+                Math.floor(
+                    100000 +
+                    Math.random()*900000
+                ),
+
+            name:name,
+
+            phone:phone,
+
+            points:0,
+
+            createdAt:
+                new Date()
+                .toLocaleString()
+
+        };
+
+
+        customers.push(customer);
+
+    }else{
+
+        customer.name = name;
+
+    }
+
+
+    saveData(
+        "amirCustomers",
+        customers
+    );
+
+
+    return customer;
 
 }
 
 
-function saveRiders(riders){
+/* ==========================================================
+   CUSTOMER BOOKING
+========================================================== */
 
-    localStorage.setItem(
+document
+.getElementById("bookingForm")
+.addEventListener(
+"submit",
+function(e){
 
-        "amirRiders",
+    e.preventDefault();
 
-        JSON.stringify(riders)
 
+    if(!bookingType){
+
+        document
+        .getElementById(
+            "bookingMessage"
+        )
+        .innerHTML =
+        `<p class="error">
+        ❌ Select Delivery or Passenger Ride.
+        </p>`;
+
+        return;
+
+    }
+
+
+    if(
+        !document
+        .getElementById(
+            "termsAgreement"
+        )
+        .checked
+    ){
+
+        document
+        .getElementById(
+            "bookingMessage"
+        )
+        .innerHTML =
+        `<p class="error">
+        ❌ You must agree to the Terms & Conditions.
+        </p>`;
+
+        return;
+
+    }
+
+
+    const fare =
+        getCurrentFare();
+
+
+    if(fare <= 0){
+
+        document
+        .getElementById(
+            "bookingMessage"
+        )
+        .innerHTML =
+        `<p class="error">
+        ❌ Please select a valid fare and route.
+        </p>`;
+
+        return;
+
+    }
+
+
+    const payment =
+        document
+        .getElementById(
+            "paymentMethod"
+        )
+        .value;
+
+
+    if(!payment){
+
+        document
+        .getElementById(
+            "bookingMessage"
+        )
+        .innerHTML =
+        `<p class="error">
+        ❌ Select a payment method.
+        </p>`;
+
+        return;
+
+    }
+
+
+    const customer =
+        createOrGetCustomer(
+
+            document
+            .getElementById(
+                "customerName"
+            )
+            .value.trim(),
+
+            document
+            .getElementById(
+                "customerPhone"
+            )
+            .value.trim()
+
+        );
+
+
+    if(payment === "points"){
+
+        if(
+            Number(customer.points) <
+            fare
+        ){
+
+            document
+            .getElementById(
+                "bookingMessage"
+            )
+            .innerHTML =
+            `<p class="error">
+            ❌ You do not have enough points.
+            </p>`;
+
+            return;
+
+        }
+
+    }
+
+
+    const booking = {
+
+        id:
+            generateBookingId(),
+
+        type:
+            bookingType,
+
+        customerId:
+            customer.id,
+
+        customerName:
+            customer.name,
+
+        customerPhone:
+            customer.phone,
+
+        pickup:
+            document
+            .getElementById(
+                "pickup"
+            )
+            .value.trim(),
+
+        destination:
+            document
+            .getElementById(
+                "destination"
+            )
+            .value.trim(),
+
+        fare:
+            fare,
+
+        fareMethod:
+            document
+            .getElementById(
+                "fareMethod"
+            )
+            .value,
+
+        paymentMethod:
+            payment,
+
+        itemType:
+            document
+            .getElementById(
+                "itemType"
+            )
+            .value,
+
+        description:
+            document
+            .getElementById(
+                "description"
+            )
+            .value.trim(),
+
+        passengers:
+            document
+            .getElementById(
+                "passengers"
+            )
+            .value,
+
+        passengerInstructions:
+            document
+            .getElementById(
+                "passengerInstructions"
+            )
+            .value.trim(),
+
+        instructions:
+            document
+            .getElementById(
+                "instructions"
+            )
+            .value.trim(),
+
+        status:
+            "Pending Approval",
+
+        riderId:"",
+        riderName:"",
+
+        ratingSubmitted:false,
+
+        createdAt:
+            new Date()
+            .toLocaleString(),
+
+        completedAt:""
+
+    };
+
+
+    /*
+       Deduct points immediately when
+       customer selects points.
+    */
+
+    if(payment === "points"){
+
+        customer.points =
+            Number(customer.points)
+            - fare;
+
+        saveCustomer(customer);
+
+    }
+
+
+    const bookings =
+        getBookings();
+
+
+    bookings.push(booking);
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    document
+    .getElementById(
+        "bookingMessage"
+    )
+    .innerHTML = `
+
+        <div class="order">
+
+            <p class="success">
+                ✅ Booking submitted successfully.
+            </p>
+
+            <p>
+                Booking ID:
+                <strong>
+                    ${booking.id}
+                </strong>
+            </p>
+
+            <p>
+                Service:
+                <strong>
+                    ${escapeHTML(
+                        booking.type
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                Fare:
+                <strong>
+                    KSh ${fare}
+                </strong>
+            </p>
+
+            <p>
+                Payment:
+                <strong>
+                    ${escapeHTML(
+                        payment
+                    )}
+                </strong>
+            </p>
+
+            <p class="info">
+                Your request is waiting for Moderator approval.
+            </p>
+
+        </div>
+
+    `;
+
+
+    sendCustomerCareBooking(
+        booking
+    );
+
+
+    document
+    .getElementById(
+        "bookingForm"
+    )
+    .reset();
+
+
+    bookingType = "";
+
+
+    document
+    .getElementById(
+        "fareDisplay"
+    )
+    .innerHTML =
+    `<p class="info">
+    Select a route to calculate your fare.
+    </p>`;
+
+});
+
+
+/* ==========================================================
+   CUSTOMER CARE BOOKING
+========================================================== */
+
+function sendCustomerCareBooking(
+    booking
+){
+
+    const text =
+
+`AMIR CHAP CHAP NEW BOOKING
+
+Booking ID: ${booking.id}
+
+Service:
+${booking.type}
+
+Customer:
+${booking.customerName}
+
+Phone:
+${booking.customerPhone}
+
+Pickup:
+${booking.pickup}
+
+Destination:
+${booking.destination}
+
+Fare:
+KSh ${booking.fare}
+
+Payment:
+${booking.paymentMethod}
+
+Status:
+Pending Moderator Approval`;
+
+
+    window.open(
+        "https://wa.me/" +
+        CUSTOMER_CARE +
+        "?text=" +
+        encodeURIComponent(text),
+        "_blank"
     );
 
 }
 
 
-/* =====================================================
-   GENERATE RIDER ID
-===================================================== */
+/* ==========================================================
+   BOOKING ID
+========================================================== */
 
-function generateRiderId(){
+function generateBookingId(){
 
-    const riders = getRiders();
+    const bookings =
+        getBookings();
 
-    return "RID" +
-
-        String(riders.length + 1)
-
-        .padStart(3,"0");
-
-}
-
-
-/* =====================================================
-   GENERATE ORDER ID
-===================================================== */
-
-function generateOrderId(){
 
     let id;
 
-    let orders = getOrders();
 
     do{
 
         id =
-
             "AC" +
-
             Math.floor(
-
                 100000 +
-
-                Math.random() *
-
-                900000
-
+                Math.random()*900000
             );
 
-    }
-
-    while(
-
-        orders.some(
-
-            order => order.id === id
-
+    }while(
+        bookings.some(
+            b =>
+            b.id === id
         )
-
     );
 
 
@@ -1574,244 +2806,3207 @@ function generateOrderId(){
 }
 
 
-/* =====================================================
-   CUSTOMER DELIVERY FORM
-===================================================== */
+/* ==========================================================
+   MODERATOR LOGIN
+========================================================== */
 
-document
-.getElementById("deliveryForm")
-.addEventListener(
+function adminLogin(){
 
-    "submit",
-
-    function(event){
-
-        event.preventDefault();
-
-
-        const name =
-
-            document
-            .getElementById("customerName")
-            .value
-            .trim();
-
-
-        const phone =
-
-            document
-            .getElementById("customerPhone")
-            .value
-            .trim();
-
-
-        const pickup =
-
-            document
-            .getElementById("pickup")
-            .value
-            .trim();
-
-
-        const destination =
-
-            document
-            .getElementById("destination")
-            .value
-            .trim();
-
-
-        const item =
-
-            document
-            .getElementById("itemType")
-            .value;
-
-
-        const description =
-
-            document
-            .getElementById("description")
-            .value
-            .trim();
-
-
-        const instructions =
-
-            document
-            .getElementById("instructions")
-            .value
-            .trim();
-
-
-        const order = {
-
-            id:generateOrderId(),
-
-            name:name,
-
-            phone:phone,
-
-            pickup:pickup,
-
-            destination:destination,
-
-            item:item,
-
-            description:description,
-
-            instructions:instructions,
-
-            status:"Pending",
-
-            riderId:"",
-
-            riderName:"",
-
-            date:new Date().toLocaleString(),
-
-            deliveredAt:""
-
-        };
-
-
-        const orders = getOrders();
-
-
-        orders.push(order);
-
-
-        saveOrders(orders);
-
-
+    const password =
         document
-        .getElementById("formMessage")
-        .innerHTML = `
-
-            <p class="success">
-
-                ✅ Delivery request submitted!
-
-                <br><br>
-
-                Your Order ID is:
-
-                <strong>${order.id}</strong>
-
-                <br><br>
-
-                Save this Order ID
-                to track your delivery.
-
-            </p>
-
-        `;
+        .getElementById(
+            "adminPassword"
+        )
+        .value;
 
 
-        /*
-           Send order to customer care
-           through WhatsApp.
-        */
+    if(
+        password ===
+        ADMIN_PASSWORD
+    ){
 
-        const message =
-
-`AMIR CHAP CHAP DELIVERY REQUEST
-
-Order ID: ${order.id}
-
-Customer: ${name}
-
-Phone: ${phone}
-
-Pickup:
-${pickup}
-
-Destination:
-${destination}
-
-Item:
-${item}
-
-Description:
-${description}
-
-Instructions:
-${instructions}`;
-
-
-        const whatsappURL =
-
-            "https://wa.me/" +
-
-            CUSTOMER_CARE_NUMBER +
-
-            "?text=" +
-
-            encodeURIComponent(message);
-
-
-        window.open(
-
-            whatsappURL,
-
-            "_blank"
-
+        showSection(
+            "moderatorPanel"
         );
 
+        loadModerator();
+
+    }else{
 
         document
-        .getElementById("deliveryForm")
-        .reset();
+        .getElementById(
+            "loginMessage"
+        )
+        .innerHTML =
+        `<p class="error">
+        ❌ Incorrect moderator password.
+        </p>`;
 
     }
 
-);
+}
 
 
-/* =====================================================
-   TRACK ORDER
-===================================================== */
+function adminLogout(){
 
-function trackOrder(){
+    document
+    .getElementById(
+        "adminPassword"
+    )
+    .value = "";
+
+    showSection("home");
+
+}
+
+
+/* ==========================================================
+   MODERATOR ROUTES
+========================================================== */
+
+document
+.getElementById("routeForm")
+.addEventListener(
+"submit",
+function(e){
+
+    e.preventDefault();
+
+
+    const routes =
+        getRoutes();
+
+
+    routes.push({
+
+        pickup:
+            document
+            .getElementById(
+                "routePickup"
+            )
+            .value.trim(),
+
+        destination:
+            document
+            .getElementById(
+                "routeDestination"
+            )
+            .value.trim(),
+
+        fare:
+            Number(
+                document
+                .getElementById(
+                    "routeFare"
+                )
+                .value
+            )
+
+    });
+
+
+    saveData(
+        "amirRoutes",
+        routes
+    );
+
+
+    this.reset();
+
+
+    loadModerator();
+
+});
+
+
+function deleteRoute(index){
+
+    const routes =
+        getRoutes();
+
+
+    routes.splice(
+        index,
+        1
+    );
+
+
+    saveData(
+        "amirRoutes",
+        routes
+    );
+
+
+    loadModerator();
+
+}
+
+
+function loadRoutes(){
+
+    const container =
+        document
+        .getElementById(
+            "routeList"
+        );
+
+
+    const routes =
+        getRoutes();
+
+
+    container.innerHTML = "";
+
+
+    routes.forEach(
+    function(route,index){
+
+        container.innerHTML += `
+
+            <div class="route">
+
+                <strong>
+                    ${escapeHTML(
+                        route.pickup
+                    )}
+                    →
+                    ${escapeHTML(
+                        route.destination
+                    )}
+                </strong>
+
+                <p>
+                    KSh ${route.fare}
+                </p>
+
+                <button
+                    class="btn red"
+                    onclick="deleteRoute(
+                    ${index}
+                    )">
+
+                    🗑️ Delete
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+function saveKmRate(){
+
+    const value =
+        document
+        .getElementById(
+            "kmRate"
+        )
+        .value;
+
+
+    localStorage.setItem(
+        "amirKmRate",
+        value
+    );
+
+
+    alert(
+        "✅ Kilometer rate saved."
+    );
+
+}
+
+
+/* ==========================================================
+   RIDER REGISTRATION
+========================================================== */
+
+function generateRiderId(){
+
+    const riders =
+        getRiders();
+
+
+    return "AC-RID-" +
+        String(
+            riders.length + 1
+        )
+        .padStart(
+            3,
+            "0"
+        );
+
+}
+
+
+document
+.getElementById("riderForm")
+.addEventListener(
+"submit",
+function(e){
+
+    e.preventDefault();
+
+
+    const riders =
+        getRiders();
+
+
+    const rider = {
+
+        id:
+            generateRiderId(),
+
+        name:
+            document
+            .getElementById(
+                "riderName"
+            )
+            .value.trim(),
+
+        phone:
+            document
+            .getElementById(
+                "riderPhone"
+            )
+            .value.trim(),
+
+        whatsapp:
+            document
+            .getElementById(
+                "riderWhatsApp"
+            )
+            .value.trim(),
+
+        nationalId:
+            document
+            .getElementById(
+                "riderNationalId"
+            )
+            .value.trim(),
+
+        bikeType:
+            document
+            .getElementById(
+                "bikeType"
+            )
+            .value,
+
+        bikeModel:
+            document
+            .getElementById(
+                "bikeModel"
+            )
+            .value.trim(),
+
+        plate:
+            document
+            .getElementById(
+                "bikePlate"
+            )
+            .value.trim(),
+
+        area:
+            document
+            .getElementById(
+                "riderArea"
+            )
+            .value.trim(),
+
+        status:
+            "Available",
+
+        registeredAt:
+            new Date()
+            .toLocaleString()
+
+    };
+
+
+    riders.push(rider);
+
+
+    saveData(
+        "amirRiders",
+        riders
+    );
+
+
+    document
+    .getElementById(
+        "riderMessage"
+    )
+    .innerHTML = `
+
+        <div class="order">
+
+            <p class="success">
+                ✅ Rider registered successfully.
+            </p>
+
+            <p>
+                Rider ID:
+                <strong>
+                    ${rider.id}
+                </strong>
+            </p>
+
+            <p>
+                Give this Rider ID to:
+                <strong>
+                    ${escapeHTML(
+                        rider.name
+                    )}
+                </strong>
+            </p>
+
+        </div>
+
+    `;
+
+
+    this.reset();
+
+
+    loadModerator();
+
+});
+
+
+/* ==========================================================
+   MODERATOR DASHBOARD
+========================================================== */
+
+function loadModerator(){
+
+    updateStats();
+
+    loadRoutes();
+
+    loadModeratorRiders();
+
+    loadModeratorBookings();
+
+    loadOffers();
+
+    loadCustomerPoints();
+
+    loadModeratorRatings();
+
+
+    document
+    .getElementById(
+        "kmRate"
+    )
+    .value =
+        localStorage
+        .getItem(
+            "amirKmRate"
+        ) || "45";
+
+
+    document
+    .getElementById(
+        "pointsRate"
+    )
+    .value =
+        localStorage
+        .getItem(
+            "amirPointsRate"
+        ) || "1";
+
+}
+
+
+function updateStats(){
+
+    const bookings =
+        getBookings();
+
+
+    document
+    .getElementById(
+        "statBookings"
+    )
+    .textContent =
+        bookings.length;
+
+
+    document
+    .getElementById(
+        "statPending"
+    )
+    .textContent =
+        bookings.filter(
+            b =>
+            b.status ===
+            "Pending Approval"
+        ).length;
+
+
+    document
+    .getElementById(
+        "statActive"
+    )
+    .textContent =
+        bookings.filter(
+            b =>
+            b.status !==
+            "Completed" &&
+
+            b.status !==
+            "Rejected" &&
+
+            b.status !==
+            "Pending Approval"
+        ).length;
+
+
+    document
+    .getElementById(
+        "statCompleted"
+    )
+    .textContent =
+        bookings.filter(
+            b =>
+            b.status ===
+            "Completed"
+        ).length;
+
+
+    document
+    .getElementById(
+        "statRiders"
+    )
+    .textContent =
+        getRiders().length;
+
+}
+
+
+/* ==========================================================
+   MODERATOR RIDERS
+========================================================== */
+
+function loadModeratorRiders(){
+
+    const container =
+        document
+        .getElementById(
+            "moderatorRiders"
+        );
+
+
+    const riders =
+        getRiders();
+
+
+    if(!riders.length){
+
+        container.innerHTML =
+        `<p class="info">
+        No riders registered.
+        </p>`;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    riders.forEach(
+    function(rider){
+
+        container.innerHTML += `
+
+            <div class="rider">
+
+                <h3>
+                    🏍️
+                    ${escapeHTML(
+                        rider.name
+                    )}
+                </h3>
+
+                <p>
+                    <strong>Rider ID:</strong>
+                    ${escapeHTML(
+                        rider.id
+                    )}
+                </p>
+
+                <p>
+                    <strong>Phone:</strong>
+                    ${escapeHTML(
+                        rider.phone
+                    )}
+                </p>
+
+                <p>
+                    <strong>WhatsApp:</strong>
+                    ${escapeHTML(
+                        rider.whatsapp
+                    )}
+                </p>
+
+                <p>
+                    <strong>Motorcycle:</strong>
+                    ${escapeHTML(
+                        rider.bikeType
+                    )}
+                    -
+                    ${escapeHTML(
+                        rider.bikeModel
+                    )}
+                </p>
+
+                <p>
+                    <strong>Plate:</strong>
+                    ${escapeHTML(
+                        rider.plate
+                    )}
+                </p>
+
+                <p>
+                    <strong>Area:</strong>
+                    ${escapeHTML(
+                        rider.area
+                    )}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    ${escapeHTML(
+                        rider.status
+                    )}
+                </p>
+
+
+                <div class="actions">
+
+                    <button
+                        class="btn call"
+                        onclick="callNumber(
+                        '${rider.phone}'
+                        )">
+
+                        📞 Call
+
+                    </button>
+
+
+                    <button
+                        class="btn whatsapp"
+                        onclick="whatsappNumber(
+                        '${rider.whatsapp}',
+                        'Hello ${escapeHTML(
+                        rider.name
+                        )}, this is Amir Chap Chap.'
+                        )">
+
+                        💬 WhatsApp
+
+                    </button>
+
+
+                    <button
+                        class="btn orange"
+                        onclick="changeRiderStatus(
+                        '${rider.id}'
+                        )">
+
+                        🔄 Status
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+function changeRiderStatus(id){
+
+    const riders =
+        getRiders();
+
+
+    const rider =
+        riders.find(
+            r =>
+            r.id === id
+        );
+
+
+    if(!rider)
+        return;
+
+
+    if(
+        rider.status ===
+        "Available"
+    ){
+
+        rider.status =
+            "Busy";
+
+    }else if(
+        rider.status ===
+        "Busy"
+    ){
+
+        rider.status =
+            "Offline";
+
+    }else{
+
+        rider.status =
+            "Available";
+
+    }
+
+
+    saveData(
+        "amirRiders",
+        riders
+    );
+
+
+    loadModerator();
+
+}
+
+
+/* ==========================================================
+   MODERATOR BOOKINGS
+========================================================== */
+
+function loadModeratorBookings(){
+
+    const container =
+        document
+        .getElementById(
+            "moderatorBookings"
+        );
+
+
+    const bookings =
+        getBookings();
+
+
+    if(!bookings.length){
+
+        container.innerHTML =
+        `<p class="info">
+        No bookings yet.
+        </p>`;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    bookings
+    .slice()
+    .reverse()
+    .forEach(
+    function(booking){
+
+        container.innerHTML += `
+
+            <div class="order">
+
+                <h3>
+                    ${
+                        booking.type ===
+                        "Delivery"
+                        ?
+                        "📦"
+                        :
+                        "🏍️"
+                    }
+
+                    ${escapeHTML(
+                        booking.id
+                    )}
+
+                </h3>
+
+
+                <p>
+                    <strong>Service:</strong>
+                    ${escapeHTML(
+                        booking.type
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Customer:</strong>
+                    ${escapeHTML(
+                        booking.customerName
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Phone:</strong>
+                    ${escapeHTML(
+                        booking.customerPhone
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Pickup:</strong>
+                    ${escapeHTML(
+                        booking.pickup
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Destination:</strong>
+                    ${escapeHTML(
+                        booking.destination
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Fare:</strong>
+                    KSh ${booking.fare}
+                </p>
+
+
+                <p>
+                    <strong>Payment:</strong>
+                    ${escapeHTML(
+                        booking.paymentMethod
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Status:</strong>
+                    ${escapeHTML(
+                        booking.status
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Rider:</strong>
+                    ${
+                        booking.riderName
+                        ?
+                        escapeHTML(
+                            booking.riderName
+                        )
+                        :
+                        "Not assigned"
+                    }
+                </p>
+
+
+                <div class="actions">
+
+                    ${
+                        booking.status ===
+                        "Pending Approval"
+
+                        ?
+
+                        `
+
+                        <button
+                            class="btn green"
+                            onclick="approveBooking(
+                            '${booking.id}'
+                            )">
+
+                            ✅ Approve
+
+                        </button>
+
+
+                        <button
+                            class="btn red"
+                            onclick="rejectBooking(
+                            '${booking.id}'
+                            )">
+
+                            ❌ Reject
+
+                        </button>
+
+                        `
+
+                        :
+
+                        ""
+
+                    }
+
+                </div>
+
+
+                ${
+                    booking.status !==
+                    "Rejected"
+
+                    ?
+
+                    `
+
+                    <label>
+                        Assign Rider
+                    </label>
+
+
+                    <select
+                        onchange="assignBookingRider(
+                        '${booking.id}',
+                        this.value
+                        )">
+
+                        <option value="">
+                            Select rider
+                        </option>
+
+                        ${riderOptions(
+                            booking.riderId
+                        )}
+
+                    </select>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+
+                ${
+                    booking.riderId
+
+                    ?
+
+                    `
+
+                    <div class="actions">
+
+                        <button
+                            class="btn call"
+                            onclick="callBookingRider(
+                            '${booking.id}'
+                            )">
+
+                            📞 Call Rider
+
+                        </button>
+
+
+                        <button
+                            class="btn whatsapp"
+                            onclick="contactBookingRider(
+                            '${booking.id}'
+                            )">
+
+                            💬 WhatsApp Rider
+
+                        </button>
+
+                    </div>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+function riderOptions(selected){
+
+    return getRiders()
+
+    .filter(
+        r =>
+        r.status !==
+        "Offline"
+    )
+
+    .map(
+    function(rider){
+
+        return `
+
+        <option
+            value="${escapeHTML(
+                rider.id
+            )}"
+            ${
+                rider.id === selected
+                ?
+                "selected"
+                :
+                ""
+            }>
+
+            ${escapeHTML(
+                rider.id
+            )}
+            -
+            ${escapeHTML(
+                rider.name
+            )}
+
+        </option>
+
+        `;
+
+    })
+
+    .join("");
+
+}
+
+
+/* ==========================================================
+   APPROVAL
+========================================================== */
+
+function approveBooking(id){
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id === id
+        );
+
+
+    if(!booking)
+        return;
+
+
+    booking.status =
+        "Approved - Waiting Rider";
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    loadModerator();
+
+}
+
+
+function rejectBooking(id){
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id === id
+        );
+
+
+    if(!booking)
+        return;
+
+
+    booking.status =
+        "Rejected";
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    loadModerator();
+
+}
+
+
+/* ==========================================================
+   ASSIGN RIDER
+========================================================== */
+
+function assignBookingRider(
+    bookingId,
+    riderId
+){
+
+    const bookings =
+        getBookings();
+
+
+    const riders =
+        getRiders();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id === bookingId
+        );
+
+
+    const rider =
+        riders.find(
+            r =>
+            r.id === riderId
+        );
+
+
+    if(!booking)
+        return;
+
+
+    if(!riderId){
+
+        booking.riderId = "";
+
+        booking.riderName = "";
+
+        booking.status =
+            "Approved - Waiting Rider";
+
+
+        saveData(
+            "amirBookings",
+            bookings
+        );
+
+
+        loadModerator();
+
+        return;
+
+    }
+
+
+    if(!rider)
+        return;
+
+
+    booking.riderId =
+        rider.id;
+
+
+    booking.riderName =
+        rider.name;
+
+
+    booking.status =
+        "Rider Assigned";
+
+
+    rider.status =
+        "Busy";
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    saveData(
+        "amirRiders",
+        riders
+    );
+
+
+    sendRiderNotification(
+        rider,
+        booking
+    );
+
+
+    loadModerator();
+
+}
+
+
+function sendRiderNotification(
+    rider,
+    booking
+){
+
+    const message =
+
+`AMIR CHAP CHAP
+
+🔔 NEW ${booking.type.toUpperCase()}
+
+Booking:
+${booking.id}
+
+Customer:
+${booking.customerName}
+
+Pickup:
+${booking.pickup}
+
+Destination:
+${booking.destination}
+
+Fare:
+KSh ${booking.fare}
+
+Open your Rider Portal to accept the booking.`;
+
+
+    window.open(
+        "https://wa.me/" +
+        normalizePhone(
+            rider.whatsapp
+        ) +
+        "?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+
+}
+
+
+/* ==========================================================
+   RIDER LOGIN
+========================================================== */
+
+function riderLogin(){
 
     const id =
+        document
+        .getElementById(
+            "riderIdLogin"
+        )
+        .value
+        .trim()
+        .toUpperCase();
+
+
+    const phone =
+        document
+        .getElementById(
+            "riderPhoneLogin"
+        )
+        .value
+        .trim();
+
+
+    const rider =
+        getRiders().find(
+            r =>
+
+            r.id.toUpperCase()
+            === id
+
+            &&
+
+            normalizePhone(
+                r.phone
+            )
+            ===
+            normalizePhone(
+                phone
+            )
+        );
+
+
+    if(!rider){
 
         document
-        .getElementById("trackingId")
+        .getElementById(
+            "riderLoginMessage"
+        )
+        .innerHTML =
+        `<p class="error">
+        ❌ Incorrect Rider ID or phone.
+        </p>`;
+
+        return;
+
+    }
+
+
+    currentRider =
+        rider;
+
+
+    showSection(
+        "riderDashboard"
+    );
+
+
+    loadRiderDashboard();
+
+}
+
+
+function riderLogout(){
+
+    currentRider =
+        null;
+
+
+    showSection(
+        "home"
+    );
+
+}
+
+
+/* ==========================================================
+   RIDER DASHBOARD
+========================================================== */
+
+function loadRiderDashboard(){
+
+    if(!currentRider)
+        return;
+
+
+    const rider =
+        getRiders().find(
+            r =>
+            r.id ===
+            currentRider.id
+        );
+
+
+    if(rider)
+        currentRider =
+            rider;
+
+
+    document
+    .getElementById(
+        "riderWelcome"
+    )
+    .innerHTML =
+
+    `Welcome,
+    <strong>
+    ${escapeHTML(
+        currentRider.name
+    )}
+    </strong>
+    |
+    Rider ID:
+    <strong>
+    ${escapeHTML(
+        currentRider.id
+    )}
+    </strong>`;
+
+
+    document
+    .getElementById(
+        "myRiderDetails"
+    )
+    .innerHTML = `
+
+        <p>
+            <strong>Rider ID:</strong>
+            ${escapeHTML(
+                currentRider.id
+            )}
+        </p>
+
+        <p>
+            <strong>Name:</strong>
+            ${escapeHTML(
+                currentRider.name
+            )}
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            ${escapeHTML(
+                currentRider.phone
+            )}
+        </p>
+
+        <p>
+            <strong>Motorcycle:</strong>
+            ${escapeHTML(
+                currentRider.bikeType
+            )}
+        </p>
+
+        <p>
+            <strong>Model:</strong>
+            ${escapeHTML(
+                currentRider.bikeModel
+            )}
+        </p>
+
+        <p>
+            <strong>Plate:</strong>
+            ${escapeHTML(
+                currentRider.plate
+            )}
+        </p>
+
+        <p>
+            <strong>Area:</strong>
+            ${escapeHTML(
+                currentRider.area
+            )}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            ${escapeHTML(
+                currentRider.status
+            )}
+        </p>
+
+    `;
+
+
+    loadRiderRating();
+
+    loadRiderBookings();
+
+    updateNotificationCount();
+
+}
+
+
+/* ==========================================================
+   RIDER RATING
+========================================================== */
+
+function loadRiderRating(){
+
+    const ratings =
+        getRatings().filter(
+            r =>
+            r.riderId ===
+            currentRider.id
+        );
+
+
+    const box =
+        document
+        .getElementById(
+            "riderRating"
+        );
+
+
+    if(!ratings.length){
+
+        box.innerHTML =
+        `<p class="info">
+        No customer ratings yet.
+        </p>`;
+
+        return;
+
+    }
+
+
+    const total =
+        ratings.reduce(
+            (sum,r) =>
+            sum + Number(r.rating),
+            0
+        );
+
+
+    const average =
+        (
+            total /
+            ratings.length
+        ).toFixed(1);
+
+
+    box.innerHTML = `
+
+        <div class="points-box">
+
+            <strong>
+                ⭐ ${average}
+            </strong>
+
+            <p>
+                Based on
+                ${ratings.length}
+                customer rating(s)
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==========================================================
+   RIDER BOOKINGS
+========================================================== */
+
+function loadRiderBookings(){
+
+    const container =
+        document
+        .getElementById(
+            "riderBookings"
+        );
+
+
+    const bookings =
+        getBookings().filter(
+            b =>
+            b.riderId ===
+            currentRider.id
+        );
+
+
+    if(!bookings.length){
+
+        container.innerHTML = `
+
+            <div class="notification">
+
+                <h3>
+                    📭 No Requests Yet
+                </h3>
+
+                <p class="info">
+                    When the Moderator approves
+                    and assigns a booking to you,
+                    it will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    bookings
+    .slice()
+    .reverse()
+    .forEach(
+    function(booking){
+
+        container.innerHTML += `
+
+            <div class="order">
+
+                <h3>
+                    ${
+                        booking.type ===
+                        "Delivery"
+                        ?
+                        "📦"
+                        :
+                        "🏍️"
+                    }
+
+                    ${escapeHTML(
+                        booking.type
+                    )}
+
+                </h3>
+
+
+                <p>
+                    <strong>Booking:</strong>
+                    ${escapeHTML(
+                        booking.id
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Customer:</strong>
+                    ${escapeHTML(
+                        booking.customerName
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Customer Phone:</strong>
+                    ${escapeHTML(
+                        booking.customerPhone
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Pickup:</strong>
+                    ${escapeHTML(
+                        booking.pickup
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Destination:</strong>
+                    ${escapeHTML(
+                        booking.destination
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>Fare:</strong>
+                    KSh ${booking.fare}
+                </p>
+
+
+                <p>
+                    <strong>Status:</strong>
+                    ${escapeHTML(
+                        booking.status
+                    )}
+                </p>
+
+
+                <div class="actions">
+
+                    <button
+                        class="btn call"
+                        onclick="callNumber(
+                        '${booking.customerPhone}'
+                        )">
+
+                        📞 Call Customer
+
+                    </button>
+
+
+                    <button
+                        class="btn whatsapp"
+                        onclick="whatsappNumber(
+                        '${booking.customerPhone}',
+                        'Hello, this is your Amir Chap Chap rider regarding booking ${booking.id}.'
+                        )">
+
+                        💬 WhatsApp Customer
+
+                    </button>
+
+
+                    <button
+                        class="btn blue"
+                        onclick="openWaze(
+                        '${booking.pickup}'
+                        )">
+
+                        🗺️ Waze Pickup
+
+                    </button>
+
+                </div>
+
+
+                ${
+                    booking.status ===
+                    "Rider Assigned"
+
+                    ?
+
+                    `
+
+                    <button
+                        class="btn green"
+                        onclick="acceptBooking(
+                        '${booking.id}'
+                        )">
+
+                        ✅ Accept ${
+                            booking.type ===
+                            "Delivery"
+                            ?
+                            "Order"
+                            :
+                            "Ride"
+                        }
+
+                    </button>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+
+                ${
+                    booking.status ===
+                    "Accepted by Rider"
+
+                    ?
+
+                    `
+
+                    <button
+                        class="btn blue"
+                        onclick="riderUpdateBooking(
+                        '${booking.id}',
+                        'Picked Up'
+                        )">
+
+                        📦 ${
+                            booking.type ===
+                            "Delivery"
+                            ?
+                            "Package Picked Up"
+                            :
+                            "Passenger Picked Up"
+                        }
+
+                    </button>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+
+                ${
+                    booking.status ===
+                    "Picked Up"
+
+                    ?
+
+                    `
+
+                    <button
+                        class="btn orange"
+                        onclick="riderUpdateBooking(
+                        '${booking.id}',
+                        'On the Way'
+                        )">
+
+                        🚚 On The Way
+
+                    </button>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+
+                ${
+                    booking.status ===
+                    "On the Way"
+
+                    ?
+
+                    `
+
+                    <button
+                        class="btn green"
+                        onclick="completeBooking(
+                        '${booking.id}'
+                        )">
+
+                        ✅ ${
+                            booking.type ===
+                            "Delivery"
+                            ?
+                            "Delivered Successfully"
+                            :
+                            "Trip Completed"
+                        }
+
+                    </button>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+
+                ${
+                    booking.status ===
+                    "Completed"
+
+                    ?
+
+                    `
+
+                    <p class="success">
+
+                        ✅ Service completed.
+
+                    </p>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================================
+   ACCEPT BOOKING
+========================================================== */
+
+function acceptBooking(id){
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id === id
+        );
+
+
+    if(!booking)
+        return;
+
+
+    booking.status =
+        "Accepted by Rider";
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    loadRiderDashboard();
+
+
+    alert(
+        "✅ Booking accepted."
+    );
+
+}
+
+
+/* ==========================================================
+   RIDER STATUS UPDATE
+========================================================== */
+
+function riderUpdateBooking(
+    id,
+    status
+){
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id === id
+        );
+
+
+    if(!booking)
+        return;
+
+
+    booking.status =
+        status;
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    loadRiderDashboard();
+
+}
+
+
+/* ==========================================================
+   COMPLETE + AWARD POINTS
+========================================================== */
+
+function completeBooking(id){
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id === id
+        );
+
+
+    if(!booking)
+        return;
+
+
+    if(
+        !confirm(
+            booking.type ===
+            "Delivery"
+
+            ?
+
+            "Confirm successful delivery?"
+
+            :
+
+            "Confirm completed passenger trip?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    booking.status =
+        "Completed";
+
+
+    booking.completedAt =
+        new Date()
+        .toLocaleString();
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    /*
+       Automatically award points.
+    */
+
+    awardPoints(
+        booking
+    );
+
+
+    /*
+       Make rider available.
+    */
+
+    const riders =
+        getRiders();
+
+
+    const rider =
+        riders.find(
+            r =>
+            r.id ===
+            currentRider.id
+        );
+
+
+    if(rider){
+
+        rider.status =
+            "Available";
+
+        saveData(
+            "amirRiders",
+            riders
+        );
+
+    }
+
+
+    loadRiderDashboard();
+
+
+    alert(
+        "✅ Completed successfully. Customer points have been processed."
+    );
+
+}
+
+
+/* ==========================================================
+   POINTS
+========================================================== */
+
+function awardPoints(booking){
+
+    const customers =
+        getCustomers();
+
+
+    const customer =
+        customers.find(
+            c =>
+            c.id ===
+            booking.customerId
+        );
+
+
+    if(!customer)
+        return;
+
+
+    const rate =
+        Number(
+            localStorage
+            .getItem(
+                "amirPointsRate"
+            ) || "1"
+        );
+
+
+    const points =
+        Math.floor(
+            Number(booking.fare)
+            *
+            rate
+        );
+
+
+    customer.points =
+        Number(
+            customer.points || 0
+        )
+        +
+        points;
+
+
+    saveData(
+        "amirCustomers",
+        customers
+    );
+
+
+    booking.pointsAwarded =
+        points;
+
+
+    const bookings =
+        getBookings();
+
+
+    const index =
+        bookings.findIndex(
+            b =>
+            b.id ===
+            booking.id
+        );
+
+
+    if(index >= 0){
+
+        bookings[index] =
+            booking;
+
+        saveData(
+            "amirBookings",
+            bookings
+        );
+
+    }
+
+}
+
+
+function saveCustomer(customer){
+
+    const customers =
+        getCustomers();
+
+
+    const index =
+        customers.findIndex(
+            c =>
+            c.id ===
+            customer.id
+        );
+
+
+    if(index >= 0){
+
+        customers[index] =
+            customer;
+
+    }else{
+
+        customers.push(
+            customer
+        );
+
+    }
+
+
+    saveData(
+        "amirCustomers",
+        customers
+    );
+
+}
+
+
+/* ==========================================================
+   CUSTOMER PORTAL
+========================================================== */
+
+function loadCustomerPortal(){
+
+    const phone =
+        document
+        .getElementById(
+            "customerPortalPhone"
+        )
+        .value.trim();
+
+
+    const customer =
+        findCustomer(phone);
+
+
+    const box =
+        document
+        .getElementById(
+            "customerAccount"
+        );
+
+
+    if(!customer){
+
+        box.innerHTML =
+        `<div class="card">
+
+            <p class="error">
+            ❌ Customer account not found.
+            </p>
+
+            <p class="info">
+            Make a booking first using this phone number.
+            </p>
+
+        </div>`;
+
+        return;
+
+    }
+
+
+    const bookings =
+        getBookings().filter(
+            b =>
+            b.customerId ===
+            customer.id
+        );
+
+
+    box.innerHTML = `
+
+        <div class="card">
+
+            <h2>
+                👤 Welcome
+                ${escapeHTML(
+                    customer.name
+                )}
+            </h2>
+
+
+            <div class="points-box">
+
+                <p>
+                    ⭐ Your Reward Points
+                </p>
+
+                <strong>
+                    ${customer.points}
+                </strong>
+
+                <p>
+                    Points may be used for eligible bookings.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                📦 My Bookings
+            </h2>
+
+            ${
+                bookings.length
+                ?
+                bookings
+                .slice()
+                .reverse()
+                .map(
+                booking =>
+                customerBookingHTML(
+                    booking
+                )
+                )
+                .join("")
+                :
+                `<p class="info">
+                No bookings yet.
+                </p>`
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+function customerBookingHTML(
+    booking
+){
+
+    return `
+
+        <div class="order">
+
+            <h3>
+                ${escapeHTML(
+                    booking.id
+                )}
+            </h3>
+
+            <p>
+                ${escapeHTML(
+                    booking.type
+                )}
+            </p>
+
+            <p>
+                ${escapeHTML(
+                    booking.pickup
+                )}
+                →
+                ${escapeHTML(
+                    booking.destination
+                )}
+            </p>
+
+            <p>
+                Fare:
+                <strong>
+                    KSh ${booking.fare}
+                </strong>
+            </p>
+
+            <p>
+                Status:
+                <strong>
+                    ${escapeHTML(
+                        booking.status
+                    )}
+                </strong>
+            </p>
+
+
+            ${
+                booking.riderId
+
+                ?
+
+                `
+
+                <p>
+                    Rider:
+                    <strong>
+                    ${escapeHTML(
+                        booking.riderName
+                    )}
+                    </strong>
+                </p>
+
+                <div class="actions">
+
+                    <button
+                        class="btn call"
+                        onclick="callBookingRider(
+                        '${booking.id}'
+                        )">
+
+                        📞 Call Rider
+
+                    </button>
+
+
+                    <button
+                        class="btn whatsapp"
+                        onclick="contactBookingRider(
+                        '${booking.id}'
+                        )">
+
+                        💬 WhatsApp Rider
+
+                    </button>
+
+
+                    <button
+                        class="btn blue"
+                        onclick="openWaze(
+                        '${booking.pickup}'
+                        )">
+
+                        🗺️ Waze
+
+                    </button>
+
+                </div>
+
+                `
+
+                :
+
+                ""
+
+            }
+
+
+            ${
+                booking.status ===
+                "Completed"
+                &&
+                !booking.ratingSubmitted
+
+                ?
+
+                `
+
+                <div class="card">
+
+                    <h3>
+                        ⭐ Rate Your Rider
+                    </h3>
+
+                    <div
+                        class="stars"
+                        id="stars-${booking.id}">
+
+                        <span
+                        class="star"
+                        onclick="selectRating(
+                        '${booking.id}',1
+                        )">★</span>
+
+                        <span
+                        class="star"
+                        onclick="selectRating(
+                        '${booking.id}',2
+                        )">★</span>
+
+                        <span
+                        class="star"
+                        onclick="selectRating(
+                        '${booking.id}',3
+                        )">★</span>
+
+                        <span
+                        class="star"
+                        onclick="selectRating(
+                        '${booking.id}',4
+                        )">★</span>
+
+                        <span
+                        class="star"
+                        onclick="selectRating(
+                        '${booking.id}',5
+                        )">★</span>
+
+                    </div>
+
+
+                    <textarea
+                        id="comment-${booking.id}"
+                        placeholder="Optional comment"></textarea>
+
+
+                    <button
+                        class="btn green"
+                        onclick="submitRating(
+                        '${booking.id}'
+                        )">
+
+                        ⭐ Submit Rating
+
+                    </button>
+
+                    <div
+                        id="ratingMessage-${booking.id}">
+                    </div>
+
+                </div>
+
+                `
+
+                :
+
+                booking.ratingSubmitted
+
+                ?
+
+                `<p class="success">
+                ⭐ Thank you for rating the rider.
+                </p>`
+
+                :
+
+                ""
+
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==========================================================
+   RATING
+========================================================== */
+
+function selectRating(
+    bookingId,
+    rating
+){
+
+    selectedRating =
+        rating;
+
+
+    const stars =
+        document
+        .querySelectorAll(
+            "#stars-" +
+            bookingId +
+            " .star"
+        );
+
+
+    stars.forEach(
+    function(star,index){
+
+        if(
+            index <
+            rating
+        ){
+
+            star.classList.add(
+                "active"
+            );
+
+        }else{
+
+            star.classList.remove(
+                "active"
+            );
+
+        }
+
+    });
+
+}
+
+
+function submitRating(
+    bookingId
+){
+
+    if(
+        selectedRating < 1
+    ){
+
+        alert(
+            "Please select a star rating."
+        );
+
+        return;
+
+    }
+
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+            b.id ===
+            bookingId
+        );
+
+
+    if(!booking)
+        return;
+
+
+    if(
+        booking.status !==
+        "Completed"
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        booking.ratingSubmitted
+    ){
+
+        return;
+
+    }
+
+
+    const comment =
+        document
+        .getElementById(
+            "comment-" +
+            bookingId
+        )
+        .value.trim();
+
+
+    const ratings =
+        getRatings();
+
+
+    ratings.push({
+
+        id:
+            "RATE-" +
+            Date.now(),
+
+        bookingId:
+            booking.id,
+
+        riderId:
+            booking.riderId,
+
+        riderName:
+            booking.riderName,
+
+        customerId:
+            booking.customerId,
+
+        rating:
+            selectedRating,
+
+        comment:
+            comment,
+
+        createdAt:
+            new Date()
+            .toLocaleString()
+
+    });
+
+
+    saveData(
+        "amirRatings",
+        ratings
+    );
+
+
+    booking.ratingSubmitted =
+        true;
+
+
+    saveData(
+        "amirBookings",
+        bookings
+    );
+
+
+    selectedRating = 0;
+
+
+    document
+    .getElementById(
+        "ratingMessage-" +
+        bookingId
+    )
+    .innerHTML =
+    `<p class="success">
+    ⭐ Rating submitted successfully.
+    </p>`;
+
+
+}
+
+
+/* ==========================================================
+   NOTIFICATIONS
+========================================================== */
+
+function updateNotificationCount(){
+
+    if(!currentRider)
+        return;
+
+
+    const count =
+        getBookings().filter(
+            b =>
+            b.riderId ===
+            currentRider.id &&
+
+            b.status ===
+            "Rider Assigned"
+        ).length;
+
+
+    document
+    .getElementById(
+        "notificationCount"
+    )
+    .textContent =
+        count;
+
+}
+
+
+function showNotifications(){
+
+    const area =
+        document
+        .getElementById(
+            "notificationsArea"
+        );
+
+
+    area.classList.toggle(
+        "hidden"
+    );
+
+
+    const list =
+        document
+        .getElementById(
+            "notificationsList"
+        );
+
+
+    const bookings =
+        getBookings().filter(
+            b =>
+            b.riderId ===
+            currentRider.id &&
+
+            b.status ===
+            "Rider Assigned"
+        );
+
+
+    if(!bookings.length){
+
+        list.innerHTML =
+        `<div class="notification">
+
+            🔔 No new requests.
+
+        </div>`;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    bookings.forEach(
+    function(booking){
+
+        list.innerHTML += `
+
+            <div class="notification">
+
+                <h3>
+                    🔔 New
+                    ${escapeHTML(
+                        booking.type
+                    )}
+                </h3>
+
+                <p>
+                    Booking:
+                    ${escapeHTML(
+                        booking.id
+                    )}
+                </p>
+
+                <p>
+                    Pickup:
+                    ${escapeHTML(
+                        booking.pickup
+                    )}
+                </p>
+
+                <p>
+                    Destination:
+                    ${escapeHTML(
+                        booking.destination
+                    )}
+                </p>
+
+                <button
+                    class="btn green"
+                    onclick="acceptBooking(
+                    '${booking.id}'
+                    )">
+
+                    ✅ Accept
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================================
+   OFFERS
+========================================================== */
+
+function loadHomeOffers(){
+
+    const container =
+        document
+        .getElementById(
+            "homeOffers"
+        );
+
+
+    const offers =
+        getOffers();
+
+
+    if(!offers.length){
+
+        container.innerHTML =
+        `<p class="info">
+        No special offers published currently.
+        </p>`;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    offers.forEach(
+    function(offer){
+
+        container.innerHTML += `
+
+            <div class="offer">
+
+                <h3>
+                    🎁
+                    ${escapeHTML(
+                        offer.title
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        offer.description
+                    )}
+                </p>
+
+                <p>
+                    <strong>
+                        ⭐ Bonus:
+                        ${offer.points}
+                        points
+                    </strong>
+                </p>
+
+                ${
+                    offer.expiry
+                    ?
+                    `<p class="small">
+                    Expires:
+                    ${escapeHTML(
+                        offer.expiry
+                    )}
+                    </p>`
+                    :
+                    ""
+                }
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+document
+.getElementById("offerForm")
+.addEventListener(
+"submit",
+function(e){
+
+    e.preventDefault();
+
+
+    const offers =
+        getOffers();
+
+
+    offers.push({
+
+        id:
+            "OFF-" +
+            Date.now(),
+
+        title:
+            document
+            .getElementById(
+                "offerTitle"
+            )
+            .value.trim(),
+
+        description:
+            document
+            .getElementById(
+                "offerDescription"
+            )
+            .value.trim(),
+
+        points:
+            Number(
+                document
+                .getElementById(
+                    "offerPoints"
+                )
+                .value
+            ),
+
+        expiry:
+            document
+            .getElementById(
+                "offerExpiry"
+            )
+            .value
+
+    });
+
+
+    saveData(
+        "amirOffers",
+        offers
+    );
+
+
+    this.reset();
+
+
+    loadModerator();
+
+    loadHomeOffers();
+
+});
+
+
+function loadOffers(){
+
+    const container =
+        document
+        .getElementById(
+            "moderatorOffers"
+        );
+
+
+    const offers =
+        getOffers();
+
+
+    container.innerHTML = "";
+
+
+    offers.forEach(
+    function(offer,index){
+
+        container.innerHTML += `
+
+            <div class="offer">
+
+                <strong>
+                    ${escapeHTML(
+                        offer.title
+                    )}
+                </strong>
+
+                <p>
+                    ${escapeHTML(
+                        offer.description
+                    )}
+                </p>
+
+                <p>
+                    ⭐ ${offer.points}
+                    points
+                </p>
+
+                <button
+                    class="btn red"
+                    onclick="deleteOffer(
+                    ${index}
+                    )">
+
+                    🗑️ Delete
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+function deleteOffer(index){
+
+    const offers =
+        getOffers();
+
+
+    offers.splice(
+        index,
+        1
+    );
+
+
+    saveData(
+        "amirOffers",
+        offers
+    );
+
+
+    loadModerator();
+
+}
+
+
+/* ==========================================================
+   POINT SETTINGS
+========================================================== */
+
+function savePointsRate(){
+
+    const value =
+        document
+        .getElementById(
+            "pointsRate"
+        )
+        .value;
+
+
+    localStorage.setItem(
+        "amirPointsRate",
+        value
+    );
+
+
+    alert(
+        "✅ Points earning rate saved."
+    );
+
+}
+
+
+function loadCustomerPoints(){
+
+    const container =
+        document
+        .getElementById(
+            "customerPointsList"
+        );
+
+
+    const customers =
+        getCustomers();
+
+
+    if(!customers.length){
+
+        container.innerHTML =
+        `<p class="info">
+        No customers registered yet.
+        </p>`;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    customers.forEach(
+    function(customer){
+
+        container.innerHTML += `
+
+            <div class="order">
+
+                <strong>
+                    ${escapeHTML(
+                        customer.name
+                    )}
+                </strong>
+
+                <p>
+                    Phone:
+                    ${escapeHTML(
+                        customer.phone
+                    )}
+                </p>
+
+                <p>
+                    ⭐ Points:
+                    <strong>
+                        ${customer.points}
+                    </strong>
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================================
+   MODERATOR RATINGS
+========================================================== */
+
+function loadModeratorRatings(){
+
+    const container =
+        document
+        .getElementById(
+            "moderatorRatings"
+        );
+
+
+    const ratings =
+        getRatings();
+
+
+    if(!ratings.length){
+
+        container.innerHTML =
+        `<p class="info">
+        No ratings yet.
+        </p>`;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    ratings
+    .slice()
+    .reverse()
+    .forEach(
+    function(rating){
+
+        container.innerHTML += `
+
+            <div class="order">
+
+                <h3>
+                    ⭐
+                    ${rating.rating}/5
+                </h3>
+
+                <p>
+                    Rider:
+                    <strong>
+                    ${escapeHTML(
+                        rating.riderName
+                    )}
+                    </strong>
+                </p>
+
+                <p>
+                    Booking:
+                    ${escapeHTML(
+                        rating.bookingId
+                    )}
+                </p>
+
+                ${
+                    rating.comment
+
+                    ?
+
+                    `<p>
+                    Comment:
+                    ${escapeHTML(
+                        rating.comment
+                    )}
+                    </p>`
+
+                    :
+
+                    `<p class="small">
+                    No comment.
+                    </p>`
+
+                }
+
+                <p class="small">
+                    ${escapeHTML(
+                        rating.createdAt
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================================
+   TRACKING
+========================================================== */
+
+function trackBooking(){
+
+    const id =
+        document
+        .getElementById(
+            "trackingId"
+        )
         .value
         .trim()
         .toUpperCase();
 
 
     const result =
-
         document
-        .getElementById("trackingResult");
-
-
-    const orders = getOrders();
-
-
-    const order =
-
-        orders.find(
-
-            item => item.id === id
-
+        .getElementById(
+            "trackingResult"
         );
 
 
-    if(!order){
+    const booking =
+        getBookings().find(
+            b =>
+            b.id === id
+        );
 
-        result.innerHTML = `
 
-            <p class="error">
+    if(!booking){
 
-                ❌ Order not found.
-
-            </p>
-
-        `;
+        result.innerHTML =
+        `<p class="error">
+        ❌ Booking not found.
+        </p>`;
 
         return;
 
@@ -1821,19 +6016,13 @@ function trackOrder(){
     let riderHTML = "";
 
 
-    if(order.riderId){
-
-        const riders = getRiders();
-
+    if(booking.riderId){
 
         const rider =
-
-            riders.find(
-
+            getRiders().find(
                 r =>
-
-                r.id === order.riderId
-
+                r.id ===
+                booking.riderId
             );
 
 
@@ -1841,49 +6030,82 @@ function trackOrder(){
 
             riderHTML = `
 
-                <div class="order">
+                <div class="rider">
 
                     <h3>
                         🏍️ Assigned Rider
                     </h3>
 
                     <p>
-                        <strong>Name:</strong>
-                        ${escapeHTML(rider.name)}
+                        <strong>
+                        ${escapeHTML(
+                            rider.name
+                        )}
+                        </strong>
                     </p>
 
                     <p>
-                        <strong>Motorcycle:</strong>
-                        ${escapeHTML(rider.bikeType)}
+                        Rider ID:
+                        ${escapeHTML(
+                            rider.id
+                        )}
                     </p>
 
                     <p>
-                        <strong>Model:</strong>
-                        ${escapeHTML(rider.bikeModel)}
+                        Motorcycle:
+                        ${escapeHTML(
+                            rider.bikeType
+                        )}
+                        -
+                        ${escapeHTML(
+                            rider.bikeModel
+                        )}
                     </p>
 
                     <p>
-                        <strong>Plate:</strong>
-                        ${escapeHTML(rider.plate)}
+                        Plate:
+                        ${escapeHTML(
+                            rider.plate
+                        )}
                     </p>
 
 
-                    <button
-                        class="btn call"
-                        onclick="callRider('${rider.phone}')">
+                    <div class="actions">
 
-                        📞 Call Rider
+                        <button
+                            class="btn call"
+                            onclick="callNumber(
+                            '${rider.phone}'
+                            )">
 
-                    </button>
+                            📞 Call Rider
+
+                        </button>
 
 
-                    <button
-                        class="btn whatsapp"
-                        onclick="whatsappRider('${rider.whatsapp}')">
+                        <button
+                            class="btn whatsapp"
+                            onclick="whatsappNumber(
+                            '${rider.whatsapp}',
+                            'Hello, I am following up on booking ${booking.id}.'
+                            )">
 
-                        💬 WhatsApp Rider
+                            💬 WhatsApp Rider
 
-                    </button>
+                        </button>
+
+
+                        <button
+                            class="btn blue"
+                            onclick="openWaze(
+                            '${booking.pickup}'
+                            )">
+
+                            🗺️ Waze
+
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -1899,68 +6121,58 @@ function trackOrder(){
         <div class="order">
 
             <h3>
-                📦 Order ${escapeHTML(order.id)}
+                ${
+                    booking.type ===
+                    "Delivery"
+                    ?
+                    "📦"
+                    :
+                    "🏍️"
+                }
+
+                ${escapeHTML(
+                    booking.type
+                )}
+
             </h3>
 
             <p>
-                <strong>Customer:</strong>
-                ${escapeHTML(order.name)}
-            </p>
-
-            <p>
-                <strong>Pickup:</strong>
-                ${escapeHTML(order.pickup)}
-            </p>
-
-            <p>
-                <strong>Destination:</strong>
-                ${escapeHTML(order.destination)}
-            </p>
-
-            <p>
-                <strong>Item:</strong>
-                ${escapeHTML(order.item)}
-            </p>
-
-            <p>
-                <strong>Status:</strong>
-
-                <span class="status">
-
-                    ${escapeHTML(order.status)}
-
-                </span>
-
-            </p>
-
-            ${
-                order.deliveredAt
-
-                ?
-
-                `<p class="success">
-
-                    ✅ Delivery successfully completed.
-
-                    <br>
-
+                Booking:
+                <strong>
                     ${escapeHTML(
-                        order.deliveredAt
+                        booking.id
                     )}
+                </strong>
+            </p>
 
-                </p>`
+            <p>
+                Pickup:
+                ${escapeHTML(
+                    booking.pickup
+                )}
+            </p>
 
-                :
+            <p>
+                Destination:
+                ${escapeHTML(
+                    booking.destination
+                )}
+            </p>
 
-                ""
+            <p>
+                Fare:
+                <strong>
+                    KSh ${booking.fare}
+                </strong>
+            </p>
 
-            }
-
-            <p class="small">
-
-                Submitted:
-                ${escapeHTML(order.date)}
-
+            <p>
+                Status:
+                <strong>
+                    ${escapeHTML(
+                        booking.status
+                    )}
+                </strong>
             </p>
 
         </div>
@@ -1972,1895 +6184,185 @@ function trackOrder(){
 }
 
 
-/* =====================================================
-   MODERATOR LOGIN
-===================================================== */
+/* ==========================================================
+   WAZE
+========================================================== */
 
-function adminLogin(){
+function openWaze(location){
 
-    const password =
-
-        document
-        .getElementById("adminPassword")
-        .value;
-
-
-    const message =
-
-        document
-        .getElementById("loginMessage");
-
-
-    /*
-       CORRECT PASSWORD
-
-       Scott@254
-    */
-
-    if(password === ADMIN_PASSWORD){
-
-        document
-        .getElementById("adminLogin")
-        .classList
-        .add("hidden");
-
-
-        document
-        .getElementById("adminPanel")
-        .classList
-        .remove("hidden");
-
-
-        message.innerHTML = "";
-
-
-        loadAdminDashboard();
-
-
-    }else{
-
-        message.innerHTML = `
-
-            <p class="error">
-
-                ❌ Incorrect password.
-
-            </p>
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   MODERATOR LOGOUT
-===================================================== */
-
-function adminLogout(){
-
-    document
-    .getElementById("adminPanel")
-    .classList
-    .add("hidden");
-
-
-    document
-    .getElementById("adminPassword")
-    .value = "";
-
-
-    showSection("home");
-
-}
-
-
-/* =====================================================
-   ADD RIDER
-===================================================== */
-
-document
-.getElementById("riderForm")
-.addEventListener(
-
-    "submit",
-
-    function(event){
-
-        event.preventDefault();
-
-
-        const name =
-
-            document
-            .getElementById("riderName")
-            .value
-            .trim();
-
-
-        const phone =
-
-            document
-            .getElementById("riderPhone")
-            .value
-            .trim();
-
-
-        const whatsapp =
-
-            document
-            .getElementById("riderWhatsApp")
-            .value
-            .trim();
-
-
-        const bikeType =
-
-            document
-            .getElementById("bikeType")
-            .value;
-
-
-        const bikeModel =
-
-            document
-            .getElementById("bikeModel")
-            .value
-            .trim();
-
-
-        const plate =
-
-            document
-            .getElementById("bikePlate")
-            .value
-            .trim();
-
-
-        const rider = {
-
-            id:generateRiderId(),
-
-            name:name,
-
-            phone:phone,
-
-            whatsapp:whatsapp,
-
-            bikeType:bikeType,
-
-            bikeModel:bikeModel,
-
-            plate:plate,
-
-            status:"Available",
-
-            dateAdded:
-                new Date().toLocaleString()
-
-        };
-
-
-        const riders = getRiders();
-
-
-        riders.push(rider);
-
-
-        saveRiders(riders);
-
-
-        document
-        .getElementById("riderMessage")
-        .innerHTML = `
-
-            <p class="success">
-
-                ✅ Rider added successfully.
-
-                <br>
-
-                Rider ID:
-
-                <strong>
-                    ${rider.id}
-                </strong>
-
-            </p>
-
-        `;
-
-
-        document
-        .getElementById("riderForm")
-        .reset();
-
-
-        loadAdminDashboard();
-
-    }
-
-);
-
-
-/* =====================================================
-   LOAD RIDERS
-===================================================== */
-
-function loadRiders(){
-
-    const container =
-
-        document
-        .getElementById("ridersList");
-
-
-    const riders = getRiders();
-
-
-    if(riders.length === 0){
-
-        container.innerHTML = `
-
-            <p class="info">
-
-                No riders have been added yet.
-
-            </p>
-
-        `;
-
+    if(!location)
         return;
 
-    }
 
-
-    container.innerHTML = "";
-
-
-    riders.forEach(function(rider){
-
-        const div =
-
-            document.createElement("div");
-
-
-        div.className = "rider";
-
-
-        div.innerHTML = `
-
-            <h3>
-                🏍️ ${escapeHTML(rider.name)}
-            </h3>
-
-            <p>
-                <strong>Rider ID:</strong>
-                ${escapeHTML(rider.id)}
-            </p>
-
-            <p>
-                <strong>Phone:</strong>
-                ${escapeHTML(rider.phone)}
-            </p>
-
-            <p>
-                <strong>WhatsApp:</strong>
-                ${escapeHTML(rider.whatsapp)}
-            </p>
-
-            <p>
-                <strong>Motorcycle Type:</strong>
-                ${escapeHTML(rider.bikeType)}
-            </p>
-
-            <p>
-                <strong>Motorcycle Model:</strong>
-                ${escapeHTML(rider.bikeModel)}
-            </p>
-
-            <p>
-                <strong>Registration:</strong>
-                ${escapeHTML(rider.plate)}
-            </p>
-
-            <p>
-                <strong>Status:</strong>
-
-                <span class="status">
-
-                    ${escapeHTML(rider.status)}
-
-                </span>
-
-            </p>
-
-
-            <button
-                class="btn call"
-                onclick="callRider('${rider.phone}')">
-
-                📞 Call
-
-            </button>
-
-
-            <button
-                class="btn whatsapp"
-                onclick="whatsappRider('${rider.whatsapp}')">
-
-                💬 WhatsApp
-
-            </button>
-
-
-            <button
-                class="btn orange"
-                onclick="toggleRiderStatus('${rider.id}')">
-
-                🔄 Change Status
-
-            </button>
-
-
-            <button
-                class="btn danger"
-                onclick="deleteRider('${rider.id}')">
-
-                🗑️ Delete Rider
-
-            </button>
-
-        `;
-
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-/* =====================================================
-   CHANGE RIDER STATUS
-===================================================== */
-
-function toggleRiderStatus(id){
-
-    const riders = getRiders();
-
-
-    const rider =
-
-        riders.find(
-
-            r => r.id === id
-
-        );
-
-
-    if(!rider){
-
-        return;
-
-    }
-
-
-    if(rider.status === "Available"){
-
-        rider.status = "Busy";
-
-    }
-
-    else if(rider.status === "Busy"){
-
-        rider.status = "Offline";
-
-    }
-
-    else{
-
-        rider.status = "Available";
-
-    }
-
-
-    saveRiders(riders);
-
-
-    loadAdminDashboard();
-
-}
-
-
-/* =====================================================
-   DELETE RIDER
-===================================================== */
-
-function deleteRider(id){
-
-    if(
-
-        !confirm(
-
-            "Are you sure you want to delete this rider?"
-
-        )
-
-    ){
-
-        return;
-
-    }
-
-
-    let riders = getRiders();
-
-
-    riders = riders.filter(
-
-        rider => rider.id !== id
-
+    window.open(
+        WAZE_BASE +
+        encodeURIComponent(
+            location
+        ),
+        "_blank"
     );
 
-
-    saveRiders(riders);
-
-
-    loadAdminDashboard();
-
 }
 
 
-/* =====================================================
-   LOAD ADMIN DASHBOARD
-===================================================== */
-
-function loadAdminDashboard(){
-
-    loadRiders();
-
-    loadOrdersAdmin();
-
-    updateStatistics();
-
-}
-
-
-/* =====================================================
-   LOAD ADMIN ORDERS
-===================================================== */
-
-function loadOrdersAdmin(){
-
-    const container =
-
-        document
-        .getElementById("ordersList");
-
-
-    const orders = getOrders();
-
-
-    if(orders.length === 0){
-
-        container.innerHTML = `
-
-            <p class="info">
-
-                No delivery requests yet.
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    orders
-    .slice()
-    .reverse()
-    .forEach(function(order){
-
-        const div =
-
-            document.createElement("div");
-
-
-        div.className = "order";
-
-
-        let assignedRider = "Not assigned";
-
-
-        if(order.riderName){
-
-            assignedRider =
-                order.riderName;
-
-        }
-
-
-        div.innerHTML = `
-
-            <h3>
-
-                📦
-                ${escapeHTML(order.id)}
-
-            </h3>
-
-
-            <p>
-
-                <strong>
-                    Customer:
-                </strong>
-
-                ${escapeHTML(order.name)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Phone:
-                </strong>
-
-                ${escapeHTML(order.phone)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Pickup:
-                </strong>
-
-                ${escapeHTML(order.pickup)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Destination:
-                </strong>
-
-                ${escapeHTML(order.destination)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Item:
-                </strong>
-
-                ${escapeHTML(order.item)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Status:
-                </strong>
-
-                <span class="status">
-
-                    ${escapeHTML(order.status)}
-
-                </span>
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Rider:
-                </strong>
-
-                ${escapeHTML(assignedRider)}
-
-            </p>
-
-
-            <p class="small">
-
-                Submitted:
-                ${escapeHTML(order.date)}
-
-            </p>
-
-
-            <div class="order-actions">
-
-
-                <button
-                    class="btn"
-                    onclick="updateOrderStatus(
-                        '${order.id}',
-                        'Accepted'
-                    )">
-
-                    ✅ Accept
-
-                </button>
-
-
-                <button
-                    class="btn"
-                    onclick="updateOrderStatus(
-                        '${order.id}',
-                        'Picked Up'
-                    )">
-
-                    📦 Picked Up
-
-                </button>
-
-
-                <button
-                    class="btn"
-                    onclick="updateOrderStatus(
-                        '${order.id}',
-                        'Out for Delivery'
-                    )">
-
-                    🚚 Out for Delivery
-
-                </button>
-
-
-                <button
-                    class="btn"
-                    onclick="updateOrderStatus(
-                        '${order.id}',
-                        'Delivered'
-                    )">
-
-                    ✅ Delivered
-
-                </button>
-
-
-                <button
-                    class="btn danger"
-                    onclick="deleteOrder(
-                        '${order.id}'
-                    )">
-
-                    🗑️ Delete
-
-                </button>
-
-            </div>
-
-
-            <label>
-
-                Assign Rider
-
-            </label>
-
-
-            <select
-                onchange="assignRider(
-                    '${order.id}',
-                    this.value
-                )">
-
-                <option value="">
-
-                    Select Rider
-
-                </option>
-
-                ${getRiderOptions(order.riderId)}
-
-            </select>
-
-
-            ${
-                order.riderId
-
-                ?
-
-                `
-
-                <button
-                    class="btn whatsapp"
-                    onclick="contactAssignedRider(
-                        '${order.id}'
-                    )">
-
-                    💬 Contact Rider
-
-                </button>
-
-                `
-
-                :
-
-                ""
-
-            }
-
-        `;
-
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-/* =====================================================
-   RIDER OPTIONS
-===================================================== */
-
-function getRiderOptions(selectedId){
-
-    const riders = getRiders();
-
-
-    return riders.map(function(rider){
-
-        const selected =
-
-            rider.id === selectedId
-
-            ?
-
-            "selected"
-
-            :
-
-            "";
-
-
-        return `
-
-            <option
-                value="${escapeHTML(rider.id)}"
-                ${selected}>
-
-                ${escapeHTML(rider.name)}
-                -
-                ${escapeHTML(rider.bikeModel)}
-                -
-                ${escapeHTML(rider.plate)}
-
-            </option>
-
-        `;
-
-    }).join("");
-
-}
-
-
-/* =====================================================
-   ASSIGN RIDER
-===================================================== */
-
-function assignRider(orderId,riderId){
-
-    const orders = getOrders();
-
-    const riders = getRiders();
-
-
-    const order =
-
-        orders.find(
-
-            o => o.id === orderId
-
+/* ==========================================================
+   PHONE / WHATSAPP
+========================================================== */
+
+function normalizePhone(phone){
+
+    let n =
+        String(phone)
+        .replace(
+            /\D/g,
+            ""
         );
 
 
-    const rider =
+    if(
+        n.startsWith("254")
+    ){
 
-        riders.find(
+        return n;
 
-            r => r.id === riderId
+    }
 
+
+    if(
+        n.startsWith("0")
+    ){
+
+        return (
+            "254" +
+            n.substring(1)
         );
 
-
-    if(!order){
-
-        return;
-
     }
 
 
-    if(!riderId){
+    return n;
 
-        order.riderId = "";
-
-        order.riderName = "";
-
-        order.status = "Accepted";
+}
 
 
-        saveOrders(orders);
+function callNumber(phone){
 
-        loadAdminDashboard();
+    window.location.href =
+        "tel:+" +
+        normalizePhone(phone);
 
-        return;
-
-    }
-
-
-    if(!rider){
-
-        return;
-
-    }
+}
 
 
-    order.riderId = rider.id;
+function whatsappNumber(
+    phone,
+    message
+){
 
-    order.riderName = rider.name;
-
-    order.status = "Rider Assigned";
-
-
-    /*
-       Rider becomes busy.
-    */
-
-    rider.status = "Busy";
-
-
-    saveOrders(orders);
-
-    saveRiders(riders);
-
-
-    loadAdminDashboard();
-
-
-    /*
-       Notify rider through WhatsApp.
-    */
-
-    const message =
-
-`AMIR CHAP CHAP DELIVERY
-
-Hello ${rider.name}.
-
-You have been assigned delivery order ${order.id}.
-
-Pickup:
-${order.pickup}
-
-Destination:
-${order.destination}
-
-Customer:
-${order.name}
-
-Customer Phone:
-${order.phone}`;
-
-
-    const url =
+    window.open(
 
         "https://wa.me/" +
-
-        cleanKenyanNumber(
-            rider.whatsapp
+        normalizePhone(
+            phone
         ) +
 
         "?text=" +
 
-        encodeURIComponent(message);
+        encodeURIComponent(
+            message
+        ),
 
-
-    window.open(
-        url,
         "_blank"
-    );
-
-}
-
-
-/* =====================================================
-   UPDATE ORDER STATUS
-===================================================== */
-
-function updateOrderStatus(id,status){
-
-    const orders = getOrders();
-
-
-    const order =
-
-        orders.find(
-
-            o => o.id === id
-
-        );
-
-
-    if(!order){
-
-        return;
-
-    }
-
-
-    order.status = status;
-
-
-    if(status === "Delivered"){
-
-        order.deliveredAt =
-            new Date().toLocaleString();
-
-
-        /*
-           Make rider available again.
-        */
-
-        if(order.riderId){
-
-            const riders = getRiders();
-
-
-            const rider =
-
-                riders.find(
-
-                    r =>
-                    r.id === order.riderId
-
-                );
-
-
-            if(rider){
-
-                rider.status =
-                    "Available";
-
-                saveRiders(riders);
-
-            }
-
-        }
-
-    }
-
-
-    saveOrders(orders);
-
-
-    loadAdminDashboard();
-
-}
-
-
-/* =====================================================
-   DELETE ORDER
-===================================================== */
-
-function deleteOrder(id){
-
-    if(
-
-        !confirm(
-
-            "Delete this delivery request?"
-
-        )
-
-    ){
-
-        return;
-
-    }
-
-
-    let orders = getOrders();
-
-
-    orders = orders.filter(
-
-        order => order.id !== id
 
     );
 
-
-    saveOrders(orders);
-
-
-    loadAdminDashboard();
-
 }
 
 
-/* =====================================================
-   RIDER LOGIN
-===================================================== */
+function callBookingRider(
+    bookingId
+){
 
-function riderLogin(){
-
-    const id =
-
-        document
-        .getElementById("riderLoginId")
-        .value
-        .trim()
-        .toUpperCase();
-
-
-    const phone =
-
-        document
-        .getElementById("riderLoginPhone")
-        .value
-        .trim();
-
-
-    const message =
-
-        document
-        .getElementById(
-            "riderLoginMessage"
+    const booking =
+        getBookings().find(
+            b =>
+            b.id ===
+            bookingId
         );
 
 
-    const riders = getRiders();
+    if(!booking)
+        return;
 
 
     const rider =
-
-        riders.find(function(r){
-
-            return (
-
-                r.id.toUpperCase() === id &&
-
-                normalizePhone(r.phone) ===
-                normalizePhone(phone)
-
-            );
-
-        });
-
-
-    if(!rider){
-
-        message.innerHTML = `
-
-            <p class="error">
-
-                ❌ Rider ID or phone number is incorrect.
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    currentRider = rider;
-
-
-    document
-    .getElementById("riderLogin")
-    .classList
-    .add("hidden");
-
-
-    document
-    .getElementById("riderDashboard")
-    .classList
-    .remove("hidden");
-
-
-    loadRiderDashboard();
-
-}
-
-
-/* =====================================================
-   RIDER DASHBOARD
-===================================================== */
-
-function loadRiderDashboard(){
-
-    if(!currentRider){
-
-        return;
-
-    }
-
-
-    /*
-       Refresh rider data.
-    */
-
-    const riders = getRiders();
-
-
-    const freshRider =
-
-        riders.find(
-
+        getRiders().find(
             r =>
-            r.id === currentRider.id
-
+            r.id ===
+            booking.riderId
         );
 
 
-    if(freshRider){
-
-        currentRider =
-            freshRider;
-
-    }
+    if(!rider)
+        return;
 
 
-    document
-    .getElementById("riderInformation")
-    .innerHTML = `
-
-        <p>
-
-            <strong>
-                Rider ID:
-            </strong>
-
-            ${escapeHTML(
-                currentRider.id
-            )}
-
-        </p>
-
-
-        <p>
-
-            <strong>
-                Name:
-            </strong>
-
-            ${escapeHTML(
-                currentRider.name
-            )}
-
-        </p>
-
-
-        <p>
-
-            <strong>
-                Motorcycle:
-            </strong>
-
-            ${escapeHTML(
-                currentRider.bikeType
-            )}
-
-        </p>
-
-
-        <p>
-
-            <strong>
-                Model:
-            </strong>
-
-            ${escapeHTML(
-                currentRider.bikeModel
-            )}
-
-        </p>
-
-
-        <p>
-
-            <strong>
-                Plate:
-            </strong>
-
-            ${escapeHTML(
-                currentRider.plate
-            )}
-
-        </p>
-
-
-        <p>
-
-            <strong>
-                Status:
-            </strong>
-
-            ${escapeHTML(
-                currentRider.status
-            )}
-
-        </p>
-
-    `;
-
-
-    loadRiderOrders();
+    callNumber(
+        rider.phone
+    );
 
 }
 
 
-/* =====================================================
-   RIDER ORDERS
-===================================================== */
+function contactBookingRider(
+    bookingId
+){
 
-function loadRiderOrders(){
-
-    const container =
-
-        document
-        .getElementById(
-            "riderOrders"
+    const booking =
+        getBookings().find(
+            b =>
+            b.id ===
+            bookingId
         );
 
 
-    const orders = getOrders();
-
-
-    const myOrders =
-
-        orders.filter(
-
-            order =>
-
-            order.riderId ===
-            currentRider.id
-
-        );
-
-
-    if(myOrders.length === 0){
-
-        container.innerHTML = `
-
-            <p class="info">
-
-                You currently have no assigned deliveries.
-
-            </p>
-
-        `;
-
+    if(!booking)
         return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    myOrders
-    .slice()
-    .reverse()
-    .forEach(function(order){
-
-        const div =
-
-            document.createElement("div");
-
-
-        div.className = "order";
-
-
-        div.innerHTML = `
-
-            <h3>
-
-                📦
-                ${escapeHTML(order.id)}
-
-            </h3>
-
-
-            <p>
-
-                <strong>
-                    Customer:
-                </strong>
-
-                ${escapeHTML(order.name)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Customer Phone:
-                </strong>
-
-                ${escapeHTML(order.phone)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Pickup:
-                </strong>
-
-                ${escapeHTML(order.pickup)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Destination:
-                </strong>
-
-                ${escapeHTML(order.destination)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Item:
-                </strong>
-
-                ${escapeHTML(order.item)}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    Status:
-                </strong>
-
-                <span class="status">
-
-                    ${escapeHTML(
-                        order.status
-                    )}
-
-                </span>
-
-            </p>
-
-
-            <button
-                class="btn call"
-                onclick="callCustomer(
-                    '${order.phone}'
-                )">
-
-                📞 Call Customer
-
-            </button>
-
-
-            <button
-                class="btn whatsapp"
-                onclick="whatsappCustomer(
-                    '${order.phone}',
-                    '${order.id}'
-                )">
-
-                💬 WhatsApp Customer
-
-            </button>
-
-
-            <br>
-
-
-            ${
-                order.status !==
-                "Delivered"
-
-                ?
-
-                `
-
-                <button
-                    class="btn"
-                    onclick="riderUpdateOrder(
-                        '${order.id}',
-                        'Picked Up'
-                    )">
-
-                    📦 I Picked Up
-
-                </button>
-
-
-                <button
-                    class="btn orange"
-                    onclick="riderUpdateOrder(
-                        '${order.id}',
-                        'Out for Delivery'
-                    )">
-
-                    🚚 Out for Delivery
-
-                </button>
-
-
-                <button
-                    class="btn green"
-                    onclick="riderConfirmDelivery(
-                        '${order.id}'
-                    )">
-
-                    ✅ I Delivered Successfully
-
-                </button>
-
-                `
-
-                :
-
-                `
-
-                <p class="success">
-
-                    ✅ Delivery Successfully Completed
-
-                    <br>
-
-                    ${escapeHTML(
-                        order.deliveredAt
-                    )}
-
-                </p>
-
-                `
-
-            }
-
-        `;
-
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-/* =====================================================
-   RIDER UPDATE ORDER
-===================================================== */
-
-function riderUpdateOrder(id,status){
-
-    const orders = getOrders();
-
-
-    const order =
-
-        orders.find(
-
-            o => o.id === id
-
-        );
-
-
-    if(!order){
-
-        return;
-
-    }
-
-
-    order.status = status;
-
-
-    saveOrders(orders);
-
-
-    loadRiderDashboard();
-
-}
-
-
-/* =====================================================
-   RIDER CONFIRM DELIVERY
-===================================================== */
-
-function riderConfirmDelivery(id){
-
-    if(
-
-        !confirm(
-
-            "Confirm that this package has been delivered successfully?"
-
-        )
-
-    ){
-
-        return;
-
-    }
-
-
-    const orders = getOrders();
-
-
-    const order =
-
-        orders.find(
-
-            o => o.id === id
-
-        );
-
-
-    if(!order){
-
-        return;
-
-    }
-
-
-    order.status = "Delivered";
-
-
-    order.deliveredAt =
-
-        new Date().toLocaleString();
-
-
-    /*
-       Make rider available again.
-    */
-
-    const riders = getRiders();
 
 
     const rider =
-
-        riders.find(
-
+        getRiders().find(
             r =>
-            r.id === currentRider.id
-
+            r.id ===
+            booking.riderId
         );
 
 
-    if(rider){
-
-        rider.status = "Available";
-
-    }
-
-
-    saveOrders(orders);
-
-    saveRiders(riders);
-
-
-    /*
-       Refresh dashboard.
-    */
-
-    loadRiderDashboard();
-
-
-    alert(
-
-        "✅ Delivery successfully acknowledged."
-
-    );
-
-}
-
-
-/* =====================================================
-   RIDER LOGOUT
-===================================================== */
-
-function riderLogout(){
-
-    currentRider = null;
-
-
-    document
-    .getElementById(
-        "riderDashboard"
-    )
-    .classList
-    .add("hidden");
-
-
-    document
-    .getElementById(
-        "riderLoginId"
-    )
-    .value = "";
-
-
-    document
-    .getElementById(
-        "riderLoginPhone"
-    )
-    .value = "";
-
-
-    showSection("home");
-
-}
-
-
-/* =====================================================
-   CALL RIDER
-===================================================== */
-
-function callRider(phone){
-
-    const number =
-
-        cleanKenyanNumber(phone);
-
-
-    window.location.href =
-        "tel:+" + number;
-
-}
-
-
-/* =====================================================
-   WHATSAPP RIDER
-===================================================== */
-
-function whatsappRider(phone){
-
-    const number =
-
-        cleanKenyanNumber(phone);
-
-
-    const message =
-
-        "Hello from Amir Chap Chap. I would like to follow up on my delivery.";
-
-
-    window.open(
-
-        "https://wa.me/" +
-
-        number +
-
-        "?text=" +
-
-        encodeURIComponent(message),
-
-        "_blank"
-
-    );
-
-}
-
-
-/* =====================================================
-   CALL CUSTOMER
-===================================================== */
-
-function callCustomer(phone){
-
-    const number =
-
-        cleanKenyanNumber(phone);
-
-
-    window.location.href =
-
-        "tel:+" + number;
-
-}
-
-
-/* =====================================================
-   WHATSAPP CUSTOMER
-===================================================== */
-
-function whatsappCustomer(phone,id){
-
-    const number =
-
-        cleanKenyanNumber(phone);
-
-
-    const message =
-
-`Hello from Amir Chap Chap.
-
-This is your rider regarding delivery order ${id}.`;
-
-
-    window.open(
-
-        "https://wa.me/" +
-
-        number +
-
-        "?text=" +
-
-        encodeURIComponent(message),
-
-        "_blank"
-
-    );
-
-}
-
-
-/* =====================================================
-   CONTACT ASSIGNED RIDER
-===================================================== */
-
-function contactAssignedRider(orderId){
-
-    const orders = getOrders();
-
-
-    const order =
-
-        orders.find(
-
-            o => o.id === orderId
-
-        );
-
-
-    if(!order){
-
+    if(!rider)
         return;
 
-    }
 
+    whatsappNumber(
 
-    const riders = getRiders();
+        rider.whatsapp,
 
-
-    const rider =
-
-        riders.find(
-
-            r =>
-            r.id === order.riderId
-
-        );
-
-
-    if(!rider){
-
-        return;
-
-    }
-
-
-    whatsappRider(rider.whatsapp);
-
-}
-
-
-/* =====================================================
-   CUSTOMER CARE CALL
-===================================================== */
-
-function callCustomerCare(){
-
-    window.location.href =
-
-        "tel:+254795653284";
-
-}
-
-
-/* =====================================================
-   CUSTOMER CARE WHATSAPP
-===================================================== */
-
-function whatsappCustomerCare(){
-
-    const message =
-
-        "Hello Amir Chap Chap Customer Care, I need assistance with my delivery.";
-
-
-    window.open(
-
-        "https://wa.me/254795653284?text=" +
-
-        encodeURIComponent(message),
-
-        "_blank"
+        "Hello, this is Amir Chap Chap regarding booking " +
+        booking.id
 
     );
 
 }
 
 
-/* =====================================================
-   PHONE NORMALIZATION
-===================================================== */
-
-function normalizePhone(phone){
-
-    let number =
-
-        String(phone)
-        .replace(/\D/g,"");
-
-
-    if(number.startsWith("254")){
-
-        return number;
-
-    }
-
-
-    if(number.startsWith("0")){
-
-        return "254" +
-            number.substring(1);
-
-    }
-
-
-    return number;
-
-}
-
-
-function cleanKenyanNumber(phone){
-
-    return normalizePhone(phone);
-
-}
-
-
-/* =====================================================
-   HTML SECURITY
-===================================================== */
+/* ==========================================================
+   SECURITY / DISPLAY
+========================================================== */
 
 function escapeHTML(value){
 
     if(
-
-        value === undefined ||
-
-        value === null
-
+        value === null ||
+        value === undefined
     ){
 
         return "";
@@ -3870,168 +6372,82 @@ function escapeHTML(value){
 
     return String(value)
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+    .replace(
+        /</g,
+        "&lt;"
+    )
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+    .replace(
+        />/g,
+        "&gt;"
+    )
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
 
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
 
-/* =====================================================
-   DASHBOARD STATISTICS
-===================================================== */
+/* ==========================================================
+   AUTO REFRESH
+========================================================== */
 
-function updateStatistics(){
-
-    const orders = getOrders();
-
-
-    const total =
-        orders.length;
-
-
-    const pending =
-
-        orders.filter(
-
-            order =>
-            order.status ===
-            "Pending"
-
-        ).length;
-
-
-    const active =
-
-        orders.filter(
-
-            order =>
-
-            order.status !==
-            "Pending" &&
-
-            order.status !==
-            "Delivered" &&
-
-            order.status !==
-            "Cancelled"
-
-        ).length;
-
-
-    const completed =
-
-        orders.filter(
-
-            order =>
-            order.status ===
-            "Delivered"
-
-        ).length;
-
-
-    document
-    .getElementById(
-        "totalOrders"
-    )
-    .textContent = total;
-
-
-    document
-    .getElementById(
-        "pendingOrders"
-    )
-    .textContent = pending;
-
-
-    document
-    .getElementById(
-        "activeOrders"
-    )
-    .textContent = active;
-
-
-    document
-    .getElementById(
-        "completedOrders"
-    )
-    .textContent = completed;
-
-}
-
-
-/* =====================================================
-   START WEBSITE
-===================================================== */
-
-showSection("home");
-
-
-/*
-   Refresh dashboard periodically
-   while page is open.
-*/
-
-setInterval(function(){
+setInterval(
+function(){
 
     if(
-
-        !document
-        .getElementById(
-            "adminPanel"
-        )
-        .classList
-        .contains("hidden")
-
-    ){
-
-        loadAdminDashboard();
-
-    }
-
-
-    if(
-
         currentRider &&
-
         !document
         .getElementById(
             "riderDashboard"
         )
         .classList
         .contains("hidden")
-
     ){
 
         loadRiderDashboard();
 
     }
 
-},5000);
+
+    if(
+        !document
+        .getElementById(
+            "moderatorPanel"
+        )
+        .classList
+        .contains("hidden")
+    ){
+
+        loadModerator();
+
+    }
+
+},
+5000);
+
+
+/* ==========================================================
+   START
+========================================================== */
+
+loadHomeOffers();
+
+showSection("home");
 
 </script>
 
 </body>
-
 </html>
