@@ -7,7 +7,6 @@
 <title>Amir Chap Chap</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -35,8 +34,8 @@ header{
     max-width:1100px;
     margin:auto;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     gap:10px;
 }
 
@@ -56,15 +55,11 @@ header{
 }
 
 button{
-    border:none;
+    border:0;
     border-radius:9px;
     padding:11px 15px;
     cursor:pointer;
     font-weight:bold;
-}
-
-button:active{
-    transform:scale(.98);
 }
 
 .btn-primary{
@@ -127,7 +122,7 @@ button:active{
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:15px;
 }
 
@@ -140,7 +135,6 @@ textarea{
     border-radius:9px;
     margin:6px 0 12px;
     font-size:15px;
-    background:white;
 }
 
 textarea{
@@ -229,13 +223,18 @@ label{
     margin:12px 0;
 }
 
+.order p{
+    margin:7px 0;
+    line-height:1.4;
+}
+
 .order-row{
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:10px;
-    margin:7px 0;
     flex-wrap:wrap;
+    margin-bottom:10px;
 }
 
 .fare{
@@ -302,17 +301,6 @@ label{
     justify-content:center;
 }
 
-.rating{
-    margin-top:8px;
-}
-
-.rating button{
-    font-size:25px;
-    background:transparent;
-    padding:3px;
-    color:#ffb400;
-}
-
 .action-row{
     display:flex;
     gap:8px;
@@ -320,8 +308,15 @@ label{
     margin-top:12px;
 }
 
+.rating button{
+    background:transparent;
+    color:#ffb400;
+    font-size:25px;
+    padding:3px;
+}
+
 hr{
-    border:none;
+    border:0;
     border-top:1px solid #e0e6e2;
     margin:20px 0;
 }
@@ -343,8 +338,12 @@ footer a{
     line-height:1.6;
 }
 
-@media(max-width:600px){
+.loading{
+    text-align:center;
+    padding:20px;
+}
 
+@media(max-width:600px){
     .header-inner{
         align-items:flex-start;
     }
@@ -365,16 +364,13 @@ footer a{
     .container{
         padding:14px;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
 <div class="header-inner">
 
 <div class="logo">
@@ -383,37 +379,27 @@ AMIR <span>CHAP CHAP</span>
 
 <div class="header-actions">
 
-<button
-class="btn-light"
-onclick="showCustomer()">
+<button class="btn-light" onclick="showCustomer()">
 Customer
 </button>
 
-<button
-class="btn-yellow"
-onclick="openRiderLogin()">
+<button class="btn-yellow" onclick="openRiderLogin()">
 Rider
 </button>
 
-<button
-class="btn-light"
-onclick="openModeratorLogin()">
+<button class="btn-light" onclick="openModeratorLogin()">
 Moderator
 </button>
 
 </div>
-
 </div>
-
 </header>
 
 
 <main class="container">
 
 
-<!-- =====================================================
-HOME
-===================================================== -->
+<!-- HOME -->
 
 <section id="homeSection">
 
@@ -428,18 +414,14 @@ Book a rider, send your package or request passenger transport.
 
 <br>
 
-<button
-class="btn-yellow"
-onclick="showCustomer()">
-Book Now
+<button class="btn-yellow" onclick="showCustomer()">
+🚀 Book Now
 </button>
 
 <a href="tel:0795653284">
-
 <button class="btn-light">
 📞 Customer Care
 </button>
-
 </a>
 
 </div>
@@ -448,48 +430,23 @@ Book Now
 <div class="grid">
 
 <div class="card">
-
 <h3>🛵 Delivery</h3>
-
-<p>
-Send packages quickly and conveniently.
-</p>
-
+<p>Send packages quickly and conveniently.</p>
 </div>
 
-
 <div class="card">
-
 <h3>👤 Passenger Transport</h3>
-
-<p>
-Request a rider for passenger transportation.
-</p>
-
+<p>Request a rider for passenger transportation.</p>
 </div>
 
-
 <div class="card">
-
 <h3>🎁 Rewards</h3>
-
-<p>
-Eligible customers can earn points and use them
-for eligible payments.
-</p>
-
+<p>Eligible customers can earn points and use them for eligible payments.</p>
 </div>
 
-
 <div class="card">
-
-<h3>📍 Waze Navigation</h3>
-
-<p>
-Customer and rider can optionally use Waze
-to assist with navigation.
-</p>
-
+<h3>📍 Waze</h3>
+<p>Customers and riders can optionally use Waze for navigation.</p>
 </div>
 
 </div>
@@ -498,42 +455,32 @@ to assist with navigation.
 
 
 
-<!-- =====================================================
-CUSTOMER SECTION
-===================================================== -->
+<!-- CUSTOMER -->
 
-<section
-id="customerSection"
-class="hidden">
-
+<section id="customerSection" class="hidden">
 
 <div class="nav">
 
-<button
-class="active"
-onclick="customerTab('book',this)">
+<button class="active" onclick="customerTab('book',this)">
 Book
 </button>
 
-<button
-onclick="customerTab('orders',this)">
+<button onclick="customerTab('orders',this)">
 My Bookings
 </button>
 
-<button
-onclick="customerTab('points',this)">
+<button onclick="customerTab('points',this)">
 My Points
 </button>
 
-<button
-onclick="customerTab('offers',this)">
+<button onclick="customerTab('offers',this)">
 Offers
 </button>
 
 </div>
 
 
-<!-- CUSTOMER BOOK -->
+<!-- BOOK -->
 
 <div id="customerBook">
 
@@ -542,24 +489,14 @@ Offers
 <h2>Book Amir Chap Chap</h2>
 
 <label>Your Name</label>
-
-<input
-id="customerName"
-placeholder="Enter your full name">
-
+<input id="customerName" placeholder="Enter your full name">
 
 <label>Phone Number</label>
-
-<input
-id="customerPhone"
-placeholder="07XXXXXXXX"
-type="tel">
-
+<input id="customerPhone" placeholder="07XXXXXXXX" type="tel">
 
 <label>Service</label>
 
-<select
-id="serviceType">
+<select id="serviceType">
 
 <option value="delivery">
 📦 Package Delivery
@@ -571,26 +508,15 @@ id="serviceType">
 
 </select>
 
-
 <label>Pickup Location</label>
-
-<input
-id="pickup"
-placeholder="Example: Lenana">
-
+<input id="pickup" placeholder="Example: Lenana">
 
 <label>Destination</label>
-
-<input
-id="destination"
-placeholder="Example: Naivas">
-
+<input id="destination" placeholder="Example: Naivas">
 
 <label>Fare Method</label>
 
-<select
-id="fareMethod"
-onchange="calculateFare()">
+<select id="fareMethod" onchange="calculateFare()">
 
 <option value="route">
 Managed Route Fare
@@ -603,13 +529,9 @@ KSh 45 Per Kilometre
 </select>
 
 
-<div
-id="kmBox"
-class="hidden">
+<div id="kmBox" class="hidden">
 
-<label>
-Distance in Kilometres
-</label>
+<label>Distance in Kilometres</label>
 
 <input
 id="distanceKm"
@@ -622,15 +544,11 @@ oninput="calculateFare()">
 </div>
 
 
-<div
-class="card"
-style="background:#f1faf4">
+<div class="card" style="background:#f1faf4">
 
 <h3>Automatic Fare</h3>
 
-<div
-id="fareDisplay"
-class="fare">
+<div id="fareDisplay" class="fare">
 Enter locations
 </div>
 
@@ -644,20 +562,13 @@ Kilometre pricing is KSh 45 per kilometre.
 
 <label>Payment Method</label>
 
-<select
-id="paymentMethod">
+<select id="paymentMethod">
 
-<option value="cash">
-Cash
-</option>
+<option value="cash">Cash</option>
 
-<option value="mpesa">
-M-Pesa
-</option>
+<option value="mpesa">M-Pesa</option>
 
-<option value="points">
-Pay With Points
-</option>
+<option value="points">Pay With Points</option>
 
 </select>
 
@@ -667,13 +578,10 @@ Pay With Points
 <textarea
 id="instructions"
 rows="3"
-placeholder="Optional instructions">
-</textarea>
+placeholder="Optional instructions"></textarea>
 
 
-<button
-class="btn-primary"
-onclick="placeOrder()">
+<button class="btn-primary" onclick="placeOrder()">
 🚀 Place Booking
 </button>
 
@@ -682,18 +590,16 @@ onclick="placeOrder()">
 </div>
 
 
+<!-- CUSTOMER BOOKINGS -->
 
-<!-- CUSTOMER ORDERS -->
-
-<div
-id="customerOrders"
-class="hidden">
+<div id="customerOrders" class="hidden">
 
 <div class="card">
 
 <h2>My Bookings</h2>
 
 <div id="customerOrderList">
+Loading...
 </div>
 
 </div>
@@ -701,12 +607,9 @@ class="hidden">
 </div>
 
 
+<!-- POINTS -->
 
-<!-- CUSTOMER POINTS -->
-
-<div
-id="customerPoints"
-class="hidden">
+<div id="customerPoints" class="hidden">
 
 <div class="card">
 
@@ -725,15 +628,8 @@ Available Points
 <br>
 
 <p>
-Points can be awarded to eligible customers
-according to the Amir Chap Chap rewards policy.
-</p>
-
-<br>
-
-<p class="small">
-When points are available for redemption,
-the customer can select "Pay With Points".
+Points can be awarded to eligible customers according
+to the Amir Chap Chap rewards policy.
 </p>
 
 </div>
@@ -741,18 +637,16 @@ the customer can select "Pay With Points".
 </div>
 
 
+<!-- OFFERS -->
 
-<!-- CUSTOMER OFFERS -->
-
-<div
-id="customerOffers"
-class="hidden">
+<div id="customerOffers" class="hidden">
 
 <div class="card">
 
 <h2>🎁 Customer Offers</h2>
 
 <div id="offersList">
+Loading...
 </div>
 
 </div>
@@ -763,13 +657,9 @@ class="hidden">
 
 
 
-<!-- =====================================================
-RIDER LOGIN
-===================================================== -->
+<!-- RIDER LOGIN -->
 
-<section
-id="riderLoginSection"
-class="hidden">
+<section id="riderLoginSection" class="hidden">
 
 <div class="card">
 
@@ -788,14 +678,11 @@ id="riderLoginId"
 placeholder="Example: ACC-4821"
 autocomplete="off">
 
-<button
-class="btn-primary"
-onclick="riderLogin()">
+<button class="btn-primary" onclick="riderLogin()">
 Sign In
 </button>
 
-<div id="riderLoginMessage">
-</div>
+<div id="riderLoginMessage"></div>
 
 </div>
 
@@ -803,50 +690,37 @@ Sign In
 
 
 
-<!-- =====================================================
-RIDER PORTAL
-===================================================== -->
+<!-- RIDER PORTAL -->
 
-<section
-id="riderPortalSection"
-class="hidden">
-
+<section id="riderPortalSection" class="hidden">
 
 <div class="nav">
 
-<button
-class="active"
-onclick="riderTab('dashboard',this)">
+<button class="active" onclick="riderTab('dashboard',this)">
 Dashboard
 </button>
 
-<button
-onclick="riderTab('jobs',this)">
+<button onclick="riderTab('jobs',this)">
 Jobs
 </button>
 
-<button
-onclick="riderTab('profile',this)">
+<button onclick="riderTab('profile',this)">
 My Details
 </button>
 
-<button
-class="notification-bell"
+<button class="notification-bell"
 onclick="riderTab('notifications',this)">
 
 🔔 Notifications
 
-<span
-id="riderNotificationCount"
+<span id="riderNotificationCount"
 class="notification-count hidden">
 0
 </span>
 
 </button>
 
-<button
-class="btn-danger"
-onclick="riderLogout()">
+<button class="btn-danger" onclick="riderLogout()">
 Logout
 </button>
 
@@ -861,41 +735,24 @@ Logout
 
 <h2>
 Welcome,
-<span id="riderWelcome">
-</span>
+<span id="riderWelcome"></span>
 </h2>
 
 <div class="grid">
 
 <div class="stat">
-
 Rider ID
-
-<strong id="riderDashId">
-</strong>
-
+<strong id="riderDashId"></strong>
 </div>
 
-
 <div class="stat">
-
 Assigned Jobs
-
-<strong id="riderJobCount">
-0
-</strong>
-
+<strong id="riderJobCount">0</strong>
 </div>
 
-
 <div class="stat">
-
 Completed
-
-<strong id="riderCompletedCount">
-0
-</strong>
-
+<strong id="riderCompletedCount">0</strong>
 </div>
 
 </div>
@@ -916,31 +773,26 @@ No assigned jobs yet.
 </div>
 
 
-
 <!-- RIDER JOBS -->
 
-<div
-id="riderJobs"
-class="hidden">
+<div id="riderJobs" class="hidden">
 
 <div class="card">
 
 <h2>📦 Assigned Jobs</h2>
 
 <div id="riderJobList">
+Loading...
 </div>
 
 </div>
 
 </div>
-
 
 
 <!-- RIDER PROFILE -->
 
-<div
-id="riderProfile"
-class="hidden">
+<div id="riderProfile" class="hidden">
 
 <div class="card">
 
@@ -998,12 +850,9 @@ class="hidden">
 </div>
 
 
-
 <!-- RIDER NOTIFICATIONS -->
 
-<div
-id="riderNotifications"
-class="hidden">
+<div id="riderNotifications" class="hidden">
 
 <div class="card">
 
@@ -1021,41 +870,30 @@ No notifications.
 
 
 
-<!-- =====================================================
-MODERATOR LOGIN
-===================================================== -->
+<!-- MODERATOR LOGIN -->
 
-<section
-id="moderatorLoginSection"
-class="hidden">
+<section id="moderatorLoginSection" class="hidden">
 
 <div class="card">
 
 <h2>🔐 Moderator Portal</h2>
 
-<p>
-Moderator access is restricted.
-</p>
+<p>Moderator access is restricted.</p>
 
 <br>
 
-<label>
-Moderator Password
-</label>
+<label>Moderator Password</label>
 
 <input
 id="adminPassword"
 type="password"
 placeholder="Enter moderator password">
 
-<button
-class="btn-primary"
-onclick="adminLogin()">
+<button class="btn-primary" onclick="adminLogin()">
 Sign In
 </button>
 
-<div id="loginMessage">
-</div>
+<div id="loginMessage"></div>
 
 </div>
 
@@ -1063,50 +901,38 @@ Sign In
 
 
 
-<!-- =====================================================
-MODERATOR PORTAL
-===================================================== -->
+<!-- MODERATOR PORTAL -->
 
-<section
-id="moderatorPortalSection"
-class="hidden">
-
+<section id="moderatorPortalSection" class="hidden">
 
 <div class="nav">
 
-<button
-class="active"
+<button class="active"
 onclick="moderatorTab('dashboard',this)">
 Dashboard
 </button>
 
-<button
-onclick="moderatorTab('orders',this)">
+<button onclick="moderatorTab('orders',this)">
 Orders
 </button>
 
-<button
-onclick="moderatorTab('riders',this)">
+<button onclick="moderatorTab('riders',this)">
 Riders
 </button>
 
-<button
-onclick="moderatorTab('createRider',this)">
+<button onclick="moderatorTab('createRider',this)">
 Add Rider
 </button>
 
-<button
-onclick="moderatorTab('offers',this)">
+<button onclick="moderatorTab('offers',this)">
 Offers
 </button>
 
-<button
-onclick="moderatorTab('terms',this)">
+<button onclick="moderatorTab('terms',this)">
 Terms
 </button>
 
-<button
-class="btn-danger"
+<button class="btn-danger"
 onclick="moderatorLogout()">
 Logout
 </button>
@@ -1114,8 +940,7 @@ Logout
 </div>
 
 
-
-<!-- MODERATOR DASHBOARD -->
+<!-- DASHBOARD -->
 
 <div id="moderatorDashboard">
 
@@ -1126,46 +951,23 @@ Logout
 <div class="grid">
 
 <div class="stat">
-
 Total Bookings
-
-<strong id="totalOrders">
-0
-</strong>
-
+<strong id="totalOrders">0</strong>
 </div>
 
-
 <div class="stat">
-
 Pending
-
-<strong id="pendingOrders">
-0
-</strong>
-
+<strong id="pendingOrders">0</strong>
 </div>
 
-
 <div class="stat">
-
 Riders
-
-<strong id="totalRiders">
-0
-</strong>
-
+<strong id="totalRiders">0</strong>
 </div>
-
 
 <div class="stat">
-
 Completed
-
-<strong id="completedOrders">
-0
-</strong>
-
+<strong id="completedOrders">0</strong>
 </div>
 
 </div>
@@ -1175,18 +977,16 @@ Completed
 </div>
 
 
+<!-- ORDERS -->
 
-<!-- MODERATOR ORDERS -->
-
-<div
-id="moderatorOrders"
-class="hidden">
+<div id="moderatorOrders" class="hidden">
 
 <div class="card">
 
 <h2>📋 Booking Management</h2>
 
 <div id="moderatorOrderList">
+Loading...
 </div>
 
 </div>
@@ -1194,23 +994,21 @@ class="hidden">
 </div>
 
 
+<!-- RIDERS -->
 
-<!-- MODERATOR RIDERS -->
-
-<div
-id="moderatorRiders"
-class="hidden">
+<div id="moderatorRiders" class="hidden">
 
 <div class="card">
 
 <h2>🛵 Registered Riders</h2>
 
 <p class="small">
-Only inactive riders can be removed.
-Active riders cannot be deleted while active.
+Moderator can activate or deactivate riders.
+Only inactive riders can be permanently removed.
 </p>
 
 <div id="moderatorRiderList">
+Loading...
 </div>
 
 </div>
@@ -1218,98 +1016,60 @@ Active riders cannot be deleted while active.
 </div>
 
 
+<!-- ADD RIDER -->
 
-<!-- CREATE RIDER -->
-
-<div
-id="moderatorCreateRider"
-class="hidden">
+<div id="moderatorCreateRider" class="hidden">
 
 <div class="card">
 
 <h2>➕ Register New Rider</h2>
 
 <p class="small">
-After the rider details are saved, the system creates
-a Rider/Job ID. Give this ID to the rider so they can
-sign in to their Rider Portal.
+After registration, a unique Rider/Job ID will be generated.
+Give this ID to the rider. The rider can then use it
+from any phone to access the Rider Portal.
 </p>
 
 <br>
 
 <label>Rider Full Name</label>
-
-<input
-id="newRiderName"
-placeholder="Full name">
-
+<input id="newRiderName" placeholder="Full name">
 
 <label>Phone Number</label>
-
-<input
-id="newRiderPhone"
-placeholder="07XXXXXXXX"
-type="tel">
-
+<input id="newRiderPhone" placeholder="07XXXXXXXX" type="tel">
 
 <label>Motorbike Type</label>
-
-<input
-id="newRiderBike"
-placeholder="Example: Motorcycle">
-
+<input id="newRiderBike" placeholder="Example: Motorcycle">
 
 <label>Motorbike Model</label>
-
-<input
-id="newRiderModel"
-placeholder="Example: Boxer 150">
-
+<input id="newRiderModel" placeholder="Example: Boxer 150">
 
 <label>Registration Number</label>
-
-<input
-id="newRiderReg"
-placeholder="Example: KXX 123A">
-
+<input id="newRiderReg" placeholder="Example: KXX 123A">
 
 <label>Rider Status</label>
 
-<select
-id="newRiderStatus">
+<select id="newRiderStatus">
 
-<option value="active">
-Active
-</option>
-
-<option value="inactive">
-Inactive
-</option>
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
 
 </select>
 
-
-<button
-class="btn-primary"
-onclick="createRider()">
+<button class="btn-primary" onclick="createRider()">
 Create Rider Account
 </button>
 
-
-<div id="newRiderMessage">
-</div>
+<div id="newRiderMessage"></div>
 
 </div>
 
 </div>
-
 
 
 <!-- OFFERS -->
 
-<div
-id="moderatorOffers"
-class="hidden">
+<div id="moderatorOffers" class="hidden">
 
 <div class="card">
 
@@ -1317,42 +1077,32 @@ class="hidden">
 
 <label>Offer Title</label>
 
-<input
-id="offerTitle"
+<input id="offerTitle"
 placeholder="Example: Weekend Bonus">
-
 
 <label>Offer Description</label>
 
 <textarea
 id="offerDescription"
 rows="3"
-placeholder="Describe the offer">
-</textarea>
+placeholder="Describe the offer"></textarea>
 
-
-<button
-class="btn-primary"
-onclick="addOffer()">
+<button class="btn-primary" onclick="addOffer()">
 Publish Offer
 </button>
 
 <hr>
 
-<div id="moderatorOfferList">
-</div>
+<div id="moderatorOfferList"></div>
 
 </div>
 
 </div>
-
 
 
 <!-- TERMS -->
 
-<div
-id="moderatorTerms"
-class="hidden">
+<div id="moderatorTerms" class="hidden">
 
 <div class="card">
 
@@ -1360,22 +1110,16 @@ class="hidden">
 
 <p>
 Published date:
-<strong id="termsPublishedDate">
-</strong>
+<strong id="termsPublishedDate"></strong>
 </p>
 
 <br>
 
-<textarea
-id="termsText"
-rows="15">
-</textarea>
+<textarea id="termsText" rows="15"></textarea>
 
 <br>
 
-<button
-class="btn-primary"
-onclick="saveTerms()">
+<button class="btn-primary" onclick="saveTerms()">
 Save Terms
 </button>
 
@@ -1387,9 +1131,7 @@ Save Terms
 
 
 
-<!-- =====================================================
-PUBLIC TERMS
-===================================================== -->
+<!-- PUBLIC TERMS -->
 
 <section>
 
@@ -1397,17 +1139,13 @@ PUBLIC TERMS
 
 <h2>Terms & Conditions</h2>
 
-<div
-id="publicTerms"
-class="public-terms">
-</div>
+<div id="publicTerms" class="public-terms"></div>
 
 <br>
 
 <p class="small">
 Published:
-<span id="publicTermsDate">
-</span>
+<span id="publicTermsDate"></span>
 </p>
 
 </div>
@@ -1418,17 +1156,11 @@ Published:
 
 
 
-<!-- =====================================================
-FOOTER
-===================================================== -->
-
 <footer>
 
 <div class="container">
 
-<h3>
-AMIR CHAP CHAP
-</h3>
+<h3>AMIR CHAP CHAP</h3>
 
 <br>
 
@@ -1457,10 +1189,51 @@ For assistance, contact Amir Chap Chap Customer Care.
 
 
 
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
 <script>
 
 /* =====================================================
-CONFIGURATION
+FIREBASE CONFIGURATION
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyDajjbkMszs-HVNHeUivTMVS2OzrSxw-Lo",
+
+    authDomain:
+    "planning-with-ai-f9d10.firebaseapp.com",
+
+    projectId:
+    "planning-with-ai-f9d10",
+
+    storageBucket:
+    "planning-with-ai-f9d10.firebasestorage.app",
+
+    messagingSenderId:
+    "943382820296",
+
+    appId:
+    "1:943382820296:web:677b8056f7212354ca3cfd"
+
+};
+
+
+/* START FIREBASE */
+
+firebase.initializeApp(firebaseConfig);
+
+const db =
+firebase.firestore();
+
+
+/* =====================================================
+SETTINGS
 ===================================================== */
 
 const ADMIN_PASSWORD = "Scott@254";
@@ -1470,72 +1243,45 @@ const CUSTOMER_CARE = "0795653284";
 const PRICE_PER_KM = 45;
 
 
-/* =====================================================
-MANAGED ROUTE FARES
-===================================================== */
-
 const managedFares = {
 
     "lenana|naivas":90,
-
     "naivas|lenana":90,
 
     "lenana|total petrol station":140,
-
     "total petrol station|lenana":140,
 
     "narok|naivas":90,
-
     "naivas|narok":90
 
 };
 
 
-/* =====================================================
-LOAD DATA
-===================================================== */
+let currentRiderId = null;
 
-let riders =
-JSON.parse(
-localStorage.getItem("amirRiders") || "[]"
-);
+let riderListener = null;
 
-let orders =
-JSON.parse(
-localStorage.getItem("amirOrders") || "[]"
-);
+let riderOrderListener = null;
 
-let offers =
-JSON.parse(
-localStorage.getItem("amirOffers") || "[]"
-);
+let riderNotificationListener = null;
 
-let notifications =
-JSON.parse(
-localStorage.getItem("amirNotifications") || "[]"
-);
+let moderatorOrderListener = null;
 
-let customerPoints =
-Number(
-localStorage.getItem("amirCustomerPoints") || 0
-);
+let moderatorRiderListener = null;
 
-let currentRiderId =
-null;
 
 
 /* =====================================================
 DEFAULT TERMS
 ===================================================== */
 
-let terms =
-localStorage.getItem("amirTerms") ||
+const DEFAULT_TERMS =
 
 `Amir Chap Chap Terms & Conditions
 
 1. Customers must provide correct pickup and destination information.
 
-2. Fares are automatically generated according to the managed fare system or the approved kilometre rate.
+2. Fares are automatically generated according to the managed fare system or approved kilometre rate.
 
 3. The current kilometre rate is KSh 45 per kilometre unless management changes the rate.
 
@@ -1543,7 +1289,7 @@ localStorage.getItem("amirTerms") ||
 
 5. Riders must only accept jobs assigned through the Amir Chap Chap system.
 
-6. Customers may contact their assigned rider using the available call option.
+6. Customers may contact their assigned rider using the call option.
 
 7. Waze/location assistance is optional.
 
@@ -1551,7 +1297,7 @@ localStorage.getItem("amirTerms") ||
 
 9. Customers may rate riders after completing a trip.
 
-10. Points and customer offers are subject to eligibility rules.
+10. Eligible customers may receive rewards and points.
 
 11. Points may be used for eligible payments when sufficient points are available.
 
@@ -1568,80 +1314,35 @@ localStorage.getItem("amirTerms") ||
 Customer Care: 0795653284`;
 
 
-/* =====================================================
-SAVE DATA
-===================================================== */
-
-function saveData(){
-
-    localStorage.setItem(
-        "amirRiders",
-        JSON.stringify(riders)
-    );
-
-    localStorage.setItem(
-        "amirOrders",
-        JSON.stringify(orders)
-    );
-
-    localStorage.setItem(
-        "amirOffers",
-        JSON.stringify(offers)
-    );
-
-    localStorage.setItem(
-        "amirNotifications",
-        JSON.stringify(notifications)
-    );
-
-    localStorage.setItem(
-        "amirCustomerPoints",
-        customerPoints
-    );
-
-    localStorage.setItem(
-        "amirTerms",
-        terms
-    );
-
-}
-
 
 /* =====================================================
-HIDE ALL
+GENERAL
 ===================================================== */
 
 function hideAllSections(){
 
     document
+    .querySelectorAll("main > section")
+    .forEach(
+        s => s.classList.add("hidden")
+    );
+
+}
+
+
+function showHome(){
+
+    hideAllSections();
+
+    document
     .getElementById("homeSection")
-    .classList.add("hidden");
-
-    document
-    .getElementById("customerSection")
-    .classList.add("hidden");
-
-    document
-    .getElementById("riderLoginSection")
-    .classList.add("hidden");
-
-    document
-    .getElementById("riderPortalSection")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorLoginSection")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorPortalSection")
-    .classList.add("hidden");
+    .classList.remove("hidden");
 
 }
 
 
 /* =====================================================
-CUSTOMER OPEN
+CUSTOMER
 ===================================================== */
 
 function showCustomer(){
@@ -1659,37 +1360,99 @@ function showCustomer(){
         )
     );
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+}
+
+
+function customerTab(tab,button){
+
+    [
+        "customerBook",
+        "customerOrders",
+        "customerPoints",
+        "customerOffers"
+    ]
+    .forEach(
+        id =>
+        document
+        .getElementById(id)
+        .classList.add("hidden")
+    );
+
+
+    const map = {
+
+        book:"customerBook",
+
+        orders:"customerOrders",
+
+        points:"customerPoints",
+
+        offers:"customerOffers"
+
+    };
+
+
+    document
+    .getElementById(map[tab])
+    .classList.remove("hidden");
+
+
+    if(button){
+
+        button
+        .parentElement
+        .querySelectorAll("button")
+        .forEach(
+            b =>
+            b.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+    }
+
+
+    if(tab === "orders")
+        loadCustomerOrders();
+
+    if(tab === "offers")
+        loadOffers();
 
 }
 
 
 /* =====================================================
-FARE CALCULATION
+FARE
 ===================================================== */
 
 function calculateFare(){
 
     const method =
-    document.getElementById("fareMethod").value;
+    document
+    .getElementById("fareMethod")
+    .value;
 
-    const kmBox =
-    document.getElementById("kmBox");
 
     if(method === "km"){
 
-        kmBox.classList.remove("hidden");
+        document
+        .getElementById("kmBox")
+        .classList.remove("hidden");
+
 
         const km =
         Number(
-            document.getElementById("distanceKm").value || 0
+            document
+            .getElementById("distanceKm")
+            .value || 0
         );
 
+
         const fare =
-        Math.ceil(km * PRICE_PER_KM);
+        Math.ceil(
+            km * PRICE_PER_KM
+        );
+
 
         document
         .getElementById("fareDisplay")
@@ -1698,12 +1461,15 @@ function calculateFare(){
         ? "KSh " + fare
         : "Enter distance";
 
+
         return fare;
 
     }
 
 
-    kmBox.classList.add("hidden");
+    document
+    .getElementById("kmBox")
+    .classList.add("hidden");
 
 
     const pickup =
@@ -1734,18 +1500,16 @@ function calculateFare(){
     }
 
 
-    const key =
-    pickup + "|" + destination;
-
-
     const fare =
-    managedFares[key] || 0;
+    managedFares[
+        pickup + "|" + destination
+    ] || 0;
 
 
     document
     .getElementById("fareDisplay")
     .textContent =
-    fare > 0
+    fare
     ? "KSh " + fare
     : "Route not configured";
 
@@ -1756,271 +1520,178 @@ function calculateFare(){
 
 
 /* =====================================================
-CUSTOMER BOOKING
+PLACE ORDER
 ===================================================== */
 
-function placeOrder(){
+async function placeOrder(){
 
-    const name =
-    document
-    .getElementById("customerName")
-    .value.trim();
+    try{
 
-
-    const phone =
-    document
-    .getElementById("customerPhone")
-    .value.trim();
+        const name =
+        document
+        .getElementById("customerName")
+        .value.trim();
 
 
-    const service =
-    document
-    .getElementById("serviceType")
-    .value;
+        const phone =
+        document
+        .getElementById("customerPhone")
+        .value.trim();
 
 
-    const pickup =
-    document
-    .getElementById("pickup")
-    .value.trim();
+        const service =
+        document
+        .getElementById("serviceType")
+        .value;
 
 
-    const destination =
-    document
-    .getElementById("destination")
-    .value.trim();
+        const pickup =
+        document
+        .getElementById("pickup")
+        .value.trim();
 
 
-    const payment =
-    document
-    .getElementById("paymentMethod")
-    .value;
+        const destination =
+        document
+        .getElementById("destination")
+        .value.trim();
 
 
-    const instructions =
-    document
-    .getElementById("instructions")
-    .value.trim();
+        const payment =
+        document
+        .getElementById("paymentMethod")
+        .value;
 
 
-    if(
-        !name ||
-        !phone ||
-        !pickup ||
-        !destination
-    ){
-
-        alert(
-            "Please complete all required fields."
-        );
-
-        return;
-
-    }
+        const instructions =
+        document
+        .getElementById("instructions")
+        .value.trim();
 
 
-    const fare =
-    calculateFare();
-
-
-    if(fare <= 0){
-
-        alert(
-            "The route is not configured. Please use the kilometre option or contact Customer Care."
-        );
-
-        return;
-
-    }
-
-
-    if(payment === "points"){
-
-        if(customerPoints < fare){
+        if(
+            !name ||
+            !phone ||
+            !pickup ||
+            !destination
+        ){
 
             alert(
-                "You do not have enough points."
+                "Please complete all required fields."
             );
 
             return;
 
         }
 
-    }
 
+        const fare =
+        calculateFare();
 
-    const order = {
 
-        id:
-        "ACC-" +
-        Date.now()
-        .toString()
-        .slice(-7),
+        if(fare <= 0){
 
-        customerName:name,
+            alert(
+                "This route is not configured. Please use the kilometre option or contact Customer Care."
+            );
 
-        customerPhone:phone,
+            return;
 
-        service:service,
+        }
 
-        pickup:pickup,
 
-        destination:destination,
+        if(payment === "points"){
 
-        fare:fare,
+            alert(
+                "Points payment will be checked against the customer's Firebase rewards balance."
+            );
 
-        payment:payment,
+            return;
 
-        instructions:instructions,
+        }
 
-        status:"pending",
 
-        riderId:null,
+        const order = {
 
-        riderName:null,
+            customerName:name,
 
-        riderPhone:null,
+            customerPhone:phone,
 
-        createdAt:
-        new Date().toISOString(),
+            service:service,
 
-        completedAt:null,
+            pickup:pickup,
 
-        rating:null
+            destination:destination,
 
-    };
+            fare:fare,
 
+            payment:payment,
 
-    orders.push(order);
+            instructions:instructions,
 
+            status:"pending",
 
-    if(payment === "points"){
+            riderId:null,
 
-        customerPoints -= fare;
+            riderName:null,
 
-    }
+            riderPhone:null,
 
+            createdAt:
+            firebase.firestore.FieldValue.serverTimestamp(),
 
-    saveData();
+            completedAt:null,
 
+            rating:null
 
-    alert(
-        "Booking submitted successfully. Please wait for moderator approval."
-    );
+        };
 
 
-    document
-    .getElementById("customerName")
-    .value = "";
+        const ref =
+        await db
+        .collection("orders")
+        .add(order);
 
 
-    document
-    .getElementById("customerPhone")
-    .value = "";
-
-
-    document
-    .getElementById("pickup")
-    .value = "";
-
-
-    document
-    .getElementById("destination")
-    .value = "";
-
-
-    document
-    .getElementById("instructions")
-    .value = "";
-
-
-    updateCustomerOrders();
-
-    updatePoints();
-
-    updateModeratorDashboard();
-
-}
-
-
-/* =====================================================
-CUSTOMER TABS
-===================================================== */
-
-function customerTab(tab,button){
-
-    document
-    .getElementById("customerBook")
-    .classList.add("hidden");
-
-    document
-    .getElementById("customerOrders")
-    .classList.add("hidden");
-
-    document
-    .getElementById("customerPoints")
-    .classList.add("hidden");
-
-    document
-    .getElementById("customerOffers")
-    .classList.add("hidden");
-
-
-    if(tab === "book"){
-
-        document
-        .getElementById("customerBook")
-        .classList.remove("hidden");
-
-    }
-
-
-    if(tab === "orders"){
-
-        document
-        .getElementById("customerOrders")
-        .classList.remove("hidden");
-
-    }
-
-
-    if(tab === "points"){
-
-        document
-        .getElementById("customerPoints")
-        .classList.remove("hidden");
-
-    }
-
-
-    if(tab === "offers"){
-
-        document
-        .getElementById("customerOffers")
-        .classList.remove("hidden");
-
-    }
-
-
-    if(button){
-
-        button
-        .parentElement
-        .querySelectorAll("button")
-        .forEach(
-            b => b.classList.remove("active")
+        alert(
+            "Booking submitted successfully.\n\nBooking ID: " +
+            ref.id +
+            "\n\nPlease wait for moderator approval."
         );
 
-        button.classList.add("active");
+
+        document
+        .getElementById("customerName")
+        .value = "";
+
+        document
+        .getElementById("customerPhone")
+        .value = "";
+
+        document
+        .getElementById("pickup")
+        .value = "";
+
+        document
+        .getElementById("destination")
+        .value = "";
+
+        document
+        .getElementById("instructions")
+        .value = "";
 
     }
 
+    catch(error){
 
-    updateCustomerOrders();
+        console.error(error);
 
-    updatePoints();
+        alert(
+            "Could not place booking.\n\n" +
+            error.message
+        );
 
-    renderOffers();
+    }
 
 }
 
@@ -2029,182 +1700,213 @@ function customerTab(tab,button){
 CUSTOMER ORDERS
 ===================================================== */
 
-function updateCustomerOrders(){
+async function loadCustomerOrders(){
 
     const box =
-    document.getElementById(
-        "customerOrderList"
-    );
-
-
-    if(!box) return;
-
-
-    if(!orders.length){
-
-        box.innerHTML =
-        "<p>No bookings yet.</p>";
-
-        return;
-
-    }
+    document
+    .getElementById("customerOrderList");
 
 
     box.innerHTML =
-    orders
-    .slice()
-    .reverse()
-    .map(order => {
-
-        return `
-
-        <div class="order">
-
-            <div class="order-row">
-
-                <strong>
-                    ${escapeHtml(order.id)}
-                </strong>
-
-                <span class="badge ${escapeHtml(order.status)}">
-                    ${escapeHtml(order.status)}
-                </span>
-
-            </div>
-
-            <p>
-                <strong>Service:</strong>
-                ${escapeHtml(order.service)}
-            </p>
-
-            <p>
-                <strong>Route:</strong>
-                ${escapeHtml(order.pickup)}
-                →
-                ${escapeHtml(order.destination)}
-            </p>
-
-            <p>
-                <strong>Fare:</strong>
-                KSh ${order.fare}
-            </p>
-
-            <p>
-                <strong>Rider:</strong>
-                ${
-                    order.riderName
-                    ? escapeHtml(order.riderName)
-                    : "Waiting for assignment"
-                }
-            </p>
+    "<div class='loading'>Loading bookings...</div>";
 
 
-            ${
-                order.riderId
-                ?
+    try{
 
-                `
-
-                <p>
-                    <strong>Rider ID:</strong>
-                    ${escapeHtml(order.riderId)}
-                </p>
-
-                <div class="action-row">
-
-                    <a
-                    href="tel:${escapeAttr(
-                        order.riderPhone ||
-                        CUSTOMER_CARE
-                    )}">
-
-                        <button class="btn-primary">
-                            📞 Call Rider
-                        </button>
-
-                    </a>
+        const snapshot =
+        await db
+        .collection("orders")
+        .orderBy("createdAt","desc")
+        .get();
 
 
-                    <button
-                    class="btn-light"
-                    onclick="openWaze('${escapeAttr(
-                        order.destination
-                    )}')">
+        if(snapshot.empty){
 
-                        📍 Waze
+            box.innerHTML =
+            "<p>No bookings yet.</p>";
 
-                    </button>
+            return;
 
-                </div>
-
-                `
-                :
-                ""
-            }
+        }
 
 
-            ${
-                order.status === "completed"
-
-                ?
-
-                `
-
-                <br>
-
-                <strong>
-                    Rate Rider
-                </strong>
-
-                <div class="rating">
-
-                    ${[1,2,3,4,5]
-                    .map(
-                        n =>
-                        `
-
-                        <button
-                        onclick="rateOrder(
-                            '${order.id}',
-                            ${n}
-                        )">
-                            ★
-                        </button>
-
-                        `
-                    )
-                    .join("")}
-
-                </div>
-
-                `
-                :
-                ""
-            }
+        box.innerHTML = "";
 
 
-            ${
-                order.rating
+        snapshot.forEach(doc => {
 
-                ?
+            const o =
+            {
+                id:doc.id,
+                ...doc.data()
+            };
 
-                `
-                <p>
-                    Rating:
-                    ${order.rating}/5 ⭐
-                </p>
-                `
 
-                :
-                ""
-            }
+            box.innerHTML +=
+            customerOrderHTML(o);
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        box.innerHTML =
+        `<div class="error">
+        Could not load bookings.
+        </div>`;
+
+    }
+
+}
+
+
+function customerOrderHTML(o){
+
+    return `
+
+    <div class="order">
+
+        <div class="order-row">
+
+            <strong>
+                ${escapeHtml(o.id)}
+            </strong>
+
+            <span class="badge ${escapeHtml(o.status || "pending")}">
+                ${escapeHtml(o.status || "pending")}
+            </span>
 
         </div>
 
-        `;
 
-    })
-    .join("");
+        <p>
+            <strong>Service:</strong>
+            ${escapeHtml(o.service)}
+        </p>
+
+
+        <p>
+            <strong>Route:</strong>
+            ${escapeHtml(o.pickup)}
+            →
+            ${escapeHtml(o.destination)}
+        </p>
+
+
+        <p>
+            <strong>Fare:</strong>
+            KSh ${o.fare}
+        </p>
+
+
+        <p>
+            <strong>Rider:</strong>
+            ${
+                o.riderName
+                ? escapeHtml(o.riderName)
+                : "Waiting for assignment"
+            }
+        </p>
+
+
+        ${
+            o.riderId
+            ?
+
+            `
+
+            <p>
+                <strong>Rider ID:</strong>
+                ${escapeHtml(o.riderId)}
+            </p>
+
+            <div class="action-row">
+
+                <a href="tel:${escapeAttr(o.riderPhone || CUSTOMER_CARE)}">
+
+                    <button class="btn-primary">
+                        📞 Call Rider
+                    </button>
+
+                </a>
+
+
+                <button
+                class="btn-light"
+                onclick="openWaze('${escapeAttr(o.destination)}')">
+
+                    📍 Waze
+
+                </button>
+
+            </div>
+
+            `
+
+            :
+
+            ""
+        }
+
+
+        ${
+            o.status === "completed"
+
+            ?
+
+            `
+
+            <br>
+
+            <strong>
+                Rate Rider
+            </strong>
+
+            <div class="rating">
+
+                ${[1,2,3,4,5].map(
+                    n =>
+                    `
+
+                    <button
+                    onclick="rateOrder('${o.id}',${n})">
+                        ★
+                    </button>
+
+                    `
+                ).join("")}
+
+            </div>
+
+            `
+
+            :
+
+            ""
+        }
+
+
+        ${
+            o.rating
+
+            ?
+
+            `<p>
+            Current Rating:
+            ${o.rating}/5 ⭐
+            </p>`
+
+            :
+
+            ""
+        }
+
+    </div>
+
+    `;
 
 }
 
@@ -2213,50 +1915,39 @@ function updateCustomerOrders(){
 RATE RIDER
 ===================================================== */
 
-function rateOrder(orderId,rating){
+async function rateOrder(orderId,rating){
 
-    const order =
-    orders.find(
-        o => o.id === orderId
-    );
+    try{
 
+        await db
+        .collection("orders")
+        .doc(orderId)
+        .update({
 
-    if(!order) return;
+            rating:rating,
 
+            ratedAt:
+            firebase.firestore.FieldValue.serverTimestamp()
 
-    order.rating =
-    rating;
-
-
-    saveData();
-
-
-    alert(
-        "Thank you for rating the rider."
-    );
+        });
 
 
-    updateCustomerOrders();
-
-}
-
-
-/* =====================================================
-POINTS
-===================================================== */
-
-function updatePoints(){
-
-    const el =
-    document.getElementById(
-        "customerPointsValue"
-    );
+        alert(
+            "Thank you for rating the rider."
+        );
 
 
-    if(el){
+        loadCustomerOrders();
 
-        el.textContent =
-        customerPoints;
+    }
+
+    catch(error){
+
+        alert(
+            "Unable to save rating."
+        );
+
+        console.error(error);
 
     }
 
@@ -2271,121 +1962,125 @@ function openRiderLogin(){
 
     hideAllSections();
 
-
     document
     .getElementById("riderLoginSection")
     .classList.remove("hidden");
 
-
-    document
-    .getElementById("riderLoginId")
-    .focus();
-
 }
 
 
-function riderLogin(){
-
-    const input =
-    document
-    .getElementById("riderLoginId");
-
+async function riderLogin(){
 
     const id =
-    input.value
+    document
+    .getElementById("riderLoginId")
+    .value
     .trim()
     .toUpperCase();
 
 
     const message =
     document
-    .getElementById(
-        "riderLoginMessage"
-    );
+    .getElementById("riderLoginMessage");
 
 
     if(!id){
 
         message.innerHTML =
-        `
-        <div class="error">
-            Please enter your Rider/Job ID.
-        </div>
-        `;
+        `<div class="error">
+        Please enter your Rider/Job ID.
+        </div>`;
 
         return;
 
     }
-
-
-    const rider =
-    riders.find(
-        r =>
-        String(r.id)
-        .toUpperCase() === id
-    );
-
-
-    if(!rider){
-
-        message.innerHTML =
-        `
-        <div class="error">
-            Rider ID not found.
-            Please contact the moderator or Customer Care.
-        </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(rider.status !== "active"){
-
-        message.innerHTML =
-        `
-        <div class="error">
-            This rider account is inactive.
-            Please contact the moderator.
-        </div>
-        `;
-
-        return;
-
-    }
-
-
-    currentRiderId =
-    rider.id;
 
 
     message.innerHTML =
-    `
-    <div class="success">
-        Login successful. Opening Rider Portal...
-    </div>
-    `;
+    `<div class="warning">
+    Checking Rider ID...
+    </div>`;
 
 
-    setTimeout(
-        () => {
+    try{
 
-            hideAllSections();
-
-
-            document
-            .getElementById(
-                "riderPortalSection"
-            )
-            .classList.remove("hidden");
+        /*
+        IMPORTANT:
+        Rider ID is the Firestore document ID.
+        Therefore the rider can log in from ANY phone.
+        */
 
 
-            loadRiderPortal();
+        const doc =
+        await db
+        .collection("riders")
+        .doc(id)
+        .get();
 
-        },
-        400
-    );
+
+        if(!doc.exists){
+
+            message.innerHTML =
+            `<div class="error">
+            Rider ID not found.
+            Please check the ID given by the moderator.
+            </div>`;
+
+            return;
+
+        }
+
+
+        const rider =
+        {
+            id:doc.id,
+            ...doc.data()
+        };
+
+
+        if(rider.status !== "active"){
+
+            message.innerHTML =
+            `<div class="error">
+            This rider account is inactive.
+            Please contact the moderator.
+            </div>`;
+
+            return;
+
+        }
+
+
+        currentRiderId =
+        rider.id;
+
+
+        hideAllSections();
+
+
+        document
+        .getElementById(
+            "riderPortalSection"
+        )
+        .classList.remove("hidden");
+
+
+        loadRiderPortal();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        message.innerHTML =
+        `<div class="error">
+        Firebase could not check the Rider ID.
+        <br><br>
+        ${escapeHtml(error.message)}
+        </div>`;
+
+    }
 
 }
 
@@ -2394,81 +2089,115 @@ function riderLogin(){
 RIDER PORTAL
 ===================================================== */
 
-function loadRiderPortal(){
+async function loadRiderPortal(){
 
-    const rider =
-    riders.find(
-        r =>
-        r.id === currentRiderId
-    );
-
-
-    if(!rider){
-
-        riderLogout();
-
+    if(!currentRiderId)
         return;
+
+
+    try{
+
+        const doc =
+        await db
+        .collection("riders")
+        .doc(currentRiderId)
+        .get();
+
+
+        if(!doc.exists){
+
+            riderLogout();
+
+            return;
+
+        }
+
+
+        const r =
+        {
+            id:doc.id,
+            ...doc.data()
+        };
+
+
+        if(r.status !== "active"){
+
+            alert(
+                "Your rider account has been made inactive."
+            );
+
+            riderLogout();
+
+            return;
+
+        }
+
+
+        document
+        .getElementById("riderWelcome")
+        .textContent =
+        r.name;
+
+
+        document
+        .getElementById("riderDashId")
+        .textContent =
+        r.id;
+
+
+        document
+        .getElementById("profileId")
+        .textContent =
+        r.id;
+
+
+        document
+        .getElementById("profileName")
+        .textContent =
+        r.name;
+
+
+        document
+        .getElementById("profilePhone")
+        .textContent =
+        r.phone;
+
+
+        document
+        .getElementById("profileBike")
+        .textContent =
+        r.bike;
+
+
+        document
+        .getElementById("profileModel")
+        .textContent =
+        r.model;
+
+
+        document
+        .getElementById("profileRegistration")
+        .textContent =
+        r.registration;
+
+
+        document
+        .getElementById("profileStatus")
+        .textContent =
+        r.status;
+
+
+        listenToRiderJobs();
+
+        listenToRiderNotifications();
 
     }
 
+    catch(error){
 
-    document
-    .getElementById("riderWelcome")
-    .textContent =
-    rider.name;
+        console.error(error);
 
-
-    document
-    .getElementById("riderDashId")
-    .textContent =
-    rider.id;
-
-
-    document
-    .getElementById("profileId")
-    .textContent =
-    rider.id;
-
-
-    document
-    .getElementById("profileName")
-    .textContent =
-    rider.name;
-
-
-    document
-    .getElementById("profilePhone")
-    .textContent =
-    rider.phone;
-
-
-    document
-    .getElementById("profileBike")
-    .textContent =
-    rider.bike;
-
-
-    document
-    .getElementById("profileModel")
-    .textContent =
-    rider.model;
-
-
-    document
-    .getElementById("profileRegistration")
-    .textContent =
-    rider.registration;
-
-
-    document
-    .getElementById("profileStatus")
-    .textContent =
-    rider.status;
-
-
-    updateRiderJobs();
-
-    updateRiderNotifications();
+    }
 
 }
 
@@ -2479,57 +2208,36 @@ RIDER TABS
 
 function riderTab(tab,button){
 
-    document
-    .getElementById("riderDashboard")
-    .classList.add("hidden");
-
-    document
-    .getElementById("riderJobs")
-    .classList.add("hidden");
-
-    document
-    .getElementById("riderProfile")
-    .classList.add("hidden");
-
-    document
-    .getElementById("riderNotifications")
-    .classList.add("hidden");
-
-
-    if(tab === "dashboard"){
-
+    [
+        "riderDashboard",
+        "riderJobs",
+        "riderProfile",
+        "riderNotifications"
+    ]
+    .forEach(
+        id =>
         document
-        .getElementById("riderDashboard")
-        .classList.remove("hidden");
-
-    }
-
-
-    if(tab === "jobs"){
-
-        document
-        .getElementById("riderJobs")
-        .classList.remove("hidden");
-
-    }
+        .getElementById(id)
+        .classList.add("hidden")
+    );
 
 
-    if(tab === "profile"){
+    const map = {
 
-        document
-        .getElementById("riderProfile")
-        .classList.remove("hidden");
+        dashboard:"riderDashboard",
 
-    }
+        jobs:"riderJobs",
+
+        profile:"riderProfile",
+
+        notifications:"riderNotifications"
+
+    };
 
 
-    if(tab === "notifications"){
-
-        document
-        .getElementById("riderNotifications")
-        .classList.remove("hidden");
-
-    }
+    document
+    .getElementById(map[tab])
+    .classList.remove("hidden");
 
 
     if(button){
@@ -2538,98 +2246,118 @@ function riderTab(tab,button){
         .parentElement
         .querySelectorAll("button")
         .forEach(
-            b => b.classList.remove("active")
+            b =>
+            b.classList.remove("active")
         );
 
         button.classList.add("active");
 
     }
 
+}
 
-    loadRiderPortal();
+
+/* =====================================================
+RIDER JOB LISTENER
+===================================================== */
+
+function listenToRiderJobs(){
+
+    if(riderOrderListener)
+        riderOrderListener();
+
+
+    riderOrderListener =
+    db
+    .collection("orders")
+    .where("riderId","==",currentRiderId)
+    .onSnapshot(
+
+        snapshot => {
+
+            const jobs = [];
+
+            snapshot.forEach(
+                doc =>
+                jobs.push({
+                    id:doc.id,
+                    ...doc.data()
+                })
+            );
+
+
+            jobs.sort(
+                (a,b) =>
+                getTime(b.createdAt) -
+                getTime(a.createdAt)
+            );
+
+
+            document
+            .getElementById("riderJobCount")
+            .textContent =
+            jobs.length;
+
+
+            document
+            .getElementById("riderCompletedCount")
+            .textContent =
+            jobs.filter(
+                j =>
+                j.status === "completed"
+            ).length;
+
+
+            const list =
+            document
+            .getElementById("riderJobList");
+
+
+            const latest =
+            document
+            .getElementById("latestRiderJob");
+
+
+            if(!jobs.length){
+
+                list.innerHTML =
+                "<p>No jobs assigned yet.</p>";
+
+                latest.innerHTML =
+                "<p>No assigned jobs yet.</p>";
+
+                return;
+
+            }
+
+
+            latest.innerHTML =
+            renderRiderJob(jobs[0]);
+
+
+            list.innerHTML =
+            jobs
+            .map(renderRiderJob)
+            .join("");
+
+        },
+
+        error => {
+
+            console.error(error);
+
+        }
+
+    );
 
 }
 
 
 /* =====================================================
-RIDER JOBS
+RIDER JOB HTML
 ===================================================== */
 
-function updateRiderJobs(){
-
-    const list =
-    document.getElementById(
-        "riderJobList"
-    );
-
-
-    const latest =
-    document.getElementById(
-        "latestRiderJob"
-    );
-
-
-    if(!list || !latest) return;
-
-
-    const riderOrders =
-    orders.filter(
-        o =>
-        o.riderId === currentRiderId
-    );
-
-
-    document
-    .getElementById("riderJobCount")
-    .textContent =
-    riderOrders.length;
-
-
-    document
-    .getElementById("riderCompletedCount")
-    .textContent =
-    riderOrders.filter(
-        o =>
-        o.status === "completed"
-    ).length;
-
-
-    if(!riderOrders.length){
-
-        list.innerHTML =
-        "<p>No jobs assigned yet.</p>";
-
-        latest.innerHTML =
-        "<p>No assigned jobs yet.</p>";
-
-        return;
-
-    }
-
-
-    latest.innerHTML =
-    renderRiderJob(
-        riderOrders[
-            riderOrders.length - 1
-        ]
-    );
-
-
-    list.innerHTML =
-    riderOrders
-    .slice()
-    .reverse()
-    .map(renderRiderJob)
-    .join("");
-
-}
-
-
-/* =====================================================
-RENDER RIDER JOB
-===================================================== */
-
-function renderRiderJob(order){
+function renderRiderJob(o){
 
     return `
 
@@ -2638,11 +2366,11 @@ function renderRiderJob(order){
         <div class="order-row">
 
             <strong>
-                ${escapeHtml(order.id)}
+                ${escapeHtml(o.id)}
             </strong>
 
-            <span class="badge ${escapeHtml(order.status)}">
-                ${escapeHtml(order.status)}
+            <span class="badge ${escapeHtml(o.status)}">
+                ${escapeHtml(o.status)}
             </span>
 
         </div>
@@ -2650,49 +2378,47 @@ function renderRiderJob(order){
 
         <p>
             <strong>Customer:</strong>
-            ${escapeHtml(order.customerName)}
+            ${escapeHtml(o.customerName)}
         </p>
 
 
         <p>
             <strong>Customer Phone:</strong>
-            ${escapeHtml(order.customerPhone)}
+            ${escapeHtml(o.customerPhone)}
         </p>
 
 
         <p>
             <strong>Service:</strong>
-            ${escapeHtml(order.service)}
+            ${escapeHtml(o.service)}
         </p>
 
 
         <p>
             <strong>Pickup:</strong>
-            ${escapeHtml(order.pickup)}
+            ${escapeHtml(o.pickup)}
         </p>
 
 
         <p>
             <strong>Destination:</strong>
-            ${escapeHtml(order.destination)}
+            ${escapeHtml(o.destination)}
         </p>
 
 
         <p>
             <strong>Fare:</strong>
-            KSh ${order.fare}
+            KSh ${o.fare}
         </p>
 
 
         ${
-            order.instructions
+            o.instructions
             ?
-            `
-            <p>
-                <strong>Instructions:</strong>
-                ${escapeHtml(order.instructions)}
-            </p>
-            `
+            `<p>
+            <strong>Instructions:</strong>
+            ${escapeHtml(o.instructions)}
+            </p>`
             :
             ""
         }
@@ -2700,10 +2426,7 @@ function renderRiderJob(order){
 
         <div class="action-row">
 
-            <a
-            href="tel:${escapeAttr(
-                order.customerPhone
-            )}">
+            <a href="tel:${escapeAttr(o.customerPhone)}">
 
                 <button class="btn-primary">
                     📞 Call Customer
@@ -2714,11 +2437,18 @@ function renderRiderJob(order){
 
             <button
             class="btn-light"
-            onclick="openWaze('${escapeAttr(
-                order.destination
-            )}')">
+            onclick="openWaze('${escapeAttr(o.pickup)}')">
 
-                📍 Waze
+                📍 Pickup
+
+            </button>
+
+
+            <button
+            class="btn-light"
+            onclick="openWaze('${escapeAttr(o.destination)}')">
+
+                📍 Destination
 
             </button>
 
@@ -2726,7 +2456,7 @@ function renderRiderJob(order){
 
 
         ${
-            order.status === "approved"
+            o.status === "approved"
 
             ?
 
@@ -2736,7 +2466,7 @@ function renderRiderJob(order){
 
             <button
             class="btn-yellow"
-            onclick="acceptJob('${order.id}')">
+            onclick="acceptJob('${o.id}')">
 
                 ✅ Accept Job
 
@@ -2751,7 +2481,7 @@ function renderRiderJob(order){
 
 
         ${
-            order.status === "accepted"
+            o.status === "accepted"
 
             ?
 
@@ -2761,7 +2491,7 @@ function renderRiderJob(order){
 
             <button
             class="btn-primary"
-            onclick="completeJob('${order.id}')">
+            onclick="completeJob('${o.id}')">
 
                 ✅ Delivered / Trip Completed
 
@@ -2776,19 +2506,13 @@ function renderRiderJob(order){
 
 
         ${
-            order.status === "completed"
+            o.status === "completed"
 
             ?
 
-            `
-
-            <div class="success">
-
-                ✅ This job has been successfully completed.
-
-            </div>
-
-            `
+            `<div class="success">
+            ✅ This job was successfully completed.
+            </div>`
 
             :
 
@@ -2806,62 +2530,80 @@ function renderRiderJob(order){
 ACCEPT JOB
 ===================================================== */
 
-function acceptJob(orderId){
+async function acceptJob(orderId){
 
-    const order =
-    orders.find(
-        o =>
-        o.id === orderId
-    );
+    try{
 
-
-    if(!order) return;
+        const ref =
+        db
+        .collection("orders")
+        .doc(orderId);
 
 
-    if(
-        order.riderId !==
-        currentRiderId
-    ){
+        const doc =
+        await ref.get();
+
+
+        if(!doc.exists){
+
+            alert("Job no longer exists.");
+
+            return;
+
+        }
+
+
+        const o =
+        doc.data();
+
+
+        if(o.riderId !== currentRiderId){
+
+            alert(
+                "This job is not assigned to your account."
+            );
+
+            return;
+
+        }
+
+
+        if(o.status !== "approved"){
+
+            alert(
+                "This job is no longer waiting for acceptance."
+            );
+
+            return;
+
+        }
+
+
+        await ref.update({
+
+            status:"accepted",
+
+            acceptedAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
 
         alert(
-            "This job is not assigned to your account."
+            "Job accepted successfully."
         );
-
-        return;
 
     }
 
+    catch(error){
 
-    if(order.status !== "approved"){
+        console.error(error);
 
         alert(
-            "This job is not waiting for acceptance."
+            "Could not accept the job."
         );
 
-        return;
-
     }
-
-
-    order.status =
-    "accepted";
-
-
-    saveData();
-
-
-    alert(
-        "Job accepted successfully."
-    );
-
-
-    updateRiderJobs();
-
-    updateCustomerOrders();
-
-    updateModeratorDashboard();
-
-    updateModeratorOrders();
 
 }
 
@@ -2870,75 +2612,90 @@ function acceptJob(orderId){
 COMPLETE JOB
 ===================================================== */
 
-function completeJob(orderId){
-
-    const order =
-    orders.find(
-        o =>
-        o.id === orderId
-    );
-
-
-    if(!order) return;
-
-
-    if(
-        order.riderId !==
-        currentRiderId
-    ){
-
-        alert(
-            "This job is not assigned to your account."
-        );
-
-        return;
-
-    }
-
-
-    if(order.status !== "accepted"){
-
-        alert(
-            "Accept the job before completing it."
-        );
-
-        return;
-
-    }
-
+async function completeJob(orderId){
 
     const confirmed =
     confirm(
-        "Confirm that the delivery/passenger trip was completed successfully?"
+        "Confirm that the delivery or passenger trip was completed successfully?"
     );
 
 
-    if(!confirmed) return;
+    if(!confirmed)
+        return;
 
 
-    order.status =
-    "completed";
+    try{
+
+        const ref =
+        db
+        .collection("orders")
+        .doc(orderId);
 
 
-    order.completedAt =
-    new Date().toISOString();
+        const doc =
+        await ref.get();
 
 
-    saveData();
+        if(!doc.exists){
+
+            alert("Job not found.");
+
+            return;
+
+        }
 
 
-    alert(
-        "Job marked as successfully completed."
-    );
+        const o =
+        doc.data();
 
 
-    updateRiderJobs();
+        if(o.riderId !== currentRiderId){
 
-    updateCustomerOrders();
+            alert(
+                "This job is not assigned to you."
+            );
 
-    updateModeratorDashboard();
+            return;
 
-    updateModeratorOrders();
+        }
+
+
+        if(o.status !== "accepted"){
+
+            alert(
+                "You must accept the job first."
+            );
+
+            return;
+
+        }
+
+
+        await ref.update({
+
+            status:"completed",
+
+            completedAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+
+        alert(
+            "Job successfully marked as completed."
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not complete the job."
+        );
+
+    }
 
 }
 
@@ -2947,119 +2704,157 @@ function completeJob(orderId){
 RIDER NOTIFICATIONS
 ===================================================== */
 
-function updateRiderNotifications(){
+function listenToRiderNotifications(){
 
-    const list =
-    document.getElementById(
-        "riderNotificationList"
+    if(riderNotificationListener)
+        riderNotificationListener();
+
+
+    riderNotificationListener =
+    db
+    .collection("notifications")
+    .where("riderId","==",currentRiderId)
+    .onSnapshot(
+
+        snapshot => {
+
+            const items = [];
+
+
+            snapshot.forEach(
+                doc =>
+                items.push({
+                    id:doc.id,
+                    ...doc.data()
+                })
+            );
+
+
+            items.sort(
+                (a,b) =>
+                getTime(b.createdAt) -
+                getTime(a.createdAt)
+            );
+
+
+            const unread =
+            items.filter(
+                n =>
+                !n.read
+            );
+
+
+            const count =
+            document
+            .getElementById(
+                "riderNotificationCount"
+            );
+
+
+            if(unread.length){
+
+                count.classList.remove(
+                    "hidden"
+                );
+
+                count.textContent =
+                unread.length;
+
+            }
+            else{
+
+                count.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            const list =
+            document
+            .getElementById(
+                "riderNotificationList"
+            );
+
+
+            if(!items.length){
+
+                list.innerHTML =
+                "<p>No notifications.</p>";
+
+                return;
+
+            }
+
+
+            list.innerHTML =
+            items
+            .map(
+                n =>
+                `
+
+                <div class="notification">
+
+                    <strong>
+                        ${escapeHtml(n.title)}
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(n.message)}
+                    </p>
+
+                    <br>
+
+                    ${
+                        !n.read
+                        ?
+                        `
+                        <button
+                        class="btn-light"
+                        onclick="markNotificationRead('${n.id}')">
+
+                            Mark Read
+
+                        </button>
+                        `
+                        :
+                        "<small>Read</small>"
+                    }
+
+                </div>
+
+                `
+            )
+            .join("");
+
+        },
+
+        error =>
+        console.error(error)
+
     );
-
-
-    const count =
-    document.getElementById(
-        "riderNotificationCount"
-    );
-
-
-    if(!list || !count) return;
-
-
-    const riderNotifications =
-    notifications.filter(
-        n =>
-        n.riderId === currentRiderId
-    );
-
-
-    const unread =
-    riderNotifications.filter(
-        n =>
-        !n.read
-    );
-
-
-    if(unread.length){
-
-        count.classList.remove("hidden");
-
-        count.textContent =
-        unread.length;
-
-    }
-    else{
-
-        count.classList.add("hidden");
-
-    }
-
-
-    if(!riderNotifications.length){
-
-        list.innerHTML =
-        "<p>No notifications.</p>";
-
-        return;
-
-    }
-
-
-    list.innerHTML =
-    riderNotifications
-    .slice()
-    .reverse()
-    .map(
-        n =>
-        `
-
-        <div class="notification">
-
-            <strong>
-                ${escapeHtml(n.title)}
-            </strong>
-
-            <p>
-                ${escapeHtml(n.message)}
-            </p>
-
-            <br>
-
-            <button
-            class="btn-light"
-            onclick="markNotificationRead('${n.id}')">
-
-                Mark Read
-
-            </button>
-
-        </div>
-
-        `
-    )
-    .join("");
 
 }
 
 
-function markNotificationRead(id){
+async function markNotificationRead(id){
 
-    const notification =
-    notifications.find(
-        n =>
-        n.id === id
-    );
+    try{
 
-
-    if(notification){
-
-        notification.read =
-        true;
+        await db
+        .collection("notifications")
+        .doc(id)
+        .update({
+            read:true
+        });
 
     }
 
+    catch(error){
 
-    saveData();
+        console.error(error);
 
-    updateRiderNotifications();
+    }
 
 }
 
@@ -3070,14 +2865,20 @@ RIDER LOGOUT
 
 function riderLogout(){
 
-    currentRiderId =
-    null;
+    if(riderOrderListener)
+        riderOrderListener();
 
-    hideAllSections();
+    if(riderNotificationListener)
+        riderNotificationListener();
 
-    document
-    .getElementById("homeSection")
-    .classList.remove("hidden");
+
+    riderOrderListener = null;
+
+    riderNotificationListener = null;
+
+    currentRiderId = null;
+
+    showHome();
 
 }
 
@@ -3090,22 +2891,11 @@ function openModeratorLogin(){
 
     hideAllSections();
 
-
     document
     .getElementById(
         "moderatorLoginSection"
     )
     .classList.remove("hidden");
-
-
-    document
-    .getElementById("adminPassword")
-    .value = "";
-
-
-    document
-    .getElementById("adminPassword")
-    .focus();
 
 }
 
@@ -3130,11 +2920,9 @@ function adminLogin(){
     if(password === ADMIN_PASSWORD){
 
         message.innerHTML =
-        `
-        <div class="success">
-            Moderator login successful.
-        </div>
-        `;
+        `<div class="success">
+        Moderator login successful.
+        </div>`;
 
 
         setTimeout(
@@ -3142,29 +2930,25 @@ function adminLogin(){
 
                 hideAllSections();
 
-
                 document
                 .getElementById(
                     "moderatorPortalSection"
                 )
                 .classList.remove("hidden");
 
-
                 loadModerator();
 
             },
-            400
+            300
         );
 
     }
     else{
 
         message.innerHTML =
-        `
-        <div class="error">
-            Incorrect moderator password.
-        </div>
-        `;
+        `<div class="error">
+        Incorrect moderator password.
+        </div>`;
 
     }
 
@@ -3177,95 +2961,42 @@ MODERATOR TABS
 
 function moderatorTab(tab,button){
 
-    document
-    .getElementById("moderatorDashboard")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorOrders")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorRiders")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorCreateRider")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorOffers")
-    .classList.add("hidden");
-
-    document
-    .getElementById("moderatorTerms")
-    .classList.add("hidden");
-
-
-    if(tab === "dashboard"){
-
+    [
+        "moderatorDashboard",
+        "moderatorOrders",
+        "moderatorRiders",
+        "moderatorCreateRider",
+        "moderatorOffers",
+        "moderatorTerms"
+    ]
+    .forEach(
+        id =>
         document
-        .getElementById(
-            "moderatorDashboard"
-        )
-        .classList.remove("hidden");
-
-    }
+        .getElementById(id)
+        .classList.add("hidden")
+    );
 
 
-    if(tab === "orders"){
+    const map = {
 
-        document
-        .getElementById(
-            "moderatorOrders"
-        )
-        .classList.remove("hidden");
+        dashboard:"moderatorDashboard",
 
-    }
+        orders:"moderatorOrders",
 
+        riders:"moderatorRiders",
 
-    if(tab === "riders"){
+        createRider:"moderatorCreateRider",
 
-        document
-        .getElementById(
-            "moderatorRiders"
-        )
-        .classList.remove("hidden");
+        offers:"moderatorOffers",
 
-    }
+        terms:"moderatorTerms"
+
+    };
 
 
-    if(tab === "createRider"){
-
-        document
-        .getElementById(
-            "moderatorCreateRider"
-        )
-        .classList.remove("hidden");
-
-    }
-
-
-    if(tab === "offers"){
-
-        document
-        .getElementById(
-            "moderatorOffers"
-        )
-        .classList.remove("hidden");
-
-    }
-
-
-    if(tab === "terms"){
-
-        document
-        .getElementById(
-            "moderatorTerms"
-        )
-        .classList.remove("hidden");
-
-    }
+    document
+    .getElementById(map[tab])
+    .classList.remove("hidden");
 
 
     if(button){
@@ -3283,111 +3014,36 @@ function moderatorTab(tab,button){
     }
 
 
-    loadModerator();
+    if(tab === "orders")
+        listenToModeratorOrders();
+
+    if(tab === "riders")
+        listenToModeratorRiders();
+
+    if(tab === "offers")
+        loadModeratorOffers();
+
+    if(tab === "terms")
+        loadTerms();
 
 }
 
 
 /* =====================================================
-LOAD MODERATOR
+MODERATOR LOAD
 ===================================================== */
 
 function loadModerator(){
 
+    listenToModeratorOrders();
+
+    listenToModeratorRiders();
+
+    loadModeratorOffers();
+
+    loadTerms();
+
     updateModeratorDashboard();
-
-    updateModeratorOrders();
-
-    updateModeratorRiders();
-
-    renderModeratorOffers();
-
-
-    document
-    .getElementById("termsText")
-    .value =
-    terms;
-
-
-    document
-    .getElementById(
-        "termsPublishedDate"
-    )
-    .textContent =
-    localStorage.getItem(
-        "amirTermsDate"
-    ) ||
-    formatDate(new Date());
-
-}
-
-
-/* =====================================================
-MODERATOR DASHBOARD
-===================================================== */
-
-function updateModeratorDashboard(){
-
-    const total =
-    document.getElementById(
-        "totalOrders"
-    );
-
-
-    const pending =
-    document.getElementById(
-        "pendingOrders"
-    );
-
-
-    const riderTotal =
-    document.getElementById(
-        "totalRiders"
-    );
-
-
-    const completed =
-    document.getElementById(
-        "completedOrders"
-    );
-
-
-    if(total){
-
-        total.textContent =
-        orders.length;
-
-    }
-
-
-    if(pending){
-
-        pending.textContent =
-        orders.filter(
-            o =>
-            o.status === "pending"
-        ).length;
-
-    }
-
-
-    if(riderTotal){
-
-        riderTotal.textContent =
-        riders.length;
-
-    }
-
-
-    if(completed){
-
-        completed.textContent =
-        orders.filter(
-            o =>
-            o.status === "completed"
-        ).length;
-
-    }
 
 }
 
@@ -3396,161 +3052,190 @@ function updateModeratorDashboard(){
 MODERATOR ORDERS
 ===================================================== */
 
-function updateModeratorOrders(){
+function listenToModeratorOrders(){
 
-    const box =
-    document.getElementById(
-        "moderatorOrderList"
+    if(moderatorOrderListener)
+        moderatorOrderListener();
+
+
+    moderatorOrderListener =
+    db
+    .collection("orders")
+    .onSnapshot(
+
+        snapshot => {
+
+            const orders = [];
+
+
+            snapshot.forEach(
+                doc =>
+                orders.push({
+                    id:doc.id,
+                    ...doc.data()
+                })
+            );
+
+
+            orders.sort(
+                (a,b) =>
+                getTime(b.createdAt) -
+                getTime(a.createdAt)
+            );
+
+
+            const box =
+            document
+            .getElementById(
+                "moderatorOrderList"
+            );
+
+
+            if(!box)
+                return;
+
+
+            if(!orders.length){
+
+                box.innerHTML =
+                "<p>No bookings.</p>";
+
+                return;
+
+            }
+
+
+            box.innerHTML =
+            orders
+            .map(
+                renderModeratorOrder
+            )
+            .join("");
+
+
+            updateModeratorDashboard();
+
+        },
+
+        error =>
+        console.error(error)
+
     );
 
-
-    if(!box) return;
-
-
-    if(!orders.length){
-
-        box.innerHTML =
-        "<p>No bookings.</p>";
-
-        return;
-
-    }
+}
 
 
-    box.innerHTML =
-    orders
-    .slice()
-    .reverse()
-    .map(
-        order =>
-        `
+/* =====================================================
+MODERATOR ORDER HTML
+===================================================== */
 
-        <div class="order">
+function renderModeratorOrder(o){
 
-            <div class="order-row">
+    return `
 
-                <strong>
-                    ${escapeHtml(order.id)}
-                </strong>
+    <div class="order">
 
-                <span class="badge ${escapeHtml(order.status)}">
-                    ${escapeHtml(order.status)}
-                </span>
+        <div class="order-row">
 
-            </div>
+            <strong>
+                ${escapeHtml(o.id)}
+            </strong>
 
-
-            <p>
-                <strong>Customer:</strong>
-                ${escapeHtml(order.customerName)}
-            </p>
-
-
-            <p>
-                <strong>Phone:</strong>
-                ${escapeHtml(order.customerPhone)}
-            </p>
-
-
-            <p>
-                <strong>Service:</strong>
-                ${escapeHtml(order.service)}
-            </p>
-
-
-            <p>
-                <strong>Route:</strong>
-                ${escapeHtml(order.pickup)}
-                →
-                ${escapeHtml(order.destination)}
-            </p>
-
-
-            <p>
-                <strong>Fare:</strong>
-                KSh ${order.fare}
-            </p>
-
-
-            ${
-                order.riderId
-                ?
-                `
-                <p>
-                    <strong>Assigned Rider:</strong>
-                    ${escapeHtml(order.riderName)}
-                    (${escapeHtml(order.riderId)})
-                </p>
-                `
-                :
-                ""
-            }
-
-
-            ${
-                order.status === "pending"
-
-                ?
-
-                `
-
-                <label>
-                    Assign Rider
-                </label>
-
-                <select
-                id="assign_${order.id}">
-
-                    <option value="">
-                        Select Rider
-                    </option>
-
-                    ${
-                        riders
-                        .filter(
-                            r =>
-                            r.status === "active"
-                        )
-                        .map(
-                            r =>
-                            `
-                            <option
-                            value="${escapeAttr(r.id)}">
-
-                                ${escapeHtml(r.id)}
-                                -
-                                ${escapeHtml(r.name)}
-
-                            </option>
-                            `
-                        )
-                        .join("")
-                    }
-
-                </select>
-
-
-                <button
-                class="btn-primary"
-                onclick="approveAndAssign('${order.id}')">
-
-                    ✅ Approve & Assign
-
-                </button>
-
-                `
-
-                :
-
-                ""
-            }
-
+            <span class="badge ${escapeHtml(o.status)}">
+                ${escapeHtml(o.status)}
+            </span>
 
         </div>
 
-        `
-    )
-    .join("");
+
+        <p>
+            <strong>Customer:</strong>
+            ${escapeHtml(o.customerName)}
+        </p>
+
+
+        <p>
+            <strong>Phone:</strong>
+            ${escapeHtml(o.customerPhone)}
+        </p>
+
+
+        <p>
+            <strong>Service:</strong>
+            ${escapeHtml(o.service)}
+        </p>
+
+
+        <p>
+            <strong>Route:</strong>
+            ${escapeHtml(o.pickup)}
+            →
+            ${escapeHtml(o.destination)}
+        </p>
+
+
+        <p>
+            <strong>Fare:</strong>
+            KSh ${o.fare}
+        </p>
+
+
+        ${
+            o.riderId
+            ?
+            `
+            <p>
+                <strong>Assigned Rider:</strong>
+                ${escapeHtml(o.riderName)}
+                (${escapeHtml(o.riderId)})
+            </p>
+            `
+            :
+            ""
+        }
+
+
+        ${
+            o.status === "pending"
+
+            ?
+
+            `
+
+            <label>
+                Assign Active Rider
+            </label>
+
+            <select id="assign_${o.id}">
+
+                <option value="">
+                    Select Rider
+                </option>
+
+                <option value="loading">
+                    Loading riders...
+                </option>
+
+            </select>
+
+            <button
+            class="btn-primary"
+            onclick="approveAndAssign('${o.id}')">
+
+                ✅ Approve & Assign
+
+            </button>
+
+            `
+
+            :
+
+            ""
+        }
+
+    </div>
+
+    `;
 
 }
 
@@ -3559,110 +3244,381 @@ function updateModeratorOrders(){
 APPROVE & ASSIGN
 ===================================================== */
 
-function approveAndAssign(orderId){
+async function approveAndAssign(orderId){
 
-    const select =
-    document.getElementById(
-        "assign_" + orderId
-    );
+    try{
 
-
-    if(!select || !select.value){
-
-        alert(
-            "Please select an active rider."
+        const select =
+        document
+        .getElementById(
+            "assign_" + orderId
         );
 
-        return;
+
+        if(!select){
+
+            alert(
+                "Assignment box not available."
+            );
+
+            return;
+
+        }
+
+
+        const riderId =
+        select.value;
+
+
+        if(!riderId){
+
+            alert(
+                "Please select an active rider."
+            );
+
+            return;
+
+        }
+
+
+        const riderDoc =
+        await db
+        .collection("riders")
+        .doc(riderId)
+        .get();
+
+
+        if(!riderDoc.exists){
+
+            alert(
+                "Rider not found."
+            );
+
+            return;
+
+        }
+
+
+        const rider =
+        riderDoc.data();
+
+
+        if(rider.status !== "active"){
+
+            alert(
+                "Only active riders can receive jobs."
+            );
+
+            return;
+
+        }
+
+
+        await db
+        .collection("orders")
+        .doc(orderId)
+        .update({
+
+            status:"approved",
+
+            riderId:riderId,
+
+            riderName:rider.name,
+
+            riderPhone:rider.phone,
+
+            approvedAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+
+        await db
+        .collection("notifications")
+        .add({
+
+            riderId:riderId,
+
+            title:"New Approved Job",
+
+            message:
+            "Booking " +
+            orderId +
+            " has been approved and assigned to you.",
+
+            read:false,
+
+            createdAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+
+        alert(
+            "Booking approved and rider notified."
+        );
 
     }
 
+    catch(error){
 
-    const rider =
-    riders.find(
-        r =>
-        r.id === select.value
-    );
-
-
-    const order =
-    orders.find(
-        o =>
-        o.id === orderId
-    );
-
-
-    if(!rider || !order){
+        console.error(error);
 
         alert(
-            "Rider or booking not found."
+            "Could not assign the rider.\n\n" +
+            error.message
         );
-
-        return;
 
     }
 
+}
 
-    if(rider.status !== "active"){
 
-        alert(
-            "Only active riders can receive jobs."
-        );
+/* =====================================================
+LOAD RIDERS FOR ASSIGNMENT
+===================================================== */
 
-        return;
+async function fillRiderSelects(){
+
+    try{
+
+        const snapshot =
+        await db
+        .collection("riders")
+        .where("status","==","active")
+        .get();
+
+
+        document
+        .querySelectorAll(
+            '[id^="assign_"]'
+        )
+        .forEach(select => {
+
+            const current =
+            select.value;
+
+
+            select.innerHTML =
+            `<option value="">
+            Select Rider
+            </option>`;
+
+
+            snapshot.forEach(doc => {
+
+                const r =
+                doc.data();
+
+
+                const option =
+                document.createElement(
+                    "option"
+                );
+
+
+                option.value =
+                doc.id;
+
+
+                option.textContent =
+                doc.id +
+                " - " +
+                r.name;
+
+
+                select.appendChild(
+                    option
+                );
+
+            });
+
+
+            if(current)
+                select.value =
+                current;
+
+        });
 
     }
 
+    catch(error){
 
-    order.status =
-    "approved";
+        console.error(error);
 
+    }
 
-    order.riderId =
-    rider.id;
-
-
-    order.riderName =
-    rider.name;
+}
 
 
-    order.riderPhone =
-    rider.phone;
+/* =====================================================
+MODERATOR RIDERS
+===================================================== */
+
+function listenToModeratorRiders(){
+
+    if(moderatorRiderListener)
+        moderatorRiderListener();
 
 
-    notifications.push({
+    moderatorRiderListener =
+    db
+    .collection("riders")
+    .onSnapshot(
 
-        id:
-        "N-" + Date.now(),
+        snapshot => {
 
-        riderId:
-        rider.id,
-
-        title:
-        "New Approved Job",
-
-        message:
-        `Booking ${order.id} has been approved and assigned to you. Pickup: ${order.pickup}. Destination: ${order.destination}. Fare: KSh ${order.fare}.`,
-
-        read:false,
-
-        createdAt:
-        new Date().toISOString()
-
-    });
+            const riders = [];
 
 
-    saveData();
+            snapshot.forEach(
+                doc =>
+                riders.push({
+                    id:doc.id,
+                    ...doc.data()
+                })
+            );
 
 
-    alert(
-        "Booking approved and rider notified."
+            riders.sort(
+                (a,b) =>
+                getTime(b.createdAt) -
+                getTime(a.createdAt)
+            );
+
+
+            const box =
+            document
+            .getElementById(
+                "moderatorRiderList"
+            );
+
+
+            if(!box)
+                return;
+
+
+            if(!riders.length){
+
+                box.innerHTML =
+                "<p>No riders registered yet.</p>";
+
+                return;
+
+            }
+
+
+            box.innerHTML =
+            riders
+            .map(
+                r =>
+                `
+
+                <div class="order">
+
+                    <div class="order-row">
+
+                        <strong>
+                            ${escapeHtml(r.id)}
+                        </strong>
+
+                        <span class="badge ${
+                            r.status === "inactive"
+                            ? "inactive"
+                            : ""
+                        }">
+
+                            ${escapeHtml(r.status)}
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+                        <strong>Name:</strong>
+                        ${escapeHtml(r.name)}
+                    </p>
+
+
+                    <p>
+                        <strong>Phone:</strong>
+                        ${escapeHtml(r.phone)}
+                    </p>
+
+
+                    <p>
+                        <strong>Motorbike:</strong>
+                        ${escapeHtml(r.bike)}
+                    </p>
+
+
+                    <p>
+                        <strong>Model:</strong>
+                        ${escapeHtml(r.model)}
+                    </p>
+
+
+                    <p>
+                        <strong>Registration:</strong>
+                        ${escapeHtml(r.registration)}
+                    </p>
+
+
+                    <div class="action-row">
+
+                        <button
+                        class="btn-light"
+                        onclick="toggleRiderStatus('${r.id}')">
+
+                            ${
+                                r.status === "active"
+                                ? "Set Inactive"
+                                : "Set Active"
+                            }
+
+                        </button>
+
+
+                        ${
+                            r.status === "inactive"
+
+                            ?
+
+                            `
+                            <button
+                            class="btn-danger"
+                            onclick="removeInactiveRider('${r.id}')">
+
+                                🗑️ Remove Inactive Rider
+
+                            </button>
+                            `
+
+                            :
+
+                            ""
+                        }
+
+                    </div>
+
+                </div>
+
+                `
+            )
+            .join("");
+
+
+            fillRiderSelects();
+
+            updateModeratorDashboard();
+
+        },
+
+        error =>
+        console.error(error)
+
     );
-
-
-    updateModeratorOrders();
-
-    updateModeratorDashboard();
 
 }
 
@@ -3671,7 +3627,7 @@ function approveAndAssign(orderId){
 CREATE RIDER
 ===================================================== */
 
-function createRider(){
+async function createRider(){
 
     const name =
     document
@@ -3738,121 +3694,118 @@ function createRider(){
     }
 
 
-    const id =
-    generateRiderId();
+    try{
+
+        const id =
+        await generateUniqueRiderId();
 
 
-    const rider = {
+        await db
+        .collection("riders")
+        .doc(id)
+        .set({
 
-        id:id,
+            name:name,
 
-        name:name,
+            phone:phone,
 
-        phone:phone,
+            bike:bike,
 
-        bike:bike,
+            model:model,
 
-        model:model,
+            registration:registration,
 
-        registration:registration,
+            status:status,
 
-        status:status,
+            createdAt:
+            firebase.firestore.FieldValue.serverTimestamp()
 
-        createdAt:
-        new Date().toISOString()
-
-    };
-
-
-    riders.push(rider);
+        });
 
 
-    saveData();
+        document
+        .getElementById(
+            "newRiderMessage"
+        )
+        .innerHTML =
+        `
+
+        <div class="success">
+
+            <strong>
+                Rider account created successfully.
+            </strong>
+
+            <br><br>
+
+            Rider/Job ID:
+
+            <strong>
+                ${escapeHtml(id)}
+            </strong>
+
+            <br><br>
+
+            Give this ID to the rider.
+
+            <br><br>
+
+            The rider can now use this ID
+            from another phone to sign in.
+
+        </div>
+
+        `;
 
 
-    document
-    .getElementById(
-        "newRiderMessage"
-    )
-    .innerHTML =
-    `
-
-    <div class="success">
-
-        <strong>
-            Rider account created successfully.
-        </strong>
-
-        <br><br>
-
-        Rider/Job ID:
-
-        <strong>
-            ${escapeHtml(id)}
-        </strong>
-
-        <br><br>
-
-        Give this ID to the rider.
-        The rider uses it to access the Rider Portal.
-
-    </div>
-
-    `;
+        [
+            "newRiderName",
+            "newRiderPhone",
+            "newRiderBike",
+            "newRiderModel",
+            "newRiderReg"
+        ]
+        .forEach(
+            id =>
+            document
+            .getElementById(id)
+            .value = ""
+        );
 
 
-    document
-    .getElementById(
-        "newRiderName"
-    )
-    .value = "";
+        alert(
+            "Rider created.\n\nRider ID: " +
+            id
+        );
 
+    }
 
-    document
-    .getElementById(
-        "newRiderPhone"
-    )
-    .value = "";
+    catch(error){
 
+        console.error(error);
 
-    document
-    .getElementById(
-        "newRiderBike"
-    )
-    .value = "";
+        alert(
+            "Could not create rider.\n\n" +
+            error.message
+        );
 
-
-    document
-    .getElementById(
-        "newRiderModel"
-    )
-    .value = "";
-
-
-    document
-    .getElementById(
-        "newRiderReg"
-    )
-    .value = "";
-
-
-    updateModeratorDashboard();
-
-    updateModeratorRiders();
+    }
 
 }
 
 
 /* =====================================================
-GENERATE RIDER ID
+GENERATE UNIQUE RIDER ID
 ===================================================== */
 
-function generateRiderId(){
+async function generateUniqueRiderId(){
 
     let id;
 
+    let exists = true;
 
-    do{
+
+    while(exists){
 
         id =
         "ACC-" +
@@ -3861,13 +3814,18 @@ function generateRiderId(){
             Math.random() * 9000
         );
 
+
+        const doc =
+        await db
+        .collection("riders")
+        .doc(id)
+        .get();
+
+
+        exists =
+        doc.exists;
+
     }
-    while(
-        riders.some(
-            r =>
-            r.id === id
-        )
-    );
 
 
     return id;
@@ -3876,168 +3834,27 @@ function generateRiderId(){
 
 
 /* =====================================================
-MODERATOR RIDER LIST
+TOGGLE RIDER
 ===================================================== */
 
-function updateModeratorRiders(){
+async function toggleRiderStatus(id){
 
-    const box =
-    document.getElementById(
-        "moderatorRiderList"
-    );
+    try{
 
-
-    if(!box) return;
-
-
-    if(!riders.length){
-
-        box.innerHTML =
-        "<p>No riders registered yet.</p>";
-
-        return;
-
-    }
+        const ref =
+        db
+        .collection("riders")
+        .doc(id);
 
 
-    box.innerHTML =
-    riders
-    .slice()
-    .reverse()
-    .map(
-        r =>
-        `
-
-        <div class="order">
-
-            <div class="order-row">
-
-                <strong>
-                    ${escapeHtml(r.id)}
-                </strong>
-
-                <span class="badge ${
-                    r.status === "active"
-                    ? ""
-                    : "inactive"
-                }">
-
-                    ${escapeHtml(r.status)}
-
-                </span>
-
-            </div>
+        const doc =
+        await ref.get();
 
 
-            <p>
-                <strong>Name:</strong>
-                ${escapeHtml(r.name)}
-            </p>
-
-
-            <p>
-                <strong>Phone:</strong>
-                ${escapeHtml(r.phone)}
-            </p>
-
-
-            <p>
-                <strong>Motorbike:</strong>
-                ${escapeHtml(r.bike)}
-            </p>
-
-
-            <p>
-                <strong>Model:</strong>
-                ${escapeHtml(r.model)}
-            </p>
-
-
-            <p>
-                <strong>Registration:</strong>
-                ${escapeHtml(r.registration)}
-            </p>
-
-
-            <div class="action-row">
-
-                <button
-                class="btn-light"
-                onclick="toggleRiderStatus('${r.id}')">
-
-                    ${
-                        r.status === "active"
-                        ? "Set Inactive"
-                        : "Set Active"
-                    }
-
-                </button>
-
-
-                ${
-                    r.status === "inactive"
-
-                    ?
-
-                    `
-                    <button
-                    class="btn-danger"
-                    onclick="removeInactiveRider('${r.id}')">
-
-                        🗑️ Remove Inactive Rider
-
-                    </button>
-                    `
-
-                    :
-
-                    ""
-                }
-
-            </div>
-
-        </div>
-
-        `
-    )
-    .join("");
-
-}
-
-
-/* =====================================================
-TOGGLE RIDER STATUS
-===================================================== */
-
-function toggleRiderStatus(id){
-
-    const rider =
-    riders.find(
-        r =>
-        r.id === id
-    );
-
-
-    if(!rider) return;
-
-
-    if(rider.status === "active"){
-
-        const hasActiveJobs =
-        orders.some(
-            o =>
-            o.riderId === id &&
-            (
-                o.status === "approved" ||
-                o.status === "accepted"
-            )
-        );
-
-
-        if(hasActiveJobs){
+        if(!doc.exists){
 
             alert(
-                "This rider has an active job and cannot be made inactive yet."
+                "Rider not found."
             );
 
             return;
@@ -4045,24 +3862,67 @@ function toggleRiderStatus(id){
         }
 
 
-        rider.status =
-        "inactive";
+        const rider =
+        doc.data();
+
+
+        if(rider.status === "active"){
+
+            const jobs =
+            await db
+            .collection("orders")
+            .where(
+                "riderId",
+                "==",
+                id
+            )
+            .get();
+
+
+            const activeJob =
+            jobs.docs.some(
+                d =>
+                d.data().status === "approved" ||
+                d.data().status === "accepted"
+            );
+
+
+            if(activeJob){
+
+                alert(
+                    "This rider has an active job and cannot be made inactive yet."
+                );
+
+                return;
+
+            }
+
+
+            await ref.update({
+                status:"inactive"
+            });
+
+        }
+
+        else{
+
+            await ref.update({
+                status:"active"
+            });
+
+        }
 
     }
-    else{
 
-        rider.status =
-        "active";
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not update rider status."
+        );
 
     }
-
-
-    saveData();
-
-
-    updateModeratorRiders();
-
-    updateModeratorDashboard();
 
 }
 
@@ -4071,97 +3931,183 @@ function toggleRiderStatus(id){
 REMOVE INACTIVE RIDER
 ===================================================== */
 
-function removeInactiveRider(id){
+async function removeInactiveRider(id){
 
-    const rider =
-    riders.find(
-        r =>
-        r.id === id
-    );
+    try{
 
-
-    if(!rider){
-
-        alert(
-            "Rider not found."
-        );
-
-        return;
-
-    }
+        const ref =
+        db
+        .collection("riders")
+        .doc(id);
 
 
-    if(rider.status !== "inactive"){
-
-        alert(
-            "Only inactive riders can be removed."
-        );
-
-        return;
-
-    }
+        const doc =
+        await ref.get();
 
 
-    const hasActiveJobs =
-    orders.some(
-        o =>
-        o.riderId === id &&
-        (
-            o.status === "approved" ||
-            o.status === "accepted"
+        if(!doc.exists){
+
+            alert(
+                "Rider not found."
+            );
+
+            return;
+
+        }
+
+
+        const rider =
+        doc.data();
+
+
+        if(rider.status !== "inactive"){
+
+            alert(
+                "Only inactive riders can be removed."
+            );
+
+            return;
+
+        }
+
+
+        const jobs =
+        await db
+        .collection("orders")
+        .where(
+            "riderId",
+            "==",
+            id
         )
-    );
+        .get();
 
 
-    if(hasActiveJobs){
-
-        alert(
-            "This rider cannot be removed because they still have an active job."
+        const activeJob =
+        jobs.docs.some(
+            d =>
+            d.data().status === "approved" ||
+            d.data().status === "accepted"
         );
 
-        return;
+
+        if(activeJob){
+
+            alert(
+                "This rider still has an active job."
+            );
+
+            return;
+
+        }
+
+
+        const confirmed =
+        confirm(
+            "Remove rider " +
+            rider.name +
+            " (" +
+            id +
+            ")?"
+        );
+
+
+        if(!confirmed)
+            return;
+
+
+        await ref.delete();
+
+
+        alert(
+            "Inactive rider removed successfully."
+        );
 
     }
 
+    catch(error){
 
-    const confirmed =
-    confirm(
-        "Remove " +
-        rider.name +
-        " (" +
-        rider.id +
-        ")?"
-    );
+        console.error(error);
 
+        alert(
+            "Could not remove rider."
+        );
 
-    if(!confirmed) return;
+    }
 
-
-    riders =
-    riders.filter(
-        r =>
-        r.id !== id
-    );
+}
 
 
-    notifications =
-    notifications.filter(
-        n =>
-        n.riderId !== id
-    );
+/* =====================================================
+MODERATOR DASHBOARD
+===================================================== */
+
+async function updateModeratorDashboard(){
+
+    try{
+
+        const orders =
+        await db
+        .collection("orders")
+        .get();
 
 
-    saveData();
+        const riders =
+        await db
+        .collection("riders")
+        .get();
 
 
-    updateModeratorRiders();
+        let pending = 0;
 
-    updateModeratorDashboard();
+        let completed = 0;
 
 
-    alert(
-        "Inactive rider removed successfully."
-    );
+        orders.forEach(doc => {
+
+            const status =
+            doc.data().status;
+
+
+            if(status === "pending")
+                pending++;
+
+
+            if(status === "completed")
+                completed++;
+
+        });
+
+
+        document
+        .getElementById("totalOrders")
+        .textContent =
+        orders.size;
+
+
+        document
+        .getElementById("pendingOrders")
+        .textContent =
+        pending;
+
+
+        document
+        .getElementById("totalRiders")
+        .textContent =
+        riders.size;
+
+
+        document
+        .getElementById("completedOrders")
+        .textContent =
+        completed;
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
 
 }
 
@@ -4170,7 +4116,7 @@ function removeInactiveRider(id){
 OFFERS
 ===================================================== */
 
-function addOffer(){
+async function addOffer(){
 
     const title =
     document
@@ -4191,7 +4137,7 @@ function addOffer(){
     if(!title || !description){
 
         alert(
-            "Please enter offer title and description."
+            "Please complete the offer."
         );
 
         return;
@@ -4199,101 +4145,147 @@ function addOffer(){
     }
 
 
-    offers.push({
+    try{
 
-        id:
-        "OFFER-" +
-        Date.now(),
+        await db
+        .collection("offers")
+        .add({
 
-        title:title,
+            title:title,
 
-        description:description,
+            description:description,
 
-        date:
-        formatDate(new Date())
+            createdAt:
+            firebase.firestore.FieldValue.serverTimestamp()
 
-    });
-
-
-    saveData();
+        });
 
 
-    document
-    .getElementById(
-        "offerTitle"
-    )
-    .value = "";
+        document
+        .getElementById(
+            "offerTitle"
+        )
+        .value = "";
 
 
-    document
-    .getElementById(
-        "offerDescription"
-    )
-    .value = "";
+        document
+        .getElementById(
+            "offerDescription"
+        )
+        .value = "";
 
 
-    renderOffers();
+        alert(
+            "Offer published successfully."
+        );
 
-    renderModeratorOffers();
+
+        loadModeratorOffers();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not publish offer."
+        );
+
+    }
 
 }
 
 
 /* =====================================================
-PUBLIC OFFERS
+LOAD OFFERS
 ===================================================== */
 
-function renderOffers(){
+async function loadOffers(){
 
     const box =
-    document.getElementById(
+    document
+    .getElementById(
         "offersList"
     );
 
 
-    if(!box) return;
+    try{
+
+        const snapshot =
+        await db
+        .collection("offers")
+        .get();
 
 
-    if(!offers.length){
+        if(snapshot.empty){
+
+            box.innerHTML =
+            "<p>No current offers.</p>";
+
+            return;
+
+        }
+
+
+        const offers = [];
+
+
+        snapshot.forEach(
+            doc =>
+            offers.push({
+                id:doc.id,
+                ...doc.data()
+            })
+        );
+
+
+        offers.sort(
+            (a,b) =>
+            getTime(b.createdAt) -
+            getTime(a.createdAt)
+        );
+
 
         box.innerHTML =
-        "<p>No current offers.</p>";
+        offers
+        .map(
+            o =>
+            `
 
-        return;
+            <div class="order">
+
+                <h3>
+                    🎁 ${escapeHtml(o.title)}
+                </h3>
+
+                <p>
+                    ${escapeHtml(o.description)}
+                </p>
+
+                <br>
+
+                <p class="small">
+                    Published:
+                    ${formatTimestamp(o.createdAt)}
+                </p>
+
+            </div>
+
+            `
+        )
+        .join("");
 
     }
 
+    catch(error){
 
-    box.innerHTML =
-    offers
-    .slice()
-    .reverse()
-    .map(
-        o =>
-        `
+        console.error(error);
 
-        <div class="order">
+        box.innerHTML =
+        "<p>Could not load offers.</p>";
 
-            <h3>
-                🎁 ${escapeHtml(o.title)}
-            </h3>
-
-            <p>
-                ${escapeHtml(o.description)}
-            </p>
-
-            <br>
-
-            <p class="small">
-                Published:
-                ${escapeHtml(o.date)}
-            </p>
-
-        </div>
-
-        `
-    )
-    .join("");
+    }
 
 }
 
@@ -4302,55 +4294,86 @@ function renderOffers(){
 MODERATOR OFFERS
 ===================================================== */
 
-function renderModeratorOffers(){
+async function loadModeratorOffers(){
 
     const box =
-    document.getElementById(
+    document
+    .getElementById(
         "moderatorOfferList"
     );
 
 
-    if(!box) return;
+    try{
+
+        const snapshot =
+        await db
+        .collection("offers")
+        .get();
 
 
-    if(!offers.length){
+        if(snapshot.empty){
+
+            box.innerHTML =
+            "<p>No offers published.</p>";
+
+            return;
+
+        }
+
+
+        const offers = [];
+
+
+        snapshot.forEach(
+            doc =>
+            offers.push({
+                id:doc.id,
+                ...doc.data()
+            })
+        );
+
+
+        offers.sort(
+            (a,b) =>
+            getTime(b.createdAt) -
+            getTime(a.createdAt)
+        );
+
 
         box.innerHTML =
-        "<p>No offers published.</p>";
+        offers
+        .map(
+            o =>
+            `
 
-        return;
+            <div class="order">
+
+                <strong>
+                    ${escapeHtml(o.title)}
+                </strong>
+
+                <p>
+                    ${escapeHtml(o.description)}
+                </p>
+
+                <p class="small">
+                    Published:
+                    ${formatTimestamp(o.createdAt)}
+                </p>
+
+            </div>
+
+            `
+        )
+        .join("");
 
     }
 
+    catch(error){
 
-    box.innerHTML =
-    offers
-    .slice()
-    .reverse()
-    .map(
-        o =>
-        `
+        console.error(error);
 
-        <div class="order">
-
-            <strong>
-                ${escapeHtml(o.title)}
-            </strong>
-
-            <p>
-                ${escapeHtml(o.description)}
-            </p>
-
-            <p class="small">
-                Published:
-                ${escapeHtml(o.date)}
-            </p>
-
-        </div>
-
-        `
-    )
-    .join("");
+    }
 
 }
 
@@ -4359,9 +4382,108 @@ function renderModeratorOffers(){
 TERMS
 ===================================================== */
 
-function saveTerms(){
+async function loadTerms(){
 
-    terms =
+    try{
+
+        const doc =
+        await db
+        .collection("settings")
+        .doc("terms")
+        .get();
+
+
+        let data;
+
+
+        if(doc.exists){
+
+            data =
+            doc.data();
+
+        }
+
+        else{
+
+            data = {
+
+                text:DEFAULT_TERMS,
+
+                publishedAt:
+                firebase.firestore.FieldValue.serverTimestamp()
+
+            };
+
+
+            await db
+            .collection("settings")
+            .doc("terms")
+            .set(data);
+
+        }
+
+
+        const text =
+        data.text ||
+        DEFAULT_TERMS;
+
+
+        document
+        .getElementById(
+            "termsText"
+        )
+        .value =
+        text;
+
+
+        document
+        .getElementById(
+            "publicTerms"
+        )
+        .textContent =
+        text;
+
+
+        document
+        .getElementById(
+            "publicTermsDate"
+        )
+        .textContent =
+        formatTimestamp(
+            data.publishedAt
+        );
+
+
+        document
+        .getElementById(
+            "termsPublishedDate"
+        )
+        .textContent =
+        formatTimestamp(
+            data.publishedAt
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        document
+        .getElementById(
+            "publicTerms"
+        )
+        .textContent =
+        DEFAULT_TERMS;
+
+    }
+
+}
+
+
+async function saveTerms(){
+
+    const text =
     document
     .getElementById(
         "termsText"
@@ -4369,51 +4491,50 @@ function saveTerms(){
     .value.trim();
 
 
-    const date =
-    formatDate(new Date());
+    if(!text){
+
+        alert(
+            "Terms cannot be empty."
+        );
+
+        return;
+
+    }
 
 
-    localStorage.setItem(
-        "amirTermsDate",
-        date
-    );
+    try{
+
+        await db
+        .collection("settings")
+        .doc("terms")
+        .set({
+
+            text:text,
+
+            publishedAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
 
 
-    saveData();
-
-    updatePublicTerms();
-
-
-    alert(
-        "Terms & Conditions updated successfully."
-    );
-
-}
+        alert(
+            "Terms & Conditions updated."
+        );
 
 
-/* =====================================================
-PUBLIC TERMS
-===================================================== */
+        loadTerms();
 
-function updatePublicTerms(){
+    }
 
-    document
-    .getElementById(
-        "publicTerms"
-    )
-    .textContent =
-    terms;
+    catch(error){
 
+        console.error(error);
 
-    document
-    .getElementById(
-        "publicTermsDate"
-    )
-    .textContent =
-    localStorage.getItem(
-        "amirTermsDate"
-    ) ||
-    formatDate(new Date());
+        alert(
+            "Could not save terms."
+        );
+
+    }
 
 }
 
@@ -4427,7 +4548,7 @@ function openWaze(destination){
     if(!destination){
 
         alert(
-            "Destination is not available."
+            "Location unavailable."
         );
 
         return;
@@ -4455,14 +4576,16 @@ MODERATOR LOGOUT
 
 function moderatorLogout(){
 
-    hideAllSections();
+    if(moderatorOrderListener)
+        moderatorOrderListener();
+
+    if(moderatorRiderListener)
+        moderatorRiderListener();
 
 
-    document
-    .getElementById(
-        "homeSection"
-    )
-    .classList.remove("hidden");
+    moderatorOrderListener = null;
+
+    moderatorRiderListener = null;
 
 
     document
@@ -4471,29 +4594,14 @@ function moderatorLogout(){
     )
     .value = "";
 
-}
 
-
-/* =====================================================
-DATE
-===================================================== */
-
-function formatDate(date){
-
-    return date.toLocaleDateString(
-        "en-KE",
-        {
-            year:"numeric",
-            month:"long",
-            day:"numeric"
-        }
-    );
+    showHome();
 
 }
 
 
 /* =====================================================
-ESCAPE HTML
+HELPERS
 ===================================================== */
 
 function escapeHtml(value){
@@ -4508,10 +4616,6 @@ function escapeHtml(value){
 }
 
 
-/* =====================================================
-ESCAPE ATTRIBUTE
-===================================================== */
-
 function escapeAttr(value){
 
     return String(value ?? "")
@@ -4522,26 +4626,57 @@ function escapeAttr(value){
 }
 
 
+function getTime(timestamp){
+
+    if(!timestamp)
+        return 0;
+
+
+    if(
+        typeof timestamp.toMillis ===
+        "function"
+    ){
+
+        return timestamp.toMillis();
+
+    }
+
+
+    return 0;
+
+}
+
+
+function formatTimestamp(timestamp){
+
+    if(!timestamp)
+        return "Just now";
+
+
+    if(
+        typeof timestamp.toDate ===
+        "function"
+    ){
+
+        return timestamp
+        .toDate()
+        .toLocaleString(
+            "en-KE"
+        );
+
+    }
+
+
+    return "Just now";
+
+}
+
+
 /* =====================================================
 INITIALIZE
 ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        updatePublicTerms();
-
-        updatePoints();
-
-        renderOffers();
-
-        updateCustomerOrders();
-
-        updateModeratorDashboard();
-
-    }
-);
+loadTerms();
 
 </script>
 
