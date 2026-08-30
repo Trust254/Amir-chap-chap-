@@ -1,89 +1,107 @@
 const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
+const crypto = require("crypto");
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-/* =========================================================
+/* ==========================================
    MIDDLEWARE
-========================================================= */
+========================================== */
 
 app.use(cors());
 app.use(express.json());
 
-/* =========================================================
-   FIREBASE ADMIN INITIALIZATION
-========================================================= */
+/* ==========================================
+   FIREBASE ADMIN
+========================================== */
 
-if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
-  console.error("FIREBASE_SERVICE_ACCOUNT is missing.");
-  process.exit(1);
-}
+if (!admin.apps.length) {
+  try {
+    if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
+      console.error("FIREBASE_SERVICE_ACCOUNT is missing.");
+      process.exit(1);
+    }
 
-let serviceAccount;
+    const serviceAccount = JSON.parse(
+      process.env.FIREBASE_SERVICE_ACCOUNT
+    );
 
-try {
-  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-} catch (error) {
-  console.error("FIREBASE_SERVICE_ACCOUNT is not valid JSON.");
-  process.exit(1);
-}
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
 
-try {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
-
-  console.log("Firebase Admin initialized successfully.");
-} catch (error) {
-  console.error(
-    "Firebase Admin initialization error:",
-    error.message
-  );
-
-  process.exit(1);
+    console.log("Firebase Admin initialized successfully.");
+  } catch (error) {
+    console.error(
+      "Firebase Admin initialization error:",
+      error.message
+    );
+    process.exit(1);
+  }
 }
 
 const db = admin.firestore();
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* ==========================================
+   PASSWORD HASHING
+========================================== */
 
-function clean(value) {
-  return typeof value === "string" ? value.trim() : "";
+function hashPassword(password, salt = crypto.randomBytes(16).toString("hex")) {
+  const hash = crypto
+    .scryptSync(password, salt, 64)
+    .toString("hex");
+
+  return `${salt}:${hash}`;
 }
 
-/* =========================================================
-   AUTHORIZATION
-========================================================= */
+function verifyPassword(password, storedPassword) {
+  try {
+    const parts = storedPassword.split(":");
 
-async function requireModerator(req, res, next) {
+    if (parts.length !== 2) return false;
+
+    const salt = parts[0];
+    const storedHash = parts[1];
+
+    const hash = crypto
+      .scryptSync(password, salt, 64)
+      .toString("hex");
+
+    return crypto.timingSafeEqual(
+      Buffer.from(hash, "hex"),
+      Buffer.from(storedHash, "hex")
+    );
+  } catch {
+    return false;
+  }
+}
+
+/* ==========================================
+   AUTHENTICATION HELPERS
+========================================== */
+
+async function verifyFirebaseToken(req, res, next) {
   try {
     const header = req.headers.authorization || "";
 
     if (!header.startsWith("Bearer ")) {
       return res.status(401).json({
-        error: "Moderator authentication token is required."
+        error: "Authentication token required."
       });
     }
 
     const token = header.substring(7);
 
-    const decoded = await admin.auth().verifyIdToken(token);
+    const decodedToken =
+      await admin.auth().verifyIdToken(token);
 
-    if (decoded.admin !== true) {
-      return res.status(403).json({
-        error: "Moderator authorization required."
-      });
-    }
+    req.user = decodedToken;
 
-    req.user = decoded;
     next();
-
   } catch (error) {
-    console.error("Moderator authentication error:", error.message);
+    console.error("Token verification failed:", error.message);
 
     return res.status(401).json({
       error: "Invalid or expired authentication token."
@@ -91,9 +109,45 @@ async function requireModerator(req, res, next) {
   }
 }
 
-/* =========================================================
+async function requireModerator(req, res, next) {
+  try {
+    const header = req.headers.authorization || "";
+
+    if (!header.startsWith("Bearer ")) {
+      return res.status(401).json({
+        error: "Moderator authentication required."
+      });
+    }
+
+    const token = header.substring(7);
+
+    const decodedToken =
+      await admin.auth().verifyIdToken(token);
+
+    if (decodedToken.admin !== true) {
+      return res.status(403).json({
+        error: "Moderator authorization required."
+      });
+    }
+
+    req.user = decodedToken;
+
+    next();
+  } catch (error) {
+    console.error(
+      "Moderator authentication failed:",
+      error.message
+    );
+
+    return res.status(403).json({
+      error: "Unauthorized moderator."
+    });
+  }
+}
+
+/* ==========================================
    HEALTH CHECK
-========================================================= */
+========================================== */
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -103,9 +157,9 @@ app.get("/", (req, res) => {
   });
 });
 
-/* =========================================================
-   RIDER TEST ROUTE
-========================================================= */
+/* ==========================================
+   RIDER TEST
+========================================== */
 
 app.get("/api/moderator/riders/test", (req, res) => {
   res.status(200).json({
@@ -114,153 +168,49 @@ app.get("/api/moderator/riders/test", (req, res) => {
   });
 });
 
-/* =========================================================
-   RIDER LOGIN
-   Rider enters:
-   ACC-1235 + password
-========================================================= */
+/* ==========================================
+   CUSTOMER REGISTER
+========================================== */
 
-app.post("/api/rider-login", async (req, res) => {
-  try {
-    const jobId = clean(req.body.jobId).toUpperCase();
-    const password = req.body.password || "";
-
-    if (!jobId || !password) {
-      return res.status(400).json({
-        error: "Rider Job ID and password are required."
-      });
-    }
-
-    const snapshot = await db
-      .collection("riders")
-      .where("jobId", "==", jobId)
-      .limit(1)
-      .get();
-
-    if (snapshot.empty) {
-      return res.status(401).json({
-        error: "Rider Job ID or password is incorrect."
-      });
-    }
-
-    const doc = snapshot.docs[0];
-    const rider = {
-      uid: doc.id,
-      ...doc.data()
-    };
-
-    if (rider.status !== "active") {
-      return res.status(403).json({
-        error: "This rider account is not active."
-      });
-    }
-
-    /*
-      Rider Firebase Auth accounts use an internal email
-      generated from the Rider Job ID.
-    */
-
-    const riderEmail =
-      jobId.toLowerCase() + "@riders.amirchapchap.local";
-
-    /*
-      Firebase Identity Toolkit REST API is used only
-      to verify the rider's password.
-    */
-
-    const apiKey = process.env.FIREBASE_WEB_API_KEY;
-
-    if (!apiKey) {
-      return res.status(500).json({
-        error: "FIREBASE_WEB_API_KEY is not configured on the backend."
-      });
-    }
-
-    const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
-      encodeURIComponent(apiKey),
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: riderEmail,
-          password: password,
-          returnSecureToken: true
-        })
-      }
-    );
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      return res.status(401).json({
-        error: "Rider Job ID or password is incorrect."
-      });
-    }
-
-    return res.status(200).json({
-      message: "Rider login successful.",
-      token: result.idToken,
-      rider: {
-        uid: rider.uid,
-        jobId: rider.jobId || "",
-        name: rider.name || "",
-        phone: rider.phone || "",
-        whatsapp: rider.whatsapp || "",
-        nationalId: rider.nationalId || "",
-        bikeType: rider.bikeType || "",
-        bikeModel: rider.bikeModel || "",
-        status: rider.status || "active"
-      }
-    });
-
-  } catch (error) {
-    console.error("Rider login error:", error);
-
-    return res.status(500).json({
-      error: error.message
-    });
-  }
-});
-
-/* =========================================================
-   MODERATOR - GET RIDERS
-========================================================= */
-
-app.get(
-  "/api/moderator/riders",
-  requireModerator,
+app.post(
+  "/api/customer/register",
+  verifyFirebaseToken,
   async (req, res) => {
     try {
-      const snapshot = await db
-        .collection("riders")
-        .orderBy("createdAt", "desc")
-        .get();
+      const uid = req.user.uid;
+      const email = req.body.email || req.user.email || "";
 
-      const riders = snapshot.docs.map(doc => ({
-        uid: doc.id,
-        ...doc.data()
-      }));
+      await db.collection("users").doc(uid).set(
+        {
+          uid,
+          email,
+          role: "customer",
+          points: 0,
+          createdAt:
+            admin.firestore.FieldValue.serverTimestamp()
+        },
+        { merge: true }
+      );
 
-      return res.status(200).json({
-        riders
+      res.status(200).json({
+        message: "Customer registered successfully."
       });
-
     } catch (error) {
-      console.error("Error loading riders:", error);
+      console.error(
+        "Customer registration error:",
+        error
+      );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
-   MODERATOR - CREATE RIDER
-========================================================= */
+/* ==========================================
+   CREATE RIDER
+========================================== */
 
 app.post(
   "/api/moderator/riders",
@@ -279,72 +229,47 @@ app.post(
         status
       } = req.body;
 
-      const cleanJobId = clean(jobId).toUpperCase();
-      const cleanName = clean(name);
-      const cleanPhone = clean(phone);
-      const cleanWhatsapp = clean(whatsapp);
-      const cleanNationalId = clean(nationalId);
-      const cleanBikeType = clean(bikeType);
-      const cleanBikeModel = clean(bikeModel);
-
-      if (!cleanJobId || !cleanName || !password) {
+      if (!jobId || !name || !password) {
         return res.status(400).json({
-          error: "Name, Rider Job ID and password are required."
+          error:
+            "Rider Job ID, name and password are required."
         });
       }
 
-      if (password.length < 6) {
-        return res.status(400).json({
-          error: "Rider password must contain at least 6 characters."
-        });
-      }
+      const cleanJobId =
+        String(jobId).trim().toUpperCase();
 
-      /*
-        Check whether Job ID already exists.
-      */
+      const riderQuery =
+        await db
+          .collection("riders")
+          .where("jobId", "==", cleanJobId)
+          .limit(1)
+          .get();
 
-      const existing = await db
-        .collection("riders")
-        .where("jobId", "==", cleanJobId)
-        .limit(1)
-        .get();
-
-      if (!existing.empty) {
+      if (!riderQuery.empty) {
         return res.status(409).json({
-          error: "This Rider Job ID is already registered."
+          error: "This Rider Job ID already exists."
         });
       }
 
       /*
-        Internal Firebase email.
+        Create a Firebase Auth account using an internal
+        email address. Riders don't need to see this email.
       */
 
-      const riderEmail =
-        cleanJobId.toLowerCase() +
-        "@riders.amirchapchap.local";
+      const internalEmail =
+        `${cleanJobId.toLowerCase()}@rider.amirchapchap.local`;
 
-      let userRecord;
-
-      try {
-        userRecord = await admin.auth().createUser({
-          email: riderEmail,
-          password: password,
-          displayName: cleanName,
-          disabled: status === "inactive"
+      const userRecord =
+        await admin.auth().createUser({
+          email: internalEmail,
+          password:
+            crypto.randomBytes(32).toString("hex"),
+          displayName: name
         });
-      } catch (error) {
-        console.error(
-          "Firebase rider account creation error:",
-          error.message
-        );
-
-        return res.status(500).json({
-          error: error.message
-        });
-      }
 
       /*
-        Give rider role.
+        Rider gets a custom Firebase claim.
       */
 
       await admin.auth().setCustomUserClaims(
@@ -354,33 +279,32 @@ app.post(
         }
       );
 
-      /*
-        Save rider profile.
-      */
+      const passwordHash =
+        hashPassword(password);
+
+      const rider = {
+        uid: userRecord.uid,
+        jobId: cleanJobId,
+        name: String(name).trim(),
+        phone: phone || "",
+        whatsapp: whatsapp || "",
+        nationalId: nationalId || "",
+        bikeType: bikeType || "",
+        bikeModel: bikeModel || "",
+        passwordHash,
+        status: status || "active",
+        role: "rider",
+        createdAt:
+          admin.firestore.FieldValue.serverTimestamp()
+      };
 
       await db
         .collection("riders")
         .doc(userRecord.uid)
-        .set({
-          uid: userRecord.uid,
-          jobId: cleanJobId,
-          name: cleanName,
-          phone: cleanPhone,
-          whatsapp: cleanWhatsapp,
-          nationalId: cleanNationalId,
-          bikeType: cleanBikeType,
-          bikeModel: cleanBikeModel,
-          email: riderEmail,
-          role: "rider",
-          status: status === "inactive"
-            ? "inactive"
-            : "active",
-          createdAt:
-            admin.firestore.FieldValue.serverTimestamp()
-        });
+        .set(rider);
 
       /*
-        Also create/update users collection.
+        Also create/update the users record.
       */
 
       await db
@@ -389,78 +313,208 @@ app.post(
         .set({
           uid: userRecord.uid,
           jobId: cleanJobId,
-          name: cleanName,
-          displayName: cleanName,
-          phone: cleanPhone,
-          whatsapp: cleanWhatsapp,
-          nationalId: cleanNationalId,
-          bikeType: cleanBikeType,
-          bikeModel: cleanBikeModel,
-          email: riderEmail,
+          name: String(name).trim(),
+          phone: phone || "",
+          whatsapp: whatsapp || "",
           role: "rider",
-          status: status === "inactive"
-            ? "inactive"
-            : "active",
+          status: status || "active",
           createdAt:
             admin.firestore.FieldValue.serverTimestamp()
         });
 
-      return res.status(201).json({
+      res.status(201).json({
         message: "Rider registered successfully.",
         rider: {
           uid: userRecord.uid,
           jobId: cleanJobId,
-          name: cleanName,
-          phone: cleanPhone,
-          whatsapp: cleanWhatsapp,
-          bikeType: cleanBikeType,
-          bikeModel: cleanBikeModel,
-          status:
-            status === "inactive"
-              ? "inactive"
-              : "active"
+          name: String(name).trim(),
+          phone: phone || "",
+          whatsapp: whatsapp || "",
+          bikeType: bikeType || "",
+          bikeModel: bikeModel || "",
+          status: status || "active"
         }
       });
-
     } catch (error) {
-      console.error("Error creating rider:", error);
+      console.error(
+        "Error creating rider:",
+        error
+      );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
-   MODERATOR - CHANGE RIDER STATUS
-========================================================= */
+/* ==========================================
+   RIDER LOGIN
+========================================== */
+
+app.post("/api/rider-login", async (req, res) => {
+  try {
+    const {
+      jobId,
+      password
+    } = req.body;
+
+    if (!jobId || !password) {
+      return res.status(400).json({
+        error:
+          "Rider Job ID and password are required."
+      });
+    }
+
+    const cleanJobId =
+      String(jobId).trim().toUpperCase();
+
+    const snapshot =
+      await db
+        .collection("riders")
+        .where("jobId", "==", cleanJobId)
+        .limit(1)
+        .get();
+
+    if (snapshot.empty) {
+      return res.status(401).json({
+        error: "Invalid Rider Job ID or password."
+      });
+    }
+
+    const doc = snapshot.docs[0];
+    const rider = doc.data();
+
+    if (rider.status !== "active") {
+      return res.status(403).json({
+        error:
+          "This rider account is not active."
+      });
+    }
+
+    if (
+      !rider.passwordHash ||
+      !verifyPassword(
+        password,
+        rider.passwordHash
+      )
+    ) {
+      return res.status(401).json({
+        error: "Invalid Rider Job ID or password."
+      });
+    }
+
+    /*
+      Create a Firebase custom token.
+      The frontend can use the returned token later
+      if Firebase authentication is needed.
+    */
+
+    const customToken =
+      await admin
+        .auth()
+        .createCustomToken(
+          rider.uid,
+          {
+            role: "rider",
+            jobId: rider.jobId
+          }
+        );
+
+    res.status(200).json({
+      message: "Rider login successful.",
+      token: customToken,
+      rider: {
+        uid: rider.uid,
+        jobId: rider.jobId,
+        name: rider.name,
+        phone: rider.phone || "",
+        whatsapp: rider.whatsapp || "",
+        bikeType: rider.bikeType || "",
+        bikeModel: rider.bikeModel || "",
+        status: rider.status
+      }
+    });
+  } catch (error) {
+    console.error(
+      "Rider login error:",
+      error
+    );
+
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
+
+/* ==========================================
+   GET ALL RIDERS
+========================================== */
+
+app.get(
+  "/api/moderator/riders",
+  requireModerator,
+  async (req, res) => {
+    try {
+      const snapshot =
+        await db
+          .collection("riders")
+          .orderBy("createdAt", "desc")
+          .get();
+
+      const riders =
+        snapshot.docs.map(doc => {
+          const data = doc.data();
+
+          /*
+            Never send the password hash to the frontend.
+          */
+
+          delete data.passwordHash;
+
+          return {
+            id: doc.id,
+            ...data
+          };
+        });
+
+      res.status(200).json({
+        riders
+      });
+    } catch (error) {
+      console.error(
+        "Error fetching riders:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   CHANGE RIDER STATUS
+========================================== */
 
 app.patch(
   "/api/moderator/riders/:uid/status",
   requireModerator,
   async (req, res) => {
     try {
-      const uid = clean(req.params.uid);
-      const status = clean(req.body.status).toLowerCase();
+      const uid = req.params.uid;
+      const { status } = req.body;
 
-      if (!uid) {
+      if (
+        status !== "active" &&
+        status !== "inactive"
+      ) {
         return res.status(400).json({
-          error: "Rider UID is required."
+          error:
+            "Status must be active or inactive."
         });
       }
-
-      if (!["active", "inactive"].includes(status)) {
-        return res.status(400).json({
-          error: "Status must be active or inactive."
-        });
-      }
-
-      const disabled = status === "inactive";
-
-      await admin.auth().updateUser(uid, {
-        disabled
-      });
 
       await db
         .collection("riders")
@@ -476,42 +530,44 @@ app.patch(
           {
             status
           },
-          {
-            merge: true
-          }
+          { merge: true }
         );
 
-      return res.status(200).json({
-        message: "Rider status updated successfully.",
-        status
+      /*
+        Disable/enable the Firebase Auth account too.
+      */
+
+      await admin.auth().updateUser(uid, {
+        disabled: status !== "active"
       });
 
+      res.status(200).json({
+        message:
+          `Rider status changed to ${status}.`
+      });
     } catch (error) {
-      console.error("Error changing rider status:", error);
+      console.error(
+        "Error changing rider status:",
+        error
+      );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
-   MODERATOR - DELETE RIDER
-========================================================= */
+/* ==========================================
+   DELETE RIDER
+========================================== */
 
 app.delete(
   "/api/moderator/riders/:uid",
   requireModerator,
   async (req, res) => {
     try {
-      const uid = clean(req.params.uid);
-
-      if (!uid) {
-        return res.status(400).json({
-          error: "Rider UID is required."
-        });
-      }
+      const uid = req.params.uid;
 
       await admin.auth().deleteUser(uid);
 
@@ -525,102 +581,108 @@ app.delete(
         .doc(uid)
         .delete();
 
-      return res.status(200).json({
-        message: "Rider removed successfully."
+      res.status(200).json({
+        message:
+          "Rider removed successfully."
       });
-
     } catch (error) {
-      console.error("Error removing rider:", error);
+      console.error(
+        "Error removing rider:",
+        error
+      );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
-   MODERATOR - GET CUSTOMERS
-========================================================= */
+/* ==========================================
+   GET CUSTOMERS
+========================================== */
 
 app.get(
   "/api/moderator/customers",
   requireModerator,
   async (req, res) => {
     try {
-      const snapshot = await db
-        .collection("users")
-        .where("role", "==", "customer")
-        .get();
+      const snapshot =
+        await db
+          .collection("users")
+          .where("role", "==", "customer")
+          .get();
 
-      const customers = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const customers =
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-      return res.status(200).json({
+      res.status(200).json({
         customers
       });
-
     } catch (error) {
-      console.error("Error loading customers:", error);
+      console.error(
+        "Error loading customers:",
+        error
+      );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
-   MODERATOR - GET ORDERS
-========================================================= */
+/* ==========================================
+   GET ALL ORDERS
+========================================== */
 
 app.get(
   "/api/moderator/orders",
   requireModerator,
   async (req, res) => {
     try {
-      const snapshot = await db
-        .collection("orders")
-        .orderBy("createdAt", "desc")
-        .get();
+      const snapshot =
+        await db
+          .collection("orders")
+          .orderBy("createdAt", "desc")
+          .get();
 
-      const orders = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const orders =
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-      return res.status(200).json({
+      res.status(200).json({
         orders
       });
-
     } catch (error) {
-      console.error("Error loading orders:", error);
+      console.error(
+        "Error loading orders:",
+        error
+      );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
-   MODERATOR - APPROVE ORDER
-========================================================= */
+/* ==========================================
+   APPROVE ORDER
+========================================== */
 
 app.patch(
   "/api/moderator/orders/:orderId/approve",
   requireModerator,
   async (req, res) => {
     try {
-      const orderId = clean(req.params.orderId);
-
-      if (!orderId) {
-        return res.status(400).json({
-          error: "Order ID is required."
-        });
-      }
+      const orderId =
+        req.params.orderId;
 
       const orderRef =
         db.collection("orders").doc(orderId);
@@ -634,15 +696,6 @@ app.patch(
         });
       }
 
-      const order = orderSnapshot.data();
-
-      if (order.status !== "pending") {
-        return res.status(400).json({
-          error:
-            "Only pending orders can be approved."
-        });
-      }
-
       await orderRef.update({
         status: "approved",
         approvedAt:
@@ -650,74 +703,120 @@ app.patch(
         approvedBy: req.user.uid
       });
 
-      return res.status(200).json({
-        message: "Order approved successfully."
+      res.status(200).json({
+        message:
+          "Order approved successfully."
       });
-
-    } catch (error) {
-      console.error("Error approving order:", error);
-
-      return res.status(500).json({
-        error: error.message
-      });
-    }
-  }
-);
-
-/* =========================================================
-   CUSTOMER REGISTER
-========================================================= */
-
-app.post(
-  "/api/customer/register",
-  async (req, res) => {
-    try {
-      const uid = clean(req.body.uid);
-      const email = clean(req.body.email);
-
-      if (!uid || !email) {
-        return res.status(400).json({
-          error: "Customer UID and email are required."
-        });
-      }
-
-      await db
-        .collection("users")
-        .doc(uid)
-        .set(
-          {
-            uid,
-            email,
-            role: "customer",
-            points: 0,
-            createdAt:
-              admin.firestore.FieldValue.serverTimestamp()
-          },
-          {
-            merge: true
-          }
-        );
-
-      return res.status(200).json({
-        message: "Customer registered successfully."
-      });
-
     } catch (error) {
       console.error(
-        "Customer registration error:",
+        "Error approving order:",
         error
       );
 
-      return res.status(500).json({
+      res.status(500).json({
         error: error.message
       });
     }
   }
 );
 
-/* =========================================================
+/* ==========================================
+   RIDER JOBS
+========================================== */
+
+app.get(
+  "/api/rider/jobs",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      if (req.user.role !== "rider") {
+        return res.status(403).json({
+          error: "Rider access required."
+        });
+      }
+
+      const snapshot =
+        await db
+          .collection("orders")
+          .where(
+            "riderUid",
+            "==",
+            req.user.uid
+          )
+          .get();
+
+      const orders =
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+      res.status(200).json({
+        orders
+      });
+    } catch (error) {
+      console.error(
+        "Error loading rider jobs:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   RIDER NOTIFICATIONS
+========================================== */
+
+app.get(
+  "/api/rider/notifications",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      if (req.user.role !== "rider") {
+        return res.status(403).json({
+          error: "Rider access required."
+        });
+      }
+
+      const snapshot =
+        await db
+          .collection("notifications")
+          .where(
+            "riderUid",
+            "==",
+            req.user.uid
+          )
+          .get();
+
+      const notifications =
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+      res.status(200).json({
+        notifications
+      });
+    } catch (error) {
+      console.error(
+        "Error loading notifications:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
    START SERVER
-========================================================= */
+========================================== */
 
 app.listen(PORT, () => {
   console.log(
