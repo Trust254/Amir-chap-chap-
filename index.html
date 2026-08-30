@@ -188,7 +188,6 @@ button{
   border-radius:10px;
   padding:15px;
   margin-top:10px;
-  border:1px solid #e5e7eb;
 }
 
 footer{
@@ -203,44 +202,30 @@ footer a{
   color:#f59e0b;
 }
 
+.small{
+  font-size:13px;
+  color:#64748b;
+}
+
 .loading{
   padding:15px;
   text-align:center;
 }
 
-.status-approved{
-  color:#16a34a;
-  font-weight:bold;
-}
-
-.status-pending{
-  color:#d97706;
-  font-weight:bold;
-}
-
-.status-active{
-  color:#16a34a;
-  font-weight:bold;
-}
-
-.status-inactive{
-  color:#dc2626;
-  font-weight:bold;
-}
-
 @media(max-width:600px){
+
+  .nav{
+    flex-direction:column;
+    align-items:flex-start;
+  }
 
   .hero h1{
     font-size:28px;
   }
 
   nav button{
-    padding:6px 8px;
+    padding:7px 9px;
     font-size:12px;
-  }
-
-  .container{
-    padding:12px;
   }
 }
 </style>
@@ -249,6 +234,7 @@ footer a{
 <body>
 
 <header>
+
 <div class="nav">
 
 <div class="logo">
@@ -256,17 +242,30 @@ Amir <span>Chap Chap</span>
 </div>
 
 <nav>
+
 <button onclick="showPage('home')">Home</button>
-<button onclick="showPage('customer')">Customer</button>
-<button onclick="showPage('rider')">Rider</button>
-<button onclick="showPage('moderator')">Moderator</button>
+
+<button onclick="showPage('customer')">
+Customer
+</button>
+
+<button onclick="showPage('rider')">
+Rider
+</button>
+
+<button onclick="showPage('moderator')">
+Moderator
+</button>
+
 </nav>
 
 </div>
+
 </header>
 
 
 <main class="container">
+
 
 <!-- =====================================================
 HOME
@@ -302,41 +301,36 @@ Rider Portal
 
 <div class="card">
 <h3>📦 Delivery</h3>
-<p>
-Send packages through our approved riders.
-</p>
+<p>Send packages through approved Amir Chap Chap riders.</p>
 </div>
 
 <div class="card">
 <h3>🏍️ Passenger Transport</h3>
-<p>
-Book transport and connect with your assigned rider.
-</p>
+<p>Book passenger transport and connect with your rider.</p>
 </div>
 
 <div class="card">
 <h3>⭐ Rewards</h3>
-<p>
-Earn points as a customer.
-</p>
+<p>Earn points as an Amir Chap Chap customer.</p>
 </div>
 
 <div class="card">
 <h3>📞 Customer Care</h3>
-<p>
-Call Customer Care.
-</p>
+
+<p>Call Customer Care:</p>
 
 <br>
 
 <a href="tel:0795653284">
 0795653284
 </a>
+
 </div>
 
 </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -353,14 +347,14 @@ CUSTOMER
 
 <div id="customerAuth">
 
-<h3>Create / Login</h3>
+<h3>Customer Login / Registration</h3>
 
 <label>Email</label>
 
 <input
 id="customerEmail"
 type="email"
-placeholder="Email"
+placeholder="Enter your email"
 >
 
 <label>Password</label>
@@ -368,30 +362,34 @@ placeholder="Email"
 <input
 id="customerPassword"
 type="password"
-placeholder="Password"
+placeholder="Enter password"
 >
 
-<button class="primary"
+<button
+class="primary"
 onclick="customerRegister()">
 Register
 </button>
 
-<button class="dark"
+<button
+class="dark"
 onclick="customerLogin()">
 Login
 </button>
 
-<div id="customerMessage"
+<div
+id="customerMessage"
 class="message">
 </div>
 
 </div>
 
 
-<div id="customerDashboard"
-class="hidden">
+<div id="customerDashboard" class="hidden">
 
 <h3>Book a Service</h3>
+
+<br>
 
 <label>Service</label>
 
@@ -434,7 +432,8 @@ placeholder="Example: 5"
 >
 
 
-<button class="dark"
+<button
+class="dark"
 onclick="calculateFare()">
 Calculate Fare
 </button>
@@ -444,13 +443,13 @@ Calculate Fare
 
 <div>Estimated Fare</div>
 
-<div id="fareDisplay"
+<div
+id="fareDisplay"
 class="price">
 KSh 0
 </div>
 
-<small id="fareExplanation">
-</small>
+<small id="fareExplanation"></small>
 
 </div>
 
@@ -477,32 +476,35 @@ Pay With Points
 </select>
 
 
-<button class="primary"
+<button
+class="primary"
 onclick="placeOrder()">
 Place Booking
 </button>
 
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="loadMyOrders()">
 My Bookings
 </button>
 
 
-<button class="danger"
+<button
+class="danger"
 onclick="customerLogout()">
 Sign Out
 </button>
 
 
-<div id="customerOrders">
-</div>
+<div id="customerOrders"></div>
 
 </div>
 
 </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -515,105 +517,95 @@ RIDER
 
 <h2>🏍️ Rider Portal</h2>
 
-<p>
-Use the Rider Job ID registered by the Moderator.
-</p>
-
-<p>
-Example:
-<strong>ACC-1235</strong>
+<p class="small">
+Riders sign in using the Job ID and password created by the Moderator.
 </p>
 
 <br>
+
 
 <div id="riderLoginBox">
 
 <label>Rider Job ID</label>
 
 <input
-id="riderLoginJobId"
-placeholder="ACC-1235"
-autocomplete="username"
+id="riderJobId"
+placeholder="Example: ACC-1001"
 >
 
 
 <label>Password</label>
 
 <input
-id="riderLoginPassword"
+id="riderPassword"
 type="password"
-placeholder="Password"
-autocomplete="current-password"
+placeholder="Rider password"
 >
 
 
-<button class="dark"
+<button
+class="dark"
 onclick="riderLogin()">
 Rider Sign In
 </button>
 
 
-<div id="riderMessage"
+<div
+id="riderMessage"
 class="message">
 </div>
 
 </div>
 
+
+<div id="riderDashboard" class="hidden">
+
+<h3>
+Rider Dashboard
+</h3>
+
+<br>
+
+<div
+id="riderProfile"
+class="route-box">
 </div>
 
-
-<div id="riderDashboard"
-class="hidden">
-
-<div class="card">
-
-<h2>
-Rider Dashboard
-
-<span
-id="notificationBadge"
-class="badge">
-0 notifications
-</span>
-
-</h2>
-
-
-<p id="riderProfile"></p>
 
 <br>
 
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="loadRiderNotifications()">
 🔔 Notifications
 </button>
 
 
-<button class="dark"
+<button
+class="dark"
 onclick="loadRiderOrders()">
 My Jobs
 </button>
 
 
-<button class="danger"
+<button
+class="danger"
 onclick="riderLogout()">
 Sign Out
 </button>
 
 
-<div id="riderNotifications">
-</div>
+<div id="riderNotifications"></div>
 
-
-<div id="riderOrders">
-</div>
+<div id="riderOrders"></div>
 
 </div>
 
 </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -647,64 +639,73 @@ placeholder="Moderator password"
 >
 
 
-<button class="dark"
+<button
+class="dark"
 onclick="moderatorLogin()">
 Moderator Sign In
 </button>
 
 
-<div id="moderatorMessage"
+<div
+id="moderatorMessage"
 class="message">
 </div>
 
 </div>
 
-</div>
 
-
-<div id="moderatorDashboard"
+<div
+id="moderatorDashboard"
 class="hidden">
 
-<div class="card">
+<h3>Moderator Dashboard</h3>
 
-<h2>Moderator Dashboard</h2>
+<br>
 
-<button class="dark"
+
+<button
+class="dark"
 onclick="showModeratorSection('riders')">
 🏍️ Riders
 </button>
 
-<button class="dark"
+
+<button
+class="dark"
 onclick="showModeratorSection('orders')">
 📦 Orders
 </button>
 
-<button class="dark"
+
+<button
+class="dark"
 onclick="showModeratorSection('customers')">
 👥 Customers
 </button>
 
-<button class="danger"
+
+<button
+class="danger"
 onclick="moderatorLogout()">
 Sign Out
 </button>
 
+
+</div>
+
 </div>
 
 
+
 <!-- =====================================================
-RIDERS
+RIDER MANAGEMENT
 ===================================================== -->
 
-<div id="moderatorRiders"
-class="card">
+<div
+id="moderatorRiders"
+class="card hidden">
 
 <h3>Register Rider</h3>
-
-<p>
-Create a rider using a Rider Job ID such as
-<strong>ACC-1235</strong>.
-</p>
 
 <br>
 
@@ -761,16 +762,16 @@ placeholder="Example: Boxer 150"
 
 <input
 id="jobId"
-placeholder="Example: ACC-1235"
+placeholder="Example: ACC-1001"
 >
 
 
 <label>Rider Password</label>
 
 <input
-id="riderCreatePassword"
+id="newRiderPassword"
 type="password"
-placeholder="Create rider password"
+placeholder="Create rider login password"
 >
 
 
@@ -789,13 +790,15 @@ Inactive
 </select>
 
 
-<button class="primary"
+<button
+class="primary"
 onclick="createRider()">
 Add Rider
 </button>
 
 
-<div id="riderCreateMessage"
+<div
+id="riderCreateMessage"
 class="message">
 </div>
 
@@ -804,62 +807,69 @@ class="message">
 
 <h3>Registered Riders</h3>
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="loadRiders()">
 Refresh Riders
 </button>
 
 
-<div id="ridersList">
-</div>
+<div id="ridersList"></div>
 
 </div>
+
 
 
 <!-- =====================================================
 ORDERS
 ===================================================== -->
 
-<div id="moderatorOrders"
+<div
+id="moderatorOrders"
 class="card hidden">
 
 <h3>All Orders</h3>
 
-<button class="secondary"
+<br>
+
+<button
+class="secondary"
 onclick="loadAllOrders()">
 Refresh Orders
 </button>
 
-<div id="allOrders">
-</div>
+<div id="allOrders"></div>
 
 </div>
+
 
 
 <!-- =====================================================
 CUSTOMERS
 ===================================================== -->
 
-<div id="moderatorCustomers"
+<div
+id="moderatorCustomers"
 class="card hidden">
 
 <h3>Customers</h3>
 
-<button class="secondary"
+<br>
+
+<button
+class="secondary"
 onclick="loadCustomers()">
 Refresh Customers
 </button>
 
-<div id="customersList">
-</div>
-
-</div>
+<div id="customersList"></div>
 
 </div>
 
 </section>
 
 </main>
+
 
 
 <footer>
@@ -879,18 +889,17 @@ Customer Care:
 </a>
 </p>
 
-<p>
-Published: 30 August 2026
-</p>
-
 <br>
 
+<p>
 <a href="#"
 onclick="showTerms();return false;">
 Terms & Conditions
 </a>
+</p>
 
 </footer>
+
 
 
 <!-- =====================================================
@@ -911,7 +920,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithCustomToken,
-  signOut
+  signOut,
+  onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
@@ -920,14 +930,18 @@ from
 import {
   getFirestore,
   collection,
-  addDoc,
+  doc,
+  setDoc,
   getDocs,
+  addDoc,
   query,
   where,
+  updateDoc,
   serverTimestamp
 }
 from
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
 
 
 /* =====================================================
@@ -957,6 +971,7 @@ const firebaseConfig = {
 };
 
 
+
 const firebaseApp =
 initializeApp(firebaseConfig);
 
@@ -967,6 +982,7 @@ const db =
 getFirestore(firebaseApp);
 
 
+
 /* =====================================================
 BACKEND
 ===================================================== */
@@ -975,50 +991,80 @@ const API_BASE =
 "https://amir-chap-chap-backend.onrender.com";
 
 
+
+let currentUser = null;
+
 let calculatedFare = 0;
 
-let riderSession = null;
 
 
 /* =====================================================
-API REQUEST
+HELPER
 ===================================================== */
 
-async function apiRequest(path, options = {}){
+function showMessage(id,text){
+
+  const element =
+  document.getElementById(id);
+
+  if(element){
+    element.textContent = text;
+  }
+
+}
+
+
+
+async function getFirebaseToken(){
+
+  if(!auth.currentUser){
+    throw new Error("You are not signed in.");
+  }
+
+  return await auth.currentUser.getIdToken(true);
+
+}
+
+
+
+async function backendRequest(
+  endpoint,
+  options={}
+){
+
+  const token =
+  await getFirebaseToken();
+
+  const headers = {
+
+    "Content-Type":
+    "application/json",
+
+    ...(options.headers || {}),
+
+    "Authorization":
+    "Bearer " + token
+
+  };
+
 
   const response =
   await fetch(
-    API_BASE + path,
+    API_BASE + endpoint,
     {
       ...options,
-
-      headers:{
-        "Content-Type":"application/json",
-        ...(options.headers || {})
-      }
+      headers
     }
   );
-
-
-  const text =
-  await response.text();
 
 
   let data = {};
 
   try{
-    data =
-    text
-    ?
-    JSON.parse(text)
-    :
-    {};
+    data = await response.json();
   }
   catch{
-    throw new Error(
-      "Server returned an unexpected response. HTTP " +
-      response.status
-    );
+    data = {};
   }
 
 
@@ -1026,8 +1072,7 @@ async function apiRequest(path, options = {}){
 
     throw new Error(
       data.error ||
-      data.message ||
-      ("HTTP " + response.status)
+      "Backend request failed."
     );
 
   }
@@ -1037,24 +1082,6 @@ async function apiRequest(path, options = {}){
 
 }
 
-
-/* =====================================================
-GET FIREBASE ID TOKEN
-===================================================== */
-
-async function getFirebaseIdToken(){
-
-  if(!auth.currentUser){
-
-    throw new Error(
-      "You are not signed in."
-    );
-
-  }
-
-  return await auth.currentUser.getIdToken(true);
-
-}
 
 
 /* =====================================================
@@ -1081,30 +1108,43 @@ function(page){
   .classList.add("hidden");
 
 
-  if(page === "home")
-  document
-  .getElementById("homePage")
-  .classList.remove("hidden");
+  if(page==="home"){
+
+    document
+    .getElementById("homePage")
+    .classList.remove("hidden");
+
+  }
 
 
-  if(page === "customer")
-  document
-  .getElementById("customerPage")
-  .classList.remove("hidden");
+  if(page==="customer"){
+
+    document
+    .getElementById("customerPage")
+    .classList.remove("hidden");
+
+  }
 
 
-  if(page === "rider")
-  document
-  .getElementById("riderPage")
-  .classList.remove("hidden");
+  if(page==="rider"){
+
+    document
+    .getElementById("riderPage")
+    .classList.remove("hidden");
+
+  }
 
 
-  if(page === "moderator")
-  document
-  .getElementById("moderatorPage")
-  .classList.remove("hidden");
+  if(page==="moderator"){
+
+    document
+    .getElementById("moderatorPage")
+    .classList.remove("hidden");
+
+  }
 
 };
+
 
 
 /* =====================================================
@@ -1120,32 +1160,18 @@ async function(){
   .value
   .trim();
 
-
   const password =
   document
   .getElementById("customerPassword")
   .value;
 
 
-  const message =
-  document
-  .getElementById("customerMessage");
-
-
   if(!email || !password){
 
-    message.textContent =
-    "Enter email and password.";
-
-    return;
-
-  }
-
-
-  if(password.length < 6){
-
-    message.textContent =
-    "Password must be at least 6 characters.";
+    showMessage(
+      "customerMessage",
+      "Enter email and password."
+    );
 
     return;
 
@@ -1162,44 +1188,57 @@ async function(){
     );
 
 
-    const token =
-    await credential.user.getIdToken(true);
-
-
-    await apiRequest(
-      "/api/customer/register",
+    await setDoc(
+      doc(
+        db,
+        "users",
+        credential.user.uid
+      ),
       {
-        method:"POST",
 
-        headers:{
-          Authorization:
-          "Bearer " + token
-        },
+        uid:
+        credential.user.uid,
 
-        body:
-        JSON.stringify({
-          email
-        })
+        email:
+        email,
+
+        points:
+        0,
+
+        role:
+        "customer",
+
+        createdAt:
+        serverTimestamp()
+
+      },
+      {
+        merge:true
       }
     );
 
 
-    message.textContent =
-    "Registration successful.";
+    showMessage(
+      "customerMessage",
+      "Registration successful."
+    );
+
 
     showCustomerDashboard();
-
 
   }
   catch(error){
 
-    message.textContent =
-    "Registration failed: " +
-    error.message;
+    showMessage(
+      "customerMessage",
+      "Registration failed: " +
+      error.message
+    );
 
   }
 
 };
+
 
 
 /* =====================================================
@@ -1215,22 +1254,18 @@ async function(){
   .value
   .trim();
 
-
   const password =
   document
   .getElementById("customerPassword")
   .value;
 
 
-  const message =
-  document
-  .getElementById("customerMessage");
-
-
   if(!email || !password){
 
-    message.textContent =
-    "Enter email and password.";
+    showMessage(
+      "customerMessage",
+      "Enter email and password."
+    );
 
     return;
 
@@ -1246,26 +1281,28 @@ async function(){
     );
 
 
-    message.textContent =
-    "Login successful.";
+    showMessage(
+      "customerMessage",
+      "Login successful."
+    );
+
 
     showCustomerDashboard();
 
   }
   catch(error){
 
-    message.textContent =
-    "Login failed: " +
-    error.message;
+    showMessage(
+      "customerMessage",
+      "Login failed: " +
+      error.message
+    );
 
   }
 
 };
 
 
-/* =====================================================
-CUSTOMER DASHBOARD
-===================================================== */
 
 function showCustomerDashboard(){
 
@@ -1280,6 +1317,7 @@ function showCustomerDashboard(){
 }
 
 
+
 /* =====================================================
 CUSTOMER LOGOUT
 ===================================================== */
@@ -1287,38 +1325,22 @@ CUSTOMER LOGOUT
 window.customerLogout =
 async function(){
 
-  try{
+  await signOut(auth);
 
-    await signOut(auth);
+  document
+  .getElementById("customerDashboard")
+  .classList.add("hidden");
 
-    document
-    .getElementById("customerDashboard")
-    .classList.add("hidden");
-
-    document
-    .getElementById("customerAuth")
-    .classList.remove("hidden");
-
-    document
-    .getElementById("customerMessage")
-    .textContent =
-    "Signed out successfully.";
-
-  }
-  catch(error){
-
-    alert(
-      "Logout failed: " +
-      error.message
-    );
-
-  }
+  document
+  .getElementById("customerAuth")
+  .classList.remove("hidden");
 
 };
 
 
+
 /* =====================================================
-FARE CALCULATION
+FARE
 ===================================================== */
 
 window.calculateFare =
@@ -1331,14 +1353,12 @@ function(){
   .trim()
   .toLowerCase();
 
-
   const destination =
   document
   .getElementById("destination")
   .value
   .trim()
   .toLowerCase();
-
 
   const km =
   Number(
@@ -1412,9 +1432,10 @@ function(){
   document
   .getElementById("fareExplanation")
   .textContent =
-  "Fare calculated automatically.";
+  "Fare calculated automatically by Amir Chap Chap.";
 
 };
+
 
 
 /* =====================================================
@@ -1426,9 +1447,7 @@ async function(){
 
   if(!auth.currentUser){
 
-    alert(
-      "Please login first."
-    );
+    alert("Please login first.");
 
     return;
 
@@ -1437,9 +1456,7 @@ async function(){
 
   if(calculatedFare <= 0){
 
-    alert(
-      "Calculate the fare first."
-    );
+    alert("Calculate the fare first.");
 
     return;
 
@@ -1452,12 +1469,21 @@ async function(){
   .value
   .trim();
 
-
   const destination =
   document
   .getElementById("destination")
   .value
   .trim();
+
+  const serviceType =
+  document
+  .getElementById("serviceType")
+  .value;
+
+  const paymentMethod =
+  document
+  .getElementById("paymentMethod")
+  .value;
 
 
   if(!pickup || !destination){
@@ -1471,18 +1497,6 @@ async function(){
   }
 
 
-  const service =
-  document
-  .getElementById("serviceType")
-  .value;
-
-
-  const paymentMethod =
-  document
-  .getElementById("paymentMethod")
-  .value;
-
-
   try{
 
     await addDoc(
@@ -1492,28 +1506,37 @@ async function(){
         userId:
         auth.currentUser.uid,
 
-        serviceType:
-        service,
+        customerEmail:
+        auth.currentUser.email || "",
 
+        serviceType:
+        serviceType,
+
+        pickup:
         pickup,
 
+        destination:
         destination,
 
         fare:
         calculatedFare,
 
+        paymentMethod:
         paymentMethod,
 
         status:
         "pending",
 
-        riderId:
-        "",
-
         riderUid:
         "",
 
         riderName:
+        "",
+
+        riderPhone:
+        "",
+
+        riderWhatsapp:
         "",
 
         createdAt:
@@ -1530,23 +1553,22 @@ async function(){
 
     document
     .getElementById("pickup")
-    .value = "";
+    .value="";
 
     document
     .getElementById("destination")
-    .value = "";
+    .value="";
 
     document
     .getElementById("distanceKm")
-    .value = "";
+    .value="";
 
-    calculatedFare = 0;
+
+    calculatedFare=0;
 
     document
     .getElementById("fareDisplay")
-    .textContent =
-    "KSh 0";
-
+    .textContent="KSh 0";
 
   }
   catch(error){
@@ -1561,8 +1583,9 @@ async function(){
 };
 
 
+
 /* =====================================================
-CUSTOMER ORDERS
+MY ORDERS
 ===================================================== */
 
 window.loadMyOrders =
@@ -1570,18 +1593,21 @@ async function(){
 
   if(!auth.currentUser){
 
+    alert("Please login first.");
+
     return;
 
   }
 
 
   const box =
-  document
-  .getElementById("customerOrders");
+  document.getElementById(
+    "customerOrders"
+  );
 
 
   box.innerHTML =
-  "<p>Loading...</p>";
+  "<div class='loading'>Loading bookings...</div>";
 
 
   try{
@@ -1601,13 +1627,14 @@ async function(){
     await getDocs(q);
 
 
-    box.innerHTML = "";
+    box.innerHTML =
+    "<h3>My Bookings</h3>";
 
 
     if(snapshot.empty){
 
-      box.innerHTML =
-      "<p>No bookings yet.</p>";
+      box.innerHTML +=
+      "<p>No bookings found.</p>";
 
       return;
 
@@ -1623,7 +1650,6 @@ async function(){
       const div =
       document.createElement("div");
 
-
       div.className =
       "route-box";
 
@@ -1631,34 +1657,73 @@ async function(){
       div.innerHTML = `
 
         <strong>
-        ${order.serviceType || "Service"}
+          ${order.serviceType || "Service"}
         </strong>
 
         <p>
-        ${order.pickup || ""}
-        →
-        ${order.destination || ""}
+          ${order.pickup || ""}
+          →
+          ${order.destination || ""}
         </p>
 
         <p>
-        Fare:
-        KSh
-        ${Number(order.fare || 0).toLocaleString()}
+          Fare:
+          <strong>
+            KSh ${Number(order.fare || 0).toLocaleString()}
+          </strong>
         </p>
 
         <p>
-        Status:
-        <span class="badge">
-        ${order.status || "pending"}
-        </span>
+          Status:
+          <span class="badge">
+            ${order.status || "pending"}
+          </span>
         </p>
 
         ${
           order.riderName
           ?
-          `<p>Rider:
-          <strong>${order.riderName}</strong>
+          `<p>
+            Rider:
+            ${order.riderName}
           </p>`
+          :
+          ""
+        }
+
+        ${
+          order.riderPhone
+          ?
+          `<a href="tel:${order.riderPhone}">
+            <button class="dark">
+              Call Rider
+            </button>
+          </a>`
+          :
+          ""
+        }
+
+        ${
+          order.riderWhatsapp
+          ?
+          `<a target="_blank"
+          href="https://wa.me/${cleanPhone(order.riderWhatsapp)}">
+            <button class="success">
+              WhatsApp Rider
+            </button>
+          </a>`
+          :
+          ""
+        }
+
+        ${
+          order.status==="delivered"
+          ?
+          `<button
+            class="primary"
+            onclick="rateRider('${item.id}')">
+            ⭐ Rate Rider
+          </button>`
           :
           ""
         }
@@ -1674,13 +1739,14 @@ async function(){
   catch(error){
 
     box.innerHTML =
-    "<p>Error: " +
+    "<p>Error loading bookings: " +
     error.message +
     "</p>";
 
   }
 
 };
+
 
 
 /* =====================================================
@@ -1692,71 +1758,91 @@ async function(){
 
   const jobId =
   document
-  .getElementById("riderLoginJobId")
+  .getElementById("riderJobId")
   .value
-  .trim()
-  .toUpperCase();
-
+  .trim();
 
   const password =
   document
-  .getElementById("riderLoginPassword")
+  .getElementById("riderPassword")
   .value;
-
-
-  const message =
-  document
-  .getElementById("riderMessage");
 
 
   if(!jobId || !password){
 
-    message.textContent =
-    "Enter your Rider Job ID and password.";
+    showMessage(
+      "riderMessage",
+      "Enter Rider Job ID and password."
+    );
 
     return;
 
   }
 
 
-  message.textContent =
-  "Signing in...";
-
-
   try{
 
-    const data =
-    await apiRequest(
-      "/api/rider-login",
-      {
-        method:"POST",
-
-        body:
-        JSON.stringify({
-          jobId,
-          password
-        })
-      }
+    showMessage(
+      "riderMessage",
+      "Signing in..."
     );
 
 
     /*
-      Exchange the backend custom token
-      for a Firebase authenticated session.
+      IMPORTANT:
+      Rider now logs into the Render backend
+      using Job ID + password.
+    */
+
+    const response =
+    await fetch(
+      API_BASE +
+      "/api/rider-login",
+      {
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+          "application/json"
+        },
+
+        body:JSON.stringify({
+
+          jobId:
+          jobId,
+
+          password:
+          password
+
+        })
+
+      }
+    );
+
+
+    const data =
+    await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        "Rider login failed."
+      );
+
+    }
+
+
+    /*
+      Backend returns Firebase custom token.
     */
 
     await signInWithCustomToken(
       auth,
       data.token
     );
-
-
-    riderSession =
-    data;
-
-
-    message.textContent =
-    "Rider login successful.";
 
 
     document
@@ -1769,66 +1855,70 @@ async function(){
     .classList.remove("hidden");
 
 
-    const rider =
-    data.rider;
-
-
     document
     .getElementById("riderProfile")
     .innerHTML = `
 
       <strong>
-      ${rider.name || "Rider"}
+        ${data.rider.name || "Rider"}
       </strong>
 
-      <br>
+      <br><br>
 
-      Rider ID:
+      Rider Job ID:
       <strong>
-      ${rider.jobId || ""}
+        ${data.rider.jobId || ""}
       </strong>
 
       <br>
 
       Phone:
-      ${rider.phone || ""}
+      ${data.rider.phone || ""}
 
       <br>
 
       WhatsApp:
-      ${rider.whatsapp || ""}
+      ${data.rider.whatsapp || ""}
 
       <br>
 
       Motorbike:
-      ${rider.bikeType || ""}
-      ${rider.bikeModel || ""}
+      ${data.rider.bikeType || ""}
+      ${data.rider.bikeModel || ""}
 
       <br>
 
       Status:
       <span class="badge">
-      ${rider.status || ""}
+        ${data.rider.status || ""}
       </span>
 
     `;
+
+
+    showMessage(
+      "riderMessage",
+      "Rider login successful."
+    );
 
 
     await loadRiderOrders();
 
     await loadRiderNotifications();
 
-
   }
   catch(error){
 
-    message.textContent =
-    "Rider login failed: " +
-    error.message;
+    showMessage(
+      "riderMessage",
+      "Rider login failed: " +
+      error.message
+    );
 
   }
 
 };
+
 
 
 /* =====================================================
@@ -1839,39 +1929,20 @@ window.loadRiderOrders =
 async function(){
 
   const box =
-  document
-  .getElementById("riderOrders");
+  document.getElementById(
+    "riderOrders"
+  );
 
 
   box.innerHTML =
-  "<h3>My Jobs</h3><p>Loading...</p>";
-
-
-  if(!riderSession){
-
-    box.innerHTML +=
-    "<p>Please sign in.</p>";
-
-    return;
-
-  }
+  "<div class='loading'>Loading jobs...</div>";
 
 
   try{
 
-    const token =
-    await getFirebaseIdToken();
-
-
     const data =
-    await apiRequest(
-      "/api/rider/jobs",
-      {
-        headers:{
-          Authorization:
-          "Bearer " + token
-        }
-      }
+    await backendRequest(
+      "/api/rider/jobs"
     );
 
 
@@ -1879,17 +1950,11 @@ async function(){
     "<h3>My Jobs</h3>";
 
 
-    if(
-      !data.orders ||
-      data.orders.length === 0
-    ){
+    if(!data.orders ||
+       data.orders.length===0){
 
       box.innerHTML +=
-      `
-      <div class="route-box">
-      <p>No jobs assigned yet.</p>
-      </div>
-      `;
+      "<p>No assigned jobs yet.</p>";
 
       return;
 
@@ -1901,39 +1966,85 @@ async function(){
       const div =
       document.createElement("div");
 
-
       div.className =
       "route-box";
 
 
       div.innerHTML = `
 
-        <strong>
-        ${order.serviceType || "Service"}
-        </strong>
+        <h3>
+          ${order.serviceType || "Delivery"}
+        </h3>
 
         <p>
-        Pickup:
-        ${order.pickup || ""}
+          <strong>Pickup:</strong>
+          ${order.pickup || ""}
         </p>
 
         <p>
-        Destination:
-        ${order.destination || ""}
+          <strong>Destination:</strong>
+          ${order.destination || ""}
         </p>
 
         <p>
-        Fare:
-        KSh
-        ${Number(order.fare || 0).toLocaleString()}
+          Fare:
+          <strong>
+            KSh ${Number(order.fare || 0).toLocaleString()}
+          </strong>
         </p>
 
         <p>
-        Status:
-        <span class="badge">
-        ${order.status || "pending"}
-        </span>
+          Status:
+          <span class="badge">
+            ${order.status || ""}
+          </span>
         </p>
+
+        ${
+          order.customerPhone
+          ?
+          `<a href="tel:${order.customerPhone}">
+            <button class="dark">
+              Call Customer
+            </button>
+          </a>`
+          :
+          ""
+        }
+
+        <a
+        target="_blank"
+        href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.destination || "")}">
+
+          <button class="secondary">
+            🗺️ Navigate
+          </button>
+
+        </a>
+
+        ${
+          order.status==="approved"
+          ?
+          `<button
+            class="primary"
+            onclick="acceptOrder('${order.id}')">
+            Accept Job
+          </button>`
+          :
+          ""
+        }
+
+        ${
+          order.status==="accepted"
+          ?
+          `<button
+            class="success"
+            onclick="markDelivered('${order.id}')">
+            Delivered Successfully
+          </button>`
+          :
+          ""
+        }
 
       `;
 
@@ -1946,7 +2057,6 @@ async function(){
   catch(error){
 
     box.innerHTML =
-    "<h3>My Jobs</h3>" +
     "<p>Error loading jobs: " +
     error.message +
     "</p>";
@@ -1954,6 +2064,117 @@ async function(){
   }
 
 };
+
+
+
+/* =====================================================
+ACCEPT JOB
+===================================================== */
+
+window.acceptOrder =
+async function(orderId){
+
+  try{
+
+    if(!auth.currentUser){
+
+      alert("Please login first.");
+
+      return;
+
+    }
+
+
+    /*
+      This update requires Firestore rules
+      allowing the rider to update his assigned order.
+    */
+
+    await updateDoc(
+      doc(
+        db,
+        "orders",
+        orderId
+      ),
+      {
+
+        status:
+        "accepted",
+
+        acceptedAt:
+        serverTimestamp()
+
+      }
+    );
+
+
+    alert("Job accepted.");
+
+    await loadRiderOrders();
+
+  }
+  catch(error){
+
+    alert(
+      "Could not accept job: " +
+      error.message
+    );
+
+  }
+
+};
+
+
+
+/* =====================================================
+DELIVERED
+===================================================== */
+
+window.markDelivered =
+async function(orderId){
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "orders",
+        orderId
+      ),
+      {
+
+        status:
+        "delivered",
+
+        deliveredAt:
+        serverTimestamp(),
+
+        deliveryAcknowledged:
+        true
+
+      }
+    );
+
+
+    alert(
+      "Delivery acknowledged successfully."
+    );
+
+
+    await loadRiderOrders();
+
+  }
+  catch(error){
+
+    alert(
+      "Could not update delivery: " +
+      error.message
+    );
+
+  }
+
+};
+
 
 
 /* =====================================================
@@ -1964,36 +2185,20 @@ window.loadRiderNotifications =
 async function(){
 
   const box =
-  document
-  .getElementById("riderNotifications");
+  document.getElementById(
+    "riderNotifications"
+  );
 
 
   box.innerHTML =
   "<h3>🔔 Notifications</h3>";
 
 
-  if(!riderSession){
-
-    return;
-
-  }
-
-
   try{
 
-    const token =
-    await getFirebaseIdToken();
-
-
     const data =
-    await apiRequest(
-      "/api/rider/notifications",
-      {
-        headers:{
-          Authorization:
-          "Bearer " + token
-        }
-      }
+    await backendRequest(
+      "/api/rider/notifications"
     );
 
 
@@ -2002,26 +2207,16 @@ async function(){
 
 
     document
-    .getElementById("notificationBadge")
-    .textContent =
-    notifications.length +
-    (
-      notifications.length === 1
-      ?
-      " notification"
-      :
-      " notifications"
-    );
+    .getElementById(
+      "notificationBadge"
+    )
+    ?.remove();
 
 
-    if(notifications.length === 0){
+    if(notifications.length===0){
 
       box.innerHTML +=
-      `
-      <div class="notification">
-      <strong>No new notifications.</strong>
-      </div>
-      `;
+      "<p>No notifications.</p>";
 
       return;
 
@@ -2033,7 +2228,6 @@ async function(){
       const div =
       document.createElement("div");
 
-
       div.className =
       "notification";
 
@@ -2041,11 +2235,11 @@ async function(){
       div.innerHTML = `
 
         <strong>
-        ${notification.title || "Notification"}
+          ${notification.title || "New Notification"}
         </strong>
 
         <p>
-        ${notification.message || ""}
+          ${notification.message || ""}
         </p>
 
       `;
@@ -2068,6 +2262,7 @@ async function(){
 };
 
 
+
 /* =====================================================
 RIDER LOGOUT
 ===================================================== */
@@ -2075,19 +2270,7 @@ RIDER LOGOUT
 window.riderLogout =
 async function(){
 
-  try{
-
-    await signOut(auth);
-
-  }
-  catch(error){
-
-    console.error(error);
-
-  }
-
-
-  riderSession = null;
+  await signOut(auth);
 
 
   document
@@ -2101,16 +2284,12 @@ async function(){
 
 
   document
-  .getElementById("riderLoginPassword")
-  .value = "";
-
-
-  document
   .getElementById("riderMessage")
   .textContent =
   "Signed out.";
 
 };
+
 
 
 /* =====================================================
@@ -2126,22 +2305,18 @@ async function(){
   .value
   .trim();
 
-
   const password =
   document
   .getElementById("moderatorPassword")
   .value;
 
 
-  const message =
-  document
-  .getElementById("moderatorMessage");
-
-
   if(!email || !password){
 
-    message.textContent =
-    "Enter moderator email and password.";
+    showMessage(
+      "moderatorMessage",
+      "Enter moderator email and password."
+    );
 
     return;
 
@@ -2149,6 +2324,12 @@ async function(){
 
 
   try{
+
+    showMessage(
+      "moderatorMessage",
+      "Signing in..."
+    );
+
 
     const credential =
     await signInWithEmailAndPassword(
@@ -2158,81 +2339,62 @@ async function(){
     );
 
 
+    /*
+      Check Firebase admin custom claim.
+    */
+
     const tokenResult =
-    await credential.user.getIdTokenResult(true);
+    await credential.user
+    .getIdTokenResult(true);
 
 
     if(tokenResult.claims.admin !== true){
 
       await signOut(auth);
 
-      message.textContent =
-      "This account is not authorized as Moderator.";
 
-      return;
+      throw new Error(
+        "This Firebase account is not authorized as Moderator."
+      );
 
     }
 
 
-    message.textContent =
-    "Moderator login successful.";
-
-
     document
-    .getElementById("moderatorLoginBox")
+    .getElementById(
+      "moderatorLoginBox"
+    )
     .classList.add("hidden");
 
 
     document
-    .getElementById("moderatorDashboard")
+    .getElementById(
+      "moderatorDashboard"
+    )
     .classList.remove("hidden");
 
 
-    await loadRiders();
+    showModeratorSection("riders");
+
+
+    showMessage(
+      "moderatorMessage",
+      "Moderator login successful."
+    );
 
   }
   catch(error){
 
-    message.textContent =
-    "Moderator login failed: " +
-    error.message;
+    showMessage(
+      "moderatorMessage",
+      "Moderator login failed: " +
+      error.message
+    );
 
   }
 
 };
 
-
-/* =====================================================
-MODERATOR TOKEN
-===================================================== */
-
-async function getModeratorToken(){
-
-  if(!auth.currentUser){
-
-    throw new Error(
-      "Moderator is not signed in."
-    );
-
-  }
-
-
-  const tokenResult =
-  await auth.currentUser.getIdTokenResult(true);
-
-
-  if(tokenResult.claims.admin !== true){
-
-    throw new Error(
-      "Moderator authorization required."
-    );
-
-  }
-
-
-  return tokenResult.token;
-
-}
 
 
 /* =====================================================
@@ -2243,18 +2405,20 @@ window.createRider =
 async function(){
 
   const message =
-  document
-  .getElementById("riderCreateMessage");
-
-
-  message.textContent =
-  "Creating rider...";
+  document.getElementById(
+    "riderCreateMessage"
+  );
 
 
   try{
 
-    const token =
-    await getModeratorToken();
+    if(!auth.currentUser){
+
+      throw new Error(
+        "Moderator must be signed in."
+      );
+
+    }
 
 
     const name =
@@ -2303,13 +2467,12 @@ async function(){
     document
     .getElementById("jobId")
     .value
-    .trim()
-    .toUpperCase();
+    .trim();
 
 
     const password =
     document
-    .getElementById("riderCreatePassword")
+    .getElementById("newRiderPassword")
     .value;
 
 
@@ -2319,49 +2482,65 @@ async function(){
     .value;
 
 
-    if(!name || !jobId || !password){
+    if(
+      !name ||
+      !jobId ||
+      !password
+    ){
 
-      message.textContent =
-      "Name, Rider Job ID and password are required.";
-
-      return;
-
-    }
-
-
-    if(password.length < 6){
-
-      message.textContent =
-      "Rider password must be at least 6 characters.";
-
-      return;
+      throw new Error(
+        "Name, Job ID and password are required."
+      );
 
     }
 
+
+    showMessage(
+      "riderCreateMessage",
+      "Creating rider..."
+    );
+
+
+    /*
+      IMPORTANT:
+      No Firebase UID is entered here.
+      The backend creates it automatically.
+    */
 
     const data =
-    await apiRequest(
+    await backendRequest(
       "/api/moderator/riders",
       {
 
         method:"POST",
 
-        headers:{
-          Authorization:
-          "Bearer " + token
-        },
+        body:JSON.stringify({
 
-        body:
-        JSON.stringify({
-
+          jobId:
           jobId,
+
+          name:
           name,
+
+          phone:
           phone,
+
+          whatsapp:
           whatsapp,
+
+          nationalId:
           nationalId,
+
+          bikeType:
           bikeType,
+
+          bikeModel:
           bikeModel,
+
+          password:
           password,
+
+          status:
           status
 
         })
@@ -2370,43 +2549,25 @@ async function(){
     );
 
 
-    message.textContent =
-    "Rider registered successfully.\n" +
-    "Rider ID: " +
-    data.rider.jobId;
+    showMessage(
+      "riderCreateMessage",
+      "Rider registered successfully.\n\n" +
+      "Job ID: " +
+      data.rider.jobId +
+      "\nName: " +
+      data.rider.name
+    );
 
 
-    document
-    .getElementById("riderName")
-    .value = "";
-
-    document
-    .getElementById("riderPhone")
-    .value = "";
-
-    document
-    .getElementById("riderWhatsapp")
-    .value = "";
+    /*
+      Clear password after creation.
+    */
 
     document
-    .getElementById("riderNationalId")
-    .value = "";
-
-    document
-    .getElementById("bikeType")
-    .value = "";
-
-    document
-    .getElementById("bikeModel")
-    .value = "";
-
-    document
-    .getElementById("jobId")
-    .value = "";
-
-    document
-    .getElementById("riderCreatePassword")
-    .value = "";
+    .getElementById(
+      "newRiderPassword"
+    )
+    .value="";
 
 
     await loadRiders();
@@ -2414,13 +2575,16 @@ async function(){
   }
   catch(error){
 
-    message.textContent =
-    "Could not create rider: " +
-    error.message;
+    showMessage(
+      "riderCreateMessage",
+      "Could not create rider: " +
+      error.message
+    );
 
   }
 
 };
+
 
 
 /* =====================================================
@@ -2431,8 +2595,9 @@ window.loadRiders =
 async function(){
 
   const box =
-  document
-  .getElementById("ridersList");
+  document.getElementById(
+    "ridersList"
+  );
 
 
   box.innerHTML =
@@ -2441,29 +2606,20 @@ async function(){
 
   try{
 
-    const token =
-    await getModeratorToken();
-
-
     const data =
-    await apiRequest(
-      "/api/moderator/riders",
-      {
-        headers:{
-          Authorization:
-          "Bearer " + token
-        }
-      }
+    await backendRequest(
+      "/api/moderator/riders"
     );
 
 
-    box.innerHTML = "";
+    const riders =
+    data.riders || [];
 
 
-    if(
-      !data.riders ||
-      data.riders.length === 0
-    ){
+    box.innerHTML="";
+
+
+    if(riders.length===0){
 
       box.innerHTML =
       "<p>No riders registered.</p>";
@@ -2473,95 +2629,74 @@ async function(){
     }
 
 
-    data.riders.forEach(rider=>{
+    riders.forEach(rider=>{
 
       const div =
       document.createElement("div");
-
 
       div.className =
       "route-box";
 
 
-      const nextStatus =
-      rider.status === "active"
-      ?
-      "inactive"
-      :
-      "active";
-
-
-      const statusText =
-      rider.status === "active"
-      ?
-      "Deactivate"
-      :
-      "Activate";
-
-
-      const statusClass =
-      rider.status === "active"
-      ?
-      "status-active"
-      :
-      "status-inactive";
-
-
       div.innerHTML = `
 
         <h3>
-        ${rider.name || ""}
+          ${rider.name || ""}
         </h3>
 
         <p>
-        Rider ID:
-        <strong>
-        ${rider.jobId || ""}
-        </strong>
+          Rider ID:
+          <strong>
+            ${rider.jobId || ""}
+          </strong>
         </p>
 
         <p>
-        Phone:
-        ${rider.phone || ""}
+          Phone:
+          ${rider.phone || ""}
         </p>
 
         <p>
-        WhatsApp:
-        ${rider.whatsapp || ""}
+          WhatsApp:
+          ${rider.whatsapp || ""}
         </p>
 
         <p>
-        Motorbike:
-        ${rider.bikeType || ""}
-        ${rider.bikeModel || ""}
+          Motorbike:
+          ${rider.bikeType || ""}
+          ${rider.bikeModel || ""}
         </p>
 
         <p>
-        Status:
-        <span class="badge ${statusClass}">
-        ${rider.status || ""}
-        </span>
+          Status:
+          <span class="badge">
+            ${rider.status || ""}
+          </span>
         </p>
 
         <button
-        class="secondary"
-        onclick="changeRiderStatus(
-        '${rider.uid}',
-        '${nextStatus}'
-        )">
+          class="secondary"
+          onclick="changeRiderStatus(
+            '${rider.uid}',
+            '${rider.status==="active" ? "inactive" : "active"}'
+          )">
 
-        ${statusText}
+          ${
+            rider.status==="active"
+            ?
+            "Deactivate"
+            :
+            "Activate"
+          }
 
         </button>
 
 
         <button
-        class="danger"
-        onclick="removeRider(
-        '${rider.uid}'
-        )">
+          class="danger"
+          onclick="removeRider('${rider.uid}')">
 
-        Remove Rider
+          Remove Rider
 
         </button>
 
@@ -2585,33 +2720,20 @@ async function(){
 };
 
 
+
 /* =====================================================
 CHANGE RIDER STATUS
 ===================================================== */
 
 window.changeRiderStatus =
-async function(uid,status){
-
-  if(
-    !confirm(
-      "Change this rider's status to " +
-      status +
-      "?"
-    )
-  ){
-
-    return;
-
-  }
-
+async function(
+  uid,
+  newStatus
+){
 
   try{
 
-    const token =
-    await getModeratorToken();
-
-
-    await apiRequest(
+    await backendRequest(
       "/api/moderator/riders/" +
       encodeURIComponent(uid) +
       "/status",
@@ -2619,14 +2741,11 @@ async function(uid,status){
 
         method:"PATCH",
 
-        headers:{
-          Authorization:
-          "Bearer " + token
-        },
+        body:JSON.stringify({
 
-        body:
-        JSON.stringify({
-          status
+          status:
+          newStatus
+
         })
 
       }
@@ -2635,8 +2754,7 @@ async function(uid,status){
 
     alert(
       "Rider status changed to " +
-      status +
-      "."
+      newStatus
     );
 
 
@@ -2646,13 +2764,14 @@ async function(uid,status){
   catch(error){
 
     alert(
-      "Could not change rider status: " +
+      "Could not change status: " +
       error.message
     );
 
   }
 
 };
+
 
 
 /* =====================================================
@@ -2664,8 +2783,7 @@ async function(uid){
 
   if(
     !confirm(
-      "Remove this rider?\n\n" +
-      "This action cannot be easily undone."
+      "Remove this rider permanently?"
     )
   ){
 
@@ -2676,21 +2794,12 @@ async function(uid){
 
   try{
 
-    const token =
-    await getModeratorToken();
-
-
-    await apiRequest(
+    await backendRequest(
       "/api/moderator/riders/" +
       encodeURIComponent(uid),
       {
 
-        method:"DELETE",
-
-        headers:{
-          Authorization:
-          "Bearer " + token
-        }
+        method:"DELETE"
 
       }
     );
@@ -2716,162 +2825,34 @@ async function(uid){
 };
 
 
-/* =====================================================
-LOAD CUSTOMERS
-===================================================== */
-
-window.loadCustomers =
-async function(){
-
-  const box =
-  document
-  .getElementById("customersList");
-
-
-  box.innerHTML =
-  "<p>Loading customers...</p>";
-
-
-  try{
-
-    const token =
-    await getModeratorToken();
-
-
-    const data =
-    await apiRequest(
-      "/api/moderator/customers",
-      {
-        headers:{
-          Authorization:
-          "Bearer " + token
-        }
-      }
-    );
-
-
-    box.innerHTML = "";
-
-
-    if(
-      !data.customers ||
-      data.customers.length === 0
-    ){
-
-      box.innerHTML =
-      "<p>No customers registered.</p>";
-
-      return;
-
-    }
-
-
-    data.customers.forEach(user=>{
-
-      const div =
-      document.createElement("div");
-
-
-      div.className =
-      "route-box";
-
-
-      div.innerHTML = `
-
-        <strong>
-        ${user.email || "Customer"}
-        </strong>
-
-        <p>
-        Points:
-        ${Number(user.points || 0)}
-        </p>
-
-        <p>
-        Role:
-        ${user.role || "customer"}
-        </p>
-
-      `;
-
-
-      box.appendChild(div);
-
-    });
-
-  }
-  catch(error){
-
-    box.innerHTML =
-    "<p>Error loading customers: " +
-    error.message +
-    "</p>";
-
-  }
-
-};
-
 
 /* =====================================================
-LOAD ORDERS
+ALL ORDERS
 ===================================================== */
 
 window.loadAllOrders =
 async function(){
 
   const box =
-  document
-  .getElementById("allOrders");
+  document.getElementById(
+    "allOrders"
+  );
 
 
   box.innerHTML =
-  "<p>Loading orders...</p>";
+  "<div class='loading'>Loading orders...</div>";
 
 
   try{
 
-    const token =
-    await getModeratorToken();
-
-
     const data =
-    await apiRequest(
-      "/api/moderator/orders",
-      {
-        headers:{
-          Authorization:
-          "Bearer " + token
-        }
-      }
+    await backendRequest(
+      "/api/moderator/orders"
     );
 
 
-    box.innerHTML = "";
+    const orders =
+    data.orders || [];
 
 
-    if(
-      !data.orders ||
-      data.orders.length === 0
-    ){
-
-      box.innerHTML =
-      "<p>No orders found.</p>";
-
-      return;
-
-    }
-
-
-    data.orders.forEach(order=>{
-
-      const div =
-      document.createElement("div");
-
-
-      div.className =
-      "route-box";
-
-
-      div.innerHTML = `
-
-       
+    box.innerHTML="";
