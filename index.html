@@ -1,7 +1,12 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Amir Chap Chap</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Amir Chap Chap</title>
+
+<style>
 *{
   box-sizing:border-box;
   margin:0;
@@ -199,6 +204,36 @@ button{
   font-weight:bold;
 }
 
+.status-pending{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.status-approved{
+  background:#dbeafe;
+  color:#1e40af;
+}
+
+.status-assigned{
+  background:#ede9fe;
+  color:#6d28d9;
+}
+
+.status-picked{
+  background:#cffafe;
+  color:#155e75;
+}
+
+.status-way{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.status-delivered{
+  background:#bbf7d0;
+  color:#166534;
+}
+
 footer{
   background:#111827;
   color:#cbd5e1;
@@ -214,6 +249,40 @@ footer a{
 .loading{
   padding:15px;
   text-align:center;
+}
+
+.divider{
+  border:none;
+  border-top:1px solid #e5e7eb;
+  margin:20px 0;
+}
+
+.small-text{
+  font-size:13px;
+  color:#64748b;
+}
+
+.assignment-box{
+  background:#fffbeb;
+  border:1px solid #fcd34d;
+  border-radius:10px;
+  padding:15px;
+  margin-top:15px;
+}
+
+.assigned-box{
+  background:#f0fdf4;
+  border:1px solid #86efac;
+  border-radius:10px;
+  padding:15px;
+  margin-top:15px;
+}
+
+.action-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:10px;
 }
 
 @media(max-width:700px){
@@ -234,61 +303,185 @@ footer a{
   .hero h1{
     font-size:28px;
   }
+
+  .container{
+    padding:12px;
+  }
 }
-</style></head><body><header><div class="nav"><div class="logo">
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">
 Amir <span>Chap Chap</span>
-</div><nav><button type="button" onclick="showPage('home')">
+</div>
+
+<nav>
+
+<button type="button" onclick="showPage('home')">
 Home
-</button><button type="button" onclick="showPage('customer')">
+</button>
+
+<button type="button" onclick="showPage('customer')">
 Customer
-</button><button type="button" onclick="showPage('rider')">
+</button>
+
+<button type="button" onclick="showPage('rider')">
 Rider
-</button><button type="button" onclick="showPage('moderator')">
+</button>
+
+<button type="button" onclick="showPage('moderator')">
 Moderator
-</button></nav></div></header><main class="container"><!-- =====================================================
+</button>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<!-- =====================================================
 HOME
-===================================================== --><section id="homePage"><div class="hero"><h1>Amir Chap Chap</h1><p>
+===================================================== -->
+
+<section id="homePage">
+
+<div class="hero">
+
+<h1>Amir Chap Chap</h1>
+
+<p>
 Fast delivery and passenger transport services.
 Book a rider, send your package or travel safely.
-</p><br><button
+</p>
+
+<br>
+
+<button
 type="button"
 class="primary"
 onclick="showPage('customer')">
 
 Book Now
 
-</button><button
+</button>
+
+<button
 type="button"
 class="secondary"
 onclick="showPage('rider')">
 
 Rider Portal
 
-</button></div><div class="grid"><div class="card"><h3>📦 Delivery</h3><br><p>
+</button>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+
+<h3>📦 Delivery</h3>
+
+<br>
+
+<p>
 Send packages through approved Amir Chap Chap riders.
-</p></div><div class="card"><h3>🏍️ Passenger Transport</h3><br><p>
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>🏍️ Passenger Transport</h3>
+
+<br>
+
+<p>
 Book passenger transport and connect with an assigned rider.
-</p></div><div class="card"><h3>⭐ Customer Rewards</h3><br><p>
-Customers can earn points and use them according to company rules.
-</p></div><div class="card"><h3>📞 Customer Care</h3><br><p>
-Need help?
-</p><br><a href="tel:0795653284">
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>⭐ Customer Rewards</h3>
+
+<br>
+
+<p>
+Customers can earn points according to company rules.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📞 Customer Care</h3>
+
+<br>
+
+<p>Need help?</p>
+
+<br>
+
+<a href="tel:0795653284">
 0795653284
-</a></div></div></section><!-- =====================================================
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
 CUSTOMER
-===================================================== --><section id="customerPage" class="hidden"><div class="card"><h2>Customer Portal</h2><br><div id="customerAuth"><h3>Create Account / Login</h3><br><label>Email</label>
+===================================================== -->
+
+<section id="customerPage" class="hidden">
+
+<div class="card">
+
+<h2>Customer Portal</h2>
+
+<br>
+
+
+<div id="customerAuth">
+
+<h3>Create Account / Login</h3>
+
+<br>
+
+<label>Email</label>
 
 <input
 id="customerEmail"
 type="email"
-placeholder="Enter your email">
+placeholder="Enter your email"
+>
 
 <label>Password</label>
 
 <input
 id="customerPassword"
 type="password"
-placeholder="Minimum 6 characters">
+placeholder="Minimum 6 characters"
+>
 
 <button
 type="button"
@@ -297,42 +490,82 @@ onclick="customerRegister()">
 
 Register
 
-</button><button
+</button>
+
+<button
 type="button"
 class="dark"
 onclick="customerLogin()">
 
 Login
 
-</button><div
+</button>
+
+<div
 id="customerMessage"
 class="message">
-</div></div><div
+</div>
+
+</div>
+
+
+<div
 id="customerDashboard"
-class="hidden"><h3>Welcome, Customer</h3><br><button
+class="hidden">
+
+<h3>
+Welcome, Customer
+</h3>
+
+<br>
+
+<button
 type="button"
 class="danger"
 onclick="customerLogout()">
 
 Logout
 
-</button><hr><br><h3>Book a Service</h3><br><label>Service</label>
+</button>
 
-<select id="serviceType"><option value="delivery">
+<hr class="divider">
+
+
+<h3>Book a Service</h3>
+
+<br>
+
+
+<label>Service</label>
+
+<select id="serviceType">
+
+<option value="delivery">
 Delivery
-</option><option value="passenger">
+</option>
+
+<option value="passenger">
 Passenger Transport
-</option></select><label>Pickup Location</label>
+</option>
+
+</select>
+
+
+<label>Pickup Location</label>
 
 <input
 id="pickup"
-placeholder="Example: Lenana">
+placeholder="Example: Lenana"
+>
+
 
 <label>Destination</label>
 
 <input
 id="destination"
-placeholder="Example: Naivas">
+placeholder="Example: Naivas"
+>
+
 
 <label>Distance in KM</label>
 
@@ -340,7 +573,9 @@ placeholder="Example: Naivas">
 id="distanceKm"
 type="number"
 min="0"
-placeholder="Example: 5">
+placeholder="Example: 5"
+>
+
 
 <button
 type="button"
@@ -349,50 +584,112 @@ onclick="calculateFare()">
 
 Calculate Fare
 
-</button><div class="route-box"><div>Estimated Fare</div><div
+</button>
+
+
+<div class="route-box">
+
+<div>
+Estimated Fare
+</div>
+
+<div
 id="fareDisplay"
-class="price">KSh 0
+class="price">
 
-</div><small id="fareExplanation"></small>
+KSh 0
 
-</div><br><label>Payment Method</label>
+</div>
 
-<select id="paymentMethod"><option value="cash">
+<small id="fareExplanation"></small>
+
+</div>
+
+
+<br>
+
+
+<label>Payment Method</label>
+
+<select id="paymentMethod">
+
+<option value="cash">
 Cash
-</option><option value="mobile">
+</option>
+
+<option value="mobile">
 Mobile Money
-</option><option value="points">
+</option>
+
+<option value="points">
 Pay With Points
-</option></select><button
+</option>
+
+</select>
+
+
+<button
 type="button"
 class="primary"
 onclick="placeOrder()">
 
 Place Booking
 
-</button><button
+</button>
+
+
+<button
 type="button"
 class="secondary"
 onclick="loadMyOrders()">
 
 My Bookings
 
-</button><div id="customerOrders"></div></div></div></section><!-- =====================================================
+</button>
+
+
+<div id="customerOrders"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
 RIDER
-===================================================== --><section id="riderPage" class="hidden"><div class="card"><h2>🏍️ Rider Portal</h2><p>
+===================================================== -->
+
+<section id="riderPage" class="hidden">
+
+<div class="card">
+
+<h2>🏍️ Rider Portal</h2>
+
+<p>
 Sign in using your Rider Job ID and password.
-</p><br><div id="riderLoginBox"><label>Rider Job ID</label>
+</p>
+
+<br>
+
+
+<div id="riderLoginBox">
+
+<label>Rider Job ID</label>
 
 <input
 id="riderJobId"
-placeholder="Example: ACC-1001">
+placeholder="Example: ACC-1001"
+>
 
 <label>Password</label>
 
 <input
 id="riderPassword"
 type="password"
-placeholder="Rider password">
+placeholder="Rider password"
+>
 
 <button
 type="button"
@@ -401,50 +698,108 @@ onclick="riderLogin()">
 
 Rider Sign In
 
-</button><div
+</button>
+
+
+<div
 id="riderMessage"
 class="message">
-</div></div><div
+</div>
+
+</div>
+
+
+<div
 id="riderDashboard"
-class="hidden"><h3>Rider Dashboard</h3><br><div
+class="hidden">
+
+<h3>Rider Dashboard</h3>
+
+<br>
+
+
+<div
 id="riderProfile"
 class="route-box">
-</div><br><button
+</div>
+
+
+<br>
+
+
+<button
 type="button"
 class="secondary"
 onclick="loadRiderJobs()">
 
 🏍️ My Jobs
 
-</button><button
+</button>
+
+
+<button
 type="button"
 class="secondary"
 onclick="loadRiderNotifications()">
 
 🔔 Notifications
 
-</button><button
+</button>
+
+
+<button
 type="button"
 class="danger"
 onclick="riderLogout()">
 
 Sign Out
 
-</button><div id="riderNotifications"></div><div id="riderJobs"></div></div></div></section><!-- =====================================================
+</button>
+
+
+<div id="riderNotifications"></div>
+
+<div id="riderJobs"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
 MODERATOR
-===================================================== --><section id="moderatorPage" class="hidden"><div class="card"><h2>👨‍💼 Moderator Portal</h2><div id="moderatorLoginBox"><br><label>Moderator Email</label>
+===================================================== -->
+
+<section id="moderatorPage" class="hidden">
+
+<div class="card">
+
+<h2>👨‍💼 Moderator Portal</h2>
+
+
+<div id="moderatorLoginBox">
+
+<br>
+
+<label>Moderator Email</label>
 
 <input
 id="moderatorEmail"
 type="email"
-placeholder="Moderator email">
+placeholder="Moderator email"
+>
+
 
 <label>Moderator Password</label>
 
 <input
 id="moderatorPassword"
 type="password"
-placeholder="Moderator password">
+placeholder="Moderator password"
+>
+
 
 <button
 type="button"
@@ -453,155 +808,293 @@ onclick="moderatorLogin()">
 
 Moderator Sign In
 
-</button><div
+</button>
+
+
+<div
 id="moderatorMessage"
 class="message">
-</div></div><div
+</div>
+
+</div>
+
+
+<div
 id="moderatorDashboard"
-class="hidden"><h3>Moderator Dashboard</h3><br><button
+class="hidden">
+
+<h3>Moderator Dashboard</h3>
+
+<br>
+
+
+<button
 type="button"
 class="dark"
 onclick="showModeratorSection('riders')">
 
 🏍️ Riders
 
-</button><button
+</button>
+
+
+<button
 type="button"
 class="dark"
 onclick="showModeratorSection('orders')">
 
 📦 Orders
 
-</button><button
+</button>
+
+
+<button
 type="button"
 class="dark"
 onclick="showModeratorSection('customers')">
 
 👥 Customers
 
-</button><button
+</button>
+
+
+<button
 type="button"
 class="danger"
 onclick="moderatorLogout()">
 
 Sign Out
 
-</button></div></div><!-- =====================================================
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
 MODERATOR RIDERS
-===================================================== --><div
+===================================================== -->
+
+<div
 id="moderatorRiders"
-class="card hidden"><h3>Register Rider</h3><br><label>Rider Full Name</label>
+class="card hidden">
+
+<h3>Register Rider</h3>
+
+<br>
+
+
+<label>Rider Full Name</label>
 
 <input
 id="riderName"
-placeholder="Full name">
+placeholder="Full name"
+>
+
 
 <label>Phone Number</label>
 
 <input
 id="riderPhone"
-placeholder="07xxxxxxxx">
+placeholder="07xxxxxxxx"
+>
+
 
 <label>WhatsApp Number</label>
 
 <input
 id="riderWhatsapp"
-placeholder="07xxxxxxxx">
+placeholder="07xxxxxxxx"
+>
+
 
 <label>National ID</label>
 
 <input
 id="riderNationalId"
-placeholder="National ID">
+placeholder="National ID"
+>
+
 
 <label>Motorbike Type</label>
 
 <input
 id="bikeType"
-placeholder="Example: Boxer">
+placeholder="Example: Boxer"
+>
+
 
 <label>Motorbike Model</label>
 
 <input
 id="bikeModel"
-placeholder="Example: Boxer 150">
+placeholder="Example: Boxer 150"
+>
+
 
 <label>Rider Job ID</label>
 
 <input
 id="createJobId"
-placeholder="Example: ACC-1001">
+placeholder="Example: ACC-1001"
+>
+
 
 <label>Rider Password</label>
 
 <input
 id="createRiderPassword"
 type="password"
-placeholder="Password for rider login">
+placeholder="Password for rider login"
+>
+
 
 <label>Status</label>
 
-<select id="riderStatus"><option value="active">
+<select id="riderStatus">
+
+<option value="active">
 Active
-</option><option value="inactive">
+</option>
+
+<option value="inactive">
 Inactive
-</option></select><button
+</option>
+
+</select>
+
+
+<button
 type="button"
 class="primary"
 onclick="createRider()">
 
 Add Rider
 
-</button><div
+</button>
+
+
+<div
 id="riderCreateMessage"
 class="message">
-</div><br><h3>Registered Riders</h3><button
+</div>
+
+
+<br>
+
+<h3>Registered Riders</h3>
+
+<button
 type="button"
 class="secondary"
 onclick="loadRiders()">
 
 Refresh Riders
 
-</button><div id="ridersList"></div></div><!-- =====================================================
+</button>
+
+
+<div id="ridersList"></div>
+
+</div>
+
+
+<!-- =====================================================
 MODERATOR ORDERS
-===================================================== --><div
+===================================================== -->
+
+<div
 id="moderatorOrders"
-class="card hidden"><h3>All Orders</h3><br><button
+class="card hidden">
+
+<h3>📦 All Orders</h3>
+
+<br>
+
+
+<button
 type="button"
 class="secondary"
 onclick="loadAllOrders()">
 
 Refresh Orders
 
-</button><div id="allOrders"></div></div><!-- =====================================================
+</button>
+
+
+<div id="allOrders"></div>
+
+</div>
+
+
+<!-- =====================================================
 MODERATOR CUSTOMERS
-===================================================== --><div
+===================================================== -->
+
+<div
 id="moderatorCustomers"
-class="card hidden"><h3>Customers</h3><br><button
+class="card hidden">
+
+<h3>Customers</h3>
+
+<br>
+
+
+<button
 type="button"
 class="secondary"
 onclick="loadCustomers()">
 
 Refresh Customers
 
-</button><div id="customersList"></div></div></section></main><footer><p>
+</button>
+
+
+<div id="customersList"></div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<p>
 <strong>Amir Chap Chap</strong>
-</p><p>
+</p>
+
+<p>
 Fast Delivery • Passenger Transport • Customer Rewards
-</p><p>
+</p>
+
+<p>
 Customer Care:
 <a href="tel:0795653284">
 0795653284
 </a>
-</p><br><a
+</p>
+
+<br>
+
+<a
 href="#"
 onclick="showTerms();return false;">
 
 Terms & Conditions
 
-</a></footer><!-- =====================================================
+</a>
+
+</footer>
+
+
+<!-- =====================================================
 FIREBASE + APPLICATION
-===================================================== --><script type="module">
+===================================================== -->
+
+<script type="module">
 
 import {
 initializeApp
@@ -624,9 +1117,6 @@ from
 
 import {
 getFirestore,
-doc,
-setDoc,
-getDoc,
 collection,
 addDoc,
 getDocs,
@@ -777,8 +1267,11 @@ pages.forEach(id => {
 const element =
 document.getElementById(id);
 
-if(element)
+if(element){
+
 element.classList.add("hidden");
+
+}
 
 });
 
@@ -789,8 +1282,11 @@ page + "Page"
 );
 
 
-if(selected)
+if(selected){
+
 selected.classList.remove("hidden");
+
+}
 
 
 window.scrollTo({
@@ -863,9 +1359,11 @@ await apiRequest(
 "/api/customer/register",
 {
 method:"POST",
+
 body:JSON.stringify({
 email
 })
+
 },
 token
 );
@@ -1020,8 +1518,6 @@ document
 calculatedFare = 0;
 
 
-/* Managed routes */
-
 if(
 pickup.includes("lenana") &&
 destination.includes("naivas")
@@ -1171,6 +1667,15 @@ destination,
 fare:
 calculatedFare,
 
+originalFare:
+calculatedFare,
+
+transportCharge:
+0,
+
+finalFare:
+calculatedFare,
+
 paymentMethod,
 
 status:
@@ -1180,8 +1685,12 @@ riderUid:"",
 riderName:"",
 riderPhone:"",
 riderWhatsapp:"",
+riderJobId:"",
 
 createdAt:
+serverTimestamp(),
+
+updatedAt:
 serverTimestamp()
 
 }
@@ -1280,17 +1789,54 @@ return;
 }
 
 
+const orders = [];
+
 snapshot.forEach(item => {
 
-const order =
-item.data();
+orders.push({
+id:item.id,
+...item.data()
+});
 
+});
+
+
+orders.sort((a,b)=>{
+
+const aTime =
+a.createdAt &&
+a.createdAt.toMillis
+?
+a.createdAt.toMillis()
+:
+0;
+
+const bTime =
+b.createdAt &&
+b.createdAt.toMillis
+?
+b.createdAt.toMillis()
+:
+0;
+
+return bTime-aTime;
+
+});
+
+
+orders.forEach(order => {
 
 const div =
 document.createElement("div");
 
 div.className =
 "route-box";
+
+
+const statusClass =
+getStatusClass(
+order.status
+);
 
 
 div.innerHTML = `
@@ -1316,16 +1862,21 @@ order.destination || ""
 Fare:
 <strong>
 KSh ${Number(
-order.fare || 0
+order.finalFare ??
+order.fare ??
+0
 ).toLocaleString()}
 </strong>
 </p>
 
 <p>
 Status:
-<span class="badge">
+<span class="badge ${statusClass}">
 ${escapeHTML(
-order.status || "pending"
+formatStatus(
+order.status ||
+"pending"
+)
 )}
 </span>
 </p>
@@ -1333,34 +1884,80 @@ order.status || "pending"
 ${
 order.riderName
 ?
-`<p>
-Rider:
-${escapeHTML(order.riderName)}
-</p>`
-:""
+`
+<div class="assigned-box">
+
+<strong>
+🏍️ Assigned Rider
+</strong>
+
+<p>
+Name:
+${escapeHTML(
+order.riderName
+)}
+</p>
+
+${
+order.riderJobId
+?
+`
+<p>
+Job ID:
+${escapeHTML(
+order.riderJobId
+)}
+</p>
+`
+:
+""
 }
 
 ${
 order.riderPhone
 ?
-`<a href="tel:${cleanPhone(order.riderPhone)}">
+`
+<p>
+Phone:
+${escapeHTML(
+order.riderPhone
+)}
+</p>
+
+<a href="tel:${cleanPhone(order.riderPhone)}">
+
 <button class="dark">
-Call Rider
+📞 Call Rider
 </button>
-</a>`
-:""
+
+</a>
+`
+:
+""
 }
 
 ${
 order.riderWhatsapp
 ?
-`<a target="_blank"
+`
+<a
+target="_blank"
 href="https://wa.me/${cleanPhone(order.riderWhatsapp)}">
+
 <button class="success">
-WhatsApp Rider
+💬 WhatsApp Rider
 </button>
-</a>`
-:""
+
+</a>
+`
+:
+""
+}
+
+</div>
+`
+:
+""
 }
 
 `;
@@ -1424,6 +2021,7 @@ await apiRequest(
 "/api/rider-login",
 {
 method:"POST",
+
 body:JSON.stringify({
 jobId,
 password
@@ -1431,11 +2029,6 @@ password
 }
 );
 
-
-/*
-The backend returns a Firebase
-custom token.
-*/
 
 await signInWithCustomToken(
 auth,
@@ -1463,7 +2056,8 @@ document
 
 <strong>
 ${escapeHTML(
-data.rider.name || "Rider"
+data.rider.name ||
+"Rider"
 )}
 </strong>
 
@@ -1472,7 +2066,8 @@ data.rider.name || "Rider"
 Rider Job ID:
 <strong>
 ${escapeHTML(
-data.rider.jobId || ""
+data.rider.jobId ||
+""
 )}
 </strong>
 
@@ -1480,22 +2075,26 @@ data.rider.jobId || ""
 
 Phone:
 ${escapeHTML(
-data.rider.phone || ""
+data.rider.phone ||
+""
 )}
 
 <br>
 
 Motorbike:
 ${escapeHTML(
-data.rider.bikeType || ""
+data.rider.bikeType ||
+""
 )}
 ${escapeHTML(
-data.rider.bikeModel || ""
+data.rider.bikeModel ||
+""
 )}
 
 <br>
 
 Status:
+
 <span class="status-online">
 ACTIVE
 </span>
@@ -1561,11 +2160,13 @@ token
 
 
 box.innerHTML =
-"<h3>My Jobs</h3>";
+"<h3>🏍️ My Jobs</h3>";
 
 
-if(!data.orders ||
-data.orders.length === 0){
+if(
+!data.orders ||
+data.orders.length === 0
+){
 
 box.innerHTML +=
 "<p>No assigned jobs yet.</p>";
@@ -1584,45 +2185,171 @@ div.className =
 "route-box";
 
 
+const status =
+order.status || "";
+
+
+let buttons = "";
+
+
+/*
+  ASSIGNED
+  Rider can pick up.
+*/
+
+if(status === "assigned"){
+
+buttons += `
+
+<button
+type="button"
+class="primary"
+onclick="riderPickupOrder('${order.id}')">
+
+📦 Pick Up Delivery
+
+</button>
+
+`;
+
+}
+
+
+/*
+  PICKED UP
+  Rider can start delivery.
+*/
+
+if(status === "picked_up"){
+
+buttons += `
+
+<button
+type="button"
+class="success"
+onclick="riderStartDelivery('${order.id}')">
+
+🏍️ Start Delivery
+
+</button>
+
+`;
+
+}
+
+
+/*
+  ON THE WAY
+*/
+
+if(status === "on_the_way"){
+
+buttons += `
+
+<div class="notification">
+
+🚚 Delivery is currently on the way.
+
+</div>
+
+`;
+
+}
+
+
 div.innerHTML = `
 
 <h3>
 ${escapeHTML(
-order.serviceType || "Delivery"
+order.serviceType ||
+"Delivery"
 )}
 </h3>
 
 <p>
-<strong>Pickup:</strong>
+<strong>
+Pickup:
+</strong>
+
 ${escapeHTML(
-order.pickup || ""
+order.pickup ||
+""
 )}
 </p>
 
 <p>
-<strong>Destination:</strong>
+<strong>
+Destination:
+</strong>
+
 ${escapeHTML(
-order.destination || ""
+order.destination ||
+""
 )}
 </p>
+
+<p>
+Customer:
+${escapeHTML(
+order.customerEmail ||
+""
+)}
+</p>
+
+${
+order.customerPhone
+?
+`
+<p>
+Customer Phone:
+${escapeHTML(
+order.customerPhone
+)}
+</p>
+
+<a href="tel:${cleanPhone(order.customerPhone)}">
+
+<button class="dark">
+📞 Call Customer
+</button>
+
+</a>
+`
+:
+""
+}
 
 <p>
 Fare:
 <strong>
 KSh ${Number(
-order.fare || 0
+order.finalFare ??
+order.fare ??
+0
 ).toLocaleString()}
 </strong>
 </p>
 
 <p>
 Status:
-<span class="badge">
+
+<span class="badge ${
+getStatusClass(status)
+}">
+
 ${escapeHTML(
-order.status || ""
+formatStatus(status)
 )}
+
 </span>
+
 </p>
+
+<div class="action-row">
+
+${buttons}
+
+</div>
 
 `;
 
@@ -1638,6 +2365,142 @@ box.innerHTML =
 "<p>Error loading jobs: " +
 escapeHTML(error.message) +
 "</p>";
+
+}
+
+};
+
+
+/* =====================================================
+RIDER PICK UP
+===================================================== */
+
+window.riderPickupOrder =
+async function(orderId){
+
+if(!auth.currentUser){
+
+alert(
+"Please login as rider."
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Confirm that you have picked up this delivery?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+const token =
+await auth.currentUser.getIdToken(true);
+
+
+const data =
+await apiRequest(
+"/api/rider/orders/" +
+encodeURIComponent(orderId) +
+"/pickup",
+{
+method:"PATCH"
+},
+token
+);
+
+
+alert(
+data.message ||
+"Delivery marked as picked up."
+);
+
+
+await loadRiderJobs();
+
+
+}catch(error){
+
+alert(
+"Could not update delivery: " +
+error.message
+);
+
+}
+
+};
+
+
+/* =====================================================
+RIDER START DELIVERY
+===================================================== */
+
+window.riderStartDelivery =
+async function(orderId){
+
+if(!auth.currentUser){
+
+alert(
+"Please login as rider."
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Start this delivery now?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+const token =
+await auth.currentUser.getIdToken(true);
+
+
+const data =
+await apiRequest(
+"/api/rider/orders/" +
+encodeURIComponent(orderId) +
+"/start-delivery",
+{
+method:"PATCH"
+},
+token
+);
+
+
+alert(
+data.message ||
+"Delivery started."
+);
+
+
+await loadRiderJobs();
+
+
+}catch(error){
+
+alert(
+"Could not start delivery: " +
+error.message
+);
 
 }
 
@@ -1681,8 +2544,10 @@ token
 );
 
 
-if(!data.notifications ||
-data.notifications.length === 0){
+if(
+!data.notifications ||
+data.notifications.length === 0
+){
 
 box.innerHTML +=
 "<p>No notifications.</p>";
@@ -1825,10 +2690,6 @@ return;
 }
 
 
-const token =
-await credential.user.getIdToken(true);
-
-
 document
 .getElementById("moderatorLoginBox")
 .classList.add("hidden");
@@ -1843,7 +2704,7 @@ message.textContent =
 "Moderator login successful.";
 
 
-showModeratorSection("riders");
+showModeratorSection("orders");
 
 
 }catch(error){
@@ -1971,6 +2832,7 @@ await apiRequest(
 "/api/moderator/riders",
 {
 method:"POST",
+
 body:JSON.stringify({
 
 jobId,
@@ -1984,6 +2846,7 @@ password,
 status
 
 })
+
 },
 token
 );
@@ -2124,7 +2987,8 @@ div.innerHTML = `
 
 <h3>
 ${escapeHTML(
-rider.name || ""
+rider.name ||
+""
 )}
 </h3>
 
@@ -2132,7 +2996,8 @@ rider.name || ""
 Job ID:
 <strong>
 ${escapeHTML(
-rider.jobId || ""
+rider.jobId ||
+""
 )}
 </strong>
 </p>
@@ -2140,41 +3005,49 @@ rider.jobId || ""
 <p>
 Phone:
 ${escapeHTML(
-rider.phone || ""
+rider.phone ||
+""
 )}
 </p>
 
 <p>
 WhatsApp:
 ${escapeHTML(
-rider.whatsapp || ""
+rider.whatsapp ||
+""
 )}
 </p>
 
 <p>
 Motorbike:
 ${escapeHTML(
-rider.bikeType || ""
+rider.bikeType ||
+""
 )}
 ${escapeHTML(
-rider.bikeModel || ""
+rider.bikeModel ||
+""
 )}
 </p>
 
 <p>
 Status:
+
 <span class="badge">
 ${escapeHTML(
-rider.status || ""
+rider.status ||
+""
 )}
 </span>
+
 </p>
+
 
 <button
 class="secondary"
 type="button"
 onclick="changeRiderStatus(
-'${rider.uid}',
+'${escapeHTML(rider.uid)}',
 '${nextStatus}'
 )">
 
@@ -2182,11 +3055,12 @@ ${nextText}
 
 </button>
 
+
 <button
 class="danger"
 type="button"
 onclick="removeRider(
-'${rider.uid}'
+'${escapeHTML(rider.uid)}'
 )">
 
 Remove Rider
@@ -2194,7 +3068,6 @@ Remove Rider
 </button>
 
 `;
-
 
 box.appendChild(div);
 
@@ -2233,9 +3106,11 @@ encodeURIComponent(uid) +
 "/status",
 {
 method:"PATCH",
+
 body:JSON.stringify({
 status
 })
+
 },
 token
 );
@@ -2347,457 +3222,6 @@ await auth.currentUser
 .getIdToken(true);
 
 
-const data =
-await apiRequest(
-"/api/moderator/orders",
-{},
-token
-);
-
-
-box.innerHTML = "";
-
-
-if(
-!data.orders ||
-data.orders.length === 0
-){
-
-box.innerHTML =
-"<p>No orders found.</p>";
-
-return;
-
-}
-
-
-data.orders.forEach(order => {
-
-const div =
-document.createElement("div");
-
-div.className =
-"route-box";
-
-
-div.innerHTML = `
-
-<strong>
-${escapeHTML(
-order.serviceType || "Service"
-)}
-</strong>
-
-<p>
-${escapeHTML(
-order.pickup || ""
-)}
- →
-${escapeHTML(
-order.destination || ""
-)}
-</p>
-
-<p>
-Customer:
-${escapeHTML(
-order.customerEmail || order.userId || ""
-)}
-</p>
-
-<p>
-Fare:
-<strong>
-KSh ${Number(
-order.fare || 0
-).toLocaleString()}
-</strong>
-</p>
-
-<p>
-Status:
-<span class="badge">
-${escapeHTML(
-order.status || ""
-)}
-</span>
-</p>
-
-${
-order.status === "pending"
-?
-`
-<button
-class="primary"
-type="button"
-onclick="approveOrder('${order.id}')">
-
-Approve Order
-
-</button>
-`
-:""
-}
-
-`;
-
-
-box.appendChild(div);
-
-});
-
-
-}catch(error){
-
-box.innerHTML =
-"<p>Error loading orders: " +
-escapeHTML(error.message) +
-"</p>";
-
-}
-
-};
-
-
-/* =====================================================
-APPROVE ORDER
-===================================================== */
-
-window.approveOrder =
-async function(orderId){
-
-try{
-
-const token =
-await auth.currentUser
-.getIdToken(true);
-
-
-await apiRequest(
-"/api/moderator/orders/" +
-encodeURIComponent(orderId) +
-"/approve",
-{
-method:"PATCH"
-},
-token
-);
-
-
-alert(
-"Order approved successfully."
-);
-
-
-await loadAllOrders();
-
-
-}catch(error){
-
-alert(
-"Could not approve order: " +
-error.message
-);
-
-}
-
-};
-
-
-/* =====================================================
-LOAD CUSTOMERS
-===================================================== */
-
-window.loadCustomers =
-async function(){
-
-if(!auth.currentUser){
-
-return;
-
-}
-
-
-const box =
-document.getElementById(
-"customersList"
-);
-
-box.innerHTML =
-"<div class='loading'>Loading customers...</div>";
-
-
-try{
-
-const token =
-await auth.currentUser
-.getIdToken(true);
-
-
-const data =
-await apiRequest(
-"/api/moderator/customers",
-{},
-token
-);
-
-
-box.innerHTML = "";
-
-
-if(
-!data.customers ||
-data.customers.length === 0
-){
-
-box.innerHTML =
-"<p>No customers registered.</p>";
-
-return;
-
-}
-
-
-data.customers.forEach(customer => {
-
-const div =
-document.createElement("div");
-
-div.className =
-"route-box";
-
-
-div.innerHTML = `
-
-<strong>
-${escapeHTML(
-customer.email || "Customer"
-)}
-</strong>
-
-<p>
-Points:
-${Number(
-customer.points || 0
-)}
-</p>
-
-<p>
-Role:
-${escapeHTML(
-customer.role || "customer"
-)}
-</p>
-
-`;
-
-box.appendChild(div);
-
-});
-
-
-}catch(error){
-
-box.innerHTML =
-"<p>Error loading customers: " +
-escapeHTML(error.message) +
-"</p>";
-
-}
-
-};
-
-
-/* =====================================================
-MODERATOR SECTIONS
-===================================================== */
-
-window.showModeratorSection =
-function(section){
-
-const sections = [
-
-"moderatorRiders",
-"moderatorOrders",
-"moderatorCustomers"
-
-];
-
-
-sections.forEach(id => {
-
-document
-.getElementById(id)
-.classList.add("hidden");
-
-});
-
-
-if(section === "riders"){
-
-document
-.getElementById("moderatorRiders")
-.classList.remove("hidden");
-
-loadRiders();
-
-}
-
-
-if(section === "orders"){
-
-document
-.getElementById("moderatorOrders")
-.classList.remove("hidden");
-
-loadAllOrders();
-
-}
-
-
-if(section === "customers"){
-
-document
-.getElementById("moderatorCustomers")
-.classList.remove("hidden");
-
-loadCustomers();
-
-}
-
-};
-
-
-/* =====================================================
-MODERATOR LOGOUT
-===================================================== */
-
-window.moderatorLogout =
-async function(){
-
-await signOut(auth);
-
-document
-.getElementById("moderatorDashboard")
-.classList.add("hidden");
-
-document
-.getElementById("moderatorLoginBox")
-.classList.remove("hidden");
-
-document
-.getElementById("moderatorMessage")
-.textContent =
-"You have been signed out.";
-
-};
-
-
-/* =====================================================
-TERMS
-===================================================== */
-
-window.showTerms =
-function(){
-
-alert(
-
-`AMIR CHAP CHAP
-
-TERMS & CONDITIONS
-
-1. Customers must provide correct pickup and destination information.
-
-2. Fares may be calculated using approved routes or the current company per-kilometre rate.
-
-3. Riders are approved and managed by Amir Chap Chap.
-
-4. Riders must follow company instructions.
-
-5. Customers should verify their booking information before submitting.
-
-6. Customer Care:
-0795653284
-
-Amir Chap Chap`
-
-);
-
-};
-
-
-/* =====================================================
-PHONE CLEANER
-===================================================== */
-
-window.cleanPhone =
-function(phone){
-
-let value =
-String(phone || "")
-.replace(/\D/g,"");
-
-
-if(value.startsWith("0")){
-
-value =
-"254" +
-value.substring(1);
-
-}
-
-
-return value;
-
-};
-
-
-/* =====================================================
-HTML ESCAPE
-===================================================== */
-
-function escapeHTML(value){
-
-return String(value || "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-AUTH STATE
-===================================================== */
-
-onAuthStateChanged(
-auth,
-user => {
-
-console.log(
-"Firebase authentication state:",
-user
-?
-user.uid
-:
-"Not signed in"
-);
-
-}
-);
-
-
-/* =====================================================
-START
-===================================================== */
-
-showPage("home");
-
-console.log(
-"Amir Chap Chap frontend loaded successfully."
-);
-
-</script></body>
-</html>
+/*
+  Load orders and riders from
+  the existing
