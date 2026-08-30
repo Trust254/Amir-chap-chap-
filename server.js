@@ -6,10 +6,6 @@ const crypto = require("crypto");
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-/* ==========================================
-   MIDDLEWARE
-========================================== */
-
 app.use(cors());
 app.use(express.json());
 
@@ -45,10 +41,13 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 /* ==========================================
-   PASSWORD HASHING
+   HELPERS
 ========================================== */
 
-function hashPassword(password, salt = crypto.randomBytes(16).toString("hex")) {
+function hashPassword(
+  password,
+  salt = crypto.randomBytes(16).toString("hex")
+) {
   const hash = crypto
     .scryptSync(password, salt, 64)
     .toString("hex");
@@ -79,12 +78,13 @@ function verifyPassword(password, storedPassword) {
 }
 
 /* ==========================================
-   AUTHENTICATION HELPERS
+   AUTHENTICATION
 ========================================== */
 
 async function verifyFirebaseToken(req, res, next) {
   try {
-    const header = req.headers.authorization || "";
+    const header =
+      req.headers.authorization || "";
 
     if (!header.startsWith("Bearer ")) {
       return res.status(401).json({
@@ -94,14 +94,16 @@ async function verifyFirebaseToken(req, res, next) {
 
     const token = header.substring(7);
 
-    const decodedToken =
+    req.user =
       await admin.auth().verifyIdToken(token);
 
-    req.user = decodedToken;
-
     next();
+
   } catch (error) {
-    console.error("Token verification failed:", error.message);
+    console.error(
+      "Token verification failed:",
+      error.message
+    );
 
     return res.status(401).json({
       error: "Invalid or expired authentication token."
@@ -111,7 +113,8 @@ async function verifyFirebaseToken(req, res, next) {
 
 async function requireModerator(req, res, next) {
   try {
-    const header = req.headers.authorization || "";
+    const header =
+      req.headers.authorization || "";
 
     if (!header.startsWith("Bearer ")) {
       return res.status(401).json({
@@ -121,18 +124,19 @@ async function requireModerator(req, res, next) {
 
     const token = header.substring(7);
 
-    const decodedToken =
+    const decoded =
       await admin.auth().verifyIdToken(token);
 
-    if (decodedToken.admin !== true) {
+    if (decoded.admin !== true) {
       return res.status(403).json({
         error: "Moderator authorization required."
       });
     }
 
-    req.user = decodedToken;
+    req.user = decoded;
 
     next();
+
   } catch (error) {
     console.error(
       "Moderator authentication failed:",
@@ -146,27 +150,35 @@ async function requireModerator(req, res, next) {
 }
 
 /* ==========================================
-   HEALTH CHECK
+   HOME / HEALTH
 ========================================== */
 
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "online",
-    message: "Amir Chap Chap Backend is running smoothly.",
+    message:
+      "Amir Chap Chap Backend is running smoothly.",
     timestamp: new Date().toISOString()
   });
 });
 
-/* ==========================================
-   RIDER TEST
-========================================== */
-
-app.get("/api/moderator/riders/test", (req, res) => {
+app.get("/api/health", (req, res) => {
   res.status(200).json({
-    status: "OK",
-    message: "Rider route is deployed"
+    status: "online",
+    service: "Amir Chap Chap Backend",
+    timestamp: new Date().toISOString()
   });
 });
+
+app.get(
+  "/api/moderator/riders/test",
+  (req, res) => {
+    res.status(200).json({
+      status: "OK",
+      message: "Rider route is deployed"
+    });
+  }
+);
 
 /* ==========================================
    CUSTOMER REGISTER
@@ -178,23 +190,31 @@ app.post(
   async (req, res) => {
     try {
       const uid = req.user.uid;
-      const email = req.body.email || req.user.email || "";
+      const email =
+        req.body.email ||
+        req.user.email ||
+        "";
 
-      await db.collection("users").doc(uid).set(
-        {
-          uid,
-          email,
-          role: "customer",
-          points: 0,
-          createdAt:
-            admin.firestore.FieldValue.serverTimestamp()
-        },
-        { merge: true }
-      );
+      await db
+        .collection("users")
+        .doc(uid)
+        .set(
+          {
+            uid,
+            email,
+            role: "customer",
+            points: 0,
+            updatedAt:
+              admin.firestore.FieldValue.serverTimestamp()
+          },
+          { merge: true }
+        );
 
-      res.status(200).json({
-        message: "Customer registered successfully."
+      res.json({
+        message:
+          "Customer registered successfully."
       });
+
     } catch (error) {
       console.error(
         "Customer registration error:",
@@ -237,25 +257,27 @@ app.post(
       }
 
       const cleanJobId =
-        String(jobId).trim().toUpperCase();
+        String(jobId)
+          .trim()
+          .toUpperCase();
 
-      const riderQuery =
+      const existing =
         await db
           .collection("riders")
-          .where("jobId", "==", cleanJobId)
+          .where(
+            "jobId",
+            "==",
+            cleanJobId
+          )
           .limit(1)
           .get();
 
-      if (!riderQuery.empty) {
+      if (!existing.empty) {
         return res.status(409).json({
-          error: "This Rider Job ID already exists."
+          error:
+            "This Rider Job ID already exists."
         });
       }
-
-      /*
-        Create a Firebase Auth account using an internal
-        email address. Riders don't need to see this email.
-      */
 
       const internalEmail =
         `${cleanJobId.toLowerCase()}@rider.amirchapchap.local`;
@@ -268,19 +290,15 @@ app.post(
           displayName: name
         });
 
-      /*
-        Rider gets a custom Firebase claim.
-      */
-
-      await admin.auth().setCustomUserClaims(
-        userRecord.uid,
-        {
-          role: "rider"
-        }
-      );
-
-      const passwordHash =
-        hashPassword(password);
+      await admin
+        .auth()
+        .setCustomUserClaims(
+          userRecord.uid,
+          {
+            role: "rider",
+            jobId: cleanJobId
+          }
+        );
 
       const rider = {
         uid: userRecord.uid,
@@ -291,7 +309,8 @@ app.post(
         nationalId: nationalId || "",
         bikeType: bikeType || "",
         bikeModel: bikeModel || "",
-        passwordHash,
+        passwordHash:
+          hashPassword(password),
         status: status || "active",
         role: "rider",
         createdAt:
@@ -302,10 +321,6 @@ app.post(
         .collection("riders")
         .doc(userRecord.uid)
         .set(rider);
-
-      /*
-        Also create/update the users record.
-      */
 
       await db
         .collection("users")
@@ -323,7 +338,8 @@ app.post(
         });
 
       res.status(201).json({
-        message: "Rider registered successfully.",
+        message:
+          "Rider registered successfully.",
         rider: {
           uid: userRecord.uid,
           jobId: cleanJobId,
@@ -335,6 +351,7 @@ app.post(
           status: status || "active"
         }
       });
+
     } catch (error) {
       console.error(
         "Error creating rider:",
@@ -352,103 +369,112 @@ app.post(
    RIDER LOGIN
 ========================================== */
 
-app.post("/api/rider-login", async (req, res) => {
-  try {
-    const {
-      jobId,
-      password
-    } = req.body;
+app.post(
+  "/api/rider-login",
+  async (req, res) => {
+    try {
+      const {
+        jobId,
+        password
+      } = req.body;
 
-    if (!jobId || !password) {
-      return res.status(400).json({
-        error:
-          "Rider Job ID and password are required."
-      });
-    }
-
-    const cleanJobId =
-      String(jobId).trim().toUpperCase();
-
-    const snapshot =
-      await db
-        .collection("riders")
-        .where("jobId", "==", cleanJobId)
-        .limit(1)
-        .get();
-
-    if (snapshot.empty) {
-      return res.status(401).json({
-        error: "Invalid Rider Job ID or password."
-      });
-    }
-
-    const doc = snapshot.docs[0];
-    const rider = doc.data();
-
-    if (rider.status !== "active") {
-      return res.status(403).json({
-        error:
-          "This rider account is not active."
-      });
-    }
-
-    if (
-      !rider.passwordHash ||
-      !verifyPassword(
-        password,
-        rider.passwordHash
-      )
-    ) {
-      return res.status(401).json({
-        error: "Invalid Rider Job ID or password."
-      });
-    }
-
-    /*
-      Create a Firebase custom token.
-      The frontend can use the returned token later
-      if Firebase authentication is needed.
-    */
-
-    const customToken =
-      await admin
-        .auth()
-        .createCustomToken(
-          rider.uid,
-          {
-            role: "rider",
-            jobId: rider.jobId
-          }
-        );
-
-    res.status(200).json({
-      message: "Rider login successful.",
-      token: customToken,
-      rider: {
-        uid: rider.uid,
-        jobId: rider.jobId,
-        name: rider.name,
-        phone: rider.phone || "",
-        whatsapp: rider.whatsapp || "",
-        bikeType: rider.bikeType || "",
-        bikeModel: rider.bikeModel || "",
-        status: rider.status
+      if (!jobId || !password) {
+        return res.status(400).json({
+          error:
+            "Rider Job ID and password are required."
+        });
       }
-    });
-  } catch (error) {
-    console.error(
-      "Rider login error:",
-      error
-    );
 
-    res.status(500).json({
-      error: error.message
-    });
+      const cleanJobId =
+        String(jobId)
+          .trim()
+          .toUpperCase();
+
+      const snapshot =
+        await db
+          .collection("riders")
+          .where(
+            "jobId",
+            "==",
+            cleanJobId
+          )
+          .limit(1)
+          .get();
+
+      if (snapshot.empty) {
+        return res.status(401).json({
+          error:
+            "Invalid Rider Job ID or password."
+        });
+      }
+
+      const rider =
+        snapshot.docs[0].data();
+
+      if (rider.status !== "active") {
+        return res.status(403).json({
+          error:
+            "This rider account is not active."
+        });
+      }
+
+      if (
+        !rider.passwordHash ||
+        !verifyPassword(
+          password,
+          rider.passwordHash
+        )
+      ) {
+        return res.status(401).json({
+          error:
+            "Invalid Rider Job ID or password."
+        });
+      }
+
+      const customToken =
+        await admin
+          .auth()
+          .createCustomToken(
+            rider.uid,
+            {
+              role: "rider",
+              jobId: rider.jobId
+            }
+          );
+
+      res.json({
+        message:
+          "Rider login successful.",
+        token: customToken,
+        rider: {
+          uid: rider.uid,
+          jobId: rider.jobId,
+          name: rider.name,
+          phone: rider.phone || "",
+          whatsapp: rider.whatsapp || "",
+          bikeType:
+            rider.bikeType || "",
+          bikeModel:
+            rider.bikeModel || "",
+          status: rider.status
+        }
+      });
+
+    } catch (error) {
+      console.error(
+        "Rider login error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
   }
-});
+);
 
 /* ==========================================
-   GET ALL RIDERS
+   GET RIDERS
 ========================================== */
 
 app.get(
@@ -459,16 +485,15 @@ app.get(
       const snapshot =
         await db
           .collection("riders")
-          .orderBy("createdAt", "desc")
+          .orderBy(
+            "createdAt",
+            "desc"
+          )
           .get();
 
       const riders =
         snapshot.docs.map(doc => {
           const data = doc.data();
-
-          /*
-            Never send the password hash to the frontend.
-          */
 
           delete data.passwordHash;
 
@@ -478,9 +503,10 @@ app.get(
           };
         });
 
-      res.status(200).json({
+      res.json({
         riders
       });
+
     } catch (error) {
       console.error(
         "Error fetching riders:",
@@ -495,7 +521,7 @@ app.get(
 );
 
 /* ==========================================
-   CHANGE RIDER STATUS
+   RIDER STATUS
 ========================================== */
 
 app.patch(
@@ -503,8 +529,12 @@ app.patch(
   requireModerator,
   async (req, res) => {
     try {
-      const uid = req.params.uid;
-      const { status } = req.body;
+      const uid =
+        req.params.uid;
+
+      const {
+        status
+      } = req.body;
 
       if (
         status !== "active" &&
@@ -519,9 +549,12 @@ app.patch(
       await db
         .collection("riders")
         .doc(uid)
-        .update({
-          status
-        });
+        .set(
+          {
+            status
+          },
+          { merge: true }
+        );
 
       await db
         .collection("users")
@@ -533,18 +566,21 @@ app.patch(
           { merge: true }
         );
 
-      /*
-        Disable/enable the Firebase Auth account too.
-      */
+      await admin
+        .auth()
+        .updateUser(
+          uid,
+          {
+            disabled:
+              status !== "active"
+          }
+        );
 
-      await admin.auth().updateUser(uid, {
-        disabled: status !== "active"
-      });
-
-      res.status(200).json({
+      res.json({
         message:
           `Rider status changed to ${status}.`
       });
+
     } catch (error) {
       console.error(
         "Error changing rider status:",
@@ -567,9 +603,12 @@ app.delete(
   requireModerator,
   async (req, res) => {
     try {
-      const uid = req.params.uid;
+      const uid =
+        req.params.uid;
 
-      await admin.auth().deleteUser(uid);
+      await admin
+        .auth()
+        .deleteUser(uid);
 
       await db
         .collection("riders")
@@ -581,10 +620,11 @@ app.delete(
         .doc(uid)
         .delete();
 
-      res.status(200).json({
+      res.json({
         message:
           "Rider removed successfully."
       });
+
     } catch (error) {
       console.error(
         "Error removing rider:",
@@ -610,7 +650,11 @@ app.get(
       const snapshot =
         await db
           .collection("users")
-          .where("role", "==", "customer")
+          .where(
+            "role",
+            "==",
+            "customer"
+          )
           .get();
 
       const customers =
@@ -619,9 +663,10 @@ app.get(
           ...doc.data()
         }));
 
-      res.status(200).json({
+      res.json({
         customers
       });
+
     } catch (error) {
       console.error(
         "Error loading customers:",
@@ -647,7 +692,10 @@ app.get(
       const snapshot =
         await db
           .collection("orders")
-          .orderBy("createdAt", "desc")
+          .orderBy(
+            "createdAt",
+            "desc"
+          )
           .get();
 
       const orders =
@@ -656,9 +704,10 @@ app.get(
           ...doc.data()
         }));
 
-      res.status(200).json({
+      res.json({
         orders
       });
+
     } catch (error) {
       console.error(
         "Error loading orders:",
@@ -685,7 +734,9 @@ app.patch(
         req.params.orderId;
 
       const orderRef =
-        db.collection("orders").doc(orderId);
+        db
+          .collection("orders")
+          .doc(orderId);
 
       const orderSnapshot =
         await orderRef.get();
@@ -696,17 +747,31 @@ app.patch(
         });
       }
 
+      const order =
+        orderSnapshot.data();
+
+      if (
+        order.status !== "pending"
+      ) {
+        return res.status(400).json({
+          error:
+            `Order is already ${order.status}.`
+        });
+      }
+
       await orderRef.update({
         status: "approved",
         approvedAt:
           admin.firestore.FieldValue.serverTimestamp(),
-        approvedBy: req.user.uid
+        approvedBy:
+          req.user.uid
       });
 
-      res.status(200).json({
+      res.json({
         message:
           "Order approved successfully."
       });
+
     } catch (error) {
       console.error(
         "Error approving order:",
@@ -721,6 +786,152 @@ app.patch(
 );
 
 /* ==========================================
+   ASSIGN RIDER
+========================================== */
+
+app.patch(
+  "/api/moderator/orders/:orderId/assign-rider",
+  requireModerator,
+  async (req, res) => {
+    try {
+      const orderId =
+        req.params.orderId;
+
+      const {
+        riderUid
+      } = req.body;
+
+      if (!riderUid) {
+        return res.status(400).json({
+          error:
+            "Rider UID is required."
+        });
+      }
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(orderId);
+
+      const riderRef =
+        db
+          .collection("riders")
+          .doc(riderUid);
+
+      const [
+        orderSnapshot,
+        riderSnapshot
+      ] = await Promise.all([
+        orderRef.get(),
+        riderRef.get()
+      ]);
+
+      if (!orderSnapshot.exists) {
+        return res.status(404).json({
+          error: "Order not found."
+        });
+      }
+
+      if (!riderSnapshot.exists) {
+        return res.status(404).json({
+          error: "Rider not found."
+        });
+      }
+
+      const order =
+        orderSnapshot.data();
+
+      const rider =
+        riderSnapshot.data();
+
+      if (rider.status !== "active") {
+        return res.status(400).json({
+          error:
+            "Selected rider is not active."
+        });
+      }
+
+      if (
+        order.status !== "approved" &&
+        order.status !== "assigned"
+      ) {
+        return res.status(400).json({
+          error:
+            "Only approved orders can be assigned."
+        });
+      }
+
+      await orderRef.update({
+        status: "assigned",
+
+        riderUid:
+          rider.uid,
+
+        riderName:
+          rider.name || "",
+
+        riderPhone:
+          rider.phone || "",
+
+        riderWhatsapp:
+          rider.whatsapp || "",
+
+        riderJobId:
+          rider.jobId || "",
+
+        assignedAt:
+          admin.firestore.FieldValue.serverTimestamp(),
+
+        assignedBy:
+          req.user.uid
+      });
+
+      await db
+        .collection("notifications")
+        .add({
+          riderUid:
+            rider.uid,
+
+          orderId,
+
+          title:
+            "New Delivery Job",
+
+          message:
+            `New job: ${order.pickup || ""} → ${order.destination || ""}. Fare KSh ${Number(order.fare || 0).toLocaleString()}.`,
+
+          read: false,
+
+          createdAt:
+            admin.firestore.FieldValue.serverTimestamp()
+        });
+
+      res.json({
+        message:
+          "Rider assigned successfully.",
+        rider: {
+          uid: rider.uid,
+          name: rider.name,
+          jobId: rider.jobId
+        }
+      });
+
+    } catch (error) {
+      console.error(
+        "ASSIGN RIDER ERROR:",
+        error
+      );
+
+      res.status(500).json({
+        error:
+          error.message ||
+          "Could not assign rider."
+      });
+    }
+  }
+);
+
+/* ==========================================
    RIDER JOBS
 ========================================== */
 
@@ -729,9 +940,12 @@ app.get(
   verifyFirebaseToken,
   async (req, res) => {
     try {
-      if (req.user.role !== "rider") {
+      if (
+        req.user.role !== "rider"
+      ) {
         return res.status(403).json({
-          error: "Rider access required."
+          error:
+            "Rider access required."
         });
       }
 
@@ -751,9 +965,10 @@ app.get(
           ...doc.data()
         }));
 
-      res.status(200).json({
+      res.json({
         orders
       });
+
     } catch (error) {
       console.error(
         "Error loading rider jobs:",
@@ -776,9 +991,12 @@ app.get(
   verifyFirebaseToken,
   async (req, res) => {
     try {
-      if (req.user.role !== "rider") {
+      if (
+        req.user.role !== "rider"
+      ) {
         return res.status(403).json({
-          error: "Rider access required."
+          error:
+            "Rider access required."
         });
       }
 
@@ -798,9 +1016,10 @@ app.get(
           ...doc.data()
         }));
 
-      res.status(200).json({
+      res.json({
         notifications
       });
+
     } catch (error) {
       console.error(
         "Error loading notifications:",
@@ -815,11 +1034,744 @@ app.get(
 );
 
 /* ==========================================
-   START SERVER
+   RIDER MARK PICKED UP
 ========================================== */
 
-app.listen(PORT, () => {
-  console.log(
-    `Amir Chap Chap Backend LIVE on port ${PORT}`
-  );
-});
+app.patch(
+  "/api/rider/orders/:orderId/picked-up",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      if (
+        req.user.role !== "rider"
+      ) {
+        return res.status(403).json({
+          error:
+            "Rider access required."
+        });
+      }
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(req.params.orderId);
+
+      const snapshot =
+        await orderRef.get();
+
+      if (!snapshot.exists) {
+        return res.status(404).json({
+          error: "Order not found."
+        });
+      }
+
+      const order =
+        snapshot.data();
+
+      if (
+        order.riderUid !==
+        req.user.uid
+      ) {
+        return res.status(403).json({
+          error:
+            "This job is not assigned to you."
+        });
+      }
+
+      await orderRef.update({
+        status: "picked_up",
+
+        pickedUpAt:
+          admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      res.json({
+        message:
+          "Order marked as picked up."
+      });
+
+    } catch (error) {
+      console.error(
+        "Picked up error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   RIDER MARK DELIVERED
+   AUTOMATIC POINTS
+========================================== */
+
+app.patch(
+  "/api/rider/orders/:orderId/delivered",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      if (
+        req.user.role !== "rider"
+      ) {
+        return res.status(403).json({
+          error:
+            "Rider access required."
+        });
+      }
+
+      const orderId =
+        req.params.orderId;
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(orderId);
+
+      const orderSnapshot =
+        await orderRef.get();
+
+      if (!orderSnapshot.exists) {
+        return res.status(404).json({
+          error: "Order not found."
+        });
+      }
+
+      const order =
+        orderSnapshot.data();
+
+      if (
+        order.riderUid !==
+        req.user.uid
+      ) {
+        return res.status(403).json({
+          error:
+            "This job is not assigned to you."
+        });
+      }
+
+      if (
+        order.status === "delivered"
+      ) {
+        return res.status(400).json({
+          error:
+            "This order has already been delivered."
+        });
+      }
+
+      const customerUid =
+        order.userId;
+
+      const pointsEarned =
+        Math.max(
+          1,
+          Math.floor(
+            Number(order.fare || 0) / 10
+          )
+        );
+
+      await db.runTransaction(
+        async transaction => {
+
+          const customerRef =
+            db
+              .collection("users")
+              .doc(customerUid);
+
+          const customerSnapshot =
+            await transaction.get(
+              customerRef
+            );
+
+          let currentPoints = 0;
+
+          if (
+            customerSnapshot.exists
+          ) {
+            currentPoints =
+              Number(
+                customerSnapshot.data()
+                  .points || 0
+              );
+          }
+
+          transaction.update(
+            orderRef,
+            {
+              status:
+                "delivered",
+
+              deliveredAt:
+                admin.firestore.FieldValue.serverTimestamp(),
+
+              pointsAwarded:
+                pointsEarned
+            }
+          );
+
+          transaction.set(
+            customerRef,
+            {
+              points:
+                currentPoints +
+                pointsEarned,
+
+              updatedAt:
+                admin.firestore.FieldValue.serverTimestamp()
+            },
+            {
+              merge: true
+            }
+          );
+
+          const pointsRef =
+            db
+              .collection("pointsTransactions")
+              .doc();
+
+          transaction.set(
+            pointsRef,
+            {
+              userId:
+                customerUid,
+
+              orderId,
+
+              type:
+                "earned",
+
+              points:
+                pointsEarned,
+
+              reason:
+                "Completed delivery",
+
+              createdAt:
+                admin.firestore.FieldValue.serverTimestamp()
+            }
+          );
+        }
+      );
+
+      res.json({
+        message:
+          "Order marked as delivered.",
+        pointsEarned
+      });
+
+    } catch (error) {
+      console.error(
+        "Delivery completion error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   CUSTOMER POINTS
+========================================== */
+
+app.get(
+  "/api/customer/points",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      const userRef =
+        db
+          .collection("users")
+          .doc(req.user.uid);
+
+      const snapshot =
+        await userRef.get();
+
+      const points =
+        snapshot.exists
+          ? Number(
+              snapshot.data().points || 0
+            )
+          : 0;
+
+      res.json({
+        points
+      });
+
+    } catch (error) {
+      console.error(
+        "Points error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   CUSTOMER PAYMENT / POINTS CHECK
+========================================== */
+
+app.post(
+  "/api/customer/check-points",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      const fare =
+        Number(req.body.fare || 0);
+
+      const userRef =
+        db
+          .collection("users")
+          .doc(req.user.uid);
+
+      const snapshot =
+        await userRef.get();
+
+      const points =
+        snapshot.exists
+          ? Number(
+              snapshot.data().points || 0
+            )
+          : 0;
+
+      /*
+        1 point = KSh 1 for redemption.
+      */
+
+      if (points < fare) {
+        return res.status(400).json({
+          error:
+            "Insufficient points.",
+          points,
+          required: fare
+        });
+      }
+
+      res.json({
+        allowed: true,
+        points,
+        required: fare
+      });
+
+    } catch (error) {
+      console.error(
+        "Point check error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   SPEND POINTS
+========================================== */
+
+app.post(
+  "/api/customer/spend-points",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      const {
+        orderId,
+        points
+      } = req.body;
+
+      const amount =
+        Number(points || 0);
+
+      if (
+        !orderId ||
+        amount <= 0
+      ) {
+        return res.status(400).json({
+          error:
+            "Order ID and valid points are required."
+        });
+      }
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(orderId);
+
+      const customerRef =
+        db
+          .collection("users")
+          .doc(req.user.uid);
+
+      await db.runTransaction(
+        async transaction => {
+
+          const [
+            orderSnapshot,
+            customerSnapshot
+          ] = await Promise.all([
+            transaction.get(orderRef),
+            transaction.get(customerRef)
+          ]);
+
+          if (
+            !orderSnapshot.exists
+          ) {
+            throw new Error(
+              "Order not found."
+            );
+          }
+
+          if (
+            orderSnapshot.data()
+              .userId !==
+            req.user.uid
+          ) {
+            throw new Error(
+              "This order does not belong to you."
+            );
+          }
+
+          const currentPoints =
+            customerSnapshot.exists
+              ? Number(
+                  customerSnapshot.data()
+                    .points || 0
+                )
+              : 0;
+
+          if (
+            currentPoints < amount
+          ) {
+            throw new Error(
+              "Insufficient points."
+            );
+          }
+
+          transaction.update(
+            customerRef,
+            {
+              points:
+                currentPoints -
+                amount
+            }
+          );
+
+          transaction.update(
+            orderRef,
+            {
+              pointsUsed:
+                amount,
+
+              paymentMethod:
+                "points",
+
+              paymentStatus:
+                "paid"
+            }
+          );
+
+          const pointsRef =
+            db
+              .collection(
+                "pointsTransactions"
+              )
+              .doc();
+
+          transaction.set(
+            pointsRef,
+            {
+              userId:
+                req.user.uid,
+
+              orderId,
+
+              type:
+                "spent",
+
+              points:
+                amount,
+
+              reason:
+                "Paid for service",
+
+              createdAt:
+                admin.firestore.FieldValue.serverTimestamp()
+            }
+          );
+        }
+      );
+
+      res.json({
+        message:
+          "Points payment successful."
+      });
+
+    } catch (error) {
+      console.error(
+        "Spend points error:",
+        error
+      );
+
+      res.status(400).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   M-PESA PAYMENT RECORD
+========================================== */
+
+app.post(
+  "/api/customer/mpesa-payment",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      const {
+        orderId,
+        amount,
+        mpesaReference
+      } = req.body;
+
+      if (
+        !orderId ||
+        !amount
+      ) {
+        return res.status(400).json({
+          error:
+            "Order ID and amount are required."
+        });
+      }
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(orderId);
+
+      const snapshot =
+        await orderRef.get();
+
+      if (!snapshot.exists) {
+        return res.status(404).json({
+          error: "Order not found."
+        });
+      }
+
+      const order =
+        snapshot.data();
+
+      if (
+        order.userId !==
+        req.user.uid
+      ) {
+        return res.status(403).json({
+          error:
+            "This order does not belong to you."
+        });
+      }
+
+      await orderRef.update({
+        paymentMethod:
+          "mpesa",
+
+        paymentStatus:
+          "pending_verification",
+
+        paymentAmount:
+          Number(amount),
+
+        mpesaReference:
+          mpesaReference || "",
+
+        paymentSubmittedAt:
+          admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      res.json({
+        message:
+          "M-Pesa payment submitted for verification."
+      });
+
+    } catch (error) {
+      console.error(
+        "M-Pesa payment error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   CASH PAYMENT
+========================================== */
+
+app.post(
+  "/api/customer/cash-payment",
+  verifyFirebaseToken,
+  async (req, res) => {
+    try {
+      const {
+        orderId
+      } = req.body;
+
+      if (!orderId) {
+        return res.status(400).json({
+          error:
+            "Order ID is required."
+        });
+      }
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(orderId);
+
+      const snapshot =
+        await orderRef.get();
+
+      if (!snapshot.exists) {
+        return res.status(404).json({
+          error:
+            "Order not found."
+        });
+      }
+
+      const order =
+        snapshot.data();
+
+      if (
+        order.userId !==
+        req.user.uid
+      ) {
+        return res.status(403).json({
+          error:
+            "This order does not belong to you."
+        });
+      }
+
+      await orderRef.update({
+        paymentMethod:
+          "cash",
+
+        paymentStatus:
+          "cash_on_delivery"
+      });
+
+      res.json({
+        message:
+          "Cash payment selected."
+      });
+
+    } catch (error) {
+      console.error(
+        "Cash payment error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   MODERATOR PAYMENT VERIFICATION
+========================================== */
+
+app.patch(
+  "/api/moderator/orders/:orderId/payment",
+  requireModerator,
+  async (req, res) => {
+    try {
+      const {
+        paymentStatus
+      } = req.body;
+
+      const allowed = [
+        "paid",
+        "rejected"
+      ];
+
+      if (
+        !allowed.includes(
+          paymentStatus
+        )
+      ) {
+        return res.status(400).json({
+          error:
+            "Invalid payment status."
+        });
+      }
+
+      const orderRef =
+        db
+          .collection("orders")
+          .doc(
+            req.params.orderId
+          );
+
+      const snapshot =
+        await orderRef.get();
+
+      if (!snapshot.exists) {
+        return res.status(404).json({
+          error:
+            "Order not found."
+        });
+      }
+
+      await orderRef.update({
+        paymentStatus,
+
+        paymentVerifiedAt:
+          admin.firestore.FieldValue.serverTimestamp(),
+
+        paymentVerifiedBy:
+          req.user.uid
+      });
+
+      res.json({
+        message:
+          `Payment ${paymentStatus}.`
+      });
+
+    } catch (error) {
+      console.error(
+        "Payment verification error:",
+        error
+      );
+
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  }
+);
+
+/* ==========================================
+   SERVER
+========================================== */
+
+app.listen(
+  PORT,
+  () => {
+    console.log(
+      `Amir Chap Chap Backend LIVE on port ${PORT}`
+    );
+  }
+);
