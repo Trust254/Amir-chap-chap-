@@ -1,287 +1,279 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Amir Chap Chap | Delivery & Passenger Transport</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Amir Chap Chap</title><style>
+
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,Helvetica,sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  background:#f5f7fb;
-  color:#18212f;
+background:#f5f7fb;
+color:#18212f;
 }
 
 header{
-  background:#111827;
-  color:white;
-  padding:15px;
-  position:sticky;
-  top:0;
-  z-index:100;
+background:#111827;
+color:white;
+padding:15px;
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .nav{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
 }
 
 .logo{
-  font-size:23px;
-  font-weight:800;
+font-size:23px;
+font-weight:800;
 }
 
 .logo span{
-  color:#f59e0b;
-}
-
-nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
+color:#f59e0b;
 }
 
 nav button{
-  background:transparent;
-  border:1px solid #64748b;
-  color:white;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
+background:transparent;
+border:1px solid #64748b;
+color:white;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+margin-left:4px;
 }
 
 .container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
+max-width:1100px;
+margin:auto;
+padding:20px;
 }
 
 .hero{
-  background:linear-gradient(135deg,#111827,#374151);
-  color:white;
-  border-radius:18px;
-  padding:35px 25px;
-  margin-bottom:20px;
+background:linear-gradient(135deg,#111827,#374151);
+color:white;
+border-radius:18px;
+padding:35px 25px;
+margin-bottom:20px;
 }
 
 .hero h1{
-  font-size:36px;
-  margin-bottom:12px;
+font-size:36px;
+margin-bottom:12px;
 }
 
 .hero p{
-  line-height:1.6;
-  color:#e5e7eb;
+line-height:1.6;
+color:#e5e7eb;
 }
 
 .card{
-  background:white;
-  border-radius:15px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 5px 18px rgba(0,0,0,.07);
+background:white;
+border-radius:15px;
+padding:20px;
+margin-bottom:18px;
+box-shadow:0 5px 18px rgba(0,0,0,.07);
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:15px;
 }
 
 input,select,textarea{
-  width:100%;
-  padding:12px;
-  border:1px solid #d1d5db;
-  border-radius:9px;
-  margin-top:6px;
-  margin-bottom:12px;
-  font-size:15px;
+width:100%;
+padding:12px;
+border:1px solid #d1d5db;
+border-radius:9px;
+margin-top:6px;
+margin-bottom:12px;
+font-size:15px;
 }
 
 label{
-  font-weight:600;
-  font-size:14px;
+font-weight:600;
+font-size:14px;
 }
 
 button{
-  border:none;
-  border-radius:9px;
-  padding:11px 16px;
-  cursor:pointer;
-  font-weight:700;
-  margin:3px;
+border:none;
+border-radius:9px;
+padding:11px 16px;
+cursor:pointer;
+font-weight:700;
+margin:3px;
 }
 
 .primary{
-  background:#f59e0b;
-  color:#111827;
+background:#f59e0b;
+color:#111827;
 }
 
 .dark{
-  background:#111827;
-  color:white;
+background:#111827;
+color:white;
 }
 
 .danger{
-  background:#dc2626;
-  color:white;
+background:#dc2626;
+color:white;
 }
 
 .success{
-  background:#16a34a;
-  color:white;
+background:#16a34a;
+color:white;
 }
 
 .secondary{
-  background:#e5e7eb;
-  color:#111827;
+background:#e5e7eb;
+color:#111827;
 }
 
 .hidden{
-  display:none!important;
+display:none!important;
 }
 
 .message{
-  padding:10px;
-  border-radius:8px;
-  margin:10px 0;
-  background:#f1f5f9;
+padding:10px;
+border-radius:8px;
+margin:10px 0;
+background:#f1f5f9;
+white-space:pre-wrap;
 }
 
 .price{
-  font-size:28px;
-  font-weight:800;
-  margin:10px 0;
+font-size:28px;
+font-weight:800;
+margin:10px 0;
 }
 
 .badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#e5e7eb;
-  font-size:12px;
-  font-weight:700;
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+background:#e5e7eb;
+font-size:12px;
+font-weight:700;
 }
 
 .notification{
-  background:#fff7ed;
-  border-left:5px solid #f59e0b;
-  padding:14px;
-  margin:10px 0;
-  border-radius:8px;
+background:#fff7ed;
+border-left:5px solid #f59e0b;
+padding:14px;
+margin:10px 0;
+border-radius:8px;
 }
 
 .route-box{
-  background:#f8fafc;
-  border-radius:10px;
-  padding:15px;
-  margin-top:10px;
+background:#f8fafc;
+border-radius:10px;
+padding:15px;
+margin-top:10px;
 }
 
 footer{
-  background:#111827;
-  color:#cbd5e1;
-  text-align:center;
-  padding:25px;
-  margin-top:30px;
+background:#111827;
+color:#cbd5e1;
+text-align:center;
+padding:25px;
+margin-top:30px;
 }
 
 footer a{
-  color:#f59e0b;
+color:#f59e0b;
 }
 
-.info-box{
-  background:#eff6ff;
-  border-left:5px solid #2563eb;
-  padding:14px;
-  border-radius:8px;
-  margin-bottom:15px;
+.status-active{
+color:#16a34a;
+font-weight:bold;
 }
 
-.success-box{
-  background:#f0fdf4;
-  border-left:5px solid #16a34a;
-  padding:14px;
-  border-radius:8px;
-  margin-bottom:15px;
+.status-inactive{
+color:#dc2626;
+font-weight:bold;
 }
 
-.error-box{
-  background:#fef2f2;
-  border-left:5px solid #dc2626;
-  padding:14px;
-  border-radius:8px;
-  margin-bottom:15px;
+hr{
+border:none;
+border-top:1px solid #e5e7eb;
+margin:18px 0;
+}
+
+.small{
+font-size:13px;
+color:#64748b;
 }
 
 @media(max-width:600px){
 
-  .nav{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  nav{
-    width:100%;
-  }
-
-  nav button{
-    font-size:12px;
-    padding:7px 9px;
-  }
-
-  .hero h1{
-    font-size:28px;
-  }
+.hero h1{
+font-size:28px;
 }
-</style></head><body><header>
-<div class="nav"><div class="logo">
+
+nav button{
+padding:6px 8px;
+font-size:12px;
+}
+
+}
+
+</style></head><body><header><div class="nav"><div class="logo">
 Amir <span>Chap Chap</span>
-</div><nav>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('customer')">Customer</button>
-<button onclick="showPage('rider')">Rider</button>
-<button onclick="showPage('moderator')">Moderator</button>
-</nav></div>
-</header><main class="container"><!-- =========================
-     HOME
+</div><nav><button onclick="showPage('home')">
+Home
+</button><button onclick="showPage('customer')">
+Customer
+</button><button onclick="showPage('rider')">
+Rider
+</button><button onclick="showPage('moderator')">
+Moderator
+</button></nav></div></header><main class="container"><!-- =========================
+HOME
 ========================= --><section id="homePage"><div class="hero"><h1>Amir Chap Chap</h1><p>
 Fast delivery and passenger transport services.
 Book a rider, send your package or travel safely
 with automatically calculated fares.
-</p><br><button class="primary" onclick="showPage('customer')">
+</p><br><button class="primary"
+onclick="showPage('customer')">
 Book Now
-</button><button class="secondary" onclick="showPage('rider')">
+</button>
+
+<button class="secondary"
+onclick="showPage('rider')">
 Rider Portal
-</button></div><div class="grid"><div class="card">
-<h3>📦 Delivery</h3>
-<p>Send packages through our approved riders.</p>
-</div><div class="card">
-<h3>🏍️ Passenger Transport</h3>
-<p>Book transport and connect with your assigned rider.</p>
-</div><div class="card">
-<h3>⭐ Rewards</h3>
-<p>Earn points as a real customer and use points toward payment.</p>
-</div><div class="card">
-<h3>📞 Customer Care</h3>
-<p>Call Customer Care.</p>
-<br>
-<a href="tel:0795653284">0795653284</a>
-</div></div></section><!-- =========================
-     CUSTOMER
+</button>
+
+</div><div class="grid"><div class="card"><h3>📦 Delivery</h3><p>
+Send packages through our approved riders.
+</p></div><div class="card"><h3>🏍️ Passenger Transport</h3><p>
+Book transport and connect with your assigned rider.
+</p></div><div class="card"><h3>⭐ Rewards</h3><p>
+Earn points as a real customer.
+</p></div><div class="card"><h3>📞 Customer Care</h3><p>
+Call Customer Care:
+</p><br><a href="tel:0795653284">
+0795653284
+</a></div></div></section><!-- =========================
+CUSTOMER
 ========================= --><section id="customerPage" class="hidden"><div class="card"><h2>Customer Portal</h2><br><div id="customerAuth"><h3>Create / Login</h3><label>Email</label>
+
 <input
 id="customerEmail"
 type="email"
 placeholder="Email">
 
 <label>Password</label>
+
 <input
 id="customerPassword"
 type="password"
@@ -299,12 +291,18 @@ onclick="customerLogin()">
 Login
 </button>
 
-<div id="customerMessage" class="message"></div></div><div id="customerDashboard" class="hidden"><h3>Book a Service</h3><label>Service</label>
+<div
+id="customerMessage"
+class="message">
+</div></div><div
+id="customerDashboard"
+class="hidden"><h3>Book a Service</h3><br><label>Service</label>
 
-<select id="serviceType">
-<option value="delivery">Delivery</option>
-<option value="passenger">Passenger Transport</option>
-</select><label>Pickup</label>
+<select id="serviceType"><option value="delivery">
+Delivery
+</option><option value="passenger">
+Passenger Transport
+</option></select><label>Pickup</label>
 
 <input
 id="pickup"
@@ -316,7 +314,7 @@ placeholder="Pickup location">
 id="destination"
 placeholder="Destination">
 
-<label>Distance in KM (optional)</label>
+<label>Distance in KM</label>
 
 <input
 id="distanceKm"
@@ -327,11 +325,13 @@ placeholder="Example: 5">
 <button
 class="dark"
 onclick="calculateFare()">
-Calculate Fare
-</button>
 
-<div class="route-box"><div>Estimated Fare</div><div id="fareDisplay" class="price">
-KSh 0
+Calculate Fare
+
+</button><div class="route-box"><div>Estimated Fare</div><div
+id="fareDisplay"
+class="price">KSh 0
+
 </div><small id="fareExplanation"></small>
 
 </div><br><label>Payment Method</label>
@@ -345,39 +345,37 @@ Pay With Points
 </option></select><button
 class="primary"
 onclick="placeOrder()">
-Place Booking
-</button>
 
-<button
+Place Booking
+
+</button><button
 class="secondary"
 onclick="loadMyOrders()">
+
 My Bookings
-</button>
 
-<div id="customerOrders"></div></div></div></section><!-- =========================
-     RIDER
-========================= --><section id="riderPage" class="hidden"><div class="card"><h2>🏍️ Rider Portal</h2><div class="info-box"><strong>Use the Rider Job ID registered by the Moderator.</strong>
+</button><div id="customerOrders"></div></div></div></section><!-- =========================
+RIDER
+========================= --><section id="riderPage" class="hidden"><div class="card"><h2>🏍️ Rider Portal</h2><p>
+Use the Rider Job ID registered by the Moderator.
+</p><br><div class="notification"><strong>Example:</strong>
 
-<br><br>
-
-Example:
-
-<strong>ACC-1235</strong>
+<br>ACC-1235
 
 <br><br>
 
 The Rider Job ID is your identification code.
 
-</div><label>Rider Job ID</label>
-
-<input
+</div><label>
+Rider Job ID
+</label><input
 id="riderJobId"
-placeholder="Example: ACC-1235"
+placeholder="ACC-1235"
 autocomplete="username">
 
-<label>Password</label>
-
-<input
+<label>
+Password
+</label><input
 id="riderPassword"
 type="password"
 placeholder="Rider password"
@@ -386,46 +384,41 @@ autocomplete="current-password">
 <button
 class="dark"
 onclick="riderLogin()">
+
 Rider Sign In
-</button>
 
-<div id="riderMessage" class="message"></div></div><div id="riderDashboard" class="hidden"><div class="card"><h2>
-Rider Dashboard<span
-id="notificationBadge"
-class="badge">
-0 notifications
-</span>
+</button><div
+id="riderMessage"
+class="message">
+</div></div><div
+id="riderDashboard"
+class="hidden"><div class="card"><h2>
+Rider Dashboard
+</h2><br><div
+id="riderProfile"
+class="route-box">
+</div><br><div class="notification"><strong>Rider account active.</strong>
 
-</h2><p id="riderProfile"></p><br><button
-class="secondary"
-onclick="loadRiderNotifications()">
-🔔 Notifications
-</button>
-
-<button
-class="dark"
-onclick="loadRiderOrders()">
-My Jobs
-</button>
-
-<button
+<p>
+You are signed in using your Rider Job ID.
+</p></div><button
 class="danger"
 onclick="riderLogout()">
+
 Sign Out
-</button>
 
-<div id="riderNotifications"></div><div id="riderOrders"></div></div></div></section><!-- =========================
-     MODERATOR
-========================= --><section id="moderatorPage" class="hidden"><div class="card"><h2>👨‍💼 Moderator Portal</h2><div id="moderatorLoginBox"><label>Email</label>
-
-<input
+</button></div></div></section><!-- =========================
+MODERATOR
+========================= --><section id="moderatorPage" class="hidden"><div class="card"><h2>👨‍💼 Moderator Portal</h2><div id="moderatorLoginBox"><br><label>
+Moderator Email
+</label><input
 id="moderatorEmail"
 type="email"
 placeholder="Moderator email">
 
-<label>Password</label>
-
-<input
+<label>
+Moderator Password
+</label><input
 id="moderatorPassword"
 type="password"
 placeholder="Moderator password">
@@ -433,139 +426,146 @@ placeholder="Moderator password">
 <button
 class="dark"
 onclick="moderatorLogin()">
-Moderator Sign In
-</button>
 
-<div id="moderatorMessage" class="message"></div></div></div><div id="moderatorDashboard" class="hidden"><div class="card"><h2>Moderator Dashboard</h2><button
+Moderator Sign In
+
+</button><div
+id="moderatorMessage"
+class="message">
+</div></div></div><div
+id="moderatorDashboard"
+class="hidden"><div class="card"><h2>
+Moderator Dashboard
+</h2><br><button
 class="dark"
 onclick="showModeratorSection('riders')">
-🏍️ Riders
-</button>
 
-<button
+🏍️ Riders
+
+</button><button
 class="dark"
 onclick="showModeratorSection('orders')">
-📦 Orders
-</button>
 
-<button
+📦 Orders
+
+</button><button
 class="dark"
 onclick="showModeratorSection('customers')">
-👥 Customers
-</button>
 
-<button
+👥 Customers
+
+</button><button
 class="danger"
 onclick="moderatorLogout()">
-Sign Out
-</button>
 
-</div><!-- =========================
-     RIDER MANAGEMENT
+Sign Out
+
+</button></div><!-- =========================
+RIDERS
 ========================= --><div
 id="moderatorRiders"
-class="card"><h3>Register Rider</h3><div class="info-box">The Moderator creates the rider account here.
+class="card"><h3>
+Register Rider
+</h3><p class="small">The Moderator creates the rider's login.
+The rider only needs the Rider Job ID and password.
 
-The rider will log in using only the
-<strong>Rider Job ID</strong> and password.
-
-<br><br>
-
-Example:
-<strong>ACC-1235</strong>
-
-</div><label>Rider Full Name</label>
-
-<input
+</p><hr><label>
+Rider Full Name
+</label><input
 id="riderName"
 placeholder="Full name">
 
-<label>Phone Number</label>
-
-<input
+<label>
+Phone Number
+</label><input
 id="riderPhone"
 placeholder="07xxxxxxxx">
 
-<label>WhatsApp Number</label>
-
-<input
+<label>
+WhatsApp Number
+</label><input
 id="riderWhatsapp"
 placeholder="07xxxxxxxx">
 
-<label>National ID Number</label>
-
-<input
+<label>
+National ID Number
+</label><input
 id="riderNationalId"
 placeholder="ID number">
 
-<label>Motorbike Type</label>
-
-<input
+<label>
+Motorbike Type
+</label><input
 id="bikeType"
 placeholder="Example: Boxer">
 
-<label>Motorbike Model</label>
-
-<input
+<label>
+Motorbike Model
+</label><input
 id="bikeModel"
 placeholder="Example: Boxer 150">
 
-<label>Rider Job ID</label>
-
-<input
+<label>
+Rider Job ID
+</label><input
 id="jobId"
-placeholder="Example: ACC-1235"
-style="text-transform:uppercase">
+placeholder="Example: ACC-1235">
 
-<label>Rider Password</label>
-
-<input
+<label>
+Rider Password
+</label><input
 id="riderCreatePassword"
 type="password"
 placeholder="Create rider password">
 
-<label>Status</label>
-
-<select id="riderStatus"><option value="active">
+<label>
+Status
+</label><select id="riderStatus"><option value="active">
 Active
 </option><option value="inactive">
 Inactive
 </option></select><button
 class="primary"
 onclick="createRider()">
-Add Rider
-</button>
 
-<div
+Add Rider
+
+</button><div
 id="riderCreateMessage"
 class="message">
-</div><br><h3>Registered Riders</h3><button
+</div><hr><h3>
+Registered Riders
+</h3><br><button
 class="secondary"
 onclick="loadRiders()">
-Refresh Riders
-</button>
 
-<div id="ridersList"></div></div><!-- =========================
-     ORDERS
+Refresh Riders
+
+</button><div id="ridersList"></div></div><!-- =========================
+ORDERS
 ========================= --><div
 id="moderatorOrders"
-class="card hidden"><h3>All Orders</h3><button
+class="card hidden"><h3>
+All Orders
+</h3><br><button
 class="secondary"
 onclick="loadAllOrders()">
-Refresh Orders
-</button>
 
-<div id="allOrders"></div></div><!-- =========================
-     CUSTOMERS
+Refresh Orders
+
+</button><div id="allOrders"></div></div><!-- =========================
+CUSTOMERS
 ========================= --><div
 id="moderatorCustomers"
-class="card hidden"><h3>Customers</h3><button
+class="card hidden"><h3>
+Customers
+</h3><br><button
 class="secondary"
 onclick="loadCustomers()">
-Refresh Customers
-</button>
 
-<div id="customersList"></div></div></div></section></main><footer><p>
+Refresh Customers
+
+</button><div id="customersList"></div></div></div></section></main><footer><p>
 <strong>Amir Chap Chap</strong>
 </p><p>
 Fast Delivery • Passenger Transport • Customer Rewards
@@ -576,19 +576,20 @@ Customer Care:
 </a>
 </p><p>
 Published: 29 August 2026
-</p><br><p>
-<a
+</p><br><p><a
 href="#"
 onclick="showTerms();return false;">
+
 Terms & Conditions
-</a>
-</p></footer><!-- =========================
-     FIREBASE
+
+</a></p></footer><!-- =========================
+FIREBASE
 ========================= --><script type="module">
 
 import {
 initializeApp
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
 
@@ -598,7 +599,8 @@ createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
 signOut,
 onAuthStateChanged
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 
@@ -612,12 +614,14 @@ addDoc,
 query,
 where,
 serverTimestamp
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
+
 /* =========================
-   FIREBASE CONFIG
+FIREBASE CONFIG
 ========================= */
 
 const firebaseConfig = {
@@ -643,6 +647,7 @@ appId:
 };
 
 
+
 const app =
 initializeApp(firebaseConfig);
 
@@ -653,19 +658,131 @@ const db =
 getFirestore(app);
 
 
+
 /* =========================
-   BACKEND
+BACKEND
 ========================= */
 
 const BACKEND_URL =
 "https://amir-chap-chap-backend.onrender.com";
 
 
+
 let calculatedFare = 0;
 
 
+
 /* =========================
-   PAGE NAVIGATION
+HELPER API
+========================= */
+
+async function apiRequest(
+path,
+options = {}
+){
+
+const response =
+await fetch(
+BACKEND_URL + path,
+{
+
+...options,
+
+headers:{
+"Content-Type":
+"application/json",
+
+...(options.headers || {})
+}
+
+}
+);
+
+
+const text =
+await response.text();
+
+
+let data;
+
+
+try{
+
+data =
+JSON.parse(text);
+
+}catch(error){
+
+throw new Error(
+"Server returned an unexpected response. HTTP " +
+response.status
+);
+
+}
+
+
+if(!response.ok){
+
+throw new Error(
+data.error ||
+"Server request failed."
+);
+
+}
+
+
+return data;
+
+}
+
+
+
+/* =========================
+MODERATOR API
+========================= */
+
+async function moderatorRequest(
+path,
+options = {}
+){
+
+if(!auth.currentUser){
+
+throw new Error(
+"Moderator is not signed in."
+);
+
+}
+
+
+const token =
+await auth.currentUser.getIdToken(true);
+
+
+return apiRequest(
+path,
+{
+
+...options,
+
+headers:{
+
+...(options.headers || {}),
+
+Authorization:
+"Bearer " + token
+
+}
+
+}
+);
+
+}
+
+
+
+/* =========================
+PAGE NAVIGATION
 ========================= */
 
 window.showPage =
@@ -688,34 +805,47 @@ document
 .classList.add("hidden");
 
 
-if(page === "home")
+if(page === "home"){
+
 document
 .getElementById("homePage")
 .classList.remove("hidden");
 
+}
 
-if(page === "customer")
+
+if(page === "customer"){
+
 document
 .getElementById("customerPage")
 .classList.remove("hidden");
 
+}
 
-if(page === "rider")
+
+if(page === "rider"){
+
 document
 .getElementById("riderPage")
 .classList.remove("hidden");
 
+}
 
-if(page === "moderator")
+
+if(page === "moderator"){
+
 document
 .getElementById("moderatorPage")
 .classList.remove("hidden");
 
+}
+
 };
 
 
+
 /* =========================
-   CUSTOMER REGISTER
+CUSTOMER REGISTER
 ========================= */
 
 window.customerRegister =
@@ -727,10 +857,12 @@ document
 .value
 .trim();
 
+
 const password =
 document
 .getElementById("customerPassword")
 .value;
+
 
 const message =
 document
@@ -755,6 +887,7 @@ auth,
 email,
 password
 );
+
 
 const uid =
 credential.user.uid;
@@ -784,6 +917,7 @@ message.textContent =
 
 showCustomerDashboard();
 
+
 }catch(error){
 
 message.textContent =
@@ -795,8 +929,9 @@ error.message;
 };
 
 
+
 /* =========================
-   CUSTOMER LOGIN
+CUSTOMER LOGIN
 ========================= */
 
 window.customerLogin =
@@ -808,14 +943,26 @@ document
 .value
 .trim();
 
+
 const password =
 document
 .getElementById("customerPassword")
 .value;
 
+
 const message =
 document
 .getElementById("customerMessage");
+
+
+if(!email || !password){
+
+message.textContent =
+"Enter email and password.";
+
+return;
+
+}
 
 
 try{
@@ -826,10 +973,12 @@ email,
 password
 );
 
+
 message.textContent =
 "Login successful.";
 
 showCustomerDashboard();
+
 
 }catch(error){
 
@@ -840,6 +989,7 @@ error.message;
 }
 
 };
+
 
 
 function showCustomerDashboard(){
@@ -855,8 +1005,9 @@ document
 }
 
 
+
 /* =========================
-   FARE
+FARE
 ========================= */
 
 window.calculateFare =
@@ -869,12 +1020,14 @@ document
 .trim()
 .toLowerCase();
 
+
 const destination =
 document
 .getElementById("destination")
 .value
 .trim()
 .toLowerCase();
+
 
 const km =
 Number(
@@ -931,7 +1084,7 @@ document
 document
 .getElementById("fareExplanation")
 .textContent =
-"Enter a managed route or distance in kilometres.";
+"Enter an approved route or distance in kilometres.";
 
 return;
 
@@ -944,6 +1097,7 @@ document
 "KSh " +
 calculatedFare.toLocaleString();
 
+
 document
 .getElementById("fareExplanation")
 .textContent =
@@ -952,8 +1106,9 @@ document
 };
 
 
+
 /* =========================
-   PLACE ORDER
+CUSTOMER ORDER
 ========================= */
 
 window.placeOrder =
@@ -961,7 +1116,9 @@ async function(){
 
 if(!auth.currentUser){
 
-alert("Please login first.");
+alert(
+"Please login first."
+);
 
 return;
 
@@ -970,7 +1127,9 @@ return;
 
 if(calculatedFare <= 0){
 
-alert("Calculate the fare first.");
+alert(
+"Calculate the fare first."
+);
 
 return;
 
@@ -982,17 +1141,20 @@ document
 .getElementById("serviceType")
 .value;
 
+
 const pickup =
 document
 .getElementById("pickup")
 .value
 .trim();
 
+
 const destination =
 document
 .getElementById("destination")
 .value
 .trim();
+
 
 const paymentMethod =
 document
@@ -1057,13 +1219,24 @@ document
 .getElementById("pickup")
 .value="";
 
+
 document
 .getElementById("destination")
 .value="";
 
+
 document
 .getElementById("distanceKm")
 .value="";
+
+
+calculatedFare=0;
+
+
+document
+.getElementById("fareDisplay")
+.textContent=
+"KSh 0";
 
 
 }catch(error){
@@ -1078,23 +1251,28 @@ error.message
 };
 
 
+
 /* =========================
-   CUSTOMER ORDERS
+CUSTOMER BOOKINGS
 ========================= */
 
 window.loadMyOrders =
 async function(){
 
-if(!auth.currentUser)
+if(!auth.currentUser){
+
 return;
+
+}
 
 
 const box =
 document
 .getElementById("customerOrders");
 
+
 box.innerHTML =
-"<p>Loading...</p>";
+"<p>Loading bookings...</p>";
 
 
 try{
@@ -1120,20 +1298,24 @@ box.innerHTML="";
 if(snapshot.empty){
 
 box.innerHTML =
-"<p>No bookings found.</p>";
+"<p>No bookings yet.</p>";
 
 return;
 
 }
 
 
-snapshot.forEach(item=>{
+snapshot.forEach(
+item => {
 
 const order =
 item.data();
 
+
 const div =
-document.createElement("div");
+document
+.createElement("div");
+
 
 div.className =
 "route-box";
@@ -1142,70 +1324,43 @@ div.className =
 div.innerHTML = `
 
 <strong>
-${escapeHtml(order.serviceType || "Service")}
+${order.serviceType || "Service"}
 </strong>
 
 <p>
-${escapeHtml(order.pickup || "")}
+${order.pickup || ""}
 →
-${escapeHtml(order.destination || "")}
+${order.destination || ""}
 </p>
 
 <p>
 Fare:
+<strong>
 KSh ${Number(order.fare || 0).toLocaleString()}
+</strong>
 </p>
 
 <p>
 Status:
 <span class="badge">
-${escapeHtml(order.status || "pending")}
+${order.status || "pending"}
 </span>
 </p>
 
-${
-order.riderPhone
-?
-`
-<p>
-Rider:
-${escapeHtml(order.riderName || "")}
-</p>
-
-<a href="tel:${cleanPhone(order.riderPhone)}">
-<button class="dark">
-Call Rider
-</button>
-</a>
-`
-:""
-}
-
-${
-order.riderWhatsapp
-?
-`
-<a target="_blank"
-href="https://wa.me/${cleanPhone(order.riderWhatsapp)}">
-<button class="success">
-WhatsApp Rider
-</button>
-</a>
-`
-:""
-}
-
 `;
+
 
 box.appendChild(div);
 
-});
+}
+);
+
 
 }catch(error){
 
 box.innerHTML =
-"<p>Error: " +
-escapeHtml(error.message) +
+"<p>Error loading bookings: " +
+error.message +
 "</p>";
 
 }
@@ -1213,10 +1368,10 @@ escapeHtml(error.message) +
 };
 
 
-/* =========================================================
-   RIDER LOGIN
-   ACC-1235 + PASSWORD
-========================================================= */
+
+/* =========================
+RIDER LOGIN
+========================= */
 
 window.riderLogin =
 async function(){
@@ -1228,10 +1383,12 @@ document
 .trim()
 .toUpperCase();
 
+
 const password =
 document
 .getElementById("riderPassword")
 .value;
+
 
 const message =
 document
@@ -1241,31 +1398,25 @@ document
 if(!jobId || !password){
 
 message.textContent =
-"Enter Rider Job ID and password.";
+"Enter your Rider Job ID and password.";
 
 return;
 
 }
 
 
+try{
+
 message.textContent =
 "Signing in...";
 
 
-try{
-
-const response =
-await fetch(
-BACKEND_URL +
+const data =
+await apiRequest(
 "/api/rider-login",
 {
 
 method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
 
 body:
 JSON.stringify({
@@ -1280,59 +1431,8 @@ password
 );
 
 
-const text =
-await response.text();
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(parseError){
-
-console.error(
-"Unexpected server response:",
-text
-);
-
 message.textContent =
-"Server returned an unexpected response.";
-
-return;
-
-}
-
-
-if(!response.ok){
-
-message.textContent =
-data.error ||
-"Rider login failed.";
-
-return;
-
-}
-
-
-/*
- Store rider login information locally.
-*/
-
-localStorage.setItem(
-"amirChapChapRider",
-JSON.stringify(data.rider)
-);
-
-localStorage.setItem(
-"amirChapChapRiderToken",
-data.idToken
-);
-
-
-message.textContent =
+data.message ||
 "Rider login successful.";
 
 
@@ -1349,38 +1449,52 @@ document
 .getElementById("riderProfile")
 .innerHTML = `
 
-<strong>
+<h3>
 ${escapeHtml(rider.name || "Rider")}
-</strong>
+</h3>
 
-<br>
-
+<p>
 Rider ID:
 <strong>
 ${escapeHtml(rider.jobId || "")}
 </strong>
+</p>
 
-<br>
-
-Motorbike:
-${escapeHtml(rider.bikeType || "")}
-${escapeHtml(rider.bikeModel || "")}
-
-<br>
-
+<p>
 Phone:
 ${escapeHtml(rider.phone || "")}
+</p>
+
+<p>
+WhatsApp:
+${escapeHtml(rider.whatsapp || "")}
+</p>
+
+<p>
+Motorbike:
+${escapeHtml(
+(rider.bikeType || "") +
+" " +
+(rider.bikeModel || "")
+)}
+</p>
+
+<p>
+Status:
+<span class="status-active">
+${escapeHtml(rider.status || "active")}
+</span>
+</p>
 
 `;
 
 
-await loadRiderOrders();
-
-await loadRiderNotifications();
-
 }catch(error){
 
-console.error(error);
+document
+.getElementById("riderDashboard")
+.classList.add("hidden");
+
 
 message.textContent =
 "Rider login failed: " +
@@ -1391,233 +1505,41 @@ error.message;
 };
 
 
-/* =========================
-   RIDER JOBS
-========================= */
-
-window.loadRiderOrders =
-async function(){
-
-const rider =
-getStoredRider();
-
-if(!rider){
-
-return;
-
-}
-
-
-const box =
-document
-.getElementById("riderOrders");
-
-box.innerHTML =
-"<h3>My Jobs</h3><p>Loading...</p>";
-
-
-try{
-
-/*
- Rider jobs are currently stored
-in Firestore and identified by riderUid.
-*/
-
-const q =
-query(
-collection(db,"orders"),
-where(
-"riderUid",
-"==",
-rider.uid
-)
-);
-
-
-const snapshot =
-await getDocs(q);
-
-
-box.innerHTML =
-"<h3>My Jobs</h3>";
-
-
-if(snapshot.empty){
-
-box.innerHTML +=
-"<p>No assigned jobs yet.</p>";
-
-return;
-
-}
-
-
-snapshot.forEach(item=>{
-
-const order =
-item.data();
-
-
-const div =
-document.createElement("div");
-
-div.className =
-"route-box";
-
-
-div.innerHTML = `
-
-<h3>
-${escapeHtml(order.serviceType || "Delivery")}
-</h3>
-
-<p>
-<strong>Pickup:</strong>
-${escapeHtml(order.pickup || "")}
-</p>
-
-<p>
-<strong>Destination:</strong>
-${escapeHtml(order.destination || "")}
-</p>
-
-<p>
-Fare:
-<strong>
-KSh ${Number(order.fare || 0).toLocaleString()}
-</strong>
-</p>
-
-<p>
-Status:
-<span class="badge">
-${escapeHtml(order.status || "")}
-</span>
-</p>
-
-<a
-target="_blank"
-href="https://www.waze.com/ul?q=${encodeURIComponent(order.destination || "")}">
-<button class="secondary">
-🗺️ Open Waze
-</button>
-</a>
-
-`;
-
-box.appendChild(div);
-
-});
-
-}catch(error){
-
-box.innerHTML +=
-"<p>Error: " +
-escapeHtml(error.message) +
-"</p>";
-
-}
-
-};
-
 
 /* =========================
-   RIDER NOTIFICATIONS
+RIDER LOGOUT
 ========================= */
 
-window.loadRiderNotifications =
-async function(){
+window.riderLogout =
+function(){
 
-const rider =
-getStoredRider();
-
-if(!rider)
-return;
-
-
-const box =
 document
-.getElementById("riderNotifications");
-
-box.innerHTML =
-"<h3>🔔 Notifications</h3>";
-
-
-try{
-
-const q =
-query(
-collection(db,"riderNotifications"),
-where(
-"riderUid",
-"==",
-rider.uid
-)
-);
-
-
-const snapshot =
-await getDocs(q);
-
-
-let count=0;
-
-
-snapshot.forEach(item=>{
-
-count++;
-
-const data =
-item.data();
-
-
-const div =
-document.createElement("div");
-
-div.className =
-"notification";
-
-
-div.innerHTML = `
-
-<strong>
-${escapeHtml(data.title || "New Job")}
-</strong>
-
-<p>
-${escapeHtml(
-data.message ||
-"You have a new notification."
-)}
-</p>
-
-`;
-
-box.appendChild(div);
-
-});
+.getElementById("riderDashboard")
+.classList.add("hidden");
 
 
 document
-.getElementById("notificationBadge")
+.getElementById("riderJobId")
+.value="";
+
+
+document
+.getElementById("riderPassword")
+.value="";
+
+
+document
+.getElementById("riderMessage")
 .textContent =
-count +
-" notifications";
-
-
-}catch(error){
-
-box.innerHTML +=
-"<p>Error loading notifications.</p>";
-
-}
+"You have signed out.";
 
 };
 
 
-/* =========================================================
-   MODERATOR LOGIN
-========================================================= */
+
+/* =========================
+MODERATOR LOGIN
+========================= */
 
 window.moderatorLogin =
 async function(){
@@ -1628,10 +1550,12 @@ document
 .value
 .trim();
 
+
 const password =
 document
 .getElementById("moderatorPassword")
 .value;
+
 
 const message =
 document
@@ -1641,7 +1565,7 @@ document
 if(!email || !password){
 
 message.textContent =
-"Enter Moderator email and password.";
+"Enter moderator email and password.";
 
 return;
 
@@ -1703,9 +1627,10 @@ error.message;
 };
 
 
-/* =========================================================
-   CREATE RIDER THROUGH RENDER BACKEND
-========================================================= */
+
+/* =========================
+CREATE RIDER
+========================= */
 
 window.createRider =
 async function(){
@@ -1715,14 +1640,46 @@ document
 .getElementById("riderCreateMessage");
 
 
-if(!auth.currentUser){
+const name =
+document
+.getElementById("riderName")
+.value
+.trim();
 
-message.textContent =
-"Moderator must be signed in.";
 
-return;
+const phone =
+document
+.getElementById("riderPhone")
+.value
+.trim();
 
-}
+
+const whatsapp =
+document
+.getElementById("riderWhatsapp")
+.value
+.trim();
+
+
+const nationalId =
+document
+.getElementById("riderNationalId")
+.value
+.trim();
+
+
+const bikeType =
+document
+.getElementById("bikeType")
+.value
+.trim();
+
+
+const bikeModel =
+document
+.getElementById("bikeModel")
+.value
+.trim();
 
 
 const jobId =
@@ -1732,46 +1689,12 @@ document
 .trim()
 .toUpperCase();
 
-const name =
-document
-.getElementById("riderName")
-.value
-.trim();
-
-const phone =
-document
-.getElementById("riderPhone")
-.value
-.trim();
-
-const whatsapp =
-document
-.getElementById("riderWhatsapp")
-.value
-.trim();
-
-const nationalId =
-document
-.getElementById("riderNationalId")
-.value
-.trim();
-
-const bikeType =
-document
-.getElementById("bikeType")
-.value
-.trim();
-
-const bikeModel =
-document
-.getElementById("bikeModel")
-.value
-.trim();
 
 const password =
 document
 .getElementById("riderCreatePassword")
 .value;
+
 
 const status =
 document
@@ -1779,49 +1702,48 @@ document
 .value;
 
 
-if(!jobId || !name || !password){
+if(!name || !jobId || !password){
 
 message.textContent =
-"Rider Job ID, name and password are required.";
+"Rider name, Rider Job ID and password are required.";
 
 return;
 
 }
 
 
+if(!/^ACC-\d+$/i.test(jobId)){
+
 message.textContent =
-"Registering rider...";
+"Rider Job ID must look like ACC-1235.";
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+message.textContent =
+"Rider password must contain at least 6 characters.";
+
+return;
+
+}
 
 
 try{
 
-
-/*
- Get fresh Moderator Firebase ID token.
-*/
-
-const idToken =
-await auth.currentUser
-.getIdToken(true);
+message.textContent =
+"Registering rider...";
 
 
-const response =
-await fetch(
-BACKEND_URL +
+const data =
+await moderatorRequest(
 "/api/moderator/riders",
 {
 
 method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json",
-
-"Authorization":
-"Bearer " + idToken
-
-},
 
 body:
 JSON.stringify({
@@ -1850,65 +1772,38 @@ status
 );
 
 
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
-console.error(
-"Unexpected server response:",
-text
-);
-
 message.textContent =
-"Server returned an unexpected response.";
+data.message ||
+"Rider registered successfully.";
 
-return;
-
-}
-
-
-if(!response.ok){
-
-message.textContent =
-data.error ||
-"Could not create rider.";
-
-return;
-
-}
-
-
-message.innerHTML = `
-<div class="success-box">
-<strong>Rider registered successfully.</strong>
-<br><br>
-Rider Job ID:
-<strong>${escapeHtml(data.rider.jobId)}</strong>
-<br>
-Rider Name:
-<strong>${escapeHtml(data.rider.name)}</strong>
-<br><br>
-The rider can now log in using the Job ID and password.
-</div>
-`;
-
-
-/*
- Clear sensitive/password fields.
-*/
 
 document
-.getElementById("riderCreatePassword")
+.getElementById("riderName")
+.value="";
+
+
+document
+.getElementById("riderPhone")
+.value="";
+
+
+document
+.getElementById("riderWhatsapp")
+.value="";
+
+
+document
+.getElementById("riderNationalId")
+.value="";
+
+
+document
+.getElementById("bikeType")
+.value="";
+
+
+document
+.getElementById("bikeModel")
 .value="";
 
 
@@ -1917,12 +1812,15 @@ document
 .value="";
 
 
+document
+.getElementById("riderCreatePassword")
+.value="";
+
+
 await loadRiders();
 
 
 }catch(error){
-
-console.error(error);
 
 message.textContent =
 "Could not create rider: " +
@@ -1933,9 +1831,10 @@ error.message;
 };
 
 
-/* =========================================================
-   LOAD RIDERS FROM BACKEND
-========================================================= */
+
+/* =========================
+LOAD RIDERS
+========================= */
 
 window.loadRiders =
 async function(){
@@ -1949,79 +1848,12 @@ box.innerHTML =
 "<p>Loading riders...</p>";
 
 
-if(!auth.currentUser){
-
-box.innerHTML =
-"<p>Moderator login required.</p>";
-
-return;
-
-}
-
-
 try{
 
-const idToken =
-await auth.currentUser
-.getIdToken(true);
-
-
-const response =
-await fetch(
-BACKEND_URL +
-"/api/moderator/riders",
-{
-
-method:"GET",
-
-headers:{
-
-"Authorization":
-"Bearer " + idToken
-
-}
-
-}
+const data =
+await moderatorRequest(
+"/api/moderator/riders"
 );
-
-
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
-console.error(
-"Unexpected server response:",
-text
-);
-
-box.innerHTML =
-"<p>Server returned an unexpected response.</p>";
-
-return;
-
-}
-
-
-if(!response.ok){
-
-box.innerHTML =
-"<p>Error loading riders: " +
-escapeHtml(data.error || "Unknown error") +
-"</p>";
-
-return;
-
-}
 
 
 box.innerHTML="";
@@ -2041,31 +1873,26 @@ return;
 }
 
 
-riders.forEach(rider=>{
+riders.forEach(
+rider => {
 
 const div =
-document.createElement("div");
+document
+.createElement("div");
+
 
 div.className =
 "route-box";
 
 
-const nextStatus =
-rider.status === "active"
-? "inactive"
-: "active";
-
-
-const statusButton =
-rider.status === "active"
-? "Deactivate"
-: "Activate";
+const active =
+rider.status === "active";
 
 
 div.innerHTML = `
 
 <h3>
-${escapeHtml(rider.name || "")}
+${escapeHtml(rider.name || "Rider")}
 </h3>
 
 <p>
@@ -2087,24 +1914,46 @@ ${escapeHtml(rider.whatsapp || "")}
 
 <p>
 Motorbike:
-${escapeHtml(rider.bikeType || "")}
-${escapeHtml(rider.bikeModel || "")}
+${escapeHtml(
+(rider.bikeType || "") +
+" " +
+(rider.bikeModel || "")
+)}
 </p>
 
 <p>
 Status:
-<span class="badge">
+<span class="${
+active
+? "status-active"
+: "status-inactive"
+}">
 ${escapeHtml(rider.status || "")}
 </span>
 </p>
 
+<p class="small">
+Firebase UID:
+${escapeHtml(rider.uid || "")}
+</p>
+
 <button
-class="secondary"
+class="${
+active
+? "secondary"
+: "success"
+}"
 onclick="changeRiderStatus(
 '${encodeURIComponent(rider.uid)}',
-'${nextStatus}'
+'${active ? "inactive" : "active"}'
 )">
-${statusButton}
+
+${
+active
+? "Deactivate Rider"
+: "Activate Rider"
+}
+
 </button>
 
 <button
@@ -2112,23 +1961,25 @@ class="danger"
 onclick="removeRider(
 '${encodeURIComponent(rider.uid)}'
 )">
+
 Remove Rider
+
 </button>
 
 `;
 
+
 box.appendChild(div);
 
-});
+}
+);
 
 
 }catch(error){
 
-console.error(error);
-
 box.innerHTML =
 "<p>Error loading riders: " +
-escapeHtml(error.message) +
+error.message +
 "</p>";
 
 }
@@ -2136,30 +1987,23 @@ escapeHtml(error.message) +
 };
 
 
-/* =========================================================
-   CHANGE RIDER STATUS
-========================================================= */
+
+/* =========================
+CHANGE RIDER STATUS
+========================= */
 
 window.changeRiderStatus =
-async function(encodedUid,newStatus){
-
-if(!auth.currentUser){
-
-alert(
-"Moderator login required."
-);
-
-return;
-
-}
-
+async function(
+encodedUid,
+newStatus
+){
 
 const uid =
 decodeURIComponent(encodedUid);
 
 
 if(!confirm(
-"Change this rider status to " +
+"Change this rider's status to " +
 newStatus +
 "?"
 )){
@@ -2171,30 +2015,13 @@ return;
 
 try{
 
-const idToken =
-await auth.currentUser
-.getIdToken(true);
-
-
-const response =
-await fetch(
-BACKEND_URL +
+await moderatorRequest(
 "/api/moderator/riders/" +
 encodeURIComponent(uid) +
 "/status",
 {
 
 method:"PATCH",
-
-headers:{
-
-"Content-Type":
-"application/json",
-
-"Authorization":
-"Bearer " + idToken
-
-},
 
 body:
 JSON.stringify({
@@ -2207,48 +2034,18 @@ status:newStatus
 );
 
 
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
 alert(
-"Server returned an unexpected response."
+"Rider status updated successfully."
 );
 
-return;
 
-}
-
-
-if(!response.ok){
-
-alert(
-"Could not change status: " +
-(data.error || "Unknown error")
-);
-
-return;
-
-}
-
-
-loadRiders();
+await loadRiders();
 
 
 }catch(error){
 
 alert(
-"Could not change status: " +
+"Could not change rider status: " +
 error.message
 );
 
@@ -2257,30 +2054,29 @@ error.message
 };
 
 
-/* =========================================================
-   REMOVE RIDER
-========================================================= */
+
+/* =========================
+REMOVE RIDER
+========================= */
 
 window.removeRider =
 async function(encodedUid){
-
-if(!auth.currentUser){
-
-alert(
-"Moderator login required."
-);
-
-return;
-
-}
-
 
 const uid =
 decodeURIComponent(encodedUid);
 
 
 if(!confirm(
-"Remove this rider record? This action is for the Moderator only."
+"Remove this rider record?\n\nThis action is for the Moderator only."
+)){
+
+return;
+
+}
+
+
+if(!confirm(
+"WARNING: This will delete the rider's login account too.\n\nContinue?"
 )){
 
 return;
@@ -2290,64 +2086,15 @@ return;
 
 try{
 
-const idToken =
-await auth.currentUser
-.getIdToken(true);
-
-
-const response =
-await fetch(
-BACKEND_URL +
+await moderatorRequest(
 "/api/moderator/riders/" +
 encodeURIComponent(uid),
 {
 
-method:"DELETE",
-
-headers:{
-
-"Authorization":
-"Bearer " + idToken
-
-}
+method:"DELETE"
 
 }
 );
-
-
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
-alert(
-"Server returned an unexpected response."
-);
-
-return;
-
-}
-
-
-if(!response.ok){
-
-alert(
-"Could not remove rider: " +
-(data.error || "Unknown error")
-);
-
-return;
-
-}
 
 
 alert(
@@ -2355,7 +2102,7 @@ alert(
 );
 
 
-loadRiders();
+await loadRiders();
 
 
 }catch(error){
@@ -2370,9 +2117,10 @@ error.message
 };
 
 
-/* =========================================================
-   MODERATOR ORDERS
-========================================================= */
+
+/* =========================
+ORDERS
+========================= */
 
 window.loadAllOrders =
 async function(){
@@ -2386,72 +2134,12 @@ box.innerHTML =
 "<p>Loading orders...</p>";
 
 
-if(!auth.currentUser){
-
-box.innerHTML =
-"<p>Moderator login required.</p>";
-
-return;
-
-}
-
-
 try{
 
-const idToken =
-await auth.currentUser
-.getIdToken(true);
-
-
-const response =
-await fetch(
-BACKEND_URL +
-"/api/moderator/orders",
-{
-
-headers:{
-
-"Authorization":
-"Bearer " + idToken
-
-}
-
-}
+const data =
+await moderatorRequest(
+"/api/moderator/orders"
 );
-
-
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
-box.innerHTML =
-"<p>Server returned an unexpected response.</p>";
-
-return;
-
-}
-
-
-if(!response.ok){
-
-box.innerHTML =
-"<p>Error: " +
-escapeHtml(data.error || "Unable to load orders") +
-"</p>";
-
-return;
-
-}
 
 
 box.innerHTML="";
@@ -2471,13 +2159,38 @@ return;
 }
 
 
-orders.forEach(order=>{
+orders.forEach(
+order => {
 
 const div =
-document.createElement("div");
+document
+.createElement("div");
+
 
 div.className =
 "route-box";
+
+
+let action = "";
+
+
+if(order.status === "pending"){
+
+action = `
+
+<button
+class="primary"
+onclick="approveOrder(
+'${encodeURIComponent(order.id)}'
+)">
+
+Approve Order
+
+</button>
+
+`;
+
+}
 
 
 div.innerHTML = `
@@ -2494,7 +2207,14 @@ ${escapeHtml(order.destination || "")}
 
 <p>
 Fare:
+<strong>
 KSh ${Number(order.fare || 0).toLocaleString()}
+</strong>
+</p>
+
+<p>
+Payment:
+${escapeHtml(order.paymentMethod || "")}
 </p>
 
 <p>
@@ -2504,32 +2224,22 @@ ${escapeHtml(order.status || "")}
 </span>
 </p>
 
-${
-order.status === "pending"
-?
-`
-<button
-class="primary"
-onclick="approveOrder('${encodeURIComponent(order.id)}')">
-Approve
-</button>
-`
-:""
-}
+${action}
 
 `;
 
 
 box.appendChild(div);
 
-});
+}
+);
 
 
 }catch(error){
 
 box.innerHTML =
-"<p>Error: " +
-escapeHtml(error.message) +
+"<p>Error loading orders: " +
+error.message +
 "</p>";
 
 }
@@ -2537,38 +2247,21 @@ escapeHtml(error.message) +
 };
 
 
-/* =========================================================
-   APPROVE ORDER
-========================================================= */
+
+/* =========================
+APPROVE ORDER
+========================= */
 
 window.approveOrder =
-async function(encodedOrderId){
+async function(encodedId){
 
 const orderId =
-decodeURIComponent(encodedOrderId);
-
-
-if(!auth.currentUser){
-
-alert(
-"Moderator login required."
-);
-
-return;
-
-}
+decodeURIComponent(encodedId);
 
 
 try{
 
-const idToken =
-await auth.currentUser
-.getIdToken(true);
-
-
-const response =
-await fetch(
-BACKEND_URL +
+await moderatorRequest(
 "/api/moderator/orders/" +
 encodeURIComponent(orderId) +
 "/approve",
@@ -2576,50 +2269,11 @@ encodeURIComponent(orderId) +
 
 method:"PATCH",
 
-headers:{
-
-"Authorization":
-"Bearer " + idToken
-
-}
+body:
+JSON.stringify({})
 
 }
 );
-
-
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
-alert(
-"Server returned an unexpected response."
-);
-
-return;
-
-}
-
-
-if(!response.ok){
-
-alert(
-"Could not approve order: " +
-(data.error || "Unknown error")
-);
-
-return;
-
-}
 
 
 alert(
@@ -2627,7 +2281,7 @@ alert(
 );
 
 
-loadAllOrders();
+await loadAllOrders();
 
 
 }catch(error){
@@ -2642,9 +2296,10 @@ error.message
 };
 
 
-/* =========================================================
-   CUSTOMERS
-========================================================= */
+
+/* =========================
+CUSTOMERS
+========================= */
 
 window.loadCustomers =
 async function(){
@@ -2658,72 +2313,12 @@ box.innerHTML =
 "<p>Loading customers...</p>";
 
 
-if(!auth.currentUser){
-
-box.innerHTML =
-"<p>Moderator login required.</p>";
-
-return;
-
-}
-
-
 try{
 
-const idToken =
-await auth.currentUser
-.getIdToken(true);
-
-
-const response =
-await fetch(
-BACKEND_URL +
-"/api/moderator/customers",
-{
-
-headers:{
-
-"Authorization":
-"Bearer " + idToken
-
-}
-
-}
+const data =
+await moderatorRequest(
+"/api/moderator/customers"
 );
-
-
-const text =
-await response.text();
-
-
-let data;
-
-
-try{
-
-data =
-JSON.parse(text);
-
-}catch(error){
-
-box.innerHTML =
-"<p>Server returned an unexpected response.</p>";
-
-return;
-
-}
-
-
-if(!response.ok){
-
-box.innerHTML =
-"<p>Error: " +
-escapeHtml(data.error || "Unable to load customers") +
-"</p>";
-
-return;
-
-}
 
 
 box.innerHTML="";
@@ -2743,10 +2338,13 @@ return;
 }
 
 
-customers.forEach(user=>{
+customers.forEach(
+user => {
 
 const div =
-document.createElement("div");
+document
+.createElement("div");
+
 
 div.className =
 "route-box";
@@ -2773,14 +2371,15 @@ ${escapeHtml(user.role || "customer")}
 
 box.appendChild(div);
 
-});
+}
+);
 
 
 }catch(error){
 
 box.innerHTML =
-"<p>Error: " +
-escapeHtml(error.message) +
+"<p>Error loading customers: " +
+error.message +
 "</p>";
 
 }
@@ -2788,9 +2387,10 @@ escapeHtml(error.message) +
 };
 
 
-/* =========================================================
-   MODERATOR SECTIONS
-========================================================= */
+
+/* =========================
+MODERATOR SECTIONS
+========================= */
 
 window.showModeratorSection =
 function(section){
@@ -2843,47 +2443,10 @@ loadCustomers();
 };
 
 
-/* =========================================================
-   RIDER LOGOUT
-========================================================= */
 
-window.riderLogout =
-function(){
-
-localStorage.removeItem(
-"amirChapChapRider"
-);
-
-localStorage.removeItem(
-"amirChapChapRiderToken"
-);
-
-
-document
-.getElementById("riderDashboard")
-.classList.add("hidden");
-
-
-document
-.getElementById("riderJobId")
-.value="";
-
-document
-.getElementById("riderPassword")
-.value="";
-
-
-document
-.getElementById("riderMessage")
-.textContent =
-"You have been signed out.";
-
-};
-
-
-/* =========================================================
-   MODERATOR LOGOUT
-========================================================= */
+/* =========================
+MODERATOR LOGOUT
+========================= */
 
 window.moderatorLogout =
 async function(){
@@ -2912,67 +2475,15 @@ document
 document
 .getElementById("moderatorMessage")
 .textContent =
-"You have been signed out.";
+"You have signed out.";
 
 };
 
 
-/* =========================================================
-   STORED RIDER
-========================================================= */
 
-function getStoredRider(){
-
-try{
-
-const data =
-localStorage.getItem(
-"amirChapChapRider"
-);
-
-if(!data)
-return null;
-
-return JSON.parse(data);
-
-}catch(error){
-
-return null;
-
-}
-
-}
-
-
-/* =========================================================
-   PHONE CLEANER
-========================================================= */
-
-window.cleanPhone =
-function(phone){
-
-phone =
-String(phone || "")
-.replace(/\D/g,"");
-
-
-if(phone.startsWith("0")){
-
-phone =
-"254" +
-phone.substring(1);
-
-}
-
-
-return phone;
-
-};
-
-
-/* =========================================================
-   HTML ESCAPE
-========================================================= */
+/* =========================
+ESCAPE HTML
+========================= */
 
 function escapeHtml(value){
 
@@ -2986,9 +2497,10 @@ return String(value || "")
 }
 
 
-/* =========================================================
-   TERMS
-========================================================= */
+
+/* =========================
+TERMS
+========================= */
 
 window.showTerms =
 function(){
@@ -3001,19 +2513,21 @@ alert(
 
 2. Fares are managed by Amir Chap Chap and may be based on approved routes or KSh 45 per kilometre.
 
-3. Riders are approved and managed by the Moderator.
+3. Riders are registered and managed by the Moderator.
 
-4. Riders must not delete customer, order or system records.
+4. Riders must use their assigned Rider Job ID.
 
-5. Customers should rate riders after completed services.
+5. Riders must not delete customer, order or system records.
 
-6. Waze navigation is optional.
+6. Customers should rate riders after completed services.
 
-7. Points and promotional offers are subject to Amir Chap Chap rules.
+7. Navigation and phone communication may be used where appropriate.
 
-8. Amir Chap Chap may deactivate riders who are inactive or violate company requirements.
+8. Points and promotional offers are subject to Amir Chap Chap rules.
 
-9. Customer Care:
+9. Amir Chap Chap may deactivate riders who are inactive or violate company requirements.
+
+10. Customer Care:
 0795653284
 
 Published:
@@ -3024,30 +2538,30 @@ Published:
 };
 
 
-/* =========================================================
-   AUTH STATE
-========================================================= */
+
+/* =========================
+AUTH STATE
+========================= */
 
 onAuthStateChanged(
 auth,
-user=>{
+user => {
 
 console.log(
-"Authentication state:",
+"Firebase authentication state:",
 user
-?
-user.uid
-:
-"Signed out"
+? user.email
+: "signed out"
 );
 
 }
 );
 
 
-/* =========================================================
-   INITIAL PAGE
-========================================================= */
+
+/* =========================
+START
+========================= */
 
 showPage("home");
 
