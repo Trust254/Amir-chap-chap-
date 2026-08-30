@@ -5,6 +5,10 @@ const admin = require("firebase-admin");
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+/* =========================================================
+   MIDDLEWARE
+========================================================= */
+
 app.use(cors());
 app.use(express.json());
 
@@ -24,86 +28,78 @@ try {
     process.env.FIREBASE_SERVICE_ACCOUNT
   );
 } catch (error) {
+  console.error("FIREBASE_SERVICE_ACCOUNT is not valid JSON.");
+  process.exit(1);
+}
+
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+
+  console.log("Firebase Admin initialized successfully.");
+
+} catch (error) {
   console.error(
-    "FIREBASE_SERVICE_ACCOUNT is not valid JSON."
+    "Firebase Admin initialization error:",
+    error.message
   );
   process.exit(1);
 }
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
 const db = admin.firestore();
-
-console.log("Firebase Admin initialized successfully.");
-
 
 /* =========================================================
    HOME
 ========================================================= */
 
 app.get("/", (req, res) => {
-
   res.status(200).json({
     status: "OK",
     message: "Amir Chap Chap Backend is running.",
     timestamp: new Date().toISOString()
   });
-
 });
-
 
 /* =========================================================
    HEALTH
 ========================================================= */
 
 app.get("/api/health", (req, res) => {
-
   res.status(200).json({
     status: "OK",
     service: "Amir Chap Chap Backend",
     timestamp: new Date().toISOString()
   });
-
 });
-
 
 /* =========================================================
    TEST RIDER ROUTE
 ========================================================= */
 
 app.get("/api/test-riders-route", (req, res) => {
-
   res.status(200).json({
     status: "OK",
     message: "Rider route is deployed"
   });
-
 });
-
 
 /* =========================================================
    VERIFY FIREBASE USER
 ========================================================= */
 
 async function verifyFirebaseUser(req, res, next) {
-
   try {
-
     const authorization =
       req.headers.authorization || "";
 
     if (!authorization.startsWith("Bearer ")) {
-
       return res.status(401).json({
         error: "Unauthorized. Login required."
       });
-
     }
 
-    const token =
-      authorization.substring(7);
+    const token = authorization.substring(7);
 
     const decodedToken =
       await admin.auth().verifyIdToken(token);
@@ -113,7 +109,6 @@ async function verifyFirebaseUser(req, res, next) {
     next();
 
   } catch (error) {
-
     console.error(
       "Token verification error:",
       error.message
@@ -122,43 +117,33 @@ async function verifyFirebaseUser(req, res, next) {
     return res.status(401).json({
       error: "Unauthorized. Invalid Firebase token."
     });
-
   }
-
 }
-
 
 /* =========================================================
    VERIFY MODERATOR
 ========================================================= */
 
 async function verifyAdmin(req, res, next) {
-
   try {
-
     const authorization =
       req.headers.authorization || "";
 
     if (!authorization.startsWith("Bearer ")) {
-
       return res.status(401).json({
         error: "Unauthorized. Moderator login required."
       });
-
     }
 
-    const token =
-      authorization.substring(7);
+    const token = authorization.substring(7);
 
     const decodedToken =
       await admin.auth().verifyIdToken(token);
 
     if (decodedToken.admin !== true) {
-
       return res.status(403).json({
         error: "Moderator privilege required."
       });
-
     }
 
     req.user = decodedToken;
@@ -166,7 +151,6 @@ async function verifyAdmin(req, res, next) {
     next();
 
   } catch (error) {
-
     console.error(
       "Moderator verification error:",
       error.message
@@ -175,20 +159,15 @@ async function verifyAdmin(req, res, next) {
     return res.status(401).json({
       error: "Unauthorized. Invalid moderator token."
     });
-
   }
-
 }
-
 
 /* =========================================================
    BOOTSTRAP MODERATOR
 ========================================================= */
 
 app.post("/api/bootstrap-admin", async (req, res) => {
-
   try {
-
     const secret =
       req.headers["x-bootstrap-secret"];
 
@@ -197,11 +176,9 @@ app.post("/api/bootstrap-admin", async (req, res) => {
       !process.env.BOOTSTRAP_SECRET ||
       secret !== process.env.BOOTSTRAP_SECRET
     ) {
-
       return res.status(403).json({
         error: "Invalid bootstrap secret."
       });
-
     }
 
     const {
@@ -211,17 +188,14 @@ app.post("/api/bootstrap-admin", async (req, res) => {
     } = req.body;
 
     if (!email || !password) {
-
       return res.status(400).json({
         error: "Email and password are required."
       });
-
     }
 
     let userRecord;
 
     try {
-
       userRecord =
         await admin.auth().getUserByEmail(email);
 
@@ -231,22 +205,16 @@ app.post("/api/bootstrap-admin", async (req, res) => {
 
         userRecord =
           await admin.auth().createUser({
-
             email,
             password,
-
             displayName:
               displayName ||
               "Amir Chap Chap Moderator"
-
           });
 
       } else {
-
         throw error;
-
       }
-
     }
 
     await admin.auth().setCustomUserClaims(
@@ -261,41 +229,29 @@ app.post("/api/bootstrap-admin", async (req, res) => {
       .doc(userRecord.uid)
       .set(
         {
-
-          uid:
-            userRecord.uid,
-
+          uid: userRecord.uid,
           email:
             userRecord.email || email,
-
-          role:
-            "admin",
-
+          role: "admin",
           displayName:
             displayName ||
             userRecord.displayName ||
             "Amir Chap Chap Moderator",
-
           updatedAt:
             admin.firestore.FieldValue.serverTimestamp()
-
         },
         {
           merge: true
         }
       );
 
-    res.status(200).json({
-
+    return res.status(200).json({
       message:
         "Moderator account is ready.",
-
       uid:
         userRecord.uid,
-
       email:
         userRecord.email || email
-
     });
 
   } catch (error) {
@@ -305,23 +261,18 @@ app.post("/api/bootstrap-admin", async (req, res) => {
       error.message
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message
     });
-
   }
-
 });
-
 
 /* =========================================================
    SET EXISTING USER AS MODERATOR
 ========================================================= */
 
 app.post("/api/set-moderator", async (req, res) => {
-
   try {
-
     const setupSecret =
       req.headers["x-setup-secret"];
 
@@ -329,21 +280,17 @@ app.post("/api/set-moderator", async (req, res) => {
       !setupSecret ||
       setupSecret !== process.env.BOOTSTRAP_SECRET
     ) {
-
       return res.status(403).json({
         error: "Invalid setup secret."
       });
-
     }
 
     const { uid } = req.body;
 
     if (!uid) {
-
       return res.status(400).json({
         error: "Firebase UID is required."
       });
-
     }
 
     const userRecord =
@@ -361,35 +308,25 @@ app.post("/api/set-moderator", async (req, res) => {
       .doc(uid)
       .set(
         {
-
           uid,
-
           email:
             userRecord.email || "",
-
-          role:
-            "admin",
-
+          role: "admin",
           displayName:
             userRecord.displayName ||
             "Amir Chap Chap Moderator",
-
           updatedAt:
             admin.firestore.FieldValue.serverTimestamp()
-
         },
         {
           merge: true
         }
       );
 
-    res.status(200).json({
-
+    return res.status(200).json({
       message:
         "Moderator role assigned successfully.",
-
       uid
-
     });
 
   } catch (error) {
@@ -399,18 +336,14 @@ app.post("/api/set-moderator", async (req, res) => {
       error.message
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message
     });
-
   }
-
 });
-
 
 /* =========================================================
    CREATE RIDER
-   Moderator creates rider using ACC-1235
 ========================================================= */
 
 app.post(
@@ -433,14 +366,10 @@ app.post(
       } = req.body;
 
       if (!jobId || !name || !password) {
-
         return res.status(400).json({
-
           error:
             "Rider Job ID, name and password are required."
-
         });
-
       }
 
       const cleanJobId =
@@ -448,24 +377,24 @@ app.post(
           .trim()
           .toUpperCase();
 
-      /* Check duplicate Rider ID */
+      /* Check duplicate rider ID */
 
       const existing =
         await db
           .collection("riders")
-          .where("jobId", "==", cleanJobId)
+          .where(
+            "jobId",
+            "==",
+            cleanJobId
+          )
           .limit(1)
           .get();
 
       if (!existing.empty) {
-
         return res.status(409).json({
-
           error:
             "This Rider Job ID is already registered."
-
         });
-
       }
 
       /* Internal Firebase email */
@@ -480,16 +409,9 @@ app.post(
 
         riderUser =
           await admin.auth().createUser({
-
-            email:
-              internalEmail,
-
-            password:
-              password,
-
-            displayName:
-              name
-
+            email: internalEmail,
+            password: password,
+            displayName: name
           });
 
       } catch (error) {
@@ -500,125 +422,71 @@ app.post(
         );
 
         return res.status(500).json({
-
           error:
             "Could not create rider login account: " +
             error.message
-
         });
-
       }
 
       const riderUid =
         riderUser.uid;
 
+      const riderStatus =
+        status === "inactive"
+          ? "inactive"
+          : "active";
+
       const riderData = {
-
-        uid:
-          riderUid,
-
-        jobId:
-          cleanJobId,
-
-        name:
-          name,
-
-        phone:
-          phone || "",
-
-        whatsapp:
-          whatsapp || "",
-
-        nationalId:
-          nationalId || "",
-
-        bikeType:
-          bikeType || "",
-
-        bikeModel:
-          bikeModel || "",
-
-        status:
-          status || "active",
-
-        createdBy:
-          req.user.uid,
-
+        uid: riderUid,
+        jobId: cleanJobId,
+        name: name,
+        phone: phone || "",
+        whatsapp: whatsapp || "",
+        nationalId: nationalId || "",
+        bikeType: bikeType || "",
+        bikeModel: bikeModel || "",
+        status: riderStatus,
+        createdBy: req.user.uid,
         createdAt:
           admin.firestore.FieldValue.serverTimestamp()
-
       };
 
-      /* Main rider record */
+      /* Save rider */
 
       await db
         .collection("riders")
         .doc(riderUid)
         .set(riderData);
 
-      /* Rider account record */
+      /* Save rider account */
 
       await db
         .collection("riderAccounts")
         .doc(riderUid)
         .set({
-
-          uid:
-            riderUid,
-
-          jobId:
-            cleanJobId,
-
-          name:
-            name,
-
-          phone:
-            phone || "",
-
-          whatsapp:
-            whatsapp || "",
-
-          nationalId:
-            nationalId || "",
-
-          bikeType:
-            bikeType || "",
-
-          bikeModel:
-            bikeModel || "",
-
-          status:
-            status || "active",
-
-          loginEmail:
-            internalEmail,
-
+          uid: riderUid,
+          jobId: cleanJobId,
+          name: name,
+          phone: phone || "",
+          whatsapp: whatsapp || "",
+          nationalId: nationalId || "",
+          bikeType: bikeType || "",
+          bikeModel: bikeModel || "",
+          status: riderStatus,
+          loginEmail: internalEmail,
           createdAt:
             admin.firestore.FieldValue.serverTimestamp()
-
         });
 
-      res.status(201).json({
-
+      return res.status(201).json({
         message:
           "Rider registered successfully.",
-
         rider: {
-
-          uid:
-            riderUid,
-
-          jobId:
-            cleanJobId,
-
-          name:
-            name,
-
-          status:
-            status || "active"
-
+          uid: riderUid,
+          jobId: cleanJobId,
+          name: name,
+          status: riderStatus
         }
-
       });
 
     } catch (error) {
@@ -628,18 +496,12 @@ app.post(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
-
 
 /* =========================================================
    GET RIDERS
@@ -659,18 +521,12 @@ app.get(
 
       const riders =
         snapshot.docs.map(doc => ({
-
-          id:
-            doc.id,
-
+          id: doc.id,
           ...doc.data()
-
         }));
 
-      res.status(200).json({
-
+      return res.status(200).json({
         riders
-
       });
 
     } catch (error) {
@@ -680,22 +536,15 @@ app.get(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
 
-
 /* =========================================================
    RIDER LOGIN
-   ACC-1235 + PASSWORD
 ========================================================= */
 
 app.post(
@@ -710,14 +559,10 @@ app.post(
       } = req.body;
 
       if (!jobId || !password) {
-
         return res.status(400).json({
-
           error:
             "Rider Job ID and password are required."
-
         });
-
       }
 
       const cleanJobId =
@@ -728,58 +573,50 @@ app.post(
       const snapshot =
         await db
           .collection("riders")
-          .where("jobId", "==", cleanJobId)
+          .where(
+            "jobId",
+            "==",
+            cleanJobId
+          )
           .limit(1)
           .get();
 
       if (snapshot.empty) {
-
         return res.status(404).json({
-
           error:
             "Rider ID not found. Contact the Moderator."
-
         });
-
       }
 
-      const riderDoc =
-        snapshot.docs[0];
-
       const rider =
-        riderDoc.data();
+        snapshot.docs[0].data();
 
       if (rider.status !== "active") {
-
         return res.status(403).json({
-
           error:
             "This rider account is inactive. Contact the Moderator."
-
         });
-
       }
 
       const apiKey =
         process.env.FIREBASE_WEB_API_KEY;
 
       if (!apiKey) {
-
         return res.status(500).json({
-
           error:
             "FIREBASE_WEB_API_KEY is missing on the server."
-
         });
-
       }
+
+      const internalEmail =
+        rider.jobId.toLowerCase() +
+        "@rider.amirchapchap.com";
 
       const authResponse =
         await fetch(
           "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
           encodeURIComponent(apiKey),
           {
-
             method: "POST",
 
             headers: {
@@ -789,19 +626,10 @@ app.post(
 
             body:
               JSON.stringify({
-
-                email:
-                  rider.jobId.toLowerCase() +
-                  "@rider.amirchapchap.com",
-
-                password:
-                  password,
-
-                returnSecureToken:
-                  true
-
+                email: internalEmail,
+                password: password,
+                returnSecureToken: true
               })
-
           }
         );
 
@@ -811,20 +639,17 @@ app.post(
       if (!authResponse.ok) {
 
         console.error(
-          "Rider Firebase login:",
+          "Rider Firebase login error:",
           authData
         );
 
         return res.status(401).json({
-
           error:
             "Invalid Rider Job ID or password."
-
         });
-
       }
 
-      res.status(200).json({
+      return res.status(200).json({
 
         message:
           "Rider login successful.",
@@ -836,33 +661,15 @@ app.post(
           authData.refreshToken,
 
         rider: {
-
-          uid:
-            rider.uid,
-
-          jobId:
-            rider.jobId,
-
-          name:
-            rider.name,
-
-          phone:
-            rider.phone,
-
-          whatsapp:
-            rider.whatsapp,
-
-          bikeType:
-            rider.bikeType,
-
-          bikeModel:
-            rider.bikeModel,
-
-          status:
-            rider.status
-
+          uid: rider.uid,
+          jobId: rider.jobId,
+          name: rider.name,
+          phone: rider.phone,
+          whatsapp: rider.whatsapp,
+          bikeType: rider.bikeType,
+          bikeModel: rider.bikeModel,
+          status: rider.status
         }
-
       });
 
     } catch (error) {
@@ -872,18 +679,12 @@ app.post(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
-
 
 /* =========================================================
    UPDATE RIDER STATUS
@@ -903,14 +704,10 @@ app.patch(
         status !== "active" &&
         status !== "inactive"
       ) {
-
         return res.status(400).json({
-
           error:
             "Status must be active or inactive."
-
         });
-
       }
 
       const uid =
@@ -930,11 +727,9 @@ app.patch(
           status
         });
 
-      res.status(200).json({
-
+      return res.status(200).json({
         message:
           "Rider status updated successfully."
-
       });
 
     } catch (error) {
@@ -944,18 +739,12 @@ app.patch(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
-
 
 /* =========================================================
    DELETE RIDER
@@ -993,14 +782,11 @@ app.delete(
           "Firebase Auth rider deletion:",
           authError.message
         );
-
       }
 
-      res.status(200).json({
-
+      return res.status(200).json({
         message:
           "Rider removed successfully."
-
       });
 
     } catch (error) {
@@ -1010,18 +796,12 @@ app.delete(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
-
 
 /* =========================================================
    ALL CUSTOMERS
@@ -1041,18 +821,12 @@ app.get(
 
       const customers =
         snapshot.docs.map(doc => ({
-
-          id:
-            doc.id,
-
+          id: doc.id,
           ...doc.data()
-
         }));
 
-      res.status(200).json({
-
+      return res.status(200).json({
         customers
-
       });
 
     } catch (error) {
@@ -1062,18 +836,12 @@ app.get(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
-
 
 /* =========================================================
    ALL ORDERS
@@ -1093,18 +861,12 @@ app.get(
 
       const orders =
         snapshot.docs.map(doc => ({
-
-          id:
-            doc.id,
-
+          id: doc.id,
           ...doc.data()
-
         }));
 
-      res.status(200).json({
-
+      return res.status(200).json({
         orders
-
       });
 
     } catch (error) {
@@ -1114,18 +876,12 @@ app.get(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
-
 
 /* =========================================================
    APPROVE ORDER
@@ -1145,20 +901,14 @@ app.patch(
         .collection("orders")
         .doc(orderId)
         .update({
-
-          status:
-            "approved",
-
+          status: "approved",
           approvedAt:
             admin.firestore.FieldValue.serverTimestamp()
-
         });
 
-      res.status(200).json({
-
+      return res.status(200).json({
         message:
           "Order approved successfully."
-
       });
 
     } catch (error) {
@@ -1168,42 +918,32 @@ app.patch(
         error.message
       );
 
-      res.status(500).json({
-
-        error:
-          error.message
-
+      return res.status(500).json({
+        error: error.message
       });
-
     }
-
   }
 );
 
-
 /* =========================================================
-   404 JSON HANDLER
-   IMPORTANT: THIS MUST BE LAST
+   404 HANDLER
+   THIS MUST BE AFTER ALL ROUTES
 ========================================================= */
 
 app.use((req, res) => {
 
-  res.status(404).json({
-
+  return res.status(404).json({
     error:
       "API endpoint not found.",
-
     path:
       req.originalUrl
-
   });
 
 });
 
-
 /* =========================================================
    SERVER
-   IMPORTANT: ONLY ONE app.listen()
+   ONLY ONE app.listen()
 ========================================================= */
 
 app.listen(PORT, () => {
