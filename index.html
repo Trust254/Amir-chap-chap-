@@ -152,6 +152,11 @@ button{
   color:#111827;
 }
 
+.info{
+  background:#2563eb;
+  color:white;
+}
+
 .hidden{
   display:none !important;
 }
@@ -179,6 +184,26 @@ button{
   font-weight:700;
 }
 
+.badge-approved{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.badge-assigned{
+  background:#dbeafe;
+  color:#1e40af;
+}
+
+.badge-picked{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.badge-way{
+  background:#ede9fe;
+  color:#5b21b6;
+}
+
 .notification{
   background:#fff7ed;
   border-left:5px solid #f59e0b;
@@ -192,6 +217,7 @@ button{
   border-radius:10px;
   padding:15px;
   margin-top:10px;
+  border:1px solid #e5e7eb;
 }
 
 .status-online{
@@ -202,36 +228,6 @@ button{
   color:#166534;
   font-size:12px;
   font-weight:bold;
-}
-
-.status-pending{
-  background:#fef3c7;
-  color:#92400e;
-}
-
-.status-approved{
-  background:#dbeafe;
-  color:#1e40af;
-}
-
-.status-assigned{
-  background:#ede9fe;
-  color:#6d28d9;
-}
-
-.status-picked{
-  background:#cffafe;
-  color:#155e75;
-}
-
-.status-way{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.status-delivered{
-  background:#bbf7d0;
-  color:#166534;
 }
 
 footer{
@@ -251,37 +247,38 @@ footer a{
   text-align:center;
 }
 
-.divider{
-  border:none;
+hr{
+  border:0;
   border-top:1px solid #e5e7eb;
-  margin:20px 0;
+  margin:15px 0;
 }
 
-.small-text{
+.small{
   font-size:13px;
   color:#64748b;
 }
 
-.assignment-box{
+.success-box{
+  background:#ecfdf5;
+  border:1px solid #86efac;
+  padding:12px;
+  border-radius:9px;
+  margin-top:10px;
+}
+
+.warning-box{
   background:#fffbeb;
   border:1px solid #fcd34d;
-  border-radius:10px;
-  padding:15px;
-  margin-top:15px;
+  padding:12px;
+  border-radius:9px;
+  margin-top:10px;
 }
 
-.assigned-box{
-  background:#f0fdf4;
-  border:1px solid #86efac;
-  border-radius:10px;
-  padding:15px;
-  margin-top:15px;
-}
-
-.action-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
+.error-box{
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  padding:12px;
+  border-radius:9px;
   margin-top:10px;
 }
 
@@ -302,10 +299,6 @@ footer a{
 
   .hero h1{
     font-size:28px;
-  }
-
-  .container{
-    padding:12px;
   }
 }
 </style>
@@ -347,6 +340,7 @@ Moderator
 
 
 <main class="container">
+
 
 <!-- =====================================================
 HOME
@@ -433,7 +427,9 @@ Customers can earn points according to company rules.
 
 <br>
 
-<p>Need help?</p>
+<p>
+Need help?
+</p>
 
 <br>
 
@@ -472,16 +468,24 @@ CUSTOMER
 <input
 id="customerEmail"
 type="email"
-placeholder="Enter your email"
->
+placeholder="Enter your email">
+
 
 <label>Password</label>
 
 <input
 id="customerPassword"
 type="password"
-placeholder="Minimum 6 characters"
->
+placeholder="Minimum 6 characters">
+
+
+<label>Phone Number</label>
+
+<input
+id="customerPhone"
+type="tel"
+placeholder="07xxxxxxxx">
+
 
 <button
 type="button"
@@ -492,6 +496,7 @@ Register
 
 </button>
 
+
 <button
 type="button"
 class="dark"
@@ -501,6 +506,7 @@ Login
 
 </button>
 
+
 <div
 id="customerMessage"
 class="message">
@@ -509,13 +515,15 @@ class="message">
 </div>
 
 
-<div
-id="customerDashboard"
-class="hidden">
+<div id="customerDashboard" class="hidden">
 
-<h3>
-Welcome, Customer
-</h3>
+<h3>Welcome, Customer</h3>
+
+<div
+id="customerProfile"
+class="route-box">
+Loading profile...
+</div>
 
 <br>
 
@@ -528,8 +536,7 @@ Logout
 
 </button>
 
-<hr class="divider">
-
+<hr>
 
 <h3>Book a Service</h3>
 
@@ -555,16 +562,14 @@ Passenger Transport
 
 <input
 id="pickup"
-placeholder="Example: Lenana"
->
+placeholder="Example: Lenana">
 
 
 <label>Destination</label>
 
 <input
 id="destination"
-placeholder="Example: Naivas"
->
+placeholder="Example: Naivas">
 
 
 <label>Distance in KM</label>
@@ -573,8 +578,7 @@ placeholder="Example: Naivas"
 id="distanceKm"
 type="number"
 min="0"
-placeholder="Example: 5"
->
+placeholder="Example: 5">
 
 
 <button
@@ -589,9 +593,7 @@ Calculate Fare
 
 <div class="route-box">
 
-<div>
-Estimated Fare
-</div>
+<div>Estimated Fare</div>
 
 <div
 id="fareDisplay"
@@ -680,16 +682,16 @@ Sign in using your Rider Job ID and password.
 
 <input
 id="riderJobId"
-placeholder="Example: ACC-1001"
->
+placeholder="Example: ACC-1001">
+
 
 <label>Password</label>
 
 <input
 id="riderPassword"
 type="password"
-placeholder="Rider password"
->
+placeholder="Rider password">
+
 
 <button
 type="button"
@@ -788,8 +790,7 @@ MODERATOR
 <input
 id="moderatorEmail"
 type="email"
-placeholder="Moderator email"
->
+placeholder="Moderator email">
 
 
 <label>Moderator Password</label>
@@ -797,8 +798,7 @@ placeholder="Moderator email"
 <input
 id="moderatorPassword"
 type="password"
-placeholder="Moderator password"
->
+placeholder="Moderator password">
 
 
 <button
@@ -889,56 +889,49 @@ class="card hidden">
 
 <input
 id="riderName"
-placeholder="Full name"
->
+placeholder="Full name">
 
 
 <label>Phone Number</label>
 
 <input
 id="riderPhone"
-placeholder="07xxxxxxxx"
->
+placeholder="07xxxxxxxx">
 
 
 <label>WhatsApp Number</label>
 
 <input
 id="riderWhatsapp"
-placeholder="07xxxxxxxx"
->
+placeholder="07xxxxxxxx">
 
 
 <label>National ID</label>
 
 <input
 id="riderNationalId"
-placeholder="National ID"
->
+placeholder="National ID">
 
 
 <label>Motorbike Type</label>
 
 <input
 id="bikeType"
-placeholder="Example: Boxer"
->
+placeholder="Example: Boxer">
 
 
 <label>Motorbike Model</label>
 
 <input
 id="bikeModel"
-placeholder="Example: Boxer 150"
->
+placeholder="Example: Boxer 150">
 
 
 <label>Rider Job ID</label>
 
 <input
 id="createJobId"
-placeholder="Example: ACC-1001"
->
+placeholder="Example: ACC-1001">
 
 
 <label>Rider Password</label>
@@ -946,8 +939,7 @@ placeholder="Example: ACC-1001"
 <input
 id="createRiderPassword"
 type="password"
-placeholder="Password for rider login"
->
+placeholder="Password for rider login">
 
 
 <label>Status</label>
@@ -984,6 +976,9 @@ class="message">
 <br>
 
 <h3>Registered Riders</h3>
+
+<br>
+
 
 <button
 type="button"
@@ -1036,7 +1031,7 @@ MODERATOR CUSTOMERS
 id="moderatorCustomers"
 class="card hidden">
 
-<h3>Customers</h3>
+<h3>👥 Customers</h3>
 
 <br>
 
@@ -1091,7 +1086,91 @@ Terms & Conditions
 
 
 <!-- =====================================================
-FIREBASE + APPLICATION
+NAVIGATION
+IMPORTANT:
+This script is NOT a module.
+Therefore navigation works even if Firebase has a problem.
+===================================================== -->
+
+<script>
+
+function showPage(page){
+
+const pages = [
+"homePage",
+"customerPage",
+"riderPage",
+"moderatorPage"
+];
+
+pages.forEach(function(id){
+
+const element =
+document.getElementById(id);
+
+if(element){
+element.classList.add("hidden");
+}
+
+});
+
+
+const selected =
+document.getElementById(
+page + "Page"
+);
+
+if(selected){
+
+selected.classList.remove("hidden");
+
+}
+
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function showTerms(){
+
+alert(
+
+`AMIR CHAP CHAP
+
+TERMS & CONDITIONS
+
+1. Customers must provide correct pickup and destination information.
+
+2. Fares are calculated using approved routes or the company per-kilometre rate.
+
+3. Riders are approved and managed by Amir Chap Chap.
+
+4. Riders must follow company instructions.
+
+5. Customers should verify booking information before submitting.
+
+6. Customer Care:
+0795653284
+
+Amir Chap Chap`
+
+);
+
+}
+
+
+/* Start on Home */
+
+showPage("home");
+
+</script>
+
+
+<!-- =====================================================
+FIREBASE APPLICATION
 ===================================================== -->
 
 <script type="module">
@@ -1117,6 +1196,9 @@ from
 
 import {
 getFirestore,
+doc,
+setDoc,
+getDoc,
 collection,
 addDoc,
 getDocs,
@@ -1165,10 +1247,6 @@ const db =
 getFirestore(firebaseApp);
 
 
-/* =====================================================
-BACKEND
-===================================================== */
-
 const API_BASE =
 "https://amir-chap-chap-backend.onrender.com";
 
@@ -1179,7 +1257,7 @@ let currentRider = null;
 
 
 /* =====================================================
-API HELPER
+API
 ===================================================== */
 
 async function apiRequest(
@@ -1216,14 +1294,14 @@ headers
 );
 
 
-let data;
+let data = {};
 
 try{
 
 data =
 await response.json();
 
-}catch{
+}catch(error){
 
 data = {};
 
@@ -1246,58 +1324,6 @@ return data;
 
 
 /* =====================================================
-PAGE NAVIGATION
-===================================================== */
-
-window.showPage =
-function(page){
-
-const pages = [
-
-"homePage",
-"customerPage",
-"riderPage",
-"moderatorPage"
-
-];
-
-
-pages.forEach(id => {
-
-const element =
-document.getElementById(id);
-
-if(element){
-
-element.classList.add("hidden");
-
-}
-
-});
-
-
-const selected =
-document.getElementById(
-page + "Page"
-);
-
-
-if(selected){
-
-selected.classList.remove("hidden");
-
-}
-
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-};
-
-
-/* =====================================================
 CUSTOMER REGISTER
 ===================================================== */
 
@@ -1314,6 +1340,12 @@ const password =
 document
 .getElementById("customerPassword")
 .value;
+
+const phone =
+document
+.getElementById("customerPhone")
+.value
+.trim();
 
 const message =
 document.getElementById(
@@ -1361,9 +1393,14 @@ await apiRequest(
 method:"POST",
 
 body:JSON.stringify({
-email
-})
 
+email,
+
+phone,
+
+customerPhone:phone
+
+})
 },
 token
 );
@@ -1448,7 +1485,7 @@ error.message;
 CUSTOMER DASHBOARD
 ===================================================== */
 
-function showCustomerDashboard(){
+async function showCustomerDashboard(){
 
 document
 .getElementById("customerAuth")
@@ -1457,6 +1494,75 @@ document
 document
 .getElementById("customerDashboard")
 .classList.remove("hidden");
+
+await loadCustomerProfile();
+
+}
+
+
+/* =====================================================
+CUSTOMER PROFILE
+===================================================== */
+
+async function loadCustomerProfile(){
+
+if(!auth.currentUser){
+return;
+}
+
+
+const box =
+document.getElementById(
+"customerProfile"
+);
+
+
+try{
+
+const token =
+await auth.currentUser.getIdToken();
+
+
+const data =
+await apiRequest(
+"/api/customer/profile",
+{},
+token
+);
+
+
+box.innerHTML = `
+
+<strong>
+${escapeHTML(
+data.email || "Customer"
+)}
+</strong>
+
+<br>
+
+Phone:
+${escapeHTML(
+data.phone || "Not provided"
+)}
+
+<br>
+
+⭐ Points:
+<strong>
+${Number(
+data.points || 0
+)}
+</strong>
+
+`;
+
+}catch(error){
+
+box.innerHTML =
+"Could not load customer profile.";
+
+}
 
 }
 
@@ -1487,7 +1593,7 @@ document
 
 
 /* =====================================================
-FARE CALCULATION
+FARE
 ===================================================== */
 
 window.calculateFare =
@@ -1634,6 +1740,12 @@ document
 .getElementById("paymentMethod")
 .value;
 
+const phone =
+document
+.getElementById("customerPhone")
+.value
+.trim();
+
 
 if(!pickup || !destination){
 
@@ -1657,6 +1769,9 @@ auth.currentUser.uid,
 
 customerEmail:
 auth.currentUser.email || "",
+
+customerPhone:
+phone,
 
 serviceType,
 
@@ -1789,42 +1904,11 @@ return;
 }
 
 
-const orders = [];
-
 snapshot.forEach(item => {
 
-orders.push({
-id:item.id,
-...item.data()
-});
+const order =
+item.data();
 
-});
-
-
-orders.sort((a,b)=>{
-
-const aTime =
-a.createdAt &&
-a.createdAt.toMillis
-?
-a.createdAt.toMillis()
-:
-0;
-
-const bTime =
-b.createdAt &&
-b.createdAt.toMillis
-?
-b.createdAt.toMillis()
-:
-0;
-
-return bTime-aTime;
-
-});
-
-
-orders.forEach(order => {
 
 const div =
 document.createElement("div");
@@ -1833,10 +1917,23 @@ div.className =
 "route-box";
 
 
-const statusClass =
-getStatusClass(
-order.status
-);
+let statusClass = "";
+
+if(order.status === "approved"){
+statusClass = "badge-approved";
+}
+
+if(order.status === "assigned"){
+statusClass = "badge-assigned";
+}
+
+if(order.status === "picked_up"){
+statusClass = "badge-picked";
+}
+
+if(order.status === "on_the_way"){
+statusClass = "badge-way";
+}
 
 
 div.innerHTML = `
@@ -1873,67 +1970,48 @@ order.fare ??
 Status:
 <span class="badge ${statusClass}">
 ${escapeHTML(
-formatStatus(
-order.status ||
-"pending"
-)
+order.status || "pending"
 )}
 </span>
 </p>
 
+
 ${
 order.riderName
 ?
 `
-<div class="assigned-box">
+<div class="success-box">
 
-<strong>
-🏍️ Assigned Rider
-</strong>
+<strong>🏍️ Assigned Rider</strong>
 
-<p>
+<br>
+
 Name:
-${escapeHTML(
-order.riderName
-)}
-</p>
+${escapeHTML(order.riderName)}
 
-${
-order.riderJobId
-?
-`
-<p>
+<br>
+
 Job ID:
-${escapeHTML(
-order.riderJobId
-)}
-</p>
-`
-:
-""
-}
+${escapeHTML(order.riderJobId || "")}
+
+<br>
+
+Phone:
+${escapeHTML(order.riderPhone || "")}
+
+<br><br>
 
 ${
 order.riderPhone
 ?
 `
-<p>
-Phone:
-${escapeHTML(
-order.riderPhone
-)}
-</p>
-
 <a href="tel:${cleanPhone(order.riderPhone)}">
-
 <button class="dark">
-📞 Call Rider
+Call Rider
 </button>
-
 </a>
 `
-:
-""
+:""
 }
 
 ${
@@ -1945,22 +2023,21 @@ target="_blank"
 href="https://wa.me/${cleanPhone(order.riderWhatsapp)}">
 
 <button class="success">
-💬 WhatsApp Rider
+WhatsApp Rider
 </button>
 
 </a>
 `
-:
-""
+:""
 }
 
 </div>
 `
-:
-""
+:""
 }
 
 `;
+
 
 box.appendChild(div);
 
@@ -1999,7 +2076,8 @@ document
 .value;
 
 const message =
-document.getElementById(
+document
+.getElementById(
 "riderMessage"
 );
 
@@ -2023,8 +2101,11 @@ await apiRequest(
 method:"POST",
 
 body:JSON.stringify({
+
 jobId,
+
 password
+
 })
 }
 );
@@ -2043,7 +2124,6 @@ data.rider;
 document
 .getElementById("riderLoginBox")
 .classList.add("hidden");
-
 
 document
 .getElementById("riderDashboard")
@@ -2185,28 +2265,19 @@ div.className =
 "route-box";
 
 
-const status =
-order.status || "";
+let actionButtons = "";
 
 
-let buttons = "";
+if(order.status === "assigned"){
 
-
-/*
-  ASSIGNED
-  Rider can pick up.
-*/
-
-if(status === "assigned"){
-
-buttons += `
+actionButtons += `
 
 <button
-type="button"
 class="primary"
-onclick="riderPickupOrder('${order.id}')">
+type="button"
+onclick="pickupOrder('${order.id}')">
 
-📦 Pick Up Delivery
+📦 Pick Up
 
 </button>
 
@@ -2215,42 +2286,18 @@ onclick="riderPickupOrder('${order.id}')">
 }
 
 
-/*
-  PICKED UP
-  Rider can start delivery.
-*/
+if(order.status === "picked_up"){
 
-if(status === "picked_up"){
-
-buttons += `
+actionButtons += `
 
 <button
+class="info"
 type="button"
-class="success"
-onclick="riderStartDelivery('${order.id}')">
+onclick="startDelivery('${order.id}')">
 
 🏍️ Start Delivery
 
 </button>
-
-`;
-
-}
-
-
-/*
-  ON THE WAY
-*/
-
-if(status === "on_the_way"){
-
-buttons += `
-
-<div class="notification">
-
-🚚 Delivery is currently on the way.
-
-</div>
 
 `;
 
@@ -2267,10 +2314,7 @@ order.serviceType ||
 </h3>
 
 <p>
-<strong>
-Pickup:
-</strong>
-
+<strong>Pickup:</strong>
 ${escapeHTML(
 order.pickup ||
 ""
@@ -2278,10 +2322,7 @@ order.pickup ||
 </p>
 
 <p>
-<strong>
-Destination:
-</strong>
-
+<strong>Destination:</strong>
 ${escapeHTML(
 order.destination ||
 ""
@@ -2296,28 +2337,13 @@ order.customerEmail ||
 )}
 </p>
 
-${
-order.customerPhone
-?
-`
 <p>
 Customer Phone:
 ${escapeHTML(
-order.customerPhone
+order.customerPhone ||
+"Not provided"
 )}
 </p>
-
-<a href="tel:${cleanPhone(order.customerPhone)}">
-
-<button class="dark">
-📞 Call Customer
-</button>
-
-</a>
-`
-:
-""
-}
 
 <p>
 Fare:
@@ -2332,24 +2358,15 @@ order.fare ??
 
 <p>
 Status:
-
-<span class="badge ${
-getStatusClass(status)
-}">
-
+<span class="badge">
 ${escapeHTML(
-formatStatus(status)
+order.status ||
+""
 )}
-
 </span>
-
 </p>
 
-<div class="action-row">
-
-${buttons}
-
-</div>
+${actionButtons}
 
 `;
 
@@ -2372,28 +2389,22 @@ escapeHTML(error.message) +
 
 
 /* =====================================================
-RIDER PICK UP
+RIDER PICKUP
 ===================================================== */
 
-window.riderPickupOrder =
+window.pickupOrder =
 async function(orderId){
 
 if(!auth.currentUser){
-
-alert(
-"Please login as rider."
-);
 
 return;
 
 }
 
 
-if(
-!confirm(
+if(!confirm(
 "Confirm that you have picked up this delivery?"
-)
-){
+)){
 
 return;
 
@@ -2403,10 +2414,9 @@ return;
 try{
 
 const token =
-await auth.currentUser.getIdToken(true);
+await auth.currentUser.getIdToken();
 
 
-const data =
 await apiRequest(
 "/api/rider/orders/" +
 encodeURIComponent(orderId) +
@@ -2419,7 +2429,6 @@ token
 
 
 alert(
-data.message ||
 "Delivery marked as picked up."
 );
 
@@ -2440,28 +2449,22 @@ error.message
 
 
 /* =====================================================
-RIDER START DELIVERY
+START DELIVERY
 ===================================================== */
 
-window.riderStartDelivery =
+window.startDelivery =
 async function(orderId){
 
 if(!auth.currentUser){
-
-alert(
-"Please login as rider."
-);
 
 return;
 
 }
 
 
-if(
-!confirm(
+if(!confirm(
 "Start this delivery now?"
-)
-){
+)){
 
 return;
 
@@ -2471,10 +2474,9 @@ return;
 try{
 
 const token =
-await auth.currentUser.getIdToken(true);
+await auth.currentUser.getIdToken();
 
 
-const data =
 await apiRequest(
 "/api/rider/orders/" +
 encodeURIComponent(orderId) +
@@ -2487,8 +2489,7 @@ token
 
 
 alert(
-data.message ||
-"Delivery started."
+"Delivery started successfully."
 );
 
 
@@ -2611,13 +2612,16 @@ await signOut(auth);
 
 currentRider = null;
 
+
 document
 .getElementById("riderLoginBox")
 .classList.remove("hidden");
 
+
 document
 .getElementById("riderDashboard")
 .classList.add("hidden");
+
 
 document
 .getElementById("riderMessage")
@@ -2823,8 +2827,7 @@ return;
 try{
 
 const token =
-await auth.currentUser
-.getIdToken(true);
+await auth.currentUser.getIdToken(true);
 
 
 const data =
@@ -2836,17 +2839,24 @@ method:"POST",
 body:JSON.stringify({
 
 jobId,
+
 name,
+
 phone,
+
 whatsapp,
+
 nationalId,
+
 bikeType,
+
 bikeModel,
+
 password,
+
 status
 
 })
-
 },
 token
 );
@@ -2930,8 +2940,7 @@ box.innerHTML =
 try{
 
 const token =
-await auth.currentUser
-.getIdToken(true);
+await auth.currentUser.getIdToken(true);
 
 
 const data =
@@ -3032,16 +3041,13 @@ rider.bikeModel ||
 
 <p>
 Status:
-
 <span class="badge">
 ${escapeHTML(
 rider.status ||
 ""
 )}
 </span>
-
 </p>
-
 
 <button
 class="secondary"
@@ -3096,8 +3102,7 @@ async function(uid,status){
 try{
 
 const token =
-await auth.currentUser
-.getIdToken(true);
+await auth.currentUser.getIdToken(true);
 
 
 await apiRequest(
@@ -3110,7 +3115,6 @@ method:"PATCH",
 body:JSON.stringify({
 status
 })
-
 },
 token
 );
@@ -3158,8 +3162,7 @@ return;
 try{
 
 const token =
-await auth.currentUser
-.getIdToken(true);
+await auth.currentUser.getIdToken(true);
 
 
 await apiRequest(
@@ -3218,10 +3221,730 @@ box.innerHTML =
 try{
 
 const token =
-await auth.currentUser
-.getIdToken(true);
+await auth.currentUser.getIdToken(true);
+
+
+const data =
+await apiRequest(
+"/api/moderator/orders",
+{},
+token
+);
+
+
+box.innerHTML = "";
+
+
+if(
+!data.orders ||
+data.orders.length === 0
+){
+
+box.innerHTML =
+"<p>No orders found.</p>";
+
+return;
+
+}
+
+
+/* Get active riders for assignment */
+
+let riders = [];
+
+try{
+
+const riderData =
+await apiRequest(
+"/api/moderator/riders",
+{},
+token
+);
+
+riders =
+(riderData.riders || [])
+.filter(
+rider => rider.status === "active"
+);
+
+}catch(error){
+
+console.error(
+"Could not load riders:",
+error
+);
+
+}
+
+
+data.orders.forEach(order => {
+
+const div =
+document.createElement("div");
+
+div.className =
+"route-box";
+
+
+const finalFare =
+Number(
+order.finalFare ??
+order.fare ??
+0
+);
+
+
+let assignmentHTML = "";
 
 
 /*
-  Load orders and riders from
-  the existing
+Approved order:
+show rider selection.
+*/
+
+if(
+order.status === "approved" ||
+order.status === "assigned"
+){
+
+let riderOptions =
+`<option value="">Select active rider</option>`;
+
+
+riders.forEach(rider => {
+
+const selected =
+order.riderUid === rider.uid
+?
+"selected"
+:
+"";
+
+
+riderOptions += `
+
+<option
+value="${escapeHTML(rider.uid)}"
+${selected}>
+
+${escapeHTML(rider.name)}
+ -
+${escapeHTML(rider.jobId)}
+
+</option>
+
+`;
+
+});
+
+
+assignmentHTML = `
+
+<hr>
+
+<h4>🏍️ Rider Assignment</h4>
+
+<br>
+
+<select
+id="riderSelect-${escapeHTML(order.id)}">
+
+${riderOptions}
+
+</select>
+
+
+<button
+class="primary"
+type="button"
+onclick="assignRider('${escapeHTML(order.id)}')">
+
+Assign Rider
+
+</button>
+
+`;
+
+}
+
+
+div.innerHTML = `
+
+<strong>
+${escapeHTML(
+order.serviceType ||
+"Service"
+)}
+</strong>
+
+<p>
+${escapeHTML(
+order.pickup ||
+""
+)}
+ →
+${escapeHTML(
+order.destination ||
+""
+)}
+</p>
+
+<p>
+Customer:
+${escapeHTML(
+order.customerEmail ||
+order.userId ||
+""
+)}
+</p>
+
+<p>
+Customer Phone:
+${escapeHTML(
+order.customerPhone ||
+"Not provided"
+)}
+</p>
+
+<p>
+Original Fare:
+<strong>
+KSh ${Number(
+order.originalFare ||
+order.fare ||
+0
+).toLocaleString()}
+</strong>
+</p>
+
+<p>
+Transport Charge:
+<strong>
+KSh ${Number(
+order.transportCharge ||
+0
+).toLocaleString()}
+</strong>
+</p>
+
+<p>
+Final Fare:
+<strong>
+KSh ${finalFare.toLocaleString()}
+</strong>
+</p>
+
+<p>
+Status:
+<span class="badge">
+${escapeHTML(
+order.status ||
+""
+)}
+</span>
+</p>
+
+
+${
+order.riderName
+?
+`
+<div class="success-box">
+
+<strong>
+🏍️ Assigned Rider
+</strong>
+
+<br>
+
+Name:
+${escapeHTML(
+order.riderName
+)}
+
+<br>
+
+Job ID:
+${escapeHTML(
+order.riderJobId ||
+""
+)}
+
+<br>
+
+Phone:
+${escapeHTML(
+order.riderPhone ||
+""
+)}
+
+</div>
+`
+:""
+}
+
+
+${
+order.status === "pending"
+?
+`
+<button
+class="primary"
+type="button"
+onclick="approveOrder('${escapeHTML(order.id)}')">
+
+Approve Order
+
+</button>
+`
+:""
+}
+
+
+${assignmentHTML}
+
+`;
+
+box.appendChild(div);
+
+});
+
+
+}catch(error){
+
+box.innerHTML =
+"<p>Error loading orders: " +
+escapeHTML(error.message) +
+"</p>";
+
+}
+
+};
+
+
+/* =====================================================
+APPROVE ORDER
+===================================================== */
+
+window.approveOrder =
+async function(orderId){
+
+try{
+
+const token =
+await auth.currentUser.getIdToken(true);
+
+
+await apiRequest(
+"/api/moderator/orders/" +
+encodeURIComponent(orderId) +
+"/approve",
+{
+method:"PATCH"
+},
+token
+);
+
+
+alert(
+"Order approved successfully."
+);
+
+
+await loadAllOrders();
+
+
+}catch(error){
+
+alert(
+"Could not approve order: " +
+error.message
+);
+
+}
+
+};
+
+
+/* =====================================================
+ASSIGN RIDER
+===================================================== */
+
+window.assignRider =
+async function(orderId){
+
+if(!auth.currentUser){
+
+alert(
+"Moderator must login first."
+);
+
+return;
+
+}
+
+
+const select =
+document.getElementById(
+"riderSelect-" + orderId
+);
+
+
+if(!select){
+
+alert(
+"Rider selection box was not found."
+);
+
+return;
+
+}
+
+
+const riderUid =
+select.value;
+
+
+if(!riderUid){
+
+alert(
+"Please select an active rider."
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Assign this rider to the order?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+const token =
+await auth.currentUser.getIdToken(true);
+
+
+const data =
+await apiRequest(
+"/api/moderator/orders/" +
+encodeURIComponent(orderId) +
+"/assign-rider",
+{
+method:"PATCH",
+
+body:JSON.stringify({
+
+riderUid
+
+})
+},
+token
+);
+
+
+alert(
+data.message ||
+"Rider assigned successfully."
+);
+
+
+await loadAllOrders();
+
+
+}catch(error){
+
+alert(
+"Could not assign rider: " +
+error.message
+);
+
+}
+
+};
+
+
+/* =====================================================
+LOAD CUSTOMERS
+===================================================== */
+
+window.loadCustomers =
+async function(){
+
+if(!auth.currentUser){
+
+return;
+
+}
+
+
+const box =
+document.getElementById(
+"customersList"
+);
+
+box.innerHTML =
+"<div class='loading'>Loading customers...</div>";
+
+
+try{
+
+const token =
+await auth.currentUser.getIdToken(true);
+
+
+const data =
+await apiRequest(
+"/api/moderator/customers",
+{},
+token
+);
+
+
+box.innerHTML = "";
+
+
+if(
+!data.customers ||
+data.customers.length === 0
+){
+
+box.innerHTML =
+"<p>No customers registered.</p>";
+
+return;
+
+}
+
+
+data.customers.forEach(customer => {
+
+const div =
+document.createElement("div");
+
+div.className =
+"route-box";
+
+
+div.innerHTML = `
+
+<strong>
+${escapeHTML(
+customer.email ||
+"Customer"
+)}
+</strong>
+
+<p>
+Phone:
+${escapeHTML(
+customer.phone ||
+customer.customerPhone ||
+"Not provided"
+)}
+</p>
+
+<p>
+Points:
+${Number(
+customer.points ||
+0
+)}
+</p>
+
+<p>
+Role:
+${escapeHTML(
+customer.role ||
+"customer"
+)}
+</p>
+
+`;
+
+
+box.appendChild(div);
+
+});
+
+
+}catch(error){
+
+box.innerHTML =
+"<p>Error loading customers: " +
+escapeHTML(error.message) +
+"</p>";
+
+}
+
+};
+
+
+/* =====================================================
+MODERATOR SECTIONS
+===================================================== */
+
+window.showModeratorSection =
+function(section){
+
+const sections = [
+
+"moderatorRiders",
+
+"moderatorOrders",
+
+"moderatorCustomers"
+
+];
+
+
+sections.forEach(id => {
+
+document
+.getElementById(id)
+.classList.add("hidden");
+
+});
+
+
+if(section === "riders"){
+
+document
+.getElementById("moderatorRiders")
+.classList.remove("hidden");
+
+loadRiders();
+
+}
+
+
+if(section === "orders"){
+
+document
+.getElementById("moderatorOrders")
+.classList.remove("hidden");
+
+loadAllOrders();
+
+}
+
+
+if(section === "customers"){
+
+document
+.getElementById("moderatorCustomers")
+.classList.remove("hidden");
+
+loadCustomers();
+
+}
+
+};
+
+
+/* =====================================================
+MODERATOR LOGOUT
+===================================================== */
+
+window.moderatorLogout =
+async function(){
+
+await signOut(auth);
+
+
+document
+.getElementById("moderatorDashboard")
+.classList.add("hidden");
+
+
+document
+.getElementById("moderatorLoginBox")
+.classList.remove("hidden");
+
+
+document
+.getElementById("moderatorMessage")
+.textContent =
+"You have been signed out.";
+
+};
+
+
+/* =====================================================
+PHONE CLEANER
+===================================================== */
+
+window.cleanPhone =
+function(phone){
+
+let value =
+String(phone || "")
+.replace(/\D/g,"");
+
+
+if(value.startsWith("0")){
+
+value =
+"254" +
+value.substring(1);
+
+}
+
+
+return value;
+
+};
+
+
+/* =====================================================
+HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+auth,
+user => {
+
+console.log(
+"Firebase authentication state:",
+user
+?
+user.uid
+:
+"Not signed in"
+);
+
+});
+
+
+console.log(
+"Amir Chap Chap Firebase application loaded."
+);
+
+</script>
+
+</body>
+</html>
