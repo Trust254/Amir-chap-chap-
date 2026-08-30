@@ -8,9 +8,9 @@ const PORT = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
-/* =========================
+/* =========================================================
    FIREBASE ADMIN
-========================= */
+========================================================= */
 
 if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
   console.error("FIREBASE_SERVICE_ACCOUNT is missing.");
@@ -39,33 +39,53 @@ const db = admin.firestore();
 console.log("Firebase Admin initialized successfully.");
 
 
-/* =========================
+/* =========================================================
    HOME
-========================= */
+========================================================= */
 
 app.get("/", (req, res) => {
-  res.json({
+
+  res.status(200).json({
     status: "OK",
-    message: "Amir Chap Chap Backend is running."
+    message: "Amir Chap Chap Backend is running.",
+    timestamp: new Date().toISOString()
   });
+
 });
 
 
-/* =========================
+/* =========================================================
    HEALTH
-========================= */
+========================================================= */
 
 app.get("/api/health", (req, res) => {
-  res.json({
+
+  res.status(200).json({
     status: "OK",
-    service: "Amir Chap Chap Backend"
+    service: "Amir Chap Chap Backend",
+    timestamp: new Date().toISOString()
   });
+
 });
 
 
-/* =========================
-   VERIFY FIREBASE TOKEN
-========================= */
+/* =========================================================
+   TEST RIDER ROUTE
+========================================================= */
+
+app.get("/api/test-riders-route", (req, res) => {
+
+  res.status(200).json({
+    status: "OK",
+    message: "Rider route is deployed"
+  });
+
+});
+
+
+/* =========================================================
+   VERIFY FIREBASE USER
+========================================================= */
 
 async function verifyFirebaseUser(req, res, next) {
 
@@ -108,9 +128,9 @@ async function verifyFirebaseUser(req, res, next) {
 }
 
 
-/* =========================
+/* =========================================================
    VERIFY MODERATOR
-========================= */
+========================================================= */
 
 async function verifyAdmin(req, res, next) {
 
@@ -161,9 +181,9 @@ async function verifyAdmin(req, res, next) {
 }
 
 
-/* =========================
+/* =========================================================
    BOOTSTRAP MODERATOR
-========================= */
+========================================================= */
 
 app.post("/api/bootstrap-admin", async (req, res) => {
 
@@ -242,12 +262,14 @@ app.post("/api/bootstrap-admin", async (req, res) => {
       .set(
         {
 
-          uid: userRecord.uid,
+          uid:
+            userRecord.uid,
 
           email:
             userRecord.email || email,
 
-          role: "admin",
+          role:
+            "admin",
 
           displayName:
             displayName ||
@@ -258,10 +280,12 @@ app.post("/api/bootstrap-admin", async (req, res) => {
             admin.firestore.FieldValue.serverTimestamp()
 
         },
-        { merge: true }
+        {
+          merge: true
+        }
       );
 
-    res.json({
+    res.status(200).json({
 
       message:
         "Moderator account is ready.",
@@ -290,9 +314,9 @@ app.post("/api/bootstrap-admin", async (req, res) => {
 });
 
 
-/* =========================
+/* =========================================================
    SET EXISTING USER AS MODERATOR
-========================= */
+========================================================= */
 
 app.post("/api/set-moderator", async (req, res) => {
 
@@ -343,7 +367,8 @@ app.post("/api/set-moderator", async (req, res) => {
           email:
             userRecord.email || "",
 
-          role: "admin",
+          role:
+            "admin",
 
           displayName:
             userRecord.displayName ||
@@ -353,10 +378,12 @@ app.post("/api/set-moderator", async (req, res) => {
             admin.firestore.FieldValue.serverTimestamp()
 
         },
-        { merge: true }
+        {
+          merge: true
+        }
       );
 
-    res.json({
+    res.status(200).json({
 
       message:
         "Moderator role assigned successfully.",
@@ -394,7 +421,6 @@ app.post(
     try {
 
       const {
-
         jobId,
         name,
         phone,
@@ -404,14 +430,9 @@ app.post(
         bikeModel,
         password,
         status
-
       } = req.body;
 
-      if (
-        !jobId ||
-        !name ||
-        !password
-      ) {
+      if (!jobId || !name || !password) {
 
         return res.status(400).json({
 
@@ -427,9 +448,7 @@ app.post(
           .trim()
           .toUpperCase();
 
-      /*
-       Prevent duplicate Rider ID
-      */
+      /* Check duplicate Rider ID */
 
       const existing =
         await db
@@ -449,10 +468,7 @@ app.post(
 
       }
 
-      /*
-       Create a Firebase Authentication account
-       using an internal email.
-      */
+      /* Internal Firebase email */
 
       const internalEmail =
         cleanJobId.toLowerCase() +
@@ -533,20 +549,14 @@ app.post(
 
       };
 
-
-      /*
-       Main rider record
-      */
+      /* Main rider record */
 
       await db
         .collection("riders")
         .doc(riderUid)
         .set(riderData);
 
-
-      /*
-       Rider account record
-      */
+      /* Rider account record */
 
       await db
         .collection("riderAccounts")
@@ -588,7 +598,6 @@ app.post(
 
         });
 
-
       res.status(201).json({
 
         message:
@@ -616,6 +625,58 @@ app.post(
 
       console.error(
         "Create rider error:",
+        error.message
+      );
+
+      res.status(500).json({
+
+        error:
+          error.message
+
+      });
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   GET RIDERS
+========================================================= */
+
+app.get(
+  "/api/moderator/riders",
+  verifyAdmin,
+  async (req, res) => {
+
+    try {
+
+      const snapshot =
+        await db
+          .collection("riders")
+          .get();
+
+      const riders =
+        snapshot.docs.map(doc => ({
+
+          id:
+            doc.id,
+
+          ...doc.data()
+
+        }));
+
+      res.status(200).json({
+
+        riders
+
+      });
+
+    } catch (error) {
+
+      console.error(
+        "Load riders error:",
         error.message
       );
 
@@ -664,7 +725,6 @@ app.post(
           .trim()
           .toUpperCase();
 
-
       const snapshot =
         await db
           .collection("riders")
@@ -689,7 +749,6 @@ app.post(
       const rider =
         riderDoc.data();
 
-
       if (rider.status !== "active") {
 
         return res.status(403).json({
@@ -700,12 +759,6 @@ app.post(
         });
 
       }
-
-
-      /*
-       Firebase Auth password verification
-       is done through the Firebase Identity Toolkit REST API.
-      */
 
       const apiKey =
         process.env.FIREBASE_WEB_API_KEY;
@@ -720,10 +773,6 @@ app.post(
         });
 
       }
-
-
-      const fetch =
-        global.fetch;
 
       const authResponse =
         await fetch(
@@ -756,12 +805,15 @@ app.post(
           }
         );
 
-
       const authData =
         await authResponse.json();
 
-
       if (!authResponse.ok) {
+
+        console.error(
+          "Rider Firebase login:",
+          authData
+        );
 
         return res.status(401).json({
 
@@ -772,8 +824,7 @@ app.post(
 
       }
 
-
-      res.json({
+      res.status(200).json({
 
         message:
           "Rider login successful.",
@@ -835,60 +886,6 @@ app.post(
 
 
 /* =========================================================
-   GET RIDERS
-========================================================= */
-
-app.get(
-  "/api/moderator/riders",
-  verifyAdmin,
-  async (req, res) => {
-
-    try {
-
-      const snapshot =
-        await db
-          .collection("riders")
-          .get();
-
-      const riders =
-        snapshot.docs.map(doc => {
-
-          return {
-
-            id:
-              doc.id,
-
-            ...doc.data()
-
-          };
-
-        });
-
-      res.json({
-        riders
-      });
-
-    } catch (error) {
-
-      console.error(
-        "Load riders error:",
-        error.message
-      );
-
-      res.status(500).json({
-
-        error:
-          error.message
-
-      });
-
-    }
-
-  }
-);
-
-
-/* =========================================================
    UPDATE RIDER STATUS
 ========================================================= */
 
@@ -919,28 +916,21 @@ app.patch(
       const uid =
         req.params.uid;
 
-
       await db
         .collection("riders")
         .doc(uid)
         .update({
-
           status
-
         });
-
 
       await db
         .collection("riderAccounts")
         .doc(uid)
         .update({
-
           status
-
         });
 
-
-      res.json({
+      res.status(200).json({
 
         message:
           "Rider status updated successfully."
@@ -981,18 +971,15 @@ app.delete(
       const uid =
         req.params.uid;
 
-
       await db
         .collection("riders")
         .doc(uid)
         .delete();
 
-
       await db
         .collection("riderAccounts")
         .doc(uid)
         .delete();
-
 
       try {
 
@@ -1009,8 +996,7 @@ app.delete(
 
       }
 
-
-      res.json({
+      res.status(200).json({
 
         message:
           "Rider removed successfully."
@@ -1054,21 +1040,19 @@ app.get(
           .get();
 
       const customers =
-        snapshot.docs.map(doc => {
+        snapshot.docs.map(doc => ({
 
-          return {
+          id:
+            doc.id,
 
-            id:
-              doc.id,
+          ...doc.data()
 
-            ...doc.data()
+        }));
 
-          };
+      res.status(200).json({
 
-        });
-
-      res.json({
         customers
+
       });
 
     } catch (error) {
@@ -1108,21 +1092,19 @@ app.get(
           .get();
 
       const orders =
-        snapshot.docs.map(doc => {
+        snapshot.docs.map(doc => ({
 
-          return {
+          id:
+            doc.id,
 
-            id:
-              doc.id,
+          ...doc.data()
 
-            ...doc.data()
+        }));
 
-          };
+      res.status(200).json({
 
-        });
-
-      res.json({
         orders
+
       });
 
     } catch (error) {
@@ -1172,8 +1154,7 @@ app.patch(
 
         });
 
-
-      res.json({
+      res.status(200).json({
 
         message:
           "Order approved successfully."
@@ -1202,6 +1183,7 @@ app.patch(
 
 /* =========================================================
    404 JSON HANDLER
+   IMPORTANT: THIS MUST BE LAST
 ========================================================= */
 
 app.use((req, res) => {
@@ -1221,6 +1203,7 @@ app.use((req, res) => {
 
 /* =========================================================
    SERVER
+   IMPORTANT: ONLY ONE app.listen()
 ========================================================= */
 
 app.listen(PORT, () => {
