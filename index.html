@@ -1,2042 +1,3014 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amir Chap Chap | Delivery & Passenger Transport</title>  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      background: #f5f7fb;
-      color: #18212f;
-    }
+<title>Amir Chap Chap | Delivery & Passenger Transport</title>
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
 
-    .nav {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
+body{
+  background:#f5f7fb;
+  color:#18212f;
+}
 
-    .logo {
-      font-size: 23px;
-      font-weight: 800;
-    }
+header{
+  background:#111827;
+  color:white;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    .logo span {
-      color: #f59e0b;
-    }
+.nav{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
 
-    nav button {
-      background: transparent;
-      border: 1px solid #64748b;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-left: 5px;
-    }
+.logo{
+  font-size:23px;
+  font-weight:800;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-    }
+.logo span{
+  color:#f59e0b;
+}
 
-    .hero {
-      background: linear-gradient(135deg, #111827, #374151);
-      color: white;
-      border-radius: 18px;
-      padding: 35px 25px;
-      margin-bottom: 20px;
-    }
+nav button{
+  background:transparent;
+  border:1px solid #64748b;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-left:5px;
+}
 
-    .hero h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
-    }
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
 
-    .hero p {
-      line-height: 1.6;
-      color: #e5e7eb;
-    }
+.hero{
+  background:linear-gradient(135deg,#111827,#374151);
+  color:white;
+  border-radius:18px;
+  padding:35px 25px;
+  margin-bottom:20px;
+}
 
-    .card {
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.07);
-    }
+.hero h1{
+  font-size:36px;
+  margin-bottom:12px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
-      gap: 15px;
-    }
+.hero p{
+  line-height:1.6;
+  color:#e5e7eb;
+}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      margin-top: 6px;
-      margin-bottom: 12px;
-      font-size: 15px;
-    }
+.card{
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
 
-    label {
-      font-weight: 600;
-      font-size: 14px;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
+}
 
-    button {
-      border: none;
-      border-radius: 9px;
-      padding: 11px 16px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  margin-top:6px;
+  margin-bottom:12px;
+  font-size:15px;
+}
 
-    .primary {
-      background: #f59e0b;
-      color: #111827;
-    }
+label{
+  font-weight:600;
+  font-size:14px;
+}
 
-    .dark {
-      background: #111827;
-      color: white;
-    }
+button{
+  border:none;
+  border-radius:9px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-weight:700;
+  margin:3px;
+}
 
-    .danger {
-      background: #dc2626;
-      color: white;
-    }
+.primary{
+  background:#f59e0b;
+  color:#111827;
+}
 
-    .success {
-      background: #16a34a;
-      color: white;
-    }
+.dark{
+  background:#111827;
+  color:white;
+}
 
-    .secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
+.danger{
+  background:#dc2626;
+  color:white;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.success{
+  background:#16a34a;
+  color:white;
+}
 
-    .message {
-      padding: 10px;
-      border-radius: 8px;
-      margin: 10px 0;
-      background: #f1f5f9;
-    }
+.secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
 
-    .price {
-      font-size: 28px;
-      font-weight: 800;
-      margin: 10px 0;
-    }
+.hidden{
+  display:none !important;
+}
 
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      background: #e5e7eb;
-      font-size: 12px;
-      font-weight: 700;
-    }
+.message{
+  padding:10px;
+  border-radius:8px;
+  margin:10px 0;
+  background:#f1f5f9;
+}
 
-    .notification {
-      background: #fff7ed;
-      border-left: 5px solid #f59e0b;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 8px;
-    }
+.price{
+  font-size:28px;
+  font-weight:800;
+  margin:10px 0;
+}
 
-    .route-box {
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 10px;
-    }
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e5e7eb;
+  font-size:12px;
+  font-weight:700;
+}
 
-    footer {
-      background: #111827;
-      color: #cbd5e1;
-      text-align: center;
-      padding: 25px;
-      margin-top: 30px;
-    }
+.notification{
+  background:#fff7ed;
+  border-left:5px solid #f59e0b;
+  padding:14px;
+  margin:10px 0;
+  border-radius:8px;
+}
 
-    footer a {
-      color: #f59e0b;
-    }
+.route-box{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:15px;
+  margin-top:10px;
+}
 
-    @media(max-width:600px) {
-      .hero h1 {
-        font-size: 28px;
-      }
+.code-box{
+  background:#111827;
+  color:#f59e0b;
+  padding:18px;
+  border-radius:12px;
+  text-align:center;
+  margin:15px 0;
+}
 
-      nav button {
-        padding: 6px 8px;
-        font-size: 12px;
-      }
-    }
-  </style></head><body><header>
-  <div class="nav">
-    <div class="logo">Amir <span>Chap Chap</span></div><nav>
-  <button onclick="showPage('home')">Home</button>
-  <button onclick="showPage('customer')">Customer</button>
-  <button onclick="showPage('rider')">Rider</button>
-  <button onclick="showPage('moderator')">Moderator</button>
+.code-box strong{
+  font-size:28px;
+  letter-spacing:2px;
+}
+
+footer{
+  background:#111827;
+  color:#cbd5e1;
+  text-align:center;
+  padding:25px;
+  margin-top:30px;
+}
+
+footer a{
+  color:#f59e0b;
+}
+
+@media(max-width:600px){
+
+  .hero h1{
+    font-size:28px;
+  }
+
+  nav button{
+    padding:6px 8px;
+    font-size:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+
+<div class="logo">
+Amir <span>Chap Chap</span>
+</div>
+
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('customer')">Customer</button>
+<button onclick="showPage('rider')">Rider</button>
+<button onclick="showPage('moderator')">Moderator</button>
 </nav>
 
-  </div>
-</header><main class="container">  <!-- HOME -->  <section id="homePage"><div class="hero">
-  <h1>Amir Chap Chap</h1>
-  <p>
-    Fast delivery and passenger transport services.
-    Book a rider, send your package or travel safely with
-    automatically calculated fares.
-  </p>
-
-  <br>
-
-  <button class="primary" onclick="showPage('customer')">
-    Book Now
-  </button>
-
-  <button class="secondary" onclick="showPage('rider')">
-    Rider Portal
-  </button>
 </div>
+</header>
+
+
+<main class="container">
+
+<!-- =========================
+HOME
+========================= -->
+
+<section id="homePage">
+
+<div class="hero">
+
+<h1>Amir Chap Chap</h1>
+
+<p>
+Fast delivery and passenger transport services.
+Book a rider, send your package or travel safely with
+automatically calculated fares.
+</p>
+
+<br>
+
+<button class="primary" onclick="showPage('customer')">
+Book Now
+</button>
+
+<button class="secondary" onclick="showPage('rider')">
+Rider Portal
+</button>
+
+</div>
+
 
 <div class="grid">
 
-  <div class="card">
-    <h3>📦 Delivery</h3>
-    <p>Send packages through our approved riders.</p>
-  </div>
+<div class="card">
+<h3>📦 Delivery</h3>
+<p>Send packages through our approved riders.</p>
+</div>
 
-  <div class="card">
-    <h3>🏍️ Passenger Transport</h3>
-    <p>Book transport and connect with your assigned rider.</p>
-  </div>
+<div class="card">
+<h3>🏍️ Passenger Transport</h3>
+<p>Book transport and connect with your assigned rider.</p>
+</div>
 
-  <div class="card">
-    <h3>⭐ Rewards</h3>
-    <p>Earn points as a real customer and use points toward payment.</p>
-  </div>
+<div class="card">
+<h3>⭐ Rewards</h3>
+<p>Earn points as a real customer and use points toward payment.</p>
+</div>
 
-  <div class="card">
-    <h3>📞 Customer Care</h3>
-    <p>Call or WhatsApp Customer Care.</p>
-    <br>
-    <a href="tel:0795653284">0795653284</a>
-  </div>
+<div class="card">
+<h3>📞 Customer Care</h3>
+<p>Call or WhatsApp Customer Care.</p>
+<br>
+<a href="tel:0795653284">0795653284</a>
+</div>
 
 </div>
 
-  </section>  <!-- CUSTOMER -->  <section id="customerPage" class="hidden"><div class="card">
+</section>
 
-  <h2>Customer Portal</h2>
-  <br>
 
-  <div id="customerAuth">
+<!-- =========================
+CUSTOMER
+========================= -->
 
-    <h3>Create / Login</h3>
+<section id="customerPage" class="hidden">
 
-    <label>Email</label>
-    <input id="customerEmail" type="email" placeholder="Email">
+<div class="card">
 
-    <label>Password</label>
-    <input id="customerPassword" type="password" placeholder="Password">
+<h2>Customer Portal</h2>
 
-    <button class="primary" onclick="customerRegister()">
-      Register
-    </button>
+<br>
 
-    <button class="dark" onclick="customerLogin()">
-      Login
-    </button>
+<div id="customerAuth">
 
-    <div id="customerMessage" class="message"></div>
+<h3>Create / Login</h3>
 
-  </div>
+<label>Email</label>
 
-  <div id="customerDashboard" class="hidden">
+<input
+id="customerEmail"
+type="email"
+placeholder="Email">
 
-    <h3>Book a Service</h3>
+<label>Password</label>
 
-    <label>Service</label>
-    <select id="serviceType">
-      <option value="delivery">Delivery</option>
-      <option value="passenger">Passenger Transport</option>
-    </select>
+<input
+id="customerPassword"
+type="password"
+placeholder="Password">
 
-    <label>Pickup</label>
-    <input id="pickup" placeholder="Pickup location">
+<button class="primary"
+onclick="customerRegister()">
+Register
+</button>
 
-    <label>Destination</label>
-    <input id="destination" placeholder="Destination">
+<button class="dark"
+onclick="customerLogin()">
+Login
+</button>
 
-    <label>Distance in KM (optional)</label>
-    <input id="distanceKm" type="number" min="0" placeholder="Example: 5">
-
-    <button class="dark" onclick="calculateFare()">
-      Calculate Fare
-    </button>
-
-    <div class="route-box">
-      <div>Estimated Fare</div>
-      <div id="fareDisplay" class="price">KSh 0</div>
-      <small id="fareExplanation"></small>
-    </div>
-
-    <br>
-
-    <label>Payment Method</label>
-    <select id="paymentMethod">
-      <option value="cash">Cash</option>
-      <option value="mobile">Mobile Money</option>
-      <option value="points">Pay With Points</option>
-    </select>
-
-    <button class="primary" onclick="placeOrder()">
-      Place Booking
-    </button>
-
-    <button class="secondary" onclick="loadMyOrders()">
-      My Bookings
-    </button>
-
-    <div id="customerOrders"></div>
-
-  </div>
+<div id="customerMessage"
+class="message"></div>
 
 </div>
 
-  </section>  <!-- RIDER -->  <section id="riderPage" class="hidden"><div class="card">
 
-  <h2>🏍️ Rider Portal</h2>
-  <p>Sign in using the Firebase account created by the Moderator.</p>
+<div id="customerDashboard" class="hidden">
 
-  <br>
+<h3>Book a Service</h3>
 
-  <label>Email</label>
-  <input id="riderEmail" type="email" placeholder="Rider account email">
+<label>Service</label>
 
-  <label>Password</label>
-  <input id="riderPassword" type="password" placeholder="Password">
+<select id="serviceType">
 
-  <button class="dark" onclick="riderLogin()">
-    Rider Sign In
-  </button>
+<option value="delivery">
+Delivery
+</option>
 
-  <div id="riderMessage" class="message"></div>
+<option value="passenger">
+Passenger Transport
+</option>
+
+</select>
+
+
+<label>Pickup</label>
+
+<input
+id="pickup"
+placeholder="Pickup location">
+
+
+<label>Destination</label>
+
+<input
+id="destination"
+placeholder="Destination">
+
+
+<label>Distance in KM (optional)</label>
+
+<input
+id="distanceKm"
+type="number"
+min="0"
+placeholder="Example: 5">
+
+
+<button class="dark"
+onclick="calculateFare()">
+
+Calculate Fare
+
+</button>
+
+
+<div class="route-box">
+
+<div>Estimated Fare</div>
+
+<div id="fareDisplay"
+class="price">
+
+KSh 0
 
 </div>
+
+<small id="fareExplanation"></small>
+
+</div>
+
+
+<br>
+
+
+<label>Payment Method</label>
+
+<select id="paymentMethod">
+
+<option value="cash">
+Cash
+</option>
+
+<option value="mobile">
+Mobile Money
+</option>
+
+<option value="points">
+Pay With Points
+</option>
+
+</select>
+
+
+<button class="primary"
+onclick="placeOrder()">
+
+Place Booking
+
+</button>
+
+
+<button class="secondary"
+onclick="loadMyOrders()">
+
+My Bookings
+
+</button>
+
+
+<div id="customerOrders"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+RIDER
+========================= -->
+
+<section id="riderPage" class="hidden">
+
+<div class="card">
+
+<h2>🏍️ Rider Portal</h2>
+
+<p>
+Enter the Rider Code provided by the Moderator.
+</p>
+
+<br>
+
+<label>Rider Code</label>
+
+<input
+id="riderCode"
+type="text"
+placeholder="Example: ACC-1235"
+autocomplete="off">
+
+<button class="dark"
+onclick="riderLogin()">
+
+Rider Sign In
+
+</button>
+
+<div id="riderMessage"
+class="message"></div>
+
+</div>
+
 
 <div id="riderDashboard" class="hidden">
 
-  <div class="card">
+<div class="card">
 
-    <h2>
-      Rider Dashboard
-      <span id="notificationBadge" class="badge">0 notifications</span>
-    </h2>
+<h2>
+Rider Dashboard
 
-    <p id="riderProfile"></p>
+<span
+id="notificationBadge"
+class="badge">
+0 notifications
+</span>
 
-    <br>
+</h2>
 
-    <button class="secondary" onclick="loadRiderNotifications()">
-      🔔 Notifications
-    </button>
+<p id="riderProfile"></p>
 
-    <button class="dark" onclick="loadRiderOrders()">
-      My Jobs
-    </button>
+<br>
 
-    <button class="danger" onclick="riderLogout()">
-      Sign Out
-    </button>
+<button class="secondary"
+onclick="loadRiderNotifications()">
 
-    <div id="riderNotifications"></div>
+🔔 Notifications
 
-    <div id="riderOrders"></div>
+</button>
 
-  </div>
+<button class="dark"
+onclick="loadRiderOrders()">
 
-</div>
+My Jobs
 
-  </section>  <!-- MODERATOR -->  <section id="moderatorPage" class="hidden"><div class="card">
+</button>
 
-  <h2>👨‍💼 Moderator Portal</h2>
+<button class="danger"
+onclick="riderLogout()">
 
-  <div id="moderatorLoginBox">
+Sign Out
 
-    <label>Email</label>
-    <input id="moderatorEmail" type="email" placeholder="Moderator email">
+</button>
 
-    <label>Password</label>
-    <input id="moderatorPassword" type="password" placeholder="Moderator password">
+<div id="riderNotifications"></div>
 
-    <button class="dark" onclick="moderatorLogin()">
-      Moderator Sign In
-    </button>
-
-    <div id="moderatorMessage" class="message"></div>
-
-  </div>
+<div id="riderOrders"></div>
 
 </div>
 
+</div>
 
-<div id="moderatorDashboard" class="hidden">
-
-  <div class="card">
-
-    <h2>Moderator Dashboard</h2>
-
-    <button class="dark" onclick="showModeratorSection('riders')">
-      🏍️ Riders
-    </button>
-
-    <button class="dark" onclick="showModeratorSection('orders')">
-      📦 Orders
-    </button>
-
-    <button class="dark" onclick="showModeratorSection('customers')">
-      👥 Customers
-    </button>
-
-    <button class="danger" onclick="moderatorLogout()">
-      Sign Out
-    </button>
-
-  </div>
+</section>
 
 
-  <!-- ADD RIDER -->
-  <div id="moderatorRiders" class="card">
+<!-- =========================
+MODERATOR
+========================= -->
 
-    <h3>Register Rider</h3>
+<section id="moderatorPage" class="hidden">
 
-    <label>Rider Full Name</label>
-    <input id="riderName" placeholder="Full name">
+<div class="card">
 
-    <label>Phone Number</label>
-    <input id="riderPhone" placeholder="07xxxxxxxx">
-
-    <label>WhatsApp Number</label>
-    <input id="riderWhatsapp" placeholder="07xxxxxxxx">
-
-    <label>National ID Number</label>
-    <input id="riderNationalId" placeholder="ID number">
-
-    <label>Motorbike Type</label>
-    <input id="bikeType" placeholder="Example: Boxer">
-
-    <label>Motorbike Model</label>
-    <input id="bikeModel" placeholder="Example: Boxer 150">
-
-    <label>Rider Job ID</label>
-    <input id="jobId" placeholder="Example: ACC-1001">
-
-    <label>Rider Firebase UID</label>
-    <input id="riderUid" placeholder="Firebase Auth UID">
-
-    <label>Status</label>
-    <select id="riderStatus">
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
-
-    <button class="primary" onclick="createRider()">
-      Add Rider
-    </button>
-
-    <div id="riderCreateMessage" class="message"></div>
-
-    <br>
-
-    <h3>Registered Riders</h3>
-
-    <button class="secondary" onclick="loadRiders()">
-      Refresh Riders
-    </button>
-
-    <div id="ridersList"></div>
-
-  </div>
+<h2>👨‍💼 Moderator Portal</h2>
 
 
-  <!-- MODERATOR ORDERS -->
-  <div id="moderatorOrders" class="card hidden">
+<div id="moderatorLoginBox">
 
-    <h3>All Orders</h3>
+<label>Email</label>
 
-    <button class="secondary" onclick="loadAllOrders()">
-      Refresh Orders
-    </button>
-
-    <div id="allOrders"></div>
-
-  </div>
+<input
+id="moderatorEmail"
+type="email"
+placeholder="Moderator email">
 
 
-  <!-- CUSTOMERS -->
-  <div id="moderatorCustomers" class="card hidden">
+<label>Password</label>
 
-    <h3>Customers</h3>
+<input
+id="moderatorPassword"
+type="password"
+placeholder="Moderator password">
 
-    <button class="secondary" onclick="loadCustomers()">
-      Refresh Customers
-    </button>
 
-    <div id="customersList"></div>
+<button class="dark"
+onclick="moderatorLogin()">
 
-  </div>
+Moderator Sign In
+
+</button>
+
+
+<div id="moderatorMessage"
+class="message"></div>
 
 </div>
 
-  </section></main><footer>  <p><strong>Amir Chap Chap</strong></p>  <p>Fast Delivery • Passenger Transport • Customer Rewards</p>  <p>Customer Care: <a href="tel:0795653284">0795653284</a></p>  <p>Published: 29 August 2026</p>  <br>  <p>
-    <a href="#" onclick="showTerms(); return false;">
-      Terms & Conditions
-    </a>
-  </p></footer><!-- FIREBASE --><script type="module">
+</div>
 
-  /*
-   ==========================================================
-   IMPORTANT:
-   Replace the values below with YOUR Firebase web configuration.
-   ==========================================================
-  */
 
-  const firebaseConfig = {
-  apiKey: "AIzaSyDajjbkMszs-HVNHeUivTMVS2OzrSxw-Lo",
-  authDomain: "planning-with-ai-f9d10.firebaseapp.com",
-  projectId: "planning-with-ai-f9d10",
-  storageBucket: "planning-with-ai-f9d10.firebasestorage.app",
-  messagingSenderId: "943382820296",
-  appId: "1:943382820296:web:677b8056f7212354ca3cfd"
+<div id="moderatorDashboard"
+class="hidden">
+
+<div class="card">
+
+<h2>Moderator Dashboard</h2>
+
+<button class="dark"
+onclick="showModeratorSection('riders')">
+
+🏍️ Riders
+
+</button>
+
+<button class="dark"
+onclick="showModeratorSection('orders')">
+
+📦 Orders
+
+</button>
+
+<button class="dark"
+onclick="showModeratorSection('customers')">
+
+👥 Customers
+
+</button>
+
+<button class="danger"
+onclick="moderatorLogout()">
+
+Sign Out
+
+</button>
+
+</div>
+
+
+<!-- RIDERS -->
+
+<div id="moderatorRiders"
+class="card">
+
+<h3>Register Rider</h3>
+
+
+<label>Rider Full Name</label>
+
+<input
+id="riderName"
+placeholder="Full name">
+
+
+<label>Phone Number</label>
+
+<input
+id="riderPhone"
+placeholder="07xxxxxxxx">
+
+
+<label>WhatsApp Number</label>
+
+<input
+id="riderWhatsapp"
+placeholder="07xxxxxxxx">
+
+
+<label>National ID Number</label>
+
+<input
+id="riderNationalId"
+placeholder="ID number">
+
+
+<label>Motorbike Type</label>
+
+<input
+id="bikeType"
+placeholder="Example: Boxer">
+
+
+<label>Motorbike Model</label>
+
+<input
+id="bikeModel"
+placeholder="Example: Boxer 150">
+
+
+<label>Rider Code</label>
+
+<input
+id="jobId"
+placeholder="Example: ACC-1235"
+autocomplete="off">
+
+
+<label>Status</label>
+
+<select id="riderStatus">
+
+<option value="active">
+Active
+</option>
+
+<option value="inactive">
+Inactive
+</option>
+
+</select>
+
+
+<button class="primary"
+onclick="createRider()">
+
+Add Rider
+
+</button>
+
+
+<div id="riderCreateMessage"
+class="message"></div>
+
+
+<br>
+
+<h3>Registered Riders</h3>
+
+<button class="secondary"
+onclick="loadRiders()">
+
+Refresh Riders
+
+</button>
+
+
+<div id="ridersList"></div>
+
+</div>
+
+
+<!-- ORDERS -->
+
+<div id="moderatorOrders"
+class="card hidden">
+
+<h3>All Orders</h3>
+
+<button class="secondary"
+onclick="loadAllOrders()">
+
+Refresh Orders
+
+</button>
+
+<div id="allOrders"></div>
+
+</div>
+
+
+<!-- CUSTOMERS -->
+
+<div id="moderatorCustomers"
+class="card hidden">
+
+<h3>Customers</h3>
+
+<button class="secondary"
+onclick="loadCustomers()">
+
+Refresh Customers
+
+</button>
+
+<div id="customersList"></div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<p>
+<strong>Amir Chap Chap</strong>
+</p>
+
+<p>
+Fast Delivery • Passenger Transport • Customer Rewards
+</p>
+
+<p>
+Customer Care:
+<a href="tel:0795653284">
+0795653284
+</a>
+</p>
+
+<p>
+Published: 29 August 2026
+</p>
+
+<br>
+
+<p>
+<a href="#"
+onclick="showTerms();return false;">
+Terms & Conditions
+</a>
+</p>
+
+</footer>
+
+
+<script type="module">
+
+/* =========================
+FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyDajjbkMszs-HVNHeUivTMVS2OzrSxw-Lo",
+
+authDomain:
+"planning-with-ai-f9d10.firebaseapp.com",
+
+projectId:
+"planning-with-ai-f9d10",
+
+storageBucket:
+"planning-with-ai-f9d10.firebasestorage.app",
+
+messagingSenderId:
+"943382820296",
+
+appId:
+"1:943382820296:web:677b8056f7212354ca3cfd"
+
 };
 
 
-  import {
-    initializeApp
-  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-  import {
-    getFirestore,
-    collection,
-    doc,
-    setDoc,
-    getDoc,
-    getDocs,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    query,
-    where,
-    orderBy,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 
-  const app = initializeApp(firebaseConfig);
+import {
+getFirestore,
+collection,
+doc,
+setDoc,
+getDoc,
+getDocs,
+addDoc,
+updateDoc,
+deleteDoc,
+query,
+where,
+serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-  const auth = getAuth(app);
-  const db = getFirestore(app);
 
+const app =
+initializeApp(firebaseConfig);
 
-  let currentUser = null;
-  let calculatedFare = 0;
+const auth =
+getAuth(app);
 
+const db =
+getFirestore(app);
 
-  /* =========================
-     PAGE NAVIGATION
-     ========================= */
 
-  window.showPage = function(page) {
+/* =========================
+BACKEND URL
+========================= */
 
-    document.getElementById("homePage").classList.add("hidden");
-    document.getElementById("customerPage").classList.add("hidden");
-    document.getElementById("riderPage").classList.add("hidden");
-    document.getElementById("moderatorPage").classList.add("hidden");
+const BACKEND_URL =
+"https://amir-chap-chap-backend.onrender.com";
 
-    if(page === "home")
-      document.getElementById("homePage").classList.remove("hidden");
 
-    if(page === "customer")
-      document.getElementById("customerPage").classList.remove("hidden");
+let currentUser = null;
 
-    if(page === "rider")
-      document.getElementById("riderPage").classList.remove("hidden");
+let calculatedFare = 0;
 
-    if(page === "moderator")
-      document.getElementById("moderatorPage").classList.remove("hidden");
-  };
+let riderSessionToken = null;
 
+let currentRider = null;
 
-  /* =========================
-     CUSTOMER REGISTER
-     ========================= */
 
-  window.customerRegister = async function() {
+/* =========================
+PAGE NAVIGATION
+========================= */
 
-    const email =
-      document.getElementById("customerEmail").value.trim();
+window.showPage = function(page){
 
-    const password =
-      document.getElementById("customerPassword").value;
+document
+.getElementById("homePage")
+.classList.add("hidden");
 
-    const message =
-      document.getElementById("customerMessage");
+document
+.getElementById("customerPage")
+.classList.add("hidden");
 
-    if(!email || !password) {
-      message.textContent = "Enter email and password.";
-      return;
-    }
+document
+.getElementById("riderPage")
+.classList.add("hidden");
 
-    try {
+document
+.getElementById("moderatorPage")
+.classList.add("hidden");
 
-      const credential =
-        await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
 
-      const uid = credential.user.uid;
+if(page === "home")
+document
+.getElementById("homePage")
+.classList.remove("hidden");
 
-      await setDoc(doc(db,"users",uid), {
 
-        uid: uid,
-        email: email,
-        points: 0,
-        role: "customer",
-        createdAt: serverTimestamp()
+if(page === "customer")
+document
+.getElementById("customerPage")
+.classList.remove("hidden");
 
-      });
 
-      message.textContent =
-        "Registration successful. You are now logged in.";
+if(page === "rider")
+document
+.getElementById("riderPage")
+.classList.remove("hidden");
 
-      showCustomerDashboard();
 
-    } catch(error) {
+if(page === "moderator")
+document
+.getElementById("moderatorPage")
+.classList.remove("hidden");
 
-      message.textContent =
-        "Registration failed: " + error.message;
+};
 
-    }
-  };
 
+/* =========================
+CUSTOMER REGISTER
+========================= */
 
-  /* =========================
-     CUSTOMER LOGIN
-     ========================= */
+window.customerRegister =
+async function(){
 
-  window.customerLogin = async function() {
+const email =
+document
+.getElementById("customerEmail")
+.value
+.trim();
 
-    const email =
-      document.getElementById("customerEmail").value.trim();
+const password =
+document
+.getElementById("customerPassword")
+.value;
 
-    const password =
-      document.getElementById("customerPassword").value;
+const message =
+document
+.getElementById("customerMessage");
 
-    const message =
-      document.getElementById("customerMessage");
 
-    try {
+if(!email || !password){
 
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+message.textContent =
+"Enter email and password.";
 
-      message.textContent = "Login successful.";
+return;
 
-      showCustomerDashboard();
+}
 
-    } catch(error) {
 
-      message.textContent =
-        "Login failed: " + error.message;
+try{
 
-    }
-  };
+const credential =
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
 
 
-  function showCustomerDashboard() {
+const uid =
+credential.user.uid;
 
-    document
-      .getElementById("customerAuth")
-      .classList.add("hidden");
 
-    document
-      .getElementById("customerDashboard")
-      .classList.remove("hidden");
+await setDoc(
+doc(db,"users",uid),
+{
 
-  }
+uid,
 
+email,
 
-  /* =========================
-     FARE CALCULATION
-     ========================= */
+points:0,
 
-  window.calculateFare = function() {
+role:"customer",
 
-    const pickup =
-      document.getElementById("pickup").value
-      .trim()
-      .toLowerCase();
+createdAt:
+serverTimestamp()
 
-    const destination =
-      document.getElementById("destination").value
-      .trim()
-      .toLowerCase();
+}
+);
 
-    const km =
-      Number(document.getElementById("distanceKm").value);
 
-    calculatedFare = 0;
+message.textContent =
+"Registration successful.";
 
-    /*
-      Fixed managed routes
-    */
+showCustomerDashboard();
 
-    if(
-      pickup.includes("lenana") &&
-      destination.includes("naivas")
-    ) {
 
-      calculatedFare = 90;
+}catch(error){
 
-    }
+message.textContent =
+"Registration failed: "
++
+error.message;
 
-    else if(
-      pickup.includes("naivas") &&
-      destination.includes("lenana")
-    ) {
+}
 
-      calculatedFare = 90;
+};
 
-    }
 
-    else if(
-      pickup.includes("lenana") &&
-      destination.includes("total")
-    ) {
+/* =========================
+CUSTOMER LOGIN
+========================= */
 
-      calculatedFare = 140;
+window.customerLogin =
+async function(){
 
-    }
+const email =
+document
+.getElementById("customerEmail")
+.value
+.trim();
 
-    /*
-      Per kilometre pricing
-    */
+const password =
+document
+.getElementById("customerPassword")
+.value;
 
-    else if(km > 0) {
+const message =
+document
+.getElementById("customerMessage");
 
-      calculatedFare = km * 45;
 
-    }
+try{
 
-    else {
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-      document.getElementById("fareDisplay").textContent =
-        "Route not available";
+message.textContent =
+"Login successful.";
 
-      document.getElementById("fareExplanation").textContent =
-        "Enter a managed route or distance in kilometres.";
+showCustomerDashboard();
 
-      return;
 
-    }
+}catch(error){
 
+message.textContent =
+"Login failed: "
++
+error.message;
 
-    document.getElementById("fareDisplay").textContent =
-      "KSh " + calculatedFare.toLocaleString();
+}
 
-    document.getElementById("fareExplanation").textContent =
-      "Fare calculated automatically by Amir Chap Chap.";
+};
 
-  };
 
+function showCustomerDashboard(){
 
-  /* =========================
-     CUSTOMER ORDER
-     ========================= */
+document
+.getElementById("customerAuth")
+.classList.add("hidden");
 
-  window.placeOrder = async function() {
+document
+.getElementById("customerDashboard")
+.classList.remove("hidden");
 
-    if(!auth.currentUser) {
+}
 
-      alert("Please login first.");
-      return;
 
-    }
+/* =========================
+FARE CALCULATION
+========================= */
 
-    if(calculatedFare <= 0) {
+window.calculateFare =
+function(){
 
-      alert("Calculate the fare first.");
-      return;
+const pickup =
+document
+.getElementById("pickup")
+.value
+.trim()
+.toLowerCase();
 
-    }
 
-    const service =
-      document.getElementById("serviceType").value;
+const destination =
+document
+.getElementById("destination")
+.value
+.trim()
+.toLowerCase();
 
-    const pickup =
-      document.getElementById("pickup").value.trim();
 
-    const destination =
-      document.getElementById("destination").value.trim();
+const km =
+Number(
+document
+.getElementById("distanceKm")
+.value
+);
 
-    const paymentMethod =
-      document.getElementById("paymentMethod").value;
 
-    if(!pickup || !destination) {
+calculatedFare = 0;
 
-      alert("Enter pickup and destination.");
-      return;
 
-    }
+if(
+pickup.includes("lenana")
+&&
+destination.includes("naivas")
+){
 
+calculatedFare = 90;
 
-    try {
+}
 
-      await addDoc(collection(db,"orders"), {
 
-        userId: auth.currentUser.uid,
+else if(
+pickup.includes("naivas")
+&&
+destination.includes("lenana")
+){
 
-        serviceType: service,
+calculatedFare = 90;
 
-        pickup: pickup,
+}
 
-        destination: destination,
 
-        fare: calculatedFare,
+else if(
+pickup.includes("lenana")
+&&
+destination.includes("total")
+){
 
-        paymentMethod: paymentMethod,
+calculatedFare = 140;
 
-        status: "pending",
+}
 
-        riderId: "",
 
-        riderUid: "",
+else if(km > 0){
 
-        riderName: "",
+calculatedFare =
+km * 45;
 
-        createdAt: serverTimestamp()
+}
 
-      });
 
+else{
 
-      alert(
-        "Booking placed successfully. Waiting for Moderator approval."
-      );
+document
+.getElementById("fareDisplay")
+.textContent =
+"Route not available";
 
-      document.getElementById("pickup").value = "";
-      document.getElementById("destination").value = "";
-      document.getElementById("distanceKm").value = "";
+document
+.getElementById("fareExplanation")
+.textContent =
+"Enter a managed route or distance in kilometres.";
 
-    }
+return;
 
-    catch(error) {
+}
 
-      alert(
-        "Could not place booking: " + error.message
-      );
 
-    }
+document
+.getElementById("fareDisplay")
+.textContent =
+"KSh "
++
+calculatedFare.toLocaleString();
 
-  };
 
+document
+.getElementById("fareExplanation")
+.textContent =
+"Fare calculated automatically by Amir Chap Chap.";
 
-  /* =========================
-     CUSTOMER ORDERS
-     ========================= */
+};
 
-  window.loadMyOrders = async function() {
 
-    if(!auth.currentUser) return;
+/* =========================
+PLACE ORDER
+========================= */
 
-    const box =
-      document.getElementById("customerOrders");
+window.placeOrder =
+async function(){
 
-    box.innerHTML = "<p>Loading...</p>";
+if(!auth.currentUser){
 
-    try {
+alert("Please login first.");
 
-      const q = query(
-        collection(db,"orders"),
-        where("userId","==",auth.currentUser.uid)
-      );
+return;
 
-      const snapshot = await getDocs(q);
+}
 
-      box.innerHTML = "";
 
-      snapshot.forEach(item => {
+if(calculatedFare <= 0){
 
-        const order = item.data();
+alert("Calculate the fare first.");
 
-        const div =
-          document.createElement("div");
+return;
 
-        div.className = "route-box";
+}
 
-        div.innerHTML = `
 
-          <strong>${order.serviceType || "Service"}</strong>
+const service =
+document
+.getElementById("serviceType")
+.value;
 
-          <p>
-            ${order.pickup || ""} →
-            ${order.destination || ""}
-          </p>
 
-          <p>
-            Fare: KSh ${Number(order.fare || 0).toLocaleString()}
-          </p>
+const pickup =
+document
+.getElementById("pickup")
+.value
+.trim();
 
-          <p>
-            Status:
-            <span class="badge">
-              ${order.status || "pending"}
-            </span>
-          </p>
 
-          ${
-            order.riderPhone
-            ?
-            `<p>Rider: ${order.riderName || ""}</p>
-             <a href="tel:${order.riderPhone}">
-               <button class="dark">Call Rider</button>
-             </a>`
-            :
-            ""
-          }
+const destination =
+document
+.getElementById("destination")
+.value
+.trim();
 
-          ${
-            order.riderWhatsapp
-            ?
-            `<a target="_blank"
-                href="https://wa.me/${cleanPhone(order.riderWhatsapp)}">
-                <button class="success">WhatsApp Rider</button>
-             </a>`
-            :
-            ""
-          }
 
-          ${
-            order.status === "delivered"
-            ?
-            `<button class="primary"
-                     onclick="rateRider('${item.id}')">
-                     ⭐ Rate Rider
-             </button>`
-            :
-            ""
-          }
+const paymentMethod =
+document
+.getElementById("paymentMethod")
+.value;
 
-        `;
 
-        box.appendChild(div);
+if(!pickup || !destination){
 
-      });
+alert(
+"Enter pickup and destination."
+);
 
-    } catch(error) {
+return;
 
-      box.innerHTML =
-        "<p>Error: " + error.message + "</p>";
+}
 
-    }
 
-  };
+try{
 
+await addDoc(
+collection(db,"orders"),
+{
 
-  /* =========================
-     RIDER LOGIN
-     ========================= */
+userId:
+auth.currentUser.uid,
 
-  window.riderLogin = async function() {
+serviceType:
+service,
 
-    const email =
-      document.getElementById("riderEmail").value.trim();
+pickup,
 
-    const password =
-      document.getElementById("riderPassword").value;
+destination,
 
-    const message =
-      document.getElementById("riderMessage");
+fare:
+calculatedFare,
 
-    if(!email || !password) {
+paymentMethod,
 
-      message.textContent =
-        "Enter your rider account email and password.";
+status:
+"pending",
 
-      return;
+riderId:"",
 
-    }
+riderUid:"",
 
-    try {
+riderName:"",
 
-      const credential =
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+createdAt:
+serverTimestamp()
 
-      const uid = credential.user.uid;
+}
+);
 
-      const riderRef =
-        doc(db,"riderAccounts",uid);
 
-      const riderSnap =
-        await getDoc(riderRef);
+alert(
+"Booking placed successfully. Waiting for Moderator approval."
+);
 
-      if(!riderSnap.exists()) {
 
-        await signOut(auth);
+document
+.getElementById("pickup")
+.value="";
 
-        message.textContent =
-          "Rider account not registered by the Moderator.";
 
-        return;
+document
+.getElementById("destination")
+.value="";
 
-      }
 
-      const rider =
-        riderSnap.data();
+document
+.getElementById("distanceKm")
+.value="";
 
-      if(rider.status !== "active") {
 
-        await signOut(auth);
+}catch(error){
 
-        message.textContent =
-          "This rider account is inactive. Contact the Moderator.";
+alert(
+"Could not place booking: "
++
+error.message
+);
 
-        return;
+}
 
-      }
+};
 
-      document
-        .getElementById("riderDashboard")
-        .classList.remove("hidden");
 
-      document.getElementById("riderProfile").innerHTML = `
+/* =========================
+CUSTOMER ORDERS
+========================= */
 
-        <strong>${rider.name || "Rider"}</strong><br>
+window.loadMyOrders =
+async function(){
 
-        Rider ID:
-        <strong>${rider.jobId || "Not assigned"}</strong><br>
+if(!auth.currentUser)
+return;
 
-        Motorbike:
-        ${rider.bikeType || ""} ${rider.bikeModel || ""}<br>
 
-        Phone:
-        ${rider.phone || ""}
+const box =
+document
+.getElementById("customerOrders");
 
-      `;
 
-      await loadRiderOrders();
-      await loadRiderNotifications();
+box.innerHTML =
+"<p>Loading...</p>";
 
-    }
 
-    catch(error) {
+try{
 
-      message.textContent =
-        "Rider login failed: " + error.message;
+const q =
+query(
+collection(db,"orders"),
+where(
+"userId",
+"==",
+auth.currentUser.uid
+)
+);
 
-    }
 
-  };
+const snapshot =
+await getDocs(q);
 
 
-  /* =========================
-     RIDER ORDERS
-     ========================= */
+box.innerHTML="";
 
-  window.loadRiderOrders = async function() {
 
-    if(!auth.currentUser) return;
+snapshot.forEach(item=>{
 
-    const box =
-      document.getElementById("riderOrders");
+const order =
+item.data();
 
-    box.innerHTML = "<h3>My Jobs</h3>";
 
-    try {
+const div =
+document.createElement("div");
 
-      const q = query(
-        collection(db,"orders"),
-        where("riderUid","==",auth.currentUser.uid)
-      );
 
-      const snapshot =
-        await getDocs(q);
+div.className =
+"route-box";
 
-      if(snapshot.empty) {
 
-        box.innerHTML +=
-          "<p>No assigned jobs yet.</p>";
+div.innerHTML=`
 
-        return;
+<strong>
+${order.serviceType || "Service"}
+</strong>
 
-      }
+<p>
+${order.pickup || ""}
+→
+${order.destination || ""}
+</p>
 
-      snapshot.forEach(item => {
+<p>
+Fare:
+KSh
+${Number(order.fare || 0).toLocaleString()}
+</p>
 
-        const order =
-          item.data();
+<p>
+Status:
+<span class="badge">
+${order.status || "pending"}
+</span>
+</p>
 
-        const div =
-          document.createElement("div");
+${
+order.riderPhone
+?
+`
+<p>
+Rider:
+${order.riderName || ""}
+</p>
 
-        div.className = "route-box";
+<a href="tel:${order.riderPhone}">
+<button class="dark">
+Call Rider
+</button>
+</a>
+`
+:""
+}
 
-        div.innerHTML = `
+${
+order.riderWhatsapp
+?
+`
+<a
+target="_blank"
+href="https://wa.me/${cleanPhone(order.riderWhatsapp)}">
 
-          <h3>${order.serviceType || "Delivery"}</h3>
+<button class="success">
+WhatsApp Rider
+</button>
 
-          <p>
-            <strong>Pickup:</strong>
-            ${order.pickup || ""}
-          </p>
+</a>
+`
+:""
+}
 
-          <p>
-            <strong>Destination:</strong>
-            ${order.destination || ""}
-          </p>
+${
+order.status === "delivered"
+?
+`
+<button
+class="primary"
+onclick="rateRider('${item.id}')">
 
-          <p>
-            Fare:
-            <strong>KSh ${Number(order.fare || 0).toLocaleString()}</strong>
-          </p>
+⭐ Rate Rider
 
-          <p>
-            Status:
-            <span class="badge">
-              ${order.status || ""}
-            </span>
-          </p>
+</button>
+`
+:""
+}
 
-          ${
-            order.customerPhone
-            ?
-            `<a href="tel:${order.customerPhone}">
-              <button class="dark">Call Customer</button>
-             </a>`
-            :
-            ""
-          }
+`;
 
-          <a target="_blank"
-             href="https://www.waze.com/ul?q=${encodeURIComponent(order.destination || "")}">
-            <button class="secondary">🗺️ Open Waze</button>
-          </a>
+box.appendChild(div);
 
-          ${
-            order.status === "approved"
-            ?
-            `<button class="primary"
-                     onclick="acceptOrder('${item.id}')">
-              Accept Job
-             </button>`
-            :
-            ""
-          }
+});
 
-          ${
-            order.status === "accepted"
-            ?
-            `<button class="success"
-                     onclick="markDelivered('${item.id}')">
-              Delivered Successfully
-             </button>`
-            :
-            ""
-          }
 
-        `;
+}catch(error){
 
-        box.appendChild(div);
+box.innerHTML =
+"<p>Error: "
++
+error.message
++
+"</p>";
 
-      });
+}
 
-    } catch(error) {
+};
 
-      box.innerHTML +=
-        "<p>Error: " + error.message + "</p>";
 
-    }
+/* =========================
+RIDER CODE LOGIN
+========================= */
 
-  };
+window.riderLogin =
+async function(){
 
+const code =
+document
+.getElementById("riderCode")
+.value
+.trim()
+.toUpperCase();
 
-  /* =========================
-     ACCEPT ORDER
-     ========================= */
 
-  window.acceptOrder = async function(orderId) {
+const message =
+document
+.getElementById("riderMessage");
 
-    if(!auth.currentUser) return;
 
-    try {
+if(!code){
 
-      await updateDoc(
-        doc(db,"orders",orderId),
-        {
-          status: "accepted",
-          acceptedAt: serverTimestamp()
-        }
-      );
+message.textContent =
+"Enter your Rider Code.";
 
-      alert("Job accepted.");
+return;
 
-      loadRiderOrders();
+}
 
-    } catch(error) {
 
-      alert(
-        "Could not accept job: " + error.message
-      );
+message.textContent =
+"Checking Rider Code...";
 
-    }
 
-  };
+try{
 
+const response =
+await fetch(
+BACKEND_URL +
+"/api/rider-login",
+{
 
-  /* =========================
-     DELIVERED
-     ========================= */
+method:"POST",
 
-  window.markDelivered = async function(orderId) {
+headers:{
+"Content-Type":
+"application/json"
+},
 
-    if(!auth.currentUser) return;
+body:JSON.stringify({
+code
+})
 
-    try {
+}
+);
 
-      await updateDoc(
-        doc(db,"orders",orderId),
-        {
-          status: "delivered",
-          deliveredAt: serverTimestamp(),
-          deliveryAcknowledged: true
-        }
-      );
 
-      alert(
-        "Delivery acknowledged successfully."
-      );
+const data =
+await response.json();
 
-      loadRiderOrders();
 
-    } catch(error) {
+if(!response.ok){
 
-      alert(
-        "Could not update delivery: " + error.message
-      );
+message.textContent =
+data.error ||
+"Invalid Rider Code.";
 
-    }
+return;
 
-  };
+}
 
 
-  /* =========================
-     RIDER NOTIFICATIONS
-     ========================= */
+riderSessionToken =
+data.token;
 
-  window.loadRiderNotifications = async function() {
+currentRider =
+data.rider;
 
-    if(!auth.currentUser) return;
 
-    const box =
-      document.getElementById("riderNotifications");
+message.textContent =
+"Rider login successful.";
 
-    box.innerHTML =
-      "<h3>🔔 Notifications</h3>";
 
-    try {
+document
+.getElementById("riderDashboard")
+.classList
+.remove("hidden");
 
-      const q = query(
-        collection(db,"riderNotifications"),
-        where("riderUid","==",auth.currentUser.uid)
-      );
 
-      const snapshot =
-        await getDocs(q);
+document
+.getElementById("riderProfile")
+.innerHTML=`
 
-      let count = 0;
+<strong>
+${currentRider.name || "Rider"}
+</strong>
 
-      snapshot.forEach(item => {
+<br>
 
-        count++;
+Rider Code:
+<strong>
+${currentRider.jobId || ""}
+</strong>
 
-        const data =
-          item.data();
+<br>
 
-        const div =
-          document.createElement("div");
+Motorbike:
+${currentRider.bikeType || ""}
+${currentRider.bikeModel || ""}
 
-        div.className = "notification";
+<br>
 
-        div.innerHTML = `
+Phone:
+${currentRider.phone || ""}
 
-          <strong>${data.title || "New Job"}</strong>
+`;
 
-          <p>${data.message || "You have a new notification."}</p>
 
-        `;
+await loadRiderOrders();
 
-        box.appendChild(div);
+await loadRiderNotifications();
 
-      });
 
-      document.getElementById(
-        "notificationBadge"
-      ).textContent =
-        count + " notifications";
+}catch(error){
 
-    } catch(error) {
+message.textContent =
+"Rider login failed: "
++
+error.message;
 
-      box.innerHTML +=
-        "<p>Error loading notifications.</p>";
+}
 
-    }
+};
 
-  };
 
+/* =========================
+RIDER ORDERS
+========================= */
 
-  /* =========================
-     MODERATOR LOGIN
-     ========================= */
+window.loadRiderOrders =
+async function(){
 
-  window.moderatorLogin = async function() {
+if(!riderSessionToken)
+return;
 
-    const email =
-      document.getElementById("moderatorEmail").value.trim();
 
-    const password =
-      document.getElementById("moderatorPassword").value;
+const box =
+document
+.getElementById("riderOrders");
 
-    const message =
-      document.getElementById("moderatorMessage");
 
-    try {
+box.innerHTML =
+"<h3>My Jobs</h3><p>Loading...</p>";
 
-      const credential =
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
 
-      /*
-       Firebase custom claim is checked here.
-       The Firestore rules also enforce it.
-      */
+try{
 
-      const token =
-        await credential.user.getIdTokenResult(true);
+const q =
+query(
+collection(db,"orders"),
+where(
+"riderUid",
+"==",
+currentRider.uid
+)
+);
 
-      if(token.claims.admin !== true) {
 
-        await signOut(auth);
+const snapshot =
+await getDocs(q);
 
-        message.textContent =
-          "This account is not authorized as Moderator. The Firebase account must have the admin custom claim.";
 
-        return;
+box.innerHTML =
+"<h3>My Jobs</h3>";
 
-      }
 
-      document
-        .getElementById("moderatorLoginBox")
-        .classList.add("hidden");
+if(snapshot.empty){
 
-      document
-        .getElementById("moderatorDashboard")
-        .classList.remove("hidden");
+box.innerHTML +=
+"<p>No assigned jobs yet.</p>";
 
-      message.textContent =
-        "Moderator login successful.";
+return;
 
-      loadRiders();
+}
 
-    } catch(error) {
 
-      message.textContent =
-        "Moderator login failed: " + error.message;
+snapshot.forEach(item=>{
 
-    }
+const order =
+item.data();
 
-  };
 
+const div =
+document.createElement("div");
 
-  /* =========================
-     CREATE RIDER RECORD
-     ========================= */
 
-  window.createRider = async function() {
+div.className =
+"route-box";
 
-    const message =
-      document.getElementById("riderCreateMessage");
 
-    if(!auth.currentUser) {
+div.innerHTML=`
 
-      message.textContent =
-        "Moderator must be signed in.";
+<h3>
+${order.serviceType || "Delivery"}
+</h3>
 
-      return;
+<p>
+<strong>Pickup:</strong>
+${order.pickup || ""}
+</p>
 
-    }
+<p>
+<strong>Destination:</strong>
+${order.destination || ""}
+</p>
 
-    const name =
-      document.getElementById("riderName").value.trim();
+<p>
+Fare:
+<strong>
+KSh
+${Number(order.fare || 0).toLocaleString()}
+</strong>
+</p>
 
-    const phone =
-      document.getElementById("riderPhone").value.trim();
+<p>
+Status:
+<span class="badge">
+${order.status || ""}
+</span>
+</p>
 
-    const whatsapp =
-      document.getElementById("riderWhatsapp").value.trim();
+${
+order.customerPhone
+?
+`
+<a href="tel:${order.customerPhone}">
+<button class="dark">
+Call Customer
+</button>
+</a>
+`
+:""
+}
 
-    const nationalId =
-      document.getElementById("riderNationalId").value.trim();
+<a
+target="_blank"
+href="https://www.waze.com/ul?q=${encodeURIComponent(order.destination || "")}">
 
-    const bikeType =
-      document.getElementById("bikeType").value.trim();
+<button class="secondary">
+🗺️ Open Waze
+</button>
 
-    const bikeModel =
-      document.getElementById("bikeModel").value.trim();
+</a>
 
-    const jobId =
-      document.getElementById("jobId").value.trim();
 
-    const riderUid =
-      document.getElementById("riderUid").value.trim();
+${
+order.status === "approved"
+?
+`
+<button
+class="primary"
+onclick="acceptOrder('${item.id}')">
 
-    const status =
-      document.getElementById("riderStatus").value;
+Accept Job
 
+</button>
+`
+:""
+}
 
-    if(!name || !jobId || !riderUid) {
 
-      message.textContent =
-        "Name, Rider ID and Firebase UID are required.";
+${
+order.status === "accepted"
+?
+`
+<button
+class="success"
+onclick="markDelivered('${item.id}')">
 
-      return;
+Delivered Successfully
 
-    }
+</button>
+`
+:""
+}
 
+`;
 
-    try {
+box.appendChild(div);
 
-      /*
-       Main rider record
-      */
+});
 
-      await setDoc(
-        doc(db,"riders",riderUid),
-        {
 
-          uid: riderUid,
+}catch(error){
 
-          jobId: jobId,
+box.innerHTML +=
+"<p>Error: "
++
+error.message
++
+"</p>";
 
-          name: name,
+}
 
-          phone: phone,
+};
 
-          whatsapp: whatsapp,
 
-          nationalId: nationalId,
+/* =========================
+ACCEPT ORDER
+========================= */
 
-          bikeType: bikeType,
+window.acceptOrder =
+async function(orderId){
 
-          bikeModel: bikeModel,
+if(!riderSessionToken)
+return;
 
-          status: status,
 
-          createdAt: serverTimestamp(),
+try{
 
-          createdBy: auth.currentUser.uid
+await updateDoc(
+doc(db,"orders",orderId),
+{
 
-        }
-      );
+status:"accepted",
 
+acceptedAt:
+serverTimestamp()
 
-      /*
-       Rider account record
-      */
+}
+);
 
-      await setDoc(
-        doc(db,"riderAccounts",riderUid),
-        {
 
-          uid: riderUid,
+alert("Job accepted.");
 
-          jobId: jobId,
+loadRiderOrders();
 
-          name: name,
 
-          phone: phone,
+}catch(error){
 
-          whatsapp: whatsapp,
+alert(
+"Could not accept job: "
++
+error.message
+);
 
-          nationalId: nationalId,
+}
 
-          bikeType: bikeType,
+};
 
-          bikeModel: bikeModel,
 
-          status: status,
+/* =========================
+DELIVERED
+========================= */
 
-          createdAt: serverTimestamp()
+window.markDelivered =
+async function(orderId){
 
-        }
-      );
+if(!riderSessionToken)
+return;
 
 
-      message.textContent =
-        "Rider registered successfully.";
+try{
 
-      loadRiders();
+await updateDoc(
+doc(db,"orders",orderId),
+{
 
-    }
+status:"delivered",
 
-    catch(error) {
+deliveredAt:
+serverTimestamp(),
 
-      message.textContent =
-        "Could not create rider: " + error.message;
+deliveryAcknowledged:
+true
 
-    }
+}
+);
 
-  };
 
+alert(
+"Delivery acknowledged successfully."
+);
 
-  /* =========================
-     LOAD RIDERS
-     ========================= */
 
-  window.loadRiders = async function() {
+loadRiderOrders();
 
-    const box =
-      document.getElementById("ridersList");
 
-    box.innerHTML =
-      "<p>Loading riders...</p>";
+}catch(error){
 
-    try {
+alert(
+"Could not update delivery: "
++
+error.message
+);
 
-      const snapshot =
-        await getDocs(collection(db,"riders"));
+}
 
-      box.innerHTML = "";
+};
 
-      if(snapshot.empty) {
 
-        box.innerHTML =
-          "<p>No riders registered.</p>";
+/* =========================
+RIDER NOTIFICATIONS
+========================= */
 
-        return;
+window.loadRiderNotifications =
+async function(){
 
-      }
+if(!riderSessionToken)
+return;
 
-      snapshot.forEach(item => {
 
-        const rider =
-          item.data();
+const box =
+document
+.getElementById("riderNotifications");
 
-        const div =
-          document.createElement("div");
 
-        div.className = "route-box";
+box.innerHTML =
+"<h3>🔔 Notifications</h3>";
 
-        div.innerHTML = `
 
-          <h3>${rider.name || ""}</h3>
+try{
 
-          <p>
-            Rider ID:
-            <strong>${rider.jobId || ""}</strong>
-          </p>
+const q =
+query(
+collection(db,"riderNotifications"),
+where(
+"riderUid",
+"==",
+currentRider.uid
+)
+);
 
-          <p>
-            Phone:
-            ${rider.phone || ""}
-          </p>
 
-          <p>
-            Motorbike:
-            ${rider.bikeType || ""} ${rider.bikeModel || ""}
-          </p>
+const snapshot =
+await getDocs(q);
 
-          <p>
-            Status:
-            <span class="badge">
-              ${rider.status || ""}
-            </span>
-          </p>
 
-          <button class="secondary"
-                  onclick="changeRiderStatus('${item.id}','${rider.status === "active" ? "inactive" : "active"}')">
-            ${rider.status === "active" ? "Deactivate" : "Activate"}
-          </button>
+let count=0;
 
-          <button class="danger"
-                  onclick="removeRider('${item.id}')">
-            Remove Rider
-          </button>
 
-        `;
+snapshot.forEach(item=>{
 
-        box.appendChild(div);
+count++;
 
-      });
 
-    } catch(error) {
+const data =
+item.data();
 
-      box.innerHTML =
-        "<p>Error loading riders: " + error.message + "</p>";
 
-    }
+const div =
+document.createElement("div");
 
-  };
 
+div.className =
+"notification";
 
-  /* =========================
-     CHANGE RIDER STATUS
-     ========================= */
 
-  window.changeRiderStatus = async function(
-    riderId,
-    newStatus
-  ) {
+div.innerHTML=`
 
-    try {
+<strong>
+${data.title || "New Job"}
+</strong>
 
-      await updateDoc(
-        doc(db,"riders",riderId),
-        {
-          status: newStatus
-        }
-      );
+<p>
+${data.message ||
+"You have a new notification."}
+</p>
 
-      /*
-       Also update rider account.
-      */
+`;
 
-      await updateDoc(
-        doc(db,"riderAccounts",riderId),
-        {
-          status: newStatus
-        }
-      );
 
-      loadRiders();
+box.appendChild(div);
 
-    } catch(error) {
+});
 
-      alert(
-        "Could not change status: " + error.message
-      );
 
-    }
+document
+.getElementById("notificationBadge")
+.textContent =
+count +
+" notifications";
 
-  };
 
+}catch(error){
 
-  /* =========================
-     REMOVE RIDER
-     ========================= */
+box.innerHTML +=
+"<p>Error loading notifications.</p>";
 
-  window.removeRider = async function(riderId) {
+}
 
-    if(!confirm(
-      "Remove this rider record? This action is for the Moderator only."
-    )) return;
+};
 
-    try {
 
-      await deleteDoc(
-        doc(db,"riders",riderId)
-      );
+/* =========================
+MODERATOR LOGIN
+========================= */
 
-      await deleteDoc(
-        doc(db,"riderAccounts",riderId)
-      );
+window.moderatorLogin =
+async function(){
 
-      loadRiders();
+const email =
+document
+.getElementById("moderatorEmail")
+.value
+.trim();
 
-    } catch(error) {
 
-      alert(
-        "Could not remove rider: " + error.message
-      );
+const password =
+document
+.getElementById("moderatorPassword")
+.value;
 
-    }
 
-  };
+const message =
+document
+.getElementById("moderatorMessage");
 
 
-  /* =========================
-     MODERATOR ORDERS
-     ========================= */
+try{
 
-  window.loadAllOrders = async function() {
+const credential =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-    const box =
-      document.getElementById("allOrders");
 
-    box.innerHTML =
-      "<p>Loading orders...</p>";
+const token =
+await credential.user
+.getIdTokenResult(true);
 
-    try {
 
-      const snapshot =
-        await getDocs(collection(db,"orders"));
+if(token.claims.admin !== true){
 
-      box.innerHTML = "";
+await signOut(auth);
 
-      snapshot.forEach(item => {
 
-        const order =
-          item.data();
+message.textContent =
+"This account is not authorized as Moderator.";
 
-        const div =
-          document.createElement("div");
+return;
 
-        div.className = "route-box";
+}
 
-        div.innerHTML = `
 
-          <strong>${order.serviceType || "Service"}</strong>
+document
+.getElementById("moderatorLoginBox")
+.classList
+.add("hidden");
 
-          <p>
-            ${order.pickup || ""} →
-            ${order.destination || ""}
-          </p>
 
-          <p>
-            Fare:
-            KSh ${Number(order.fare || 0).toLocaleString()}
-          </p>
+document
+.getElementById("moderatorDashboard")
+.classList
+.remove("hidden");
 
-          <p>
-            Status:
-            ${order.status || ""}
-          </p>
 
-          ${
-            order.status === "pending"
-            ?
-            `<button class="primary"
-                     onclick="approveOrder('${item.id}')">
-              Approve
-             </button>`
-            :
-            ""
-          }
+message.textContent =
+"Moderator login successful.";
 
-        `;
 
-        box.appendChild(div);
+loadRiders();
 
-      });
 
-    } catch(error) {
+}catch(error){
 
-      box.innerHTML =
-        "<p>Error: " + error.message + "</p>";
+message.textContent =
+"Moderator login failed: "
++
+error.message;
 
-    }
+}
 
-  };
+};
 
 
-  /* =========================
-     APPROVE ORDER
-     ========================= */
+/* =========================
+CREATE RIDER
+========================= */
 
-  window.approveOrder = async function(orderId) {
+window.createRider =
+async function(){
 
-    try {
+const message =
+document
+.getElementById("riderCreateMessage");
 
-      await updateDoc(
-        doc(db,"orders",orderId),
-        {
-          status: "approved",
-          approvedAt: serverTimestamp()
-        }
-      );
 
-      alert("Order approved.");
+if(!auth.currentUser){
 
-      loadAllOrders();
+message.textContent =
+"Moderator must be signed in.";
 
-    } catch(error) {
+return;
 
-      alert(
-        "Could not approve order: " + error.message
-      );
+}
 
-    }
 
-  };
+const name =
+document
+.getElementById("riderName")
+.value
+.trim();
 
 
-  /* =========================
-     MODERATOR CUSTOMERS
-     ========================= */
+const phone =
+document
+.getElementById("riderPhone")
+.value
+.trim();
 
-  window.loadCustomers = async function() {
 
-    const box =
-      document.getElementById("customersList");
+const whatsapp =
+document
+.getElementById("riderWhatsapp")
+.value
+.trim();
 
-    box.innerHTML =
-      "<p>Loading customers...</p>";
 
-    try {
+const nationalId =
+document
+.getElementById("riderNationalId")
+.value
+.trim();
 
-      const snapshot =
-        await getDocs(collection(db,"users"));
 
-      box.innerHTML = "";
+const bikeType =
+document
+.getElementById("bikeType")
+.value
+.trim();
 
-      snapshot.forEach(item => {
 
-        const user =
-          item.data();
+const bikeModel =
+document
+.getElementById("bikeModel")
+.value
+.trim();
 
-        const div =
-          document.createElement("div");
 
-        div.className = "route-box";
+const jobId =
+document
+.getElementById("jobId")
+.value
+.trim()
+.toUpperCase();
 
-        div.innerHTML = `
 
-          <strong>${user.email || "Customer"}</strong>
+const status =
+document
+.getElementById("riderStatus")
+.value;
 
-          <p>
-            Points:
-            ${Number(user.points || 0)}
-          </p>
 
-          <p>
-            Role:
-            ${user.role || "customer"}
-          </p>
+if(!name || !jobId){
 
-        `;
+message.textContent =
+"Name and Rider Code are required.";
 
-        box.appendChild(div);
+return;
 
-      });
+}
 
-    } catch(error) {
 
-      box.innerHTML =
-        "<p>Error: " + error.message + "</p>";
+try{
 
-    }
+const idToken =
+await auth.currentUser
+.getIdToken(true);
 
-  };
 
+const response =
+await fetch(
+BACKEND_URL +
+"/api/riders",
+{
 
-  /* =========================
-     MODERATOR SECTIONS
-     ========================= */
+method:"POST",
 
-  window.showModeratorSection = function(section) {
+headers:{
 
-    document
-      .getElementById("moderatorRiders")
-      .classList.add("hidden");
+"Content-Type":
+"application/json",
 
-    document
-      .getElementById("moderatorOrders")
-      .classList.add("hidden");
+"Authorization":
+"Bearer " + idToken
 
-    document
-      .getElementById("moderatorCustomers")
-      .classList.add("hidden");
+},
 
+body:JSON.stringify({
 
-    if(section === "riders") {
+name,
 
-      document
-        .getElementById("moderatorRiders")
-        .classList.remove("hidden");
+phone,
 
-      loadRiders();
+whatsapp,
 
-    }
+nationalId,
 
-    if(section === "orders") {
+bikeType,
 
-      document
-        .getElementById("moderatorOrders")
-        .classList.remove("hidden");
+bikeModel,
 
-      loadAllOrders();
+jobId,
 
-    }
+status
 
-    if(section === "customers") {
+})
 
-      document
-        .getElementById("moderatorCustomers")
-        .classList.remove("hidden");
+}
+);
 
-      loadCustomers();
 
-    }
+const data =
+await response.json();
 
-  };
 
+if(!response.ok){
 
-  /* =========================
-     RATE RIDER
-     ========================= */
+message.textContent =
+data.error ||
+"Could not create rider.";
 
-  window.rateRider = async function(orderId) {
+return;
 
-    if(!auth.currentUser) return;
+}
 
-    const rating =
-      prompt("Rate your rider from 1 to 5:");
 
-    const number =
-      Number(rating);
+message.innerHTML =
+`
+Rider registered successfully.
 
-    if(!number || number < 1 || number > 5) {
+<div class="code-box">
 
-      alert("Please enter a rating from 1 to 5.");
+<div>RIDER CODE</div>
 
-      return;
+<strong>
+${data.riderCode}
+</strong>
 
-    }
+</div>
 
-    try {
+Give this code to the rider.
+`;
 
-      await addDoc(
-        collection(db,"ratings"),
-        {
 
-          orderId: orderId,
+document
+.getElementById("riderName")
+.value="";
 
-          userId: auth.currentUser.uid,
 
-          rating: number,
+document
+.getElementById("riderPhone")
+.value="";
 
-          createdAt: serverTimestamp()
 
-        }
-      );
+document
+.getElementById("riderWhatsapp")
+.value="";
 
-      alert("Thank you for rating the rider.");
 
-    } catch(error) {
+document
+.getElementById("riderNationalId")
+.value="";
 
-      alert(
-        "Could not submit rating: " + error.message
-      );
 
-    }
+document
+.getElementById("bikeType")
+.value="";
 
-  };
 
+document
+.getElementById("bikeModel")
+.value="";
 
-  /* =========================
-     LOGOUTS
-     ========================= */
 
-  window.riderLogout = async function() {
+document
+.getElementById("jobId")
+.value="";
 
-    await signOut(auth);
 
-    document
-      .getElementById("riderDashboard")
-      .classList.add("hidden");
+loadRiders();
 
-  };
 
+}catch(error){
 
-  window.moderatorLogout = async function() {
+message.textContent =
+"Could not create rider: "
++
+error.message;
 
-    await signOut(auth);
+}
 
-    document
-      .getElementById("moderatorDashboard")
-      .classList.add("hidden");
+};
 
-    document
-      .getElementById("moderatorLoginBox")
-      .classList.remove("hidden");
 
-  };
+/* =========================
+LOAD RIDERS
+========================= */
 
+window.loadRiders =
+async function(){
 
-  /* =========================
-     PHONE CLEANER
-     ========================= */
+if(!auth.currentUser)
+return;
 
-  window.cleanPhone = function(phone) {
 
-    phone = String(phone || "")
-      .replace(/\D/g,"");
+const box =
+document
+.getElementById("ridersList");
 
-    if(phone.startsWith("0"))
-      phone = "254" + phone.substring(1);
 
-    return phone;
+box.innerHTML =
+"<p>Loading riders...</p>";
 
-  };
 
+try{
 
-  /* =========================
-     TERMS
-     ========================= */
+const idToken =
+await auth.currentUser
+.getIdToken(true);
 
-  window.showTerms = function() {
 
-    alert(
+const response =
+await fetch(
+BACKEND_URL +
+"/api/riders",
+{
+
+headers:{
+"Authorization":
+"Bearer " + idToken
+}
+
+}
+);
+
+
+/*
+The backend version above does not
+yet include GET /api/riders.
+
+So we use Firestore here.
+*/
+
+const snapshot =
+await getDocs(
+collection(db,"riders")
+);
+
+
+box.innerHTML="";
+
+
+if(snapshot.empty){
+
+box.innerHTML =
+"<p>No riders registered.</p>";
+
+return;
+
+}
+
+
+snapshot.forEach(item=>{
+
+const rider =
+item.data();
+
+
+const div =
+document.createElement("div");
+
+
+div.className =
+"route-box";
+
+
+div.innerHTML=`
+
+<h3>
+${rider.name || ""}
+</h3>
+
+<p>
+Rider Code:
+<strong>
+${rider.jobId || ""}
+</strong>
+</p>
+
+<p>
+Phone:
+${rider.phone || ""}
+</p>
+
+<p>
+Motorbike:
+${rider.bikeType || ""}
+${rider.bikeModel || ""}
+</p>
+
+<p>
+Status:
+<span class="badge">
+${rider.status || ""}
+</span>
+</p>
+
+
+<button
+class="secondary"
+onclick="changeRiderStatus(
+'${item.id}',
+'${rider.status === "active"
+? "inactive"
+: "active"}'
+)">
+
+${
+rider.status === "active"
+? "Deactivate"
+: "Activate"
+}
+
+</button>
+
+
+<button
+class="danger"
+onclick="removeRider('${item.id}')">
+
+Remove Rider
+
+</button>
+
+`;
+
+box.appendChild(div);
+
+});
+
+
+}catch(error){
+
+box.innerHTML =
+"<p>Error loading riders: "
++
+error.message
++
+"</p>";
+
+}
+
+};
+
+
+/* =========================
+CHANGE RIDER STATUS
+========================= */
+
+window.changeRiderStatus =
+async function(
+riderId,
+newStatus
+){
+
+try{
+
+await updateDoc(
+doc(db,"riders",riderId),
+{
+status:newStatus
+}
+);
+
+
+await updateDoc(
+doc(db,"riderAccounts",riderId),
+{
+status:newStatus
+}
+);
+
+
+loadRiders();
+
+
+}catch(error){
+
+alert(
+"Could not change status: "
++
+error.message
+);
+
+}
+
+};
+
+
+/* =========================
+REMOVE RIDER
+========================= */
+
+window.removeRider =
+async function(riderId){
+
+if(!confirm(
+"Remove this rider record? This action is for the Moderator only."
+))
+return;
+
+
+try{
+
+await deleteDoc(
+doc(db,"riders",riderId)
+);
+
+
+await deleteDoc(
+doc(db,"riderAccounts",riderId)
+);
+
+
+loadRiders();
+
+
+}catch(error){
+
+alert(
+"Could not remove rider: "
++
+error.message
+);
+
+}
+
+};
+
+
+/* =========================
+ALL ORDERS
+========================= */
+
+window.loadAllOrders =
+async function(){
+
+const box =
+document
+.getElementById("allOrders");
+
+
+box.innerHTML =
+"<p>Loading orders...</p>";
+
+
+try{
+
+const snapshot =
+await getDocs(
+collection(db,"orders")
+);
+
+
+box.innerHTML="";
+
+
+snapshot.forEach(item=>{
+
+const order =
+item.data();
+
+
+const div =
+document.createElement("div");
+
+
+div.className =
+"route-box";
+
+
+div.innerHTML=`
+
+<strong>
+${order.serviceType || "Service"}
+</strong>
+
+<p>
+${order.pickup || ""}
+→
+${order.destination || ""}
+</p>
+
+<p>
+Fare:
+KSh
+${Number(order.fare || 0).toLocaleString()}
+</p>
+
+<p>
+Status:
+${order.status || ""}
+</p>
+
+
+${
+order.status === "pending"
+?
+`
+<button
+class="primary"
+onclick="approveOrder('${item.id}')">
+
+Approve
+
+</button>
+`
+:""
+}
+
+`;
+
+
+box.appendChild(div);
+
+});
+
+
+}catch(error){
+
+box.innerHTML =
+"<p>Error: "
++
+error.message
++
+"</p>";
+
+}
+
+};
+
+
+/* =========================
+APPROVE ORDER
+========================= */
+
+window.approveOrder =
+async function(orderId){
+
+try{
+
+await updateDoc(
+doc(db,"orders",orderId),
+{
+
+status:"approved",
+
+approvedAt:
+serverTimestamp()
+
+}
+);
+
+
+alert("Order approved.");
+
+loadAllOrders();
+
+
+}catch(error){
+
+alert(
+"Could not approve order: "
++
+error.message
+);
+
+}
+
+};
+
+
+/* =========================
+CUSTOMERS
+========================= */
+
+window.loadCustomers =
+async function(){
+
+const box =
+document
+.getElementById("customersList");
+
+
+box.innerHTML =
+"<p>Loading customers...</p>";
+
+
+try{
+
+const snapshot =
+await getDocs(
+collection(db,"users")
+);
+
+
+box.innerHTML="";
+
+
+snapshot.forEach(item=>{
+
+const user =
+item.data();
+
+
+const div =
+document.createElement("div");
+
+
+div.className =
+"route-box";
+
+
+div.innerHTML=`
+
+<strong>
+${user.email || "Customer"}
+</strong>
+
+<p>
+Points:
+${Number(user.points || 0)}
+</p>
+
+<p>
+Role:
+${user.role || "customer"}
+</p>
+
+`;
+
+
+box.appendChild(div);
+
+});
+
+
+}catch(error){
+
+box.innerHTML =
+"<p>Error: "
++
+error.message
++
+"</p>";
+
+}
+
+};
+
+
+/* =========================
+MODERATOR SECTIONS
+========================= */
+
+window.showModeratorSection =
+function(section){
+
+document
+.getElementById("moderatorRiders")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("moderatorOrders")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("moderatorCustomers")
+.classList
+.add("hidden");
+
+
+if(section === "riders"){
+
+document
+.getElementById("moderatorRiders")
+.classList
+.remove("hidden");
+
+loadRiders();
+
+}
+
+
+if(section === "orders"){
+
+document
+.getElementById("moderatorOrders")
+.classList
+.remove("hidden");
+
+loadAllOrders();
+
+}
+
+
+if(section === "customers"){
+
+document
+.getElementById("moderatorCustomers")
+.classList
+.remove("hidden");
+
+loadCustomers();
+
+}
+
+};
+
+
+/* =========================
+RATE RIDER
+========================= */
+
+window.rateRider =
+async function(orderId){
+
+if(!auth.currentUser)
+return;
+
+
+const rating =
+prompt(
+"Rate your rider from 1 to 5:"
+);
+
+
+const number =
+Number(rating);
+
+
+if(
+!number ||
+number < 1 ||
+number > 5
+){
+
+alert(
+"Please enter a rating from 1 to 5."
+);
+
+return;
+
+}
+
+
+try{
+
+await addDoc(
+collection(db,"ratings"),
+{
+
+orderId,
+
+userId:
+auth.currentUser.uid,
+
+rating:number,
+
+createdAt:
+serverTimestamp()
+
+}
+);
+
+
+alert(
+"Thank you for rating the rider."
+);
+
+
+}catch(error){
+
+alert(
+"Could not submit rating: "
++
+error.message
+);
+
+}
+
+};
+
+
+/* =========================
+RIDER LOGOUT
+========================= */
+
+window.riderLogout =
+async function(){
+
+if(riderSessionToken){
+
+try{
+
+await fetch(
+BACKEND_URL +
+"/api/rider-logout",
+{
+
+method:"POST",
+
+headers:{
+"Authorization":
+"Bearer " +
+riderSessionToken
+}
+
+}
+);
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+
+riderSessionToken =
+null;
+
+currentRider =
+null;
+
+
+document
+.getElementById("riderDashboard")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("riderCode")
+.value="";
+
+
+document
+.getElementById("riderMessage")
+.textContent =
+"Rider signed out.";
+
+};
+
+
+/* =========================
+MODERATOR LOGOUT
+========================= */
+
+window.moderatorLogout =
+async function(){
+
+await signOut(auth);
+
+
+document
+.getElementById("moderatorDashboard")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("moderatorLoginBox")
+.classList
+.remove("hidden");
+
+};
+
+
+/* =========================
+PHONE CLEANER
+========================= */
+
+window.cleanPhone =
+function(phone){
+
+phone =
+String(phone || "")
+.replace(/\D/g,"");
+
+
+if(phone.startsWith("0"))
+phone =
+"254" +
+phone.substring(1);
+
+
+return phone;
+
+};
+
+
+/* =========================
+TERMS
+========================= */
+
+window.showTerms =
+function(){
+
+alert(
 
 `AMIR CHAP CHAP TERMS & CONDITIONS
 
@@ -2046,11 +3018,11 @@
 
 3. Riders are approved and managed by the Moderator.
 
-4. Riders must not delete customer, order or system records.
+4. Riders must use only their assigned Rider Code.
 
 5. Customers should rate riders after completed services.
 
-6. Waze navigation is optional. Customers and riders may communicate by phone.
+6. Waze navigation is optional.
 
 7. Points and promotional offers are subject to Amir Chap Chap rules.
 
@@ -2062,34 +3034,40 @@
 Published:
 29 August 2026`
 
-    );
+);
 
-  };
-
-
-  /* =========================
-     AUTH STATE
-     ========================= */
-
-  onAuthStateChanged(auth, async user => {
-
-    currentUser = user;
-
-    if(!user) return;
-
-    console.log(
-      "Authenticated user:",
-      user.uid
-    );
-
-  });
+};
 
 
-  /* =========================
-     INITIAL PAGE
-     ========================= */
+/* =========================
+AUTH STATE
+========================= */
 
-  showPage("home");
+onAuthStateChanged(
+auth,
+async user=>{
 
-</script></body>
+currentUser =
+user;
+
+if(!user)
+return;
+
+console.log(
+"Authenticated user:",
+user.uid
+);
+
+});
+
+
+/* =========================
+INITIAL PAGE
+========================= */
+
+showPage("home");
+
+</script>
+
+</body>
 </html>
