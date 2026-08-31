@@ -175,7 +175,7 @@
       line-height: 1.4;
     }
 
-    /* NOTIFICATION BELL BANNER */
+    /* STICKY NOTIFICATION BELL BANNER */
     #notifBanner {
       display: none;
       position: fixed;
@@ -185,11 +185,29 @@
       color: white;
       padding: 14px 20px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 9999;
       font-weight: bold;
       animation: slideIn 0.3s ease-out;
     }
+
+    .notif-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .notif-close-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .notif-close-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
     @keyframes slideIn {
       from { transform: translateY(-20px); opacity: 0; }
@@ -205,9 +223,12 @@
 </head>
 <body>
 
-  <!-- Floating Notification Alert -->
+  <!-- Floating Sticky Notification Alert -->
   <div id="notifBanner">
-    <span id="notifMessage">🔔 New Notification!</span>
+    <div class="notif-content">
+      <span id="notifMessage">🔔 New Notification!</span>
+      <button class="notif-close-btn" onclick="dismissNotification()">Open / Dismiss</button>
+    </div>
   </div>
 
   <header>
@@ -268,6 +289,14 @@
             <label>Item Description / Note</label>
             <input type="text" id="itemNote" class="form-control" placeholder="e.g. Electronics package">
           </div>
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select id="paymentMethod" class="form-control">
+              <option value="cash">💵 Pay Cash</option>
+              <option value="mpesa">📱 M-Pesa</option>
+              <option value="points">⭐ Deduct from Loyalty Points</option>
+            </select>
+          </div>
           <button class="btn btn-success" onclick="createCustomerOrder()">Submit Order</button>
         </div>
       </div>
@@ -279,13 +308,14 @@
             <tr>
               <th>Order ID</th>
               <th>Pickup ➔ Dropoff</th>
+              <th>Payment Method</th>
               <th>Status</th>
               <th>Final Fare</th>
               <th>Assigned Rider Info</th>
             </tr>
           </thead>
           <tbody id="customerOrdersTable">
-            <tr><td colspan="5">Sign in to view orders.</td></tr>
+            <tr><td colspan="6">Sign in to view orders.</td></tr>
           </tbody>
         </table>
       </div>
@@ -323,6 +353,7 @@
             <tr>
               <th>Order ID</th>
               <th>Customer Phone</th>
+              <th>Payment</th>
               <th>Route</th>
               <th>Fare</th>
               <th>Current Status</th>
@@ -330,7 +361,7 @@
             </tr>
           </thead>
           <tbody id="riderJobsTable">
-            <tr><td colspan="6">Log in with Job ID to fetch deliveries.</td></tr>
+            <tr><td colspan="7">Log in with Job ID to fetch deliveries.</td></tr>
           </tbody>
         </table>
       </div>
@@ -392,6 +423,7 @@
               <tr>
                 <th>Order ID</th>
                 <th>Customer Phone</th>
+                <th>Payment</th>
                 <th>Route</th>
                 <th>Base Fare</th>
                 <th>Transport Charge</th>
@@ -402,7 +434,7 @@
               </tr>
             </thead>
             <tbody id="moderatorOrdersTable">
-              <tr><td colspan="9">Loading orders...</td></tr>
+              <tr><td colspan="10">Loading orders...</td></tr>
             </tbody>
           </table>
         </div>
@@ -449,17 +481,16 @@
     const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
 
     /* =====================================================
-       AUDIO NOTIFICATION GENERATOR
+       AUDIO & STICKY NOTIFICATION SYSTEM
     ===================================================== */
     function playNotificationSound() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // Bell tone 1
         const osc1 = audioCtx.createOscillator();
         const gain1 = audioCtx.createGain();
         osc1.type = "sine";
-        osc1.frequency.value = 880; // A5 tone
+        osc1.frequency.value = 880;
         gain1.gain.setValueAtTime(0.3, audioCtx.currentTime);
         gain1.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
         osc1.connect(gain1);
@@ -467,12 +498,11 @@
         osc1.start();
         osc1.stop(audioCtx.currentTime + 0.8);
 
-        // Bell tone 2 (chime echo)
         setTimeout(() => {
           const osc2 = audioCtx.createOscillator();
           const gain2 = audioCtx.createGain();
           osc2.type = "sine";
-          osc2.frequency.value = 1174.66; // D6 tone
+          osc2.frequency.value = 1174.66;
           gain2.gain.setValueAtTime(0.4, audioCtx.currentTime);
           gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.0);
           osc2.connect(gain2);
@@ -481,7 +511,7 @@
           osc2.stop(audioCtx.currentTime + 1.0);
         }, 150);
       } catch (e) {
-        console.log("Audio play prevented until user interacts with the page.");
+        console.log("Audio play prevented until user interacts with page.");
       }
     }
 
@@ -489,12 +519,12 @@
       const banner = document.getElementById('notifBanner');
       const msg = document.getElementById('notifMessage');
       msg.innerHTML = "🔔 " + text;
-      banner.style.display = "block";
+      banner.style.display = "block"; // Remains until user clicks Open/Dismiss
       playNotificationSound();
+    }
 
-      setTimeout(() => {
-        banner.style.display = "none";
-      }, 6000);
+    function dismissNotification() {
+      document.getElementById('notifBanner').style.display = "none";
     }
 
     function switchPortal(portalName) {
@@ -592,8 +622,10 @@
       if (!user) return;
 
       const userDoc = await db.collection("users").doc(user.uid).get();
+      let userPoints = 0;
       if (userDoc.exists) {
-        document.getElementById('customerPointsDisplay').textContent = `Loyalty Points: ${userDoc.data().points || 0} pts`;
+        userPoints = userDoc.data().points || 0;
+        document.getElementById('customerPointsDisplay').textContent = `Loyalty Points: ${userPoints} pts`;
       }
 
       db.collection("orders").where("userId", "==", user.uid).onSnapshot(async snapshot => {
@@ -604,6 +636,17 @@
           const o = doc.data();
           const orderId = doc.id;
 
+          // Process Loyalty Points: 10 KSh = 1 Point on completion
+          if (o.status === 'delivered' && !o.pointsAwarded && o.paymentMethod !== 'points') {
+            const earnedPoints = Math.floor((o.finalFare || 0) / 10);
+            if (earnedPoints > 0) {
+              await db.collection("users").doc(user.uid).update({
+                points: firebase.firestore.FieldValue.increment(earnedPoints)
+              });
+              await db.collection("orders").doc(orderId).update({ pointsAwarded: true });
+            }
+          }
+
           // Customer Notification Check
           if (previousCustomerOrderStatuses[orderId] && previousCustomerOrderStatuses[orderId] !== 'delivered' && o.status === 'delivered') {
             showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered! 🎉`);
@@ -611,7 +654,6 @@
           previousCustomerOrderStatuses[orderId] = o.status;
 
           let riderDetails = "<em>Unassigned</em>";
-
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
             if (riderDoc.exists) {
@@ -629,10 +671,13 @@
             }
           }
 
+          const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
+
           tbody.innerHTML += `
             <tr>
               <td>#${orderId.substring(0,6)}</td>
               <td>${o.pickup} ➔ ${o.dropoff}</td>
+              <td><strong>${payLabel}</strong></td>
               <td><strong>${o.status || 'Pending'}</strong></td>
               <td>KSh ${o.finalFare || o.originalFare || 'TBD'}</td>
               <td>${riderDetails}</td>
@@ -648,10 +693,18 @@
 
       const userDoc = await db.collection("users").doc(user.uid).get();
       const userPhone = userDoc.exists ? (userDoc.data().phone || "") : "";
+      const currentPoints = userDoc.exists ? (userDoc.data().points || 0) : 0;
 
       const pickup = document.getElementById('pickupLoc').value;
       const dropoff = document.getElementById('dropoffLoc').value;
       const itemNote = document.getElementById('itemNote').value;
+      const paymentMethod = document.getElementById('paymentMethod').value;
+
+      if (!pickup || !dropoff) return alert("Please specify both pickup and destination.");
+
+      if (paymentMethod === 'points' && currentPoints <= 0) {
+        return alert("You have 0 Loyalty Points! Please select Cash or M-Pesa.");
+      }
 
       await db.collection("orders").add({
         userId: user.uid,
@@ -659,6 +712,7 @@
         pickup,
         dropoff,
         itemNote,
+        paymentMethod,
         originalFare: 0,
         transportCharge: 0,
         finalFare: 0,
@@ -693,7 +747,6 @@
         document.getElementById('riderProfilePlate').textContent = data.rider.plateNumber || 'N/A';
         document.getElementById('riderProfileStatus').textContent = data.rider.availabilityStatus;
 
-        // Start listening to order changes for real-time sound/bell alerts
         db.collection("orders").where("riderUid", "==", auth.currentUser.uid).onSnapshot(snapshot => {
           if (previousRiderOrderCount !== null && snapshot.size > previousRiderOrderCount) {
             showBannerNotification("You received a NEW Delivery Request! 🏍️💨");
@@ -730,10 +783,13 @@
             actionBtn = `<span>Completed</span>`;
           }
 
+          const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
+
           tbody.innerHTML += `
             <tr>
               <td>#${o.id.substring(0,6)}</td>
               <td>${o.customerPhone || 'N/A'}</td>
+              <td><strong>${payLabel}</strong></td>
               <td>${o.pickup} ➔ ${o.dropoff}</td>
               <td>KSh ${o.finalFare || 0}</td>
               <td><strong>${o.status}</strong></td>
@@ -804,10 +860,13 @@
             });
           }
 
+          const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
+
           tbodyOrders.innerHTML += `
             <tr>
               <td>#${o.id.substring(0,6)}</td>
               <td>${o.customerPhone || 'N/A'}</td>
+              <td><strong>${payLabel}</strong></td>
               <td>${o.pickup} ➔ ${o.dropoff}</td>
               <td><input type="number" id="baseFare_${o.id}" class="form-control" value="${o.originalFare || 0}"></td>
               <td><input type="number" id="chargeFare_${o.id}" class="form-control" value="${o.transportCharge || 0}"></td>
