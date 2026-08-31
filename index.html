@@ -375,26 +375,51 @@
   <script>
     /* =====================================================
        FIREBASE CONFIGURATION
+       IMPORTANT: REPLACE LINES 333 - 344 WITH YOUR REAL KEYS
     ===================================================== */
     const firebaseConfig = {
-      apiKey: "YOUR_FIREBASE_API_KEY",
-      authDomain: "YOUR_FIREBASE_PROJECT.firebaseapp.com",
-      projectId: "YOUR_FIREBASE_PROJECT_ID",
-      storageBucket: "YOUR_FIREBASE_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "PASTE_YOUR_FIREBASE_API_KEY_HERE",
+      authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "PASTE_YOUR_PROJECT_ID_HERE",
+      storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
+      appId: "PASTE_YOUR_APP_ID_HERE"
     };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    const BACKEND_URL = "https://your-amir-chap-chap-backend.onrender.com";
+    // Replace with your actual Render URL (e.g., https://amir-chap-chap-backend.onrender.com)
+    const BACKEND_URL = "PASTE_YOUR_RENDER_BACKEND_URL_HERE";
 
     /* =====================================================
-       PORTAL TAB SWITCHING
+       SECURED PORTAL TAB SWITCHING
     ===================================================== */
-    function switchPortal(portalName) {
+    async function switchPortal(portalName) {
+      const user = auth.currentUser;
+
+      // Lock Moderator Tab: Block unauthenticated users and non-admin profiles
+      if (portalName === 'moderator') {
+        if (!user) {
+          alert("Access Denied: You must sign in to an authorized Moderator account first.");
+          return;
+        }
+
+        try {
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          const role = userDoc.exists ? userDoc.data().role : null;
+          
+          if (role !== "moderator" && role !== "admin") {
+            alert("Access Denied: This account does not have Moderator permissions.");
+            return;
+          }
+        } catch (err) {
+          alert("Authorization error: " + err.message);
+          return;
+        }
+      }
+
       document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
@@ -466,7 +491,6 @@
         document.getElementById('customerPointsDisplay').textContent = `Loyalty Points: ${userDoc.data().points || 0} pts`;
       }
 
-      // Realtime Customer Orders
       db.collection("orders").where("userId", "==", user.uid).onSnapshot(snapshot => {
         const tbody = document.getElementById("customerOrdersTable");
         tbody.innerHTML = "";
@@ -597,19 +621,16 @@
     async function loadModeratorDashboard() {
       const token = await auth.currentUser.getIdToken();
 
-      // Load Orders
       const resOrders = await fetch(`${BACKEND_URL}/api/moderator/orders`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const dataOrders = await resOrders.json();
 
-      // Load Riders
       const resRiders = await fetch(`${BACKEND_URL}/api/moderator/riders`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const dataRiders = await resRiders.json();
 
-      // Render Orders
       const tbodyOrders = document.getElementById("moderatorOrdersTable");
       tbodyOrders.innerHTML = "";
 
@@ -643,7 +664,6 @@
         `;
       });
 
-      // Render Riders
       const tbodyRiders = document.getElementById("moderatorRidersTable");
       tbodyRiders.innerHTML = "";
 
