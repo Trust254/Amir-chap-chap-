@@ -103,6 +103,8 @@
         <div class="message" id="customerMessage"></div>
         <label>Email</label>
         <input id="customerEmail" type="email" placeholder="email@example.com">
+        <label>Phone Number</label>
+        <input id="customerPhone" type="tel" placeholder="0712345678">
         <label>Password</label>
         <input id="customerPassword" type="password" placeholder="••••••••">
         <button class="primary" onclick="customerRegister()">Register</button>
@@ -111,7 +113,7 @@
 
       <div id="customerDashboard" class="card hidden">
         <h2>Welcome, Customer</h2>
-        <p class="info">⭐ Points: <span id="customerPoints">0</span></p>
+        <p class="info">⭐ Points: <span id="customerPoints">0</span> | Phone: <strong id="customerPhoneDisplay">Not set</strong></p>
         <button class="danger" onclick="customerLogout()">Logout</button>
         <hr>
 
@@ -121,6 +123,9 @@
           <option value="Delivery">Delivery</option>
           <option value="Passenger Transport">Passenger Transport</option>
         </select>
+
+        <label>Customer Contact Phone</label>
+        <input id="bookingPhone" type="tel" placeholder="0712345678">
 
         <label>Pickup Location</label>
         <input id="pickup" type="text" placeholder="Example: Lenana">
@@ -339,10 +344,11 @@
     /* CUSTOMER REGISTER */
     window.customerRegister = async function() {
       const email = document.getElementById("customerEmail").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
       const password = document.getElementById("customerPassword").value;
       const message = document.getElementById("customerMessage");
-      if (!email || !password) {
-        message.textContent = "Enter email and password.";
+      if (!email || !password || !phone) {
+        message.textContent = "Enter email, phone number, and password.";
         return;
       }
       if (password.length < 6) {
@@ -352,7 +358,7 @@
       try {
         const credential = await createUserWithEmailAndPassword(auth, email, password);
         const token = await credential.user.getIdToken(true);
-        await apiRequest("/api/customer/register", { method: "POST", body: JSON.stringify({ email }) }, token);
+        await apiRequest("/api/customer/register", { method: "POST", body: JSON.stringify({ email, phone }) }, token);
         message.textContent = "Registration successful.";
         showCustomerDashboard();
         await loadCustomerProfile();
@@ -393,6 +399,10 @@
         const token = await auth.currentUser.getIdToken(true);
         const data = await apiRequest("/api/customer/profile", {}, token);
         document.getElementById("customerPoints").textContent = Number(data.points || 0);
+        document.getElementById("customerPhoneDisplay").textContent = data.phone || data.customerPhone || "Not set";
+        if (data.phone) {
+          document.getElementById("bookingPhone").value = data.phone;
+        }
       } catch (error) {
         console.error("Customer profile:", error);
       }
@@ -439,14 +449,20 @@
       }
       const p = document.getElementById("pickup").value.trim();
       const d = document.getElementById("destination").value.trim();
+      const customerPhone = document.getElementById("bookingPhone").value.trim();
       if (!p || !d) {
         alert("Enter pickup and destination.");
+        return;
+      }
+      if (!customerPhone) {
+        alert("Please provide a contact phone number for this booking.");
         return;
       }
       try {
         await addDoc(collection(db, "orders"), {
           userId: auth.currentUser.uid,
           customerEmail: auth.currentUser.email || "",
+          customerPhone: customerPhone,
           serviceType: document.getElementById("serviceType").value,
           pickup: p,
           destination: d,
@@ -570,6 +586,7 @@
             <h3>${esc(o.serviceType || "Delivery")}</h3>
             <p><strong>Pickup:</strong> ${esc(o.pickup || "")}</p>
             <p><strong>Destination:</strong> ${esc(o.destination || "")}</p>
+            <p><strong>Customer Contact:</strong> ${esc(o.customerPhone || "Not provided")}</p>
             <p>Fare: <strong>KSh ${Number(o.finalFare ?? o.fare ?? 0).toLocaleString()}</strong></p>
             <p>Status: <span class="badge">${esc(o.status || "")}</span></p>
             ${actions}
@@ -807,7 +824,8 @@
           div.innerHTML = `
             <strong>${esc(o.serviceType || "Service")}</strong>
             <p>${esc(o.pickup || "")} → ${esc(o.destination || "")}</p>
-            <p>Customer: ${esc(o.customerEmail || o.userId || "")}</p>
+            <p>Customer Email: ${esc(o.customerEmail || o.userId || "")}</p>
+            <p>Customer Phone: <strong>${esc(o.customerPhone || "Not provided")}</strong></p>
             <p>Original Fare: <strong>KSh ${original.toLocaleString()}</strong></p>
             <p>Transport Charge: <strong>KSh ${charge.toLocaleString()}</strong></p>
             <p>Final Fare: <strong>KSh ${fare.toLocaleString()}</strong></p>
@@ -886,7 +904,7 @@
           div.className = "route-box";
           div.innerHTML = `
             <strong>${esc(c.email || "Customer")}</strong>
-            <p>Phone: ${esc(c.phone || c.customerPhone || "")}</p>
+            <p>Phone: ${esc(c.phone || c.customerPhone || "Not set")}</p>
             <p>Points: <strong>${Number(c.points || 0)}</strong></p>
             <p>Role: ${esc(c.role || "customer")}</p>
           `;
