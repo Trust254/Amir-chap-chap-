@@ -105,6 +105,11 @@
       gap: 15px;
     }
 
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
     .btn {
       padding: 10px 18px;
       border: none;
@@ -115,6 +120,7 @@
     }
 
     .btn-primary { background-color: var(--primary); color: white; }
+    .btn-secondary { background-color: var(--gray); color: white; }
     .btn-success { background-color: var(--success); color: white; }
     .btn-warning { background-color: var(--warning); color: white; }
     .btn-danger { background-color: var(--danger); color: white; }
@@ -171,7 +177,10 @@
 
   <header>
     <h1>Amir Chap Chap</h1>
-    <div id="authStatusHeader">Loading User...</div>
+    <div>
+      <span id="authStatusHeader">Loading User...</span>
+      <button class="btn btn-danger" style="padding: 4px 10px; margin-left: 10px; font-size:0.8rem;" onclick="logoutUser()">Logout</button>
+    </div>
   </header>
 
   <nav class="nav-tabs">
@@ -194,7 +203,7 @@
       <div class="grid-2">
         <!-- Customer Registration / Auth -->
         <div class="card">
-          <h2>1. Customer Account Sign In</h2>
+          <h2>1. Customer Account Access</h2>
           <div class="form-group">
             <label>Email</label>
             <input type="email" id="custEmail" class="form-control" placeholder="customer@example.com">
@@ -207,7 +216,10 @@
             <label>Phone / WhatsApp Number</label>
             <input type="text" id="custPhone" class="form-control" placeholder="+254 700 000000">
           </div>
-          <button class="btn btn-primary" onclick="loginCustomer()">Login / Register</button>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="loginCustomer()">Login</button>
+            <button class="btn btn-secondary" onclick="registerCustomer()">Register Account</button>
+          </div>
         </div>
 
         <!-- Create Order -->
@@ -302,71 +314,89 @@
          3. MODERATOR PORTAL
     ===================================================== -->
     <section id="moderatorPortal" class="portal-section">
-      <!-- Create Rider -->
-      <div class="card">
-        <h2>Create / Register New Rider</h2>
+      <!-- Moderator Authentication -->
+      <div class="card" id="modAuthCard">
+        <h2>Moderator Login</h2>
         <div class="grid-2">
           <div class="form-group">
-            <label>Job ID</label>
-            <input type="text" id="modRiderJobId" class="form-control" placeholder="JOB-102">
-          </div>
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="modRiderName" class="form-control" placeholder="John Doe">
-          </div>
-          <div class="form-group">
-            <label>Phone / WhatsApp</label>
-            <input type="text" id="modRiderPhone" class="form-control" placeholder="+254 700 111222">
+            <label>Moderator Email</label>
+            <input type="email" id="modEmail" class="form-control" placeholder="admin@amirchapchap.com">
           </div>
           <div class="form-group">
             <label>Password</label>
-            <input type="password" id="modRiderPassword" class="form-control" placeholder="••••••••">
+            <input type="password" id="modPassword" class="form-control" placeholder="••••••••">
           </div>
         </div>
-        <button class="btn btn-primary" onclick="registerRiderByModerator()">Register Rider</button>
+        <button class="btn btn-primary" onclick="loginModerator()">Login as Moderator</button>
       </div>
 
-      <!-- Moderator All Orders -->
-      <div class="card">
-        <h2>Manage Orders & Set Fares</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer Phone</th>
-              <th>Route</th>
-              <th>Base Fare</th>
-              <th>Transport Charge</th>
-              <th>Final Fare</th>
-              <th>Status</th>
-              <th>Assign Rider</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="moderatorOrdersTable">
-            <tr><td colspan="9">Loading orders...</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <div id="modDashboardContent" style="display:none;">
+        <!-- Create Rider -->
+        <div class="card">
+          <h2>Create / Register New Rider</h2>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Job ID</label>
+              <input type="text" id="modRiderJobId" class="form-control" placeholder="JOB-102">
+            </div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="modRiderName" class="form-control" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label>Phone / WhatsApp</label>
+              <input type="text" id="modRiderPhone" class="form-control" placeholder="+254 700 111222">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="modRiderPassword" class="form-control" placeholder="••••••••">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="registerRiderByModerator()">Register Rider</button>
+        </div>
 
-      <!-- Available Riders Table -->
-      <div class="card">
-        <h2>Rider Availability Monitor</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Job ID</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Account Status</th>
-              <th>Availability</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="moderatorRidersTable">
-            <tr><td colspan="6">Loading riders...</td></tr>
-          </tbody>
-        </table>
+        <!-- Moderator All Orders -->
+        <div class="card">
+          <h2>Manage Orders & Set Fares</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer Phone</th>
+                <th>Route</th>
+                <th>Base Fare</th>
+                <th>Transport Charge</th>
+                <th>Final Fare</th>
+                <th>Status</th>
+                <th>Assign Rider</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="moderatorOrdersTable">
+              <tr><td colspan="9">Loading orders...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Available Riders Table -->
+        <div class="card">
+          <h2>Rider Availability Monitor</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Account Status</th>
+                <th>Availability</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="moderatorRidersTable">
+              <tr><td colspan="6">Loading riders...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -389,36 +419,12 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // UPDATE THIS: Replace with your actual live Render URL when deployed
     const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
 
     /* =====================================================
-       SECURED PORTAL TAB SWITCHING
+       PORTAL TAB SWITCHING
     ===================================================== */
-    async function switchPortal(portalName) {
-      const user = auth.currentUser;
-
-      // Lock Moderator Tab: Block unauthenticated users and non-admin profiles
-      if (portalName === 'moderator') {
-        if (!user) {
-          alert("Access Denied: You must sign in to an authorized Moderator account first.");
-          return;
-        }
-
-        try {
-          const userDoc = await db.collection("users").doc(user.uid).get();
-          const role = userDoc.exists ? userDoc.data().role : null;
-          
-          if (role !== "moderator" && role !== "admin") {
-            alert("Access Denied: This account does not have Moderator permissions.");
-            return;
-          }
-        } catch (err) {
-          alert("Authorization error: " + err.message);
-          return;
-        }
-      }
-
+    function switchPortal(portalName) {
       document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
@@ -431,12 +437,29 @@
       } else if (portalName === 'moderator') {
         document.getElementById('moderatorPortal').classList.add('active');
         document.querySelectorAll('.tab-btn')[2].classList.add('active');
-        loadModeratorDashboard();
+        checkModeratorAuth();
       }
     }
 
+    async function checkModeratorAuth() {
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          if (userDoc.exists && (userDoc.data().role === "moderator" || userDoc.data().role === "admin")) {
+            document.getElementById('modAuthCard').style.display = "none";
+            document.getElementById('modDashboardContent').style.display = "block";
+            loadModeratorDashboard();
+            return;
+          }
+        } catch(e) {}
+      }
+      document.getElementById('modAuthCard').style.display = "block";
+      document.getElementById('modDashboardContent').style.display = "none";
+    }
+
     /* =====================================================
-       AUTH STATE MONITOR
+       AUTH MONITOR & LOGOUT
     ===================================================== */
     auth.onAuthStateChanged(async (user) => {
       const header = document.getElementById('authStatusHeader');
@@ -448,23 +471,37 @@
       }
     });
 
+    async function logoutUser() {
+      await auth.signOut();
+      alert("Logged out successfully.");
+      location.reload();
+    }
+
     /* =====================================================
-       CUSTOMER PORTAL LOGIC
+       CUSTOMER PORTAL SEPARATED LOGIC
     ===================================================== */
     async function loginCustomer() {
+      const email = document.getElementById('custEmail').value;
+      const password = document.getElementById('custPassword').value;
+
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("Logged in successfully!");
+        loadCustomerProfile();
+      } catch (err) {
+        alert("Login failed: " + err.message);
+      }
+    }
+
+    async function registerCustomer() {
       const email = document.getElementById('custEmail').value;
       const password = document.getElementById('custPassword').value;
       const phone = document.getElementById('custPhone').value;
 
       try {
-        let cred;
-        try {
-          cred = await auth.signInWithEmailAndPassword(email, password);
-        } catch {
-          cred = await auth.createUserWithEmailAndPassword(email, password);
-        }
-
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
         const token = await cred.user.getIdToken();
+        
         await fetch(`${BACKEND_URL}/api/customer/register`, {
           method: "POST",
           headers: {
@@ -474,10 +511,10 @@
           body: JSON.stringify({ email, phone })
         });
 
-        alert("Customer authenticated successfully.");
+        alert("Account registered successfully!");
         loadCustomerProfile();
       } catch (err) {
-        alert("Error: " + err.message);
+        alert("Registration failed: " + err.message);
       }
     }
 
@@ -575,29 +612,31 @@
       const tbody = document.getElementById("riderJobsTable");
       tbody.innerHTML = "";
 
-      data.orders.forEach(o => {
-        let actionBtn = "";
-        if (o.status === "assigned") {
-          actionBtn = `<button class="btn btn-warning" onclick="updateRiderOrder('${o.id}', 'pickup')">🏍️ Pickup Package</button>`;
-        } else if (o.status === "picked_up") {
-          actionBtn = `<button class="btn btn-primary" onclick="updateRiderOrder('${o.id}', 'start-delivery')">🚚 Start Delivery</button>`;
-        } else if (o.status === "in_transit") {
-          actionBtn = `<button class="btn btn-success" onclick="updateRiderOrder('${o.id}', 'delivered')">✅ Complete Delivery</button>`;
-        } else {
-          actionBtn = `<span>Completed</span>`;
-        }
+      if (data.orders) {
+        data.orders.forEach(o => {
+          let actionBtn = "";
+          if (o.status === "assigned") {
+            actionBtn = `<button class="btn btn-warning" onclick="updateRiderOrder('${o.id}', 'pickup')">🏍️ Pickup Package</button>`;
+          } else if (o.status === "picked_up") {
+            actionBtn = `<button class="btn btn-primary" onclick="updateRiderOrder('${o.id}', 'start-delivery')">🚚 Start Delivery</button>`;
+          } else if (o.status === "in_transit") {
+            actionBtn = `<button class="btn btn-success" onclick="updateRiderOrder('${o.id}', 'delivered')">✅ Complete Delivery</button>`;
+          } else {
+            actionBtn = `<span>Completed</span>`;
+          }
 
-        tbody.innerHTML += `
-          <tr>
-            <td>#${o.id.substring(0,6)}</td>
-            <td>${o.customerPhone || 'N/A'}</td>
-            <td>${o.pickup} ➔ ${o.dropoff}</td>
-            <td>KSh ${o.finalFare || 0}</td>
-            <td><strong>${o.status}</strong></td>
-            <td>${actionBtn}</td>
-          </tr>
-        `;
-      });
+          tbody.innerHTML += `
+            <tr>
+              <td>#${o.id.substring(0,6)}</td>
+              <td>${o.customerPhone || 'N/A'}</td>
+              <td>${o.pickup} ➔ ${o.dropoff}</td>
+              <td>KSh ${o.finalFare || 0}</td>
+              <td><strong>${o.status}</strong></td>
+              <td>${actionBtn}</td>
+            </tr>
+          `;
+        });
+      }
     }
 
     async function updateRiderOrder(orderId, actionPath) {
@@ -617,6 +656,25 @@
     /* =====================================================
        MODERATOR PORTAL LOGIC
     ===================================================== */
+    async function loginModerator() {
+      const email = document.getElementById('modEmail').value;
+      const password = document.getElementById('modPassword').value;
+
+      try {
+        const cred = await auth.signInWithEmailAndPassword(email, password);
+        const userDoc = await db.collection("users").doc(cred.user.uid).get();
+
+        if (userDoc.exists && (userDoc.data().role === "moderator" || userDoc.data().role === "admin")) {
+          alert("Moderator authenticated!");
+          checkModeratorAuth();
+        } else {
+          alert("Access Denied: This email account does not have moderator privileges in Firestore.");
+        }
+      } catch (err) {
+        alert("Moderator Login Failed: " + err.message);
+      }
+    }
+
     async function loadModeratorDashboard() {
       const token = await auth.currentUser.getIdToken();
 
@@ -633,56 +691,62 @@
       const tbodyOrders = document.getElementById("moderatorOrdersTable");
       tbodyOrders.innerHTML = "";
 
-      dataOrders.orders.forEach(o => {
-        let riderOptions = `<option value="">-- Select Available Rider --</option>`;
-        dataRiders.riders.forEach(r => {
-          const avail = r.availabilityStatus === "available" ? "🟢" : "🔴";
-          const selected = o.riderUid === r.uid ? "selected" : "";
-          riderOptions += `<option value="${r.uid}" ${selected}>${avail} ${r.name} (${r.jobId})</option>`;
-        });
+      if (dataOrders.orders) {
+        dataOrders.orders.forEach(o => {
+          let riderOptions = `<option value="">-- Select Available Rider --</option>`;
+          if (dataRiders.riders) {
+            dataRiders.riders.forEach(r => {
+              const avail = r.availabilityStatus === "available" ? "🟢" : "🔴";
+              const selected = o.riderUid === r.uid ? "selected" : "";
+              riderOptions += `<option value="${r.uid}" ${selected}>${avail} ${r.name} (${r.jobId})</option>`;
+            });
+          }
 
-        tbodyOrders.innerHTML += `
-          <tr>
-            <td>#${o.id.substring(0,6)}</td>
-            <td>${o.customerPhone || 'N/A'}</td>
-            <td>${o.pickup} ➔ ${o.dropoff}</td>
-            <td><input type="number" id="baseFare_${o.id}" class="form-control" value="${o.originalFare || 0}"></td>
-            <td><input type="number" id="chargeFare_${o.id}" class="form-control" value="${o.transportCharge || 0}"></td>
-            <td><strong>KSh ${o.finalFare || 0}</strong></td>
-            <td>${o.status}</td>
-            <td>
-              <select id="riderSelect_${o.id}" class="form-control">
-                ${riderOptions}
-              </select>
-            </td>
-            <td>
-              <button class="btn btn-primary" onclick="saveModeratorFare('${o.id}')">Save Fare</button>
-              <button class="btn btn-success" onclick="assignRiderByModerator('${o.id}')">Assign</button>
-            </td>
-          </tr>
-        `;
-      });
+          tbodyOrders.innerHTML += `
+            <tr>
+              <td>#${o.id.substring(0,6)}</td>
+              <td>${o.customerPhone || 'N/A'}</td>
+              <td>${o.pickup} ➔ ${o.dropoff}</td>
+              <td><input type="number" id="baseFare_${o.id}" class="form-control" value="${o.originalFare || 0}"></td>
+              <td><input type="number" id="chargeFare_${o.id}" class="form-control" value="${o.transportCharge || 0}"></td>
+              <td><strong>KSh ${o.finalFare || 0}</strong></td>
+              <td>${o.status}</td>
+              <td>
+                <select id="riderSelect_${o.id}" class="form-control">
+                  ${riderOptions}
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-primary" onclick="saveModeratorFare('${o.id}')">Save Fare</button>
+                <button class="btn btn-success" onclick="assignRiderByModerator('${o.id}')">Assign</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
 
       const tbodyRiders = document.getElementById("moderatorRidersTable");
       tbodyRiders.innerHTML = "";
 
-      dataRiders.riders.forEach(r => {
-        const badgeClass = r.availabilityStatus === "available" ? "badge-available" : "badge-busy";
-        tbodyRiders.innerHTML += `
-          <tr>
-            <td>${r.jobId}</td>
-            <td>${r.name}</td>
-            <td>${r.phone || 'N/A'}</td>
-            <td>${r.status}</td>
-            <td><span class="badge ${badgeClass}">${r.availabilityStatus || 'offline'}</span></td>
-            <td>
-              <button class="btn btn-danger" onclick="toggleRiderStatus('${r.uid}', '${r.status}')">
-                ${r.status === 'active' ? 'Deactivate' : 'Activate'}
-              </button>
-            </td>
-          </tr>
-        `;
-      });
+      if (dataRiders.riders) {
+        dataRiders.riders.forEach(r => {
+          const badgeClass = r.availabilityStatus === "available" ? "badge-available" : "badge-busy";
+          tbodyRiders.innerHTML += `
+            <tr>
+              <td>${r.jobId}</td>
+              <td>${r.name}</td>
+              <td>${r.phone || 'N/A'}</td>
+              <td>${r.status}</td>
+              <td><span class="badge ${badgeClass}">${r.availabilityStatus || 'offline'}</span></td>
+              <td>
+                <button class="btn btn-danger" onclick="toggleRiderStatus('${r.uid}', '${r.status}')">
+                  ${r.status === 'active' ? 'Deactivate' : 'Activate'}
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }
     }
 
     async function registerRiderByModerator() {
