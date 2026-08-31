@@ -375,23 +375,22 @@
   <script>
     /* =====================================================
        FIREBASE CONFIGURATION
-       IMPORTANT: REPLACE LINES 333 - 344 WITH YOUR REAL KEYS
     ===================================================== */
     const firebaseConfig = {
-      apiKey: "PASTE_YOUR_FIREBASE_API_KEY_HERE",
-      authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "PASTE_YOUR_PROJECT_ID_HERE",
-      storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
-      appId: "PASTE_YOUR_APP_ID_HERE"
+      apiKey: "AIzaSyDajjbkMszs-HVNHeUivTMVS2OzrSxw-Lo",
+      authDomain: "planning-with-ai-f9d10.firebaseapp.com",
+      projectId: "planning-with-ai-f9d10",
+      storageBucket: "planning-with-ai-f9d10.firebasestorage.app",
+      messagingSenderId: "943382820296",
+      appId: "1:943382820296:web:677b8056f7212354ca3cfd"
     };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Replace with your actual Render URL (e.g., https://amir-chap-chap-backend.onrender.com)
-    const BACKEND_URL = "PASTE_YOUR_RENDER_BACKEND_URL_HERE";
+    // UPDATE THIS: Replace with your actual live Render URL when deployed
+    const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
 
     /* =====================================================
        SECURED PORTAL TAB SWITCHING
