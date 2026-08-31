@@ -223,7 +223,7 @@
 </head>
 <body>
 
-  <!-- Floating Sticky Notification Alert -->
+  <!-- Persistent Sticky Notification Alert -->
   <div id="notifBanner">
     <div class="notif-content">
       <span id="notifMessage">🔔 New Notification!</span>
@@ -310,7 +310,7 @@
               <th>Pickup ➔ Dropoff</th>
               <th>Payment Method</th>
               <th>Status</th>
-              <th>Final Fare</th>
+              <th>Final Cash Due</th>
               <th>Assigned Rider Info</th>
             </tr>
           </thead>
@@ -486,7 +486,6 @@
     function playNotificationSound() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
         const osc1 = audioCtx.createOscillator();
         const gain1 = audioCtx.createGain();
         osc1.type = "sine";
@@ -519,7 +518,7 @@
       const banner = document.getElementById('notifBanner');
       const msg = document.getElementById('notifMessage');
       msg.innerHTML = "🔔 " + text;
-      banner.style.display = "block"; // Remains until user clicks Open/Dismiss
+      banner.style.display = "block";
       playNotificationSound();
     }
 
@@ -635,19 +634,45 @@
         for (const doc of snapshot.docs) {
           const o = doc.data();
           const orderId = doc.id;
+          const totalFare = o.finalFare || 0;
 
-          // Process Loyalty Points: 10 KSh = 1 Point on completion
-          if (o.status === 'delivered' && !o.pointsAwarded && o.paymentMethod !== 'points') {
-            const earnedPoints = Math.floor((o.finalFare || 0) / 10);
-            if (earnedPoints > 0) {
-              await db.collection("users").doc(user.uid).update({
-                points: firebase.firestore.FieldValue.increment(earnedPoints)
-              });
-              await db.collection("orders").doc(orderId).update({ pointsAwarded: true });
+          let cashToPay = totalFare;
+          let pointsUsed = 0;
+
+          // Deduct points balance (1 Pt = 1 KSh)
+          if (o.paymentMethod === 'points' && totalFare > 0) {
+            if (userPoints >= totalFare) {
+              pointsUsed = totalFare;
+              cashToPay = 0;
+            } else {
+              pointsUsed = userPoints;
+              cashToPay = totalFare - userPoints;
             }
           }
 
-          // Customer Notification Check
+          // Handle Points Deductions and Rewards on Delivery Completion
+          if (o.status === 'delivered' && !o.pointsAwarded) {
+            let netPointsChange = 0;
+
+            if (o.paymentMethod === 'points' && pointsUsed > 0 && !o.pointsRedeemed) {
+              netPointsChange -= pointsUsed;
+            }
+
+            const earnedPoints = Math.floor(cashToPay / 10);
+            netPointsChange += earnedPoints;
+
+            if (netPointsChange !== 0) {
+              await db.collection("users").doc(user.uid).update({
+                points: firebase.firestore.FieldValue.increment(netPointsChange)
+              });
+            }
+
+            await db.collection("orders").doc(orderId).update({ 
+              pointsAwarded: true, 
+              pointsRedeemed: true 
+            });
+          }
+
           if (previousCustomerOrderStatuses[orderId] && previousCustomerOrderStatuses[orderId] !== 'delivered' && o.status === 'delivered') {
             showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered! 🎉`);
           }
@@ -671,7 +696,18 @@
             }
           }
 
-          const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
+          let payLabel = "💵 Cash";
+          if (o.paymentMethod === 'mpesa') {
+            payLabel = "📱 M-Pesa";
+          } else if (o.paymentMethod === 'points') {
+            if (cashToPay === 0 && totalFare > 0) {
+              payLabel = `⭐ Full Points (${pointsUsed} pts)`;
+            } else if (pointsUsed > 0) {
+              payLabel = `⭐ ${pointsUsed} pts + 💵 KSh ${cashToPay} Cash`;
+            } else {
+              payLabel = "⭐ Points";
+            }
+          }
 
           tbody.innerHTML += `
             <tr>
@@ -679,7 +715,7 @@
               <td>${o.pickup} ➔ ${o.dropoff}</td>
               <td><strong>${payLabel}</strong></td>
               <td><strong>${o.status || 'Pending'}</strong></td>
-              <td>KSh ${o.finalFare || o.originalFare || 'TBD'}</td>
+              <td>KSh ${cashToPay}${totalFare !== cashToPay ? ` (Total: KSh ${totalFare})` : ''}</td>
               <td>${riderDetails}</td>
             </tr>
           `;
@@ -703,7 +739,7 @@
       if (!pickup || !dropoff) return alert("Please specify both pickup and destination.");
 
       if (paymentMethod === 'points' && currentPoints <= 0) {
-        return alert("You have 0 Loyalty Points! Please select Cash or M-Pesa.");
+        return alert("You have 0 Loyalty Points! Please select Pay Cash or M-Pesa.");
       }
 
       await db.collection("orders").add({
@@ -718,6 +754,7 @@
         finalFare: 0,
         status: "pending",
         pointsAwarded: false,
+        pointsRedeemed: false,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 
