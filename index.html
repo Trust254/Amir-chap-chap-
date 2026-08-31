@@ -7,102 +7,152 @@
   <style>
     :root {
       --bg-dark: #0f172a;
-      --card-bg: #1e293b;
+      --card-bg: #ffffff;
       --primary: #f59e0b;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --primary-hover: #d97706;
+      --dark-card: #1e293b;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #22c55e;
+      --danger: #ef4444;
     }
+
+    * { box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-dark);
-      color: var(--text);
+      color: #f8fafc;
       margin: 0;
       padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
+
     .header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
     }
     .header h1 {
       margin: 0;
       font-size: 28px;
+      font-weight: 800;
     }
-    .header span {
-      color: var(--primary);
-    }
-    .nav-buttons {
+    .header h1 span { color: var(--primary); }
+    .header p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+
+    /* TOP TAB NAVIGATION */
+    .nav-tabs {
       display: flex;
       gap: 8px;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 16px;
       justify-content: center;
-      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
-    .nav-btn {
-      background: var(--card-bg);
+    .nav-tab {
+      flex: 1;
+      min-width: 90px;
+      background: var(--dark-card);
       border: 1px solid #334155;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
+      color: #f8fafc;
+      padding: 10px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.2s ease;
     }
+    .nav-tab.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* CARDS & PANELS */
     .card {
-      background: #ffffff;
-      color: #0f172a;
+      background: var(--card-bg);
+      color: var(--text-dark);
       border-radius: 12px;
       padding: 20px;
-      max-width: 480px;
-      margin: 0 auto 20px auto;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      display: none;
     }
-    .form-group {
-      margin-bottom: 14px;
+    .card.active-card { display: block; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
     }
+    .card-header h3 { margin: 0; font-size: 20px; }
+
+    /* FORMS & INPUTS */
+    .form-group { margin-bottom: 14px; }
     .form-group label {
       display: block;
       font-weight: 600;
       margin-bottom: 6px;
       font-size: 14px;
+      color: #334155;
     }
     .form-group input, .form-group select {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      box-sizing: border-box;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
       font-size: 14px;
+      background: #f8fafc;
     }
+
+    /* BUTTONS */
     .btn {
       width: 100%;
-      background: #0f172a;
+      background: var(--bg-dark);
       color: white;
       padding: 12px;
       border: none;
-      border-radius: 6px;
-      font-weight: 600;
+      border-radius: 8px;
+      font-weight: 700;
       cursor: pointer;
+      font-size: 14px;
     }
-    .btn-warning {
-      background: var(--primary);
-      color: #000;
-    }
-    .btn-danger {
-      background: #ef4444;
-      color: white;
-    }
+    .btn-warning { background: var(--primary); color: #000; }
+    .btn-warning:hover { background: var(--primary-hover); }
+    .btn-danger { background: var(--danger); color: white; width: auto; padding: 6px 12px; font-size: 12px; }
+    .btn-sm { padding: 8px 12px; margin-top: 6px; font-size: 13px; }
+
+    /* ORDER CARDS */
     .order-item {
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
     }
+    .order-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .order-meta { font-size: 13px; color: #475569; margin-bottom: 6px; line-height: 1.4; }
+    
     .status-tag {
       display: inline-block;
-      padding: 2px 8px;
-      border-radius: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
       font-size: 12px;
+      font-weight: 600;
       background: #e2e8f0;
+      color: #334155;
       text-transform: capitalize;
     }
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-approved { background: #dcfce7; color: #166534; }
+    .status-assigned { background: #e0e7ff; color: #3730a3; }
   </style>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -112,40 +162,41 @@
 
   <div class="header">
     <h1>Amir <span>Chap Chap</span></h1>
-    <p style="color: var(--text-muted); font-size: 14px;">Fast & Reliable Service</p>
+    <p>Fast & Reliable Service</p>
   </div>
 
-  <div class="nav-buttons">
-    <button class="nav-btn" onclick="showSection('authSection')">Login / Register</button>
-    <button class="nav-btn" onclick="showSection('customerSection')">Customer</button>
-    <button class="nav-btn" onclick="showSection('moderatorSection')">Moderator</button>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('auth')">Login</button>
+    <button class="nav-tab" onclick="switchTab('customer')">Customer</button>
+    <button class="nav-tab" onclick="switchTab('rider')">Rider</button>
+    <button class="nav-tab" onclick="switchTab('moderator')">Moderator</button>
   </div>
 
-  <div id="authSection" class="card">
-    <h3>Customer Portal Access</h3>
+  <div id="authPanel" class="card active-card">
+    <h3>Customer Access</h3>
     <div class="form-group">
       <label>Email Address</label>
-      <input type="email" id="authEmail" placeholder="e.g. user@example.com" required>
+      <input type="email" id="authEmail" placeholder="user@example.com">
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" id="authPassword" placeholder="••••••••" required>
+      <input type="password" id="authPassword" placeholder="••••••••">
     </div>
     <div class="form-group">
-      <label>Phone Number (Required for New Register)</label>
+      <label>Phone Number (New Accounts)</label>
       <input type="tel" id="authPhone" placeholder="0712345678">
     </div>
     <button class="btn" onclick="handleLogin()">Login</button>
     <button class="btn btn-warning" style="margin-top: 8px;" onclick="handleRegister()">Register & Auto-Login</button>
   </div>
 
-  <div id="customerSection" class="card" style="display: none;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+  <div id="customerPanel" class="card">
+    <div class="card-header">
       <h3>Customer Portal</h3>
-      <button class="btn btn-danger" style="width: auto; padding: 6px 12px;" onclick="handleLogout()">Logout</button>
+      <button class="btn btn-danger" onclick="handleLogout()">Sign Out</button>
     </div>
 
-    <h4>Book a Service</h4>
+    <h4 style="margin-bottom: 10px;">Book a Service</h4>
     <div class="form-group">
       <label>Service Type</label>
       <select id="custService">
@@ -155,37 +206,49 @@
     </div>
     <div class="form-group">
       <label>Pickup Location</label>
-      <input type="text" id="custPickup" placeholder="Example: Lenana" required>
+      <input type="text" id="custPickup" placeholder="e.g. Lenana">
     </div>
     <div class="form-group">
       <label>Destination</label>
-      <input type="text" id="custDestination" placeholder="Example: Naivas" required>
+      <input type="text" id="custDestination" placeholder="e.g. Naivas">
     </div>
     <div class="form-group">
       <label>Phone Number / WhatsApp</label>
-      <input type="tel" id="custPhone" placeholder="Example: 0712345678" required>
+      <input type="tel" id="custPhone" placeholder="0712345678">
     </div>
     <div class="form-group">
       <label>Distance in KM</label>
-      <input type="number" id="custDistance" placeholder="Example: 5" required>
+      <input type="number" id="custDistance" placeholder="e.g. 5">
     </div>
-    <button class="btn btn-warning" onclick="submitCustomerOrder()">Submit Order for Price Quote</button>
+    <button class="btn btn-warning" onclick="submitCustomerOrder()">Submit Order</button>
 
-    <h4 style="margin-top: 24px;">My Orders</h4>
+    <h4 style="margin-top: 24px; margin-bottom: 10px;">My Orders</h4>
     <div id="customerOrdersList">Loading orders...</div>
   </div>
 
-  <div id="moderatorSection" class="card" style="display: none;">
-    <h3>All Orders & Fare Control</h3>
-    <button class="btn" onclick="loadModeratorOrders()">Refresh Orders</button>
+  <div id="riderPanel" class="card">
+    <div class="card-header">
+      <h3>Rider Portal</h3>
+      <button class="btn btn-danger" onclick="handleLogout()">Sign Out</button>
+    </div>
+    <button class="btn btn-sm" onclick="loadRiderJobs()">Refresh Assigned Jobs</button>
+    <div id="riderJobsList" style="margin-top: 16px;">Loading jobs...</div>
+  </div>
+
+  <div id="moderatorPanel" class="card">
+    <div class="card-header">
+      <h3>All Orders & Fare Control</h3>
+      <button class="btn btn-danger" onclick="handleLogout()">Sign Out</button>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: -10px;">Approve orders, update fares, and assign active riders.</p>
+    <button class="btn btn-sm" onclick="loadModeratorOrders()">Refresh Orders</button>
     <div id="moderatorOrdersList" style="margin-top: 16px;">Loading orders...</div>
   </div>
 
   <script>
-    // 1. YOUR BACKEND API BASE URL
     const API_BASE_URL = "https://amir-chap-chap-backend.onrender.com";
 
-    // 2. YOUR FIREBASE CONFIGURATION
+    // Insert your active Firebase Web SDK Configuration
     const firebaseConfig = {
       apiKey: "YOUR_FIREBASE_API_KEY",
       authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -197,47 +260,48 @@
 
     firebase.initializeApp(firebaseConfig);
 
-    // PERSISTENCE & AUTO LOGIN MONITOR
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        showSection('customerSection');
+        switchTab('customer');
         loadCustomerOrders();
       } else {
-        showSection('authSection');
+        switchTab('auth');
       }
     });
 
-    function showSection(sectionId) {
-      document.getElementById('authSection').style.display = 'none';
-      document.getElementById('customerSection').style.display = 'none';
-      document.getElementById('moderatorSection').style.display = 'none';
-      document.getElementById(sectionId).style.display = 'block';
+    function switchTab(tab) {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('active-card'));
 
-      if (sectionId === 'moderatorSection') loadModeratorOrders();
+      if (tab === 'auth') {
+        document.getElementById('authPanel').classList.add('active-card');
+      } else if (tab === 'customer') {
+        document.getElementById('customerPanel').classList.add('active-card');
+      } else if (tab === 'rider') {
+        document.getElementById('riderPanel').classList.add('active-card');
+        loadRiderJobs();
+      } else if (tab === 'moderator') {
+        document.getElementById('moderatorPanel').classList.add('active-card');
+        loadModeratorOrders();
+      }
     }
 
-    // AUTHENTICATION LOGIC
     async function handleRegister() {
       const email = document.getElementById('authEmail').value;
       const password = document.getElementById('authPassword').value;
       const phone = document.getElementById('authPhone').value;
 
-      if (!phone) return alert("Please enter your phone number to register.");
-
       try {
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const token = await userCredential.user.getIdToken();
+        const cred = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const token = await cred.user.getIdToken();
 
         await fetch(`${API_BASE_URL}/api/customer/register`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
           body: JSON.stringify({ phone })
         });
 
-        alert("Registration successful! Logging you in...");
+        alert("Registered and logged in!");
       } catch (err) {
         alert("Registration failed: " + err.message);
       }
@@ -246,7 +310,6 @@
     async function handleLogin() {
       const email = document.getElementById('authEmail').value;
       const password = document.getElementById('authPassword').value;
-
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
       } catch (err) {
@@ -258,7 +321,6 @@
       await firebase.auth().signOut();
     }
 
-    // CUSTOMER ORDER SUBMISSION
     async function submitCustomerOrder() {
       const pickup = document.getElementById('custPickup').value;
       const destination = document.getElementById('custDestination').value;
@@ -266,25 +328,18 @@
       const distance = document.getElementById('custDistance').value;
 
       const user = firebase.auth().currentUser;
-      if (!user) return alert("You must be logged in.");
-
+      if (!user) return alert("Log in required");
       const token = await user.getIdToken();
 
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/customer/orders`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({ pickup, destination, phone, distance })
-        });
+      const res = await fetch(`${API_BASE_URL}/api/customer/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({ pickup, destination, phone, distance })
+      });
 
-        if (!res.ok) throw new Error("Order submission failed");
-        alert("Order submitted! The moderator will review and set the fair price.");
+      if (res.ok) {
+        alert("Order submitted to moderator for pricing.");
         loadCustomerOrders();
-      } catch (err) {
-        alert(err.message);
       }
     }
 
@@ -298,26 +353,71 @@
       });
       const data = await res.json();
 
-      const listDiv = document.getElementById('customerOrdersList');
-      if (!data.orders || data.orders.length === 0) {
-        listDiv.innerHTML = "<p>No orders placed yet.</p>";
+      const list = document.getElementById('customerOrdersList');
+      if (!data.orders || !data.orders.length) {
+        list.innerHTML = "<p>No orders submitted yet.</p>";
         return;
       }
 
-      listDiv.innerHTML = data.orders.map(o => `
+      list.innerHTML = data.orders.map(o => `
         <div class="order-item">
-          <strong>${o.pickup} → ${o.destination}</strong><br>
-          Phone: ${o.customerPhone || 'N/A'}<br>
-          Fare: <strong>KSh ${o.fare || 0}</strong><br>
-          Status: <span class="status-tag">${o.status}</span>
+          <div class="order-title">${o.pickup} → ${o.destination}</div>
+          <div class="order-meta">
+            Phone: ${o.customerPhone || 'N/A'}<br>
+            Fare: <strong>KSh ${o.fare || 0}</strong>
+          </div>
+          <span class="status-tag status-${o.status}">${o.status}</span>
         </div>
       `).join('');
     }
 
-    // MODERATOR FARE CONTROL
+    async function loadRiderJobs() {
+      const user = firebase.auth().currentUser;
+      if (!user) return;
+      const token = await user.getIdToken();
+
+      const res = await fetch(`${API_BASE_URL}/api/rider/jobs`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      const data = await res.json();
+
+      const list = document.getElementById('riderJobsList');
+      if (!data.orders || !data.orders.length) {
+        list.innerHTML = "<p>No jobs assigned to you yet.</p>";
+        return;
+      }
+
+      list.innerHTML = data.orders.map(o => `
+        <div class="order-item">
+          <div class="order-title">${o.pickup} → ${o.destination}</div>
+          <div class="order-meta">Customer Phone: ${o.customerPhone || 'N/A'}<br>Fare: KSh ${o.fare || 0}</div>
+          <button class="btn btn-warning btn-sm" onclick="updateRiderStatus('${o.id}', 'pickup')">Mark Picked Up</button>
+          <button class="btn btn-sm" onclick="updateRiderStatus('${o.id}', 'delivered')">Mark Delivered</button>
+        </div>
+      `).join('');
+    }
+
+    async function updateRiderStatus(orderId, action) {
+      const user = firebase.auth().currentUser;
+      const token = await user.getIdToken();
+      const endpoint = action === "delivered" 
+        ? `${API_BASE_URL}/api/rider/orders/${orderId}/delivered`
+        : `${API_BASE_URL}/api/rider/orders/${orderId}/${action}`;
+
+      const res = await fetch(endpoint, {
+        method: "PATCH",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+
+      if (res.ok) {
+        alert("Status updated!");
+        loadRiderJobs();
+      }
+    }
+
     async function loadModeratorOrders() {
       const user = firebase.auth().currentUser;
-      if (!user) return alert("Please log in as a moderator first.");
+      if (!user) return;
       const token = await user.getIdToken();
 
       const res = await fetch(`${API_BASE_URL}/api/moderator/orders`, {
@@ -325,27 +425,31 @@
       });
       const data = await res.json();
 
-      const listDiv = document.getElementById('moderatorOrdersList');
-      if (!data.orders || data.orders.length === 0) {
-        listDiv.innerHTML = "<p>No orders available.</p>";
+      const list = document.getElementById('moderatorOrdersList');
+      if (!data.orders || !data.orders.length) {
+        list.innerHTML = "<p>No orders found.</p>";
         return;
       }
 
-      listDiv.innerHTML = data.orders.map(o => `
+      list.innerHTML = data.orders.map(o => `
         <div class="order-item">
-          <strong>${o.pickup} → ${o.destination}</strong><br>
-          Customer: ${o.customerEmail} (${o.customerPhone || 'No Phone'})<br>
-          Original Fare: KSh ${o.originalFare || 0} | Transport: KSh ${o.transportCharge || 0}<br>
-          Final Fare: <strong>KSh ${o.fare || 0}</strong> | Status: <span class="status-tag">${o.status}</span>
-          <hr style="margin: 8px 0;">
+          <div class="order-title">${o.pickup} → ${o.destination}</div>
+          <div class="order-meta">
+            Customer: ${o.customerEmail}<br>
+            Phone: ${o.customerPhone || 'N/A'}<br>
+            Original: KSh ${o.originalFare || 0} | Transport: KSh ${o.transportCharge || 0}<br>
+            <strong>Final Fare: KSh ${o.fare || 0}</strong>
+          </div>
+          <span class="status-tag status-${o.status}">${o.status}</span>
+          <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border);">
           <div class="form-group">
             <input type="number" id="orig_${o.id}" placeholder="Original Fare (KSh)" value="${o.originalFare || ''}">
           </div>
           <div class="form-group">
             <input type="number" id="trans_${o.id}" placeholder="Transport Charge (KSh)" value="${o.transportCharge || ''}">
           </div>
-          <button class="btn btn-warning" onclick="updateModeratorFare('${o.id}')">Update Fare</button>
-          <button class="btn" style="margin-top: 6px;" onclick="approveOrder('${o.id}')">Approve Order</button>
+          <button class="btn btn-warning btn-sm" onclick="updateModeratorFare('${o.id}')">Update Fare</button>
+          <button class="btn btn-sm" onclick="approveOrder('${o.id}')">Approve Order</button>
         </div>
       `).join('');
     }
@@ -357,21 +461,17 @@
       const user = firebase.auth().currentUser;
       const token = await user.getIdToken();
 
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/moderator/orders/${orderId}/fare`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({ originalFare, transportCharge })
-        });
+      const res = await fetch(`${API_BASE_URL}/api/moderator/orders/${orderId}/fare`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({ originalFare, transportCharge })
+      });
 
-        if (!res.ok) throw new Error("Could not update fare");
+      if (res.ok) {
         alert("Fare updated successfully!");
         loadModeratorOrders();
-      } catch (err) {
-        alert("Could not update fare: " + err.message);
+      } else {
+        alert("Failed to update fare.");
       }
     }
 
