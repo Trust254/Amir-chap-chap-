@@ -166,6 +166,36 @@
       font-weight: bold;
     }
 
+    .rider-info-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    /* NOTIFICATION BELL BANNER */
+    #notifBanner {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #15803d;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 9999;
+      font-weight: bold;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
     @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
       header { flex-direction: column; gap: 10px; text-align: center; }
@@ -174,6 +204,11 @@
   </style>
 </head>
 <body>
+
+  <!-- Floating Notification Alert -->
+  <div id="notifBanner">
+    <span id="notifMessage">🔔 New Notification!</span>
+  </div>
 
   <header>
     <h1>Amir Chap Chap</h1>
@@ -191,9 +226,7 @@
 
   <div class="container">
 
-    <!-- =====================================================
-         1. CUSTOMER PORTAL
-    ===================================================== -->
+    <!-- CUSTOMER PORTAL -->
     <section id="customerPortal" class="portal-section active">
       <div class="status-bar">
         <span>Customer Account</span>
@@ -201,7 +234,6 @@
       </div>
 
       <div class="grid-2">
-        <!-- Customer Registration / Auth -->
         <div class="card">
           <h2>1. Customer Account Access</h2>
           <div class="form-group">
@@ -222,7 +254,6 @@
           </div>
         </div>
 
-        <!-- Create Order -->
         <div class="card">
           <h2>2. Request Parcel / Passenger Trip</h2>
           <div class="form-group">
@@ -241,17 +272,16 @@
         </div>
       </div>
 
-      <!-- Customer Active Orders -->
       <div class="card">
-        <h2>My Orders & Deliveries</h2>
+        <h2>My Orders & Assigned Rider Details</h2>
         <table>
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Pickup -> Dropoff</th>
+              <th>Pickup ➔ Dropoff</th>
               <th>Status</th>
               <th>Final Fare</th>
-              <th>Assigned Rider</th>
+              <th>Assigned Rider Info</th>
             </tr>
           </thead>
           <tbody id="customerOrdersTable">
@@ -261,12 +291,9 @@
       </div>
     </section>
 
-    <!-- =====================================================
-         2. RIDER PORTAL
-    ===================================================== -->
+    <!-- RIDER PORTAL -->
     <section id="riderPortal" class="portal-section">
       <div class="grid-2">
-        <!-- Rider Login -->
         <div class="card">
           <h2>Rider Portal Access</h2>
           <div class="form-group">
@@ -280,16 +307,15 @@
           <button class="btn btn-primary" onclick="loginRider()">Rider Login</button>
         </div>
 
-        <!-- Rider Profile Info -->
         <div class="card">
           <h2>Rider Profile Status</h2>
           <p><strong>Rider Name:</strong> <span id="riderProfileName">-</span></p>
           <p><strong>Job ID:</strong> <span id="riderProfileJobId">-</span></p>
+          <p><strong>Plate Number:</strong> <span id="riderProfilePlate">-</span></p>
           <p><strong>Status:</strong> <span id="riderProfileStatus" class="badge badge-offline">Offline</span></p>
         </div>
       </div>
 
-      <!-- Rider Assigned Jobs -->
       <div class="card">
         <h2>Assigned Deliveries & Actions</h2>
         <table>
@@ -310,11 +336,8 @@
       </div>
     </section>
 
-    <!-- =====================================================
-         3. MODERATOR PORTAL
-    ===================================================== -->
+    <!-- MODERATOR PORTAL -->
     <section id="moderatorPortal" class="portal-section">
-      <!-- Moderator Authentication -->
       <div class="card" id="modAuthCard">
         <h2>Moderator Login</h2>
         <div class="grid-2">
@@ -331,7 +354,6 @@
       </div>
 
       <div id="modDashboardContent" style="display:none;">
-        <!-- Create Rider -->
         <div class="card">
           <h2>Create / Register New Rider</h2>
           <div class="grid-2">
@@ -348,6 +370,14 @@
               <input type="text" id="modRiderPhone" class="form-control" placeholder="+254 700 111222">
             </div>
             <div class="form-group">
+              <label>Motorbike Plate Number</label>
+              <input type="text" id="modRiderPlate" class="form-control" placeholder="KMTE 123X">
+            </div>
+            <div class="form-group">
+              <label>Bike Model / Make</label>
+              <input type="text" id="modRiderBikeModel" class="form-control" placeholder="Boxer BM150">
+            </div>
+            <div class="form-group">
               <label>Password</label>
               <input type="password" id="modRiderPassword" class="form-control" placeholder="••••••••">
             </div>
@@ -355,7 +385,6 @@
           <button class="btn btn-primary" onclick="registerRiderByModerator()">Register Rider</button>
         </div>
 
-        <!-- Moderator All Orders -->
         <div class="card">
           <h2>Manage Orders & Set Fares</h2>
           <table>
@@ -378,7 +407,6 @@
           </table>
         </div>
 
-        <!-- Available Riders Table -->
         <div class="card">
           <h2>Rider Availability Monitor</h2>
           <table>
@@ -387,13 +415,15 @@
                 <th>Job ID</th>
                 <th>Name</th>
                 <th>Phone</th>
+                <th>Plate Number</th>
+                <th>Bike Model</th>
                 <th>Account Status</th>
                 <th>Availability</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody id="moderatorRidersTable">
-              <tr><td colspan="6">Loading riders...</td></tr>
+              <tr><td colspan="8">Loading riders...</td></tr>
             </tbody>
           </table>
         </div>
@@ -403,9 +433,6 @@
   </div>
 
   <script>
-    /* =====================================================
-       FIREBASE CONFIGURATION
-    ===================================================== */
     const firebaseConfig = {
       apiKey: "AIzaSyDajjbkMszs-HVNHeUivTMVS2OzrSxw-Lo",
       authDomain: "planning-with-ai-f9d10.firebaseapp.com",
@@ -422,8 +449,54 @@
     const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
 
     /* =====================================================
-       PORTAL TAB SWITCHING
+       AUDIO NOTIFICATION GENERATOR
     ===================================================== */
+    function playNotificationSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Bell tone 1
+        const osc1 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        osc1.type = "sine";
+        osc1.frequency.value = 880; // A5 tone
+        gain1.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
+        osc1.connect(gain1);
+        gain1.connect(audioCtx.destination);
+        osc1.start();
+        osc1.stop(audioCtx.currentTime + 0.8);
+
+        // Bell tone 2 (chime echo)
+        setTimeout(() => {
+          const osc2 = audioCtx.createOscillator();
+          const gain2 = audioCtx.createGain();
+          osc2.type = "sine";
+          osc2.frequency.value = 1174.66; // D6 tone
+          gain2.gain.setValueAtTime(0.4, audioCtx.currentTime);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.0);
+          osc2.connect(gain2);
+          gain2.connect(audioCtx.destination);
+          osc2.start();
+          osc2.stop(audioCtx.currentTime + 1.0);
+        }, 150);
+      } catch (e) {
+        console.log("Audio play prevented until user interacts with the page.");
+      }
+    }
+
+    function showBannerNotification(text) {
+      const banner = document.getElementById('notifBanner');
+      const msg = document.getElementById('notifMessage');
+      msg.innerHTML = "🔔 " + text;
+      banner.style.display = "block";
+      playNotificationSound();
+
+      setTimeout(() => {
+        banner.style.display = "none";
+      }, 6000);
+    }
+
     function switchPortal(portalName) {
       document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -458,9 +531,6 @@
       document.getElementById('modDashboardContent').style.display = "none";
     }
 
-    /* =====================================================
-       AUTH MONITOR & LOGOUT
-    ===================================================== */
     auth.onAuthStateChanged(async (user) => {
       const header = document.getElementById('authStatusHeader');
       if (user) {
@@ -477,9 +547,6 @@
       location.reload();
     }
 
-    /* =====================================================
-       CUSTOMER PORTAL SEPARATED LOGIC
-    ===================================================== */
     async function loginCustomer() {
       const email = document.getElementById('custEmail').value;
       const password = document.getElementById('custPassword').value;
@@ -518,6 +585,8 @@
       }
     }
 
+    let previousCustomerOrderStatuses = {};
+
     async function loadCustomerProfile() {
       const user = auth.currentUser;
       if (!user) return;
@@ -527,21 +596,49 @@
         document.getElementById('customerPointsDisplay').textContent = `Loyalty Points: ${userDoc.data().points || 0} pts`;
       }
 
-      db.collection("orders").where("userId", "==", user.uid).onSnapshot(snapshot => {
+      db.collection("orders").where("userId", "==", user.uid).onSnapshot(async snapshot => {
         const tbody = document.getElementById("customerOrdersTable");
         tbody.innerHTML = "";
-        snapshot.forEach(doc => {
+        
+        for (const doc of snapshot.docs) {
           const o = doc.data();
+          const orderId = doc.id;
+
+          // Customer Notification Check
+          if (previousCustomerOrderStatuses[orderId] && previousCustomerOrderStatuses[orderId] !== 'delivered' && o.status === 'delivered') {
+            showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered! 🎉`);
+          }
+          previousCustomerOrderStatuses[orderId] = o.status;
+
+          let riderDetails = "<em>Unassigned</em>";
+
+          if (o.riderUid) {
+            const riderDoc = await db.collection("users").doc(o.riderUid).get();
+            if (riderDoc.exists) {
+              const r = riderDoc.data();
+              riderDetails = `
+                <div class="rider-info-box">
+                  <strong>👤 ${r.name || 'Rider'}</strong><br>
+                  📞 <a href="tel:${r.phone}">${r.phone || 'N/A'}</a><br>
+                  🏍️ <strong>Plate:</strong> ${r.plateNumber || 'N/A'}<br>
+                  🛵 <strong>Bike:</strong> ${r.bikeModel || 'N/A'}
+                </div>
+              `;
+            } else {
+              riderDetails = `<span>Assigned (${o.riderName || 'Rider'})</span>`;
+            }
+          }
+
           tbody.innerHTML += `
             <tr>
-              <td>#${doc.id.substring(0,6)}</td>
+              <td>#${orderId.substring(0,6)}</td>
               <td>${o.pickup} ➔ ${o.dropoff}</td>
               <td><strong>${o.status || 'Pending'}</strong></td>
               <td>KSh ${o.finalFare || o.originalFare || 'TBD'}</td>
-              <td>${o.riderName || 'Unassigned'}</td>
+              <td>${riderDetails}</td>
             </tr>
           `;
-        });
+        }
       });
     }
 
@@ -573,9 +670,8 @@
       alert("Order submitted successfully!");
     }
 
-    /* =====================================================
-       RIDER PORTAL LOGIC
-    ===================================================== */
+    let previousRiderOrderCount = null;
+
     async function loginRider() {
       const jobId = document.getElementById('riderJobIdInput').value;
       const password = document.getElementById('riderPasswordInput').value;
@@ -594,9 +690,18 @@
 
         document.getElementById('riderProfileName').textContent = data.rider.name;
         document.getElementById('riderProfileJobId').textContent = data.rider.jobId;
+        document.getElementById('riderProfilePlate').textContent = data.rider.plateNumber || 'N/A';
         document.getElementById('riderProfileStatus').textContent = data.rider.availabilityStatus;
 
-        loadRiderJobs();
+        // Start listening to order changes for real-time sound/bell alerts
+        db.collection("orders").where("riderUid", "==", auth.currentUser.uid).onSnapshot(snapshot => {
+          if (previousRiderOrderCount !== null && snapshot.size > previousRiderOrderCount) {
+            showBannerNotification("You received a NEW Delivery Request! 🏍️💨");
+          }
+          previousRiderOrderCount = snapshot.size;
+          loadRiderJobs();
+        });
+
       } catch (err) {
         alert("Rider login failed: " + err.message);
       }
@@ -653,9 +758,6 @@
       loadRiderJobs();
     }
 
-    /* =====================================================
-       MODERATOR PORTAL LOGIC
-    ===================================================== */
     async function loginModerator() {
       const email = document.getElementById('modEmail').value;
       const password = document.getElementById('modPassword').value;
@@ -698,7 +800,7 @@
             dataRiders.riders.forEach(r => {
               const avail = r.availabilityStatus === "available" ? "🟢" : "🔴";
               const selected = o.riderUid === r.uid ? "selected" : "";
-              riderOptions += `<option value="${r.uid}" ${selected}>${avail} ${r.name} (${r.jobId})</option>`;
+              riderOptions += `<option value="${r.uid}" ${selected}>${avail} ${r.name} (${r.plateNumber || r.jobId})</option>`;
             });
           }
 
@@ -736,6 +838,8 @@
               <td>${r.jobId}</td>
               <td>${r.name}</td>
               <td>${r.phone || 'N/A'}</td>
+              <td><strong>${r.plateNumber || 'N/A'}</strong></td>
+              <td>${r.bikeModel || 'N/A'}</td>
               <td>${r.status}</td>
               <td><span class="badge ${badgeClass}">${r.availabilityStatus || 'offline'}</span></td>
               <td>
@@ -753,6 +857,8 @@
       const jobId = document.getElementById('modRiderJobId').value;
       const name = document.getElementById('modRiderName').value;
       const phone = document.getElementById('modRiderPhone').value;
+      const plateNumber = document.getElementById('modRiderPlate').value;
+      const bikeModel = document.getElementById('modRiderBikeModel').value;
       const password = document.getElementById('modRiderPassword').value;
 
       const token = await auth.currentUser.getIdToken();
@@ -762,13 +868,13 @@
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ jobId, name, phone, password })
+        body: JSON.stringify({ jobId, name, phone, plateNumber, bikeModel, password })
       });
 
       const data = await res.json();
       if (!res.ok) return alert("Error: " + data.error);
 
-      alert("Rider created successfully!");
+      alert("Rider created successfully with Motorbike details!");
       loadModeratorDashboard();
     }
 
