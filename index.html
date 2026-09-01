@@ -376,13 +376,13 @@
         <div class="grid-2">
           <div class="form-group">
             <label>Order Number / ID</label>
-            <input type="text" id="trackOrderIdInput" class="form-control" placeholder="Enter Order ID">
+            <input type="text" id="trackOrderIdInput" class="form-control" placeholder="Enter full or 6-character Order ID (e.g. #a1b2c3)">
           </div>
           <div style="display:flex; align-items:flex-end; margin-bottom:12px;">
             <button class="btn btn-primary" onclick="trackCustomerOrder()">Track Order</button>
           </div>
         </div>
-        <div id="trackOrderResult" style="display:none; background:#f0fdf4; border:1px solid #bbf7d0; padding:12px; border-radius:6px; margin-top:10px;"></div>
+        <div id="trackOrderResult" style="display:none; background:#f0fdf4; border:1px solid #bbf7d0; padding:15px; border-radius:6px; margin-top:10px; line-height:1.6;"></div>
       </div>
 
       <div class="card">
@@ -469,6 +469,21 @@
       </div>
 
       <div id="modDashboardContent" style="display:none;">
+        
+        <!-- Offer Broadcast Tool -->
+        <div class="card">
+          <h2>🎉 Broadcast Special Offers & Notifications</h2>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Offer Details / Promo Announcement</label>
+              <input type="text" id="modOfferInput" class="form-control" placeholder="e.g. 🎁 Get 20% OFF on all parcel deliveries today!">
+            </div>
+            <div style="display:flex; align-items:flex-end; margin-bottom:12px;">
+              <button class="btn btn-success" onclick="broadcastOfferNotification()">Broadcast Offer to All Users</button>
+            </div>
+          </div>
+        </div>
+
         <div class="card">
           <h2>Create / Register New Rider</h2>
           <div class="grid-2">
@@ -553,10 +568,11 @@
                 <th>Phone / WhatsApp</th>
                 <th>Email</th>
                 <th>Loyalty Points</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="moderatorCustomersTable">
-              <tr><td colspan="4">Loading registered customers...</td></tr>
+              <tr><td colspan="5">Loading registered customers...</td></tr>
             </tbody>
           </table>
         </div>
@@ -630,6 +646,31 @@
 
     function dismissNotification() {
       document.getElementById('notifBanner').style.display = "none";
+    }
+
+    // Broadcast Listeners for Offers
+    db.collection("broadcasts").doc("currentOffer").onSnapshot(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        if (data && data.text) {
+          showBannerNotification(`<strong>SPECIAL OFFER:</strong> ${data.text}`);
+        }
+      }
+    });
+
+    async function broadcastOfferNotification() {
+      const offerMsg = document.getElementById('modOfferInput').value.trim();
+      if (!offerMsg) return alert("Please type an offer message.");
+
+      try {
+        await db.collection("broadcasts").doc("currentOffer").set({
+          text: offerMsg,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Offer broadcasted to all users!");
+      } catch(err) {
+        alert("Broadcast failed: " + err.message);
+      }
     }
 
     function switchPortal(portalName) {
@@ -897,26 +938,60 @@
     }
 
     async function trackCustomerOrder() {
-      const orderIdInput = document.getElementById('trackOrderIdInput').value.trim();
+      let rawInput = document.getElementById('trackOrderIdInput').value.trim();
       const resDiv = document.getElementById('trackOrderResult');
 
-      if (!orderIdInput) return alert("Please enter an Order ID.");
+      if (!rawInput) return alert("Please enter an Order ID.");
+      const searchId = rawInput.replace('#', '').toLowerCase();
 
       try {
-        const doc = await db.collection("orders").doc(orderIdInput).get();
-        if (!doc.exists) {
+        let matchedDoc = null;
+
+        // 1. Direct document ID lookup
+        const directDoc = await db.collection("orders").doc(searchId).get();
+        if (directDoc.exists) {
+          matchedDoc = directDoc;
+        } else {
+          // 2. Fallback search by 6-character prefix matching
+          const snapshot = await db.collection("orders").get();
+          snapshot.forEach(doc => {
+            if (doc.id.toLowerCase().startsWith(searchId) || doc.id.toLowerCase() === searchId) {
+              matchedDoc = doc;
+            }
+          });
+        }
+
+        if (!matchedDoc) {
           resDiv.style.display = "block";
-          resDiv.innerHTML = "<span style='color:red;'>Order not found. Please check your Order ID.</span>";
+          resDiv.innerHTML = "<span style='color:red;'>⚠️ Order not found. Please verify your Order ID and try again.</span>";
           return;
         }
 
-        const o = doc.data();
+        const o = matchedDoc.data();
+        const displayStatus = (o.status || "Pending").toUpperCase();
+        
+        let statusBadgeClass = "badge-busy";
+        if (o.status === "delivered") statusBadgeClass = "badge-available";
+        if (o.status === "pending") statusBadgeClass = "badge-offline";
+
+        let riderText = "Rider not assigned yet";
+        if (o.riderUid) {
+          const riderDoc = await db.collection("users").doc(o.riderUid).get();
+          if (riderDoc.exists) {
+            const r = riderDoc.data();
+            riderText = `${r.name || 'Rider'} (Plate: ${r.plateNumber || 'N/A'}, Phone: ${r.phone || 'N/A'})`;
+          }
+        }
+
         resDiv.style.display = "block";
         resDiv.innerHTML = `
-          <strong>Order Status:</strong> ${o.status.toUpperCase()}<br>
-          <strong>Type:</strong> ${o.serviceType || 'parcel'}<br>
-          <strong>Route:</strong> ${o.pickup} ➔ ${o.dropoff}<br>
-          <strong>Fare:</strong> KSh ${o.finalFare || 0}
+          <h3>📦 Order Tracking Details</h3>
+          <p><strong>Order ID:</strong> #${matchedDoc.id.substring(0,6)} (${matchedDoc.id})</p>
+          <p><strong>Current Status:</strong> <span class="badge ${statusBadgeClass}">${displayStatus}</span></p>
+          <p><strong>Service Type:</strong> ${o.serviceType === 'passenger' ? '🙋‍♂️ Passenger Trip' : '📦 Parcel Delivery'}</p>
+          <p><strong>Route:</strong> ${o.pickup} ➔ ${o.dropoff}</p>
+          <p><strong>Assigned Rider:</strong> ${riderText}</p>
+          <p><strong>Total Fare:</strong> KSh ${o.finalFare || 0}</p>
         `;
       } catch (err) {
         alert("Error tracking order: " + err.message);
@@ -1114,7 +1189,7 @@
         });
       }
 
-      // Customer name extraction fix (prevents "Unnamed")
+      // Customer name extraction fix + Deletion action
       db.collection("users")
         .where("role", "==", "customer")
         .onSnapshot((snapshot) => {
@@ -1123,7 +1198,7 @@
           tbodyCustomers.innerHTML = "";
 
           if (snapshot.empty) {
-            tbodyCustomers.innerHTML = "<tr><td colspan='4'>No registered customers found.</td></tr>";
+            tbodyCustomers.innerHTML = "<tr><td colspan='5'>No registered customers found.</td></tr>";
             return;
           }
 
@@ -1143,10 +1218,25 @@
                 <td>📞 <a href="tel:${cust.phone}">${cust.phone || 'N/A'}</a></td>
                 <td>📧 ${cust.email || 'N/A'}</td>
                 <td>⭐ ${cust.points || 0} pts</td>
+                <td>
+                  <button class="btn btn-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="deleteCustomerByModerator('${doc.id}', '${displayName}')">Delete Customer</button>
+                </td>
               </tr>
             `;
           });
         });
+    }
+
+    async function deleteCustomerByModerator(customerId, customerName) {
+      const confirmDelete = confirm(`Are you sure you want to delete customer "${customerName}"? This action cannot be undone.`);
+      if (confirmDelete) {
+        try {
+          await db.collection("users").doc(customerId).delete();
+          alert("Customer account deleted successfully.");
+        } catch (err) {
+          alert("Failed to delete customer: " + err.message);
+        }
+      }
     }
 
     async function registerRiderByModerator() {
