@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Amir Chap Chap",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "AmirChap",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "description": "Fast delivery and logistics platform"
+}
