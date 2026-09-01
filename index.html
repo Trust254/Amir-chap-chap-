@@ -25,7 +25,7 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 40px; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 40px; overflow-x: hidden; }
 
     header {
       background-color: var(--primary);
@@ -51,17 +51,19 @@
     .nav-tabs {
       display: flex;
       background-color: var(--primary-dark);
-      padding: 0 2rem;
+      padding: 0 1rem;
       gap: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
     .tab-btn {
       background: none;
       border: none;
       color: rgba(255, 255, 255, 0.7);
-      padding: 12px 20px;
+      padding: 12px 16px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       border-bottom: 3px solid transparent;
       transition: all 0.2s;
@@ -87,6 +89,7 @@
       padding: 20px;
       margin-bottom: 20px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
     }
 
     .card h2 { margin-bottom: 15px; color: var(--primary-dark); font-size: 1.25rem; }
@@ -119,6 +122,7 @@
     .btn-group {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -150,17 +154,26 @@
     .badge-busy { background-color: #fffde7; color: var(--warning); }
     .badge-offline { background-color: #ffebee; color: var(--danger); }
 
+    /* Responsive Table Container Fix */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 10px;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      min-width: 600px;
     }
 
     th, td {
       text-align: left;
-      padding: 12px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      white-space: nowrap;
     }
 
     th { background-color: #fafafa; color: var(--gray); font-weight: 600; }
@@ -184,6 +197,7 @@
       border-radius: 6px;
       font-size: 0.85rem;
       line-height: 1.4;
+      white-space: normal;
     }
 
     /* Persistent Notification Banner */
@@ -199,12 +213,14 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 9999;
       font-weight: bold;
+      max-width: 90%;
       animation: slideIn 0.3s ease-out;
     }
 
     .notif-content {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 15px;
     }
 
@@ -248,8 +264,7 @@
 
     @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
-      header { flex-direction: column; gap: 10px; text-align: center; }
-      .nav-tabs { overflow-x: auto; }
+      header { flex-direction: column; gap: 10px; text-align: center; padding: 1rem; }
     }
   </style>
 </head>
@@ -370,13 +385,13 @@
         </div>
       </div>
 
-      <!-- Quick Parcel/Trip Tracking Tool -->
+      <!-- Quick Track Order Tool -->
       <div class="card">
         <h2>🔍 Track Parcel or Passenger Trip</h2>
         <div class="grid-2">
           <div class="form-group">
             <label>Order Number / ID</label>
-            <input type="text" id="trackOrderIdInput" class="form-control" placeholder="Enter full or 6-character Order ID (e.g. #a1b2c3)">
+            <input type="text" id="trackOrderIdInput" class="form-control" placeholder="Enter Order ID (e.g. POQEZo)">
           </div>
           <div style="display:flex; align-items:flex-end; margin-bottom:12px;">
             <button class="btn btn-primary" onclick="trackCustomerOrder()">Track Order</button>
@@ -387,21 +402,23 @@
 
       <div class="card">
         <h2>My Orders & Assigned Rider Details</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Service & Route</th>
-              <th>Payment Method</th>
-              <th>Status</th>
-              <th>Final Cash Due</th>
-              <th>Assigned Rider Info</th>
-            </tr>
-          </thead>
-          <tbody id="customerOrdersTable">
-            <tr><td colspan="6">Sign in to view orders.</td></tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Service & Route</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+                <th>Final Cash Due</th>
+                <th>Assigned Rider Info</th>
+              </tr>
+            </thead>
+            <tbody id="customerOrdersTable">
+              <tr><td colspan="6">Sign in to view orders.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -432,22 +449,24 @@
 
       <div class="card">
         <h2>Assigned Deliveries & Actions</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer Phone</th>
-              <th>Payment</th>
-              <th>Type & Route</th>
-              <th>Fare</th>
-              <th>Current Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="riderJobsTable">
-            <tr><td colspan="7">Log in with Job ID to fetch deliveries.</td></tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer Phone</th>
+                <th>Payment</th>
+                <th>Type & Route</th>
+                <th>Fare</th>
+                <th>Current Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="riderJobsTable">
+              <tr><td colspan="7">Log in with Job ID to fetch deliveries.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -470,7 +489,7 @@
 
       <div id="modDashboardContent" style="display:none;">
         
-        <!-- Offer Broadcast Tool -->
+        <!-- Broadcast Offers -->
         <div class="card">
           <h2>🎉 Broadcast Special Offers & Notifications</h2>
           <div class="grid-2">
@@ -517,64 +536,70 @@
 
         <div class="card">
           <h2>Manage Orders & Set Fares</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer Phone</th>
-                <th>Payment</th>
-                <th>Type & Route</th>
-                <th>Base Fare</th>
-                <th>Transport Charge</th>
-                <th>Final Fare</th>
-                <th>Status</th>
-                <th>Assign Rider</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="moderatorOrdersTable">
-              <tr><td colspan="10">Loading orders...</td></tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer Phone</th>
+                  <th>Payment</th>
+                  <th>Type & Route</th>
+                  <th>Base Fare</th>
+                  <th>Transport Charge</th>
+                  <th>Final Fare</th>
+                  <th>Status</th>
+                  <th>Assign Rider</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="moderatorOrdersTable">
+                <tr><td colspan="10">Loading orders...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div class="card">
           <h2>Rider Availability Monitor</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Job ID</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Plate Number</th>
-                <th>Bike Model</th>
-                <th>Account Status</th>
-                <th>Availability</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="moderatorRidersTable">
-              <tr><td colspan="8">Loading riders...</td></tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Job ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Plate Number</th>
+                  <th>Bike Model</th>
+                  <th>Account Status</th>
+                  <th>Availability</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="moderatorRidersTable">
+                <tr><td colspan="8">Loading riders...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div class="card">
           <h2>Registered Customers Monitor</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Customer Name</th>
-                <th>Phone / WhatsApp</th>
-                <th>Email</th>
-                <th>Loyalty Points</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="moderatorCustomersTable">
-              <tr><td colspan="5">Loading registered customers...</td></tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Phone / WhatsApp</th>
+                  <th>Email</th>
+                  <th>Loyalty Points</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="moderatorCustomersTable">
+                <tr><td colspan="5">Loading registered customers...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -600,12 +625,10 @@
     function openTermsModal() { document.getElementById('termsModal').style.display = 'flex'; }
     function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
 
-    // Audio & Vibration System
     function playNotificationSound() {
       if ("vibrate" in navigator) {
         navigator.vibrate([500, 150, 500, 150, 800]);
       }
-
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc1 = audioCtx.createOscillator();
@@ -618,22 +641,7 @@
         gain1.connect(audioCtx.destination);
         osc1.start();
         osc1.stop(audioCtx.currentTime + 0.8);
-
-        setTimeout(() => {
-          const osc2 = audioCtx.createOscillator();
-          const gain2 = audioCtx.createGain();
-          osc2.type = "sine";
-          osc2.frequency.value = 1174.66;
-          gain2.gain.setValueAtTime(0.4, audioCtx.currentTime);
-          gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.0);
-          osc2.connect(gain2);
-          gain2.connect(audioCtx.destination);
-          osc2.start();
-          osc2.stop(audioCtx.currentTime + 1.0);
-        }, 150);
-      } catch (e) {
-        console.log("Audio alert prevented by browser permissions.");
-      }
+      } catch (e) { console.log("Audio prevented."); }
     }
 
     function showBannerNotification(text) {
@@ -648,19 +656,23 @@
       document.getElementById('notifBanner').style.display = "none";
     }
 
-    // Broadcast Listeners for Offers
+    // Broadcast Snapshot Listener
     db.collection("broadcasts").doc("currentOffer").onSnapshot(doc => {
-      if (doc.exists) {
+      if (doc && doc.exists) {
         const data = doc.data();
         if (data && data.text) {
           showBannerNotification(`<strong>SPECIAL OFFER:</strong> ${data.text}`);
         }
       }
-    });
+    }, err => console.log("Offer listener ready:", err.message));
 
     async function broadcastOfferNotification() {
       const offerMsg = document.getElementById('modOfferInput').value.trim();
       if (!offerMsg) return alert("Please type an offer message.");
+
+      if (!auth.currentUser) {
+        return alert("Please log in as a Moderator first to send broadcasts.");
+      }
 
       try {
         await db.collection("broadcasts").doc("currentOffer").set({
@@ -669,7 +681,7 @@
         });
         alert("Offer broadcasted to all users!");
       } catch(err) {
-        alert("Broadcast failed: " + err.message);
+        alert("Broadcast failed: " + err.message + "\nMake sure your Firestore Security Rules are published.");
       }
     }
 
@@ -701,14 +713,12 @@
             document.getElementById('modDashboardContent').style.display = "block";
             loadModeratorDashboard();
 
-            // Moderator notification when a customer places an order
             db.collection("orders").onSnapshot(snapshot => {
               if (initialModOrderCount !== null && snapshot.size > initialModOrderCount) {
                 showBannerNotification("A new customer order has been placed!");
               }
               initialModOrderCount = snapshot.size;
             });
-
             return;
           }
         } catch(e) {}
@@ -819,11 +829,9 @@
 
           if (o.status === 'delivered' && !o.pointsAwarded) {
             let netPointsChange = 0;
-
             if (o.paymentMethod === 'points' && pointsUsed > 0 && !o.pointsRedeemed) {
               netPointsChange -= pointsUsed;
             }
-
             const earnedPoints = Math.floor(cashToPay / 10);
             netPointsChange += earnedPoints;
 
@@ -839,7 +847,6 @@
             });
           }
 
-          // Customer notification when rider completes delivery
           if (previousCustomerOrderStatuses[orderId] && previousCustomerOrderStatuses[orderId] !== 'delivered' && o.status === 'delivered') {
             showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered / Completed! 🎉`);
           }
@@ -937,33 +944,26 @@
       alert("Order submitted successfully!");
     }
 
+    // Direct Tracking Mechanism
     async function trackCustomerOrder() {
       let rawInput = document.getElementById('trackOrderIdInput').value.trim();
       const resDiv = document.getElementById('trackOrderResult');
 
       if (!rawInput) return alert("Please enter an Order ID.");
-      const searchId = rawInput.replace('#', '').toLowerCase();
+      const searchId = rawInput.replace('#', '');
 
       try {
         let matchedDoc = null;
 
-        // 1. Direct document ID lookup
+        // Direct Document ID Lookup
         const directDoc = await db.collection("orders").doc(searchId).get();
         if (directDoc.exists) {
           matchedDoc = directDoc;
-        } else {
-          // 2. Fallback search by 6-character prefix matching
-          const snapshot = await db.collection("orders").get();
-          snapshot.forEach(doc => {
-            if (doc.id.toLowerCase().startsWith(searchId) || doc.id.toLowerCase() === searchId) {
-              matchedDoc = doc;
-            }
-          });
         }
 
         if (!matchedDoc) {
           resDiv.style.display = "block";
-          resDiv.innerHTML = "<span style='color:red;'>⚠️ Order not found. Please verify your Order ID and try again.</span>";
+          resDiv.innerHTML = "<span style='color:red;'>⚠️ Order not found. Please double check your Order ID and try again.</span>";
           return;
         }
 
@@ -986,7 +986,7 @@
         resDiv.style.display = "block";
         resDiv.innerHTML = `
           <h3>📦 Order Tracking Details</h3>
-          <p><strong>Order ID:</strong> #${matchedDoc.id.substring(0,6)} (${matchedDoc.id})</p>
+          <p><strong>Order ID:</strong> #${matchedDoc.id}</p>
           <p><strong>Current Status:</strong> <span class="badge ${statusBadgeClass}">${displayStatus}</span></p>
           <p><strong>Service Type:</strong> ${o.serviceType === 'passenger' ? '🙋‍♂️ Passenger Trip' : '📦 Parcel Delivery'}</p>
           <p><strong>Route:</strong> ${o.pickup} ➔ ${o.dropoff}</p>
@@ -994,7 +994,7 @@
           <p><strong>Total Fare:</strong> KSh ${o.finalFare || 0}</p>
         `;
       } catch (err) {
-        alert("Error tracking order: " + err.message);
+        alert("Error tracking order: " + err.message + "\nEnsure Firestore security rules permit order reads.");
       }
     }
 
@@ -1021,7 +1021,6 @@
         document.getElementById('riderProfilePlate').textContent = data.rider.plateNumber || 'N/A';
         document.getElementById('riderProfileStatus').textContent = data.rider.availabilityStatus;
 
-        // Notification to rider when assigned an order by moderator
         db.collection("orders").where("riderUid", "==", auth.currentUser.uid).onSnapshot(snapshot => {
           if (previousRiderOrderCount !== null && snapshot.size > previousRiderOrderCount) {
             showBannerNotification("You received a NEW Delivery Request! 🏍️💨");
@@ -1102,7 +1101,7 @@
           alert("Moderator authenticated!");
           checkModeratorAuth();
         } else {
-          alert("Access Denied: This email account does not have moderator privileges in Firestore.");
+          alert("Access Denied: This account lacks moderator permissions in Firestore.");
         }
       } catch (err) {
         alert("Moderator Login Failed: " + err.message);
@@ -1189,7 +1188,6 @@
         });
       }
 
-      // Customer name extraction fix + Deletion action
       db.collection("users")
         .where("role", "==", "customer")
         .onSnapshot((snapshot) => {
@@ -1228,11 +1226,10 @@
     }
 
     async function deleteCustomerByModerator(customerId, customerName) {
-      const confirmDelete = confirm(`Are you sure you want to delete customer "${customerName}"? This action cannot be undone.`);
-      if (confirmDelete) {
+      if (confirm(`Delete customer "${customerName}"?`)) {
         try {
           await db.collection("users").doc(customerId).delete();
-          alert("Customer account deleted successfully.");
+          alert("Customer account deleted.");
         } catch (err) {
           alert("Failed to delete customer: " + err.message);
         }
@@ -1260,7 +1257,7 @@
       const data = await res.json();
       if (!res.ok) return alert("Error: " + data.error);
 
-      alert("Rider created successfully with Motorbike details!");
+      alert("Rider created successfully!");
       loadModeratorDashboard();
     }
 
@@ -1307,14 +1304,12 @@
     }
 
     async function deleteOrderByModerator(orderId) {
-      const confirmDelete = confirm("Are you sure you want to delete order #" + orderId.substring(0,6) + "? This cannot be undone.");
-      if (confirmDelete) {
+      if (confirm("Delete order #" + orderId.substring(0,6) + "?")) {
         try {
           await db.collection("orders").doc(orderId).delete();
-          alert("Order deleted successfully.");
+          alert("Order deleted.");
           loadModeratorDashboard();
         } catch (error) {
-          console.error("Error deleting order:", error);
           alert("Failed to delete order: " + error.message);
         }
       }
