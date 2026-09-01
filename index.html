@@ -154,7 +154,6 @@
     .badge-busy { background-color: #fffde7; color: var(--warning); }
     .badge-offline { background-color: #ffebee; color: var(--danger); }
 
-    /* Responsive Table Container Fix */
     .table-container {
       width: 100%;
       overflow-x: auto;
@@ -165,7 +164,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px;
+      min-width: 650px;
     }
 
     th, td {
@@ -190,17 +189,31 @@
       font-weight: bold;
     }
 
-    .rider-info-box {
+    .rider-card-box {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
-      padding: 8px 12px;
+      padding: 10px 12px;
       border-radius: 6px;
       font-size: 0.85rem;
-      line-height: 1.4;
+      line-height: 1.5;
       white-space: normal;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
 
-    /* Persistent Notification Banner */
+    .rider-call-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      padding: 6px 12px;
+      background-color: var(--success);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
     #notifBanner {
       display: none;
       position: fixed;
@@ -234,9 +247,6 @@
       font-size: 0.8rem;
     }
 
-    .notif-close-btn:hover { background: rgba(255, 255, 255, 0.4); }
-
-    /* Modal for Terms & Conditions */
     .modal {
       display: none;
       position: fixed;
@@ -270,7 +280,7 @@
 </head>
 <body>
 
-  <!-- Persistent Notification Banner -->
+  <!-- Notification Banner -->
   <div id="notifBanner">
     <div class="notif-content">
       <span id="notifMessage">🔔 New Notification!</span>
@@ -401,7 +411,7 @@
       </div>
 
       <div class="card">
-        <h2>My Orders & Assigned Rider Details</h2>
+        <h2>My Orders & Live Assigned Rider Details</h2>
         <div class="table-container">
           <table>
             <thead>
@@ -411,7 +421,7 @@
                 <th>Payment Method</th>
                 <th>Status</th>
                 <th>Final Cash Due</th>
-                <th>Assigned Rider Info</th>
+                <th>Assigned Rider Details & Phone</th>
               </tr>
             </thead>
             <tbody id="customerOrdersTable">
@@ -488,8 +498,6 @@
       </div>
 
       <div id="modDashboardContent" style="display:none;">
-        
-        <!-- Broadcast Offers -->
         <div class="card">
           <h2>🎉 Broadcast Special Offers & Notifications</h2>
           <div class="grid-2">
@@ -626,9 +634,7 @@
     function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
 
     function playNotificationSound() {
-      if ("vibrate" in navigator) {
-        navigator.vibrate([500, 150, 500, 150, 800]);
-      }
+      if ("vibrate" in navigator) { navigator.vibrate([500, 150, 500, 150, 800]); }
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc1 = audioCtx.createOscillator();
@@ -656,7 +662,6 @@
       document.getElementById('notifBanner').style.display = "none";
     }
 
-    // Broadcast Snapshot Listener
     db.collection("broadcasts").doc("currentOffer").onSnapshot(doc => {
       if (doc && doc.exists) {
         const data = doc.data();
@@ -664,24 +669,21 @@
           showBannerNotification(`<strong>SPECIAL OFFER:</strong> ${data.text}`);
         }
       }
-    }, err => console.log("Offer listener ready:", err.message));
+    });
 
     async function broadcastOfferNotification() {
       const offerMsg = document.getElementById('modOfferInput').value.trim();
       if (!offerMsg) return alert("Please type an offer message.");
-
-      if (!auth.currentUser) {
-        return alert("Please log in as a Moderator first to send broadcasts.");
-      }
+      if (!auth.currentUser) return alert("Please log in as a Moderator first.");
 
       try {
         await db.collection("broadcasts").doc("currentOffer").set({
           text: offerMsg,
           updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("Offer broadcasted to all users!");
+        alert("Offer broadcasted!");
       } catch(err) {
-        alert("Broadcast failed: " + err.message + "\nMake sure your Firestore Security Rules are published.");
+        alert("Broadcast failed: " + err.message);
       }
     }
 
@@ -808,7 +810,12 @@
       db.collection("orders").where("userId", "==", user.uid).onSnapshot(async snapshot => {
         const tbody = document.getElementById("customerOrdersTable");
         tbody.innerHTML = "";
-        
+
+        if (snapshot.empty) {
+          tbody.innerHTML = "<tr><td colspan='6'>No orders placed yet.</td></tr>";
+          return;
+        }
+
         for (const doc of snapshot.docs) {
           const o = doc.data();
           const orderId = doc.id;
@@ -848,26 +855,33 @@
           }
 
           if (previousCustomerOrderStatuses[orderId] && previousCustomerOrderStatuses[orderId] !== 'delivered' && o.status === 'delivered') {
-            showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered / Completed! 🎉`);
+            showBannerNotification(`Order #${orderId.substring(0,6)} has been completed! 🎉`);
           }
           previousCustomerOrderStatuses[orderId] = o.status;
 
-          let riderDetails = "<em>Unassigned</em>";
+          // Render Live Assigned Rider Details & Direct Phone Dial Button
+          let riderDetailsHtml = `<span style="color:var(--gray); font-style:italic;">⏳ Awaiting Rider Assignment...</span>`;
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
             if (riderDoc.exists) {
               const r = riderDoc.data();
-              riderDetails = `
-                <div class="rider-info-box">
-                  <strong>👤 ${r.name || 'Rider'}</strong><br>
-                  📞 <a href="tel:${r.phone}">${r.phone || 'N/A'}</a><br>
-                  🏍️ <strong>Plate:</strong> ${r.plateNumber || 'N/A'}<br>
-                  🛵 <strong>Bike:</strong> ${r.bikeModel || 'N/A'}<br>
-                  <a href="tel:${r.phone}" class="btn btn-success" style="display:inline-block; margin-top:6px; padding:4px 8px; font-size:0.75rem; text-decoration:none;">📞 Call Rider</a>
+              const rPhone = r.phone || 'N/A';
+              const rName = r.name || 'Assigned Rider';
+              const rPlate = r.plateNumber || 'N/A';
+              const rBike = r.bikeModel || 'N/A';
+
+              riderDetailsHtml = `
+                <div class="rider-card-box">
+                  <strong>🏍️ Rider:</strong> ${rName}<br>
+                  <strong>📞 Phone:</strong> <a href="tel:${rPhone}" style="color:var(--primary-dark); font-weight:bold;">${rPhone}</a><br>
+                  <strong>🔢 Plate:</strong> ${rPlate} (${rBike})<br>
+                  <a href="tel:${rPhone}" class="rider-call-btn">
+                    📞 Call Rider
+                  </a>
                 </div>
               `;
-            } else {
-              riderDetails = `<span>Assigned (${o.riderName || 'Rider'})</span>`;
+            } else if (o.riderName) {
+              riderDetailsHtml = `<div class="rider-card-box"><strong>👤 Rider:</strong> ${o.riderName}</div>`;
             }
           }
 
@@ -893,7 +907,7 @@
               <td><strong>${payLabel}</strong></td>
               <td><strong>${o.status || 'Pending'}</strong></td>
               <td>KSh ${cashToPay}${totalFare !== cashToPay ? ` (Total: KSh ${totalFare})` : ''}</td>
-              <td>${riderDetails}</td>
+              <td>${riderDetailsHtml}</td>
             </tr>
           `;
         }
@@ -944,7 +958,6 @@
       alert("Order submitted successfully!");
     }
 
-    // Direct Tracking Mechanism
     async function trackCustomerOrder() {
       let rawInput = document.getElementById('trackOrderIdInput').value.trim();
       const resDiv = document.getElementById('trackOrderResult');
@@ -955,10 +968,19 @@
       try {
         let matchedDoc = null;
 
-        // Direct Document ID Lookup
         const directDoc = await db.collection("orders").doc(searchId).get();
         if (directDoc.exists) {
           matchedDoc = directDoc;
+        } else {
+          const querySnapshot = await db.collection("orders")
+            .where(firebase.firestore.FieldPath.documentId(), ">=", searchId)
+            .where(firebase.firestore.FieldPath.documentId(), "<=", searchId + "\uf8ff")
+            .limit(1)
+            .get();
+
+          if (!querySnapshot.empty) {
+            matchedDoc = querySnapshot.docs[0];
+          }
         }
 
         if (!matchedDoc) {
@@ -979,14 +1001,14 @@
           const riderDoc = await db.collection("users").doc(o.riderUid).get();
           if (riderDoc.exists) {
             const r = riderDoc.data();
-            riderText = `${r.name || 'Rider'} (Plate: ${r.plateNumber || 'N/A'}, Phone: ${r.phone || 'N/A'})`;
+            riderText = `<strong>${r.name || 'Rider'}</strong> | Phone: <a href="tel:${r.phone}">${r.phone || 'N/A'}</a> | Plate: ${r.plateNumber || 'N/A'}`;
           }
         }
 
         resDiv.style.display = "block";
         resDiv.innerHTML = `
           <h3>📦 Order Tracking Details</h3>
-          <p><strong>Order ID:</strong> #${matchedDoc.id}</p>
+          <p><strong>Order ID:</strong> #${matchedDoc.id.substring(0, 6)}</p>
           <p><strong>Current Status:</strong> <span class="badge ${statusBadgeClass}">${displayStatus}</span></p>
           <p><strong>Service Type:</strong> ${o.serviceType === 'passenger' ? '🙋‍♂️ Passenger Trip' : '📦 Parcel Delivery'}</p>
           <p><strong>Route:</strong> ${o.pickup} ➔ ${o.dropoff}</p>
@@ -994,7 +1016,7 @@
           <p><strong>Total Fare:</strong> KSh ${o.finalFare || 0}</p>
         `;
       } catch (err) {
-        alert("Error tracking order: " + err.message + "\nEnsure Firestore security rules permit order reads.");
+        alert("Error tracking order: " + err.message);
       }
     }
 
@@ -1101,7 +1123,7 @@
           alert("Moderator authenticated!");
           checkModeratorAuth();
         } else {
-          alert("Access Denied: This account lacks moderator permissions in Firestore.");
+          alert("Access Denied: Lacks moderator permissions.");
         }
       } catch (err) {
         alert("Moderator Login Failed: " + err.message);
@@ -1202,13 +1224,7 @@
 
           snapshot.forEach((doc) => {
             const cust = doc.data();
-            let displayName = cust.name;
-            if (!displayName && cust.email) {
-              displayName = cust.email.split('@')[0];
-            }
-            if (!displayName) {
-              displayName = "Customer #" + doc.id.substring(0, 5);
-            }
+            let displayName = cust.name || cust.email?.split('@')[0] || "Customer #" + doc.id.substring(0, 5);
 
             tbodyCustomers.innerHTML += `
               <tr>
