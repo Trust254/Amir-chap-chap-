@@ -37,6 +37,17 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
+    .header-contacts {
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .header-contacts a {
+      color: #e0f7fa;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
     .nav-tabs {
       display: flex;
       background-color: var(--primary-dark);
@@ -175,7 +186,7 @@
       line-height: 1.4;
     }
 
-    /* STICKY NOTIFICATION BELL BANNER */
+    /* Persistent Notification Banner */
     #notifBanner {
       display: none;
       position: fixed;
@@ -209,6 +220,27 @@
 
     .notif-close-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
+    /* Modal for Terms & Conditions */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
     @keyframes slideIn {
       from { transform: translateY(-20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -223,16 +255,36 @@
 </head>
 <body>
 
-  <!-- Persistent Sticky Notification Alert -->
+  <!-- Persistent Notification Banner -->
   <div id="notifBanner">
     <div class="notif-content">
       <span id="notifMessage">🔔 New Notification!</span>
-      <button class="notif-close-btn" onclick="dismissNotification()">Open / Dismiss</button>
+      <button class="notif-close-btn" onclick="dismissNotification()">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- Terms & Conditions Modal -->
+  <div id="termsModal" class="modal">
+    <div class="modal-content">
+      <h2>Terms & Conditions</h2>
+      <p style="margin-top: 10px; font-size: 0.9rem; line-height: 1.5;">
+        1. All parcels submitted for delivery must be clearly packaged and non-hazardous.<br>
+        2. Passengers must adhere to helmet and safety standards provided by the rider.<br>
+        3. Payment must be cleared upon trip or delivery completion.<br>
+        4. Customer Care lines: <strong>0791730207</strong> / <strong>0792102645</strong>.<br>
+        5. Published Date: <strong>January 2026</strong>.
+      </p>
+      <button class="btn btn-primary" style="margin-top:15px;" onclick="closeTermsModal()">Close</button>
     </div>
   </div>
 
   <header>
-    <h1>Amir Chap Chap</h1>
+    <div>
+      <h1>Amir Chap Chap</h1>
+      <div class="header-contacts">
+        📞 Customer Care: <a href="tel:0791730207">0791730207</a> | <a href="tel:0792102645">0792102645</a>
+      </div>
+    </div>
     <div>
       <span id="authStatusHeader">Loading User...</span>
       <button class="btn btn-danger" style="padding: 4px 10px; margin-left: 10px; font-size:0.8rem;" onclick="logoutUser()">Logout</button>
@@ -258,6 +310,10 @@
         <div class="card">
           <h2>1. Customer Account Access</h2>
           <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="custName" class="form-control" placeholder="John Doe">
+          </div>
+          <div class="form-group">
             <label>Email</label>
             <input type="email" id="custEmail" class="form-control" placeholder="customer@example.com">
           </div>
@@ -278,16 +334,23 @@
         <div class="card">
           <h2>2. Request Parcel / Passenger Trip</h2>
           <div class="form-group">
-            <label>Pickup Location</label>
-            <input type="text" id="pickupLoc" class="form-control" placeholder="e.g. Westlands">
+            <label>Service Type</label>
+            <select id="serviceType" class="form-control">
+              <option value="parcel">📦 Parcel Delivery</option>
+              <option value="passenger">🙋‍♂️ Passenger Trip</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>Delivery Destination</label>
-            <input type="text" id="dropoffLoc" class="form-control" placeholder="e.g. Kilimani">
+            <label>Pickup Location & Exact Spot</label>
+            <input type="text" id="pickupLoc" class="form-control" placeholder="e.g. Naivas Supermarket (Main Gate)">
           </div>
           <div class="form-group">
-            <label>Item Description / Note</label>
-            <input type="text" id="itemNote" class="form-control" placeholder="e.g. Electronics package">
+            <label>Delivery Destination & Exact Spot</label>
+            <input type="text" id="dropoffLoc" class="form-control" placeholder="e.g. Lenana School / Exact Location">
+          </div>
+          <div class="form-group">
+            <label>Item Description / Passenger Note</label>
+            <input type="text" id="itemNote" class="form-control" placeholder="e.g. Electronics package / 1 Passenger waiting">
           </div>
           <div class="form-group">
             <label>Payment Method</label>
@@ -297,8 +360,29 @@
               <option value="points">⭐ Deduct from Loyalty Points</option>
             </select>
           </div>
+          <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="acceptTerms">
+            <label for="acceptTerms" style="margin-bottom:0; font-size:0.85rem;">
+              I accept <a href="#" onclick="openTermsModal(); return false;">Terms & Conditions</a>
+            </label>
+          </div>
           <button class="btn btn-success" onclick="createCustomerOrder()">Submit Order</button>
         </div>
+      </div>
+
+      <!-- Quick Parcel/Trip Tracking Tool -->
+      <div class="card">
+        <h2>🔍 Track Parcel or Passenger Trip</h2>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Order Number / ID</label>
+            <input type="text" id="trackOrderIdInput" class="form-control" placeholder="Enter Order ID">
+          </div>
+          <div style="display:flex; align-items:flex-end; margin-bottom:12px;">
+            <button class="btn btn-primary" onclick="trackCustomerOrder()">Track Order</button>
+          </div>
+        </div>
+        <div id="trackOrderResult" style="display:none; background:#f0fdf4; border:1px solid #bbf7d0; padding:12px; border-radius:6px; margin-top:10px;"></div>
       </div>
 
       <div class="card">
@@ -307,7 +391,7 @@
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Pickup ➔ Dropoff</th>
+              <th>Service & Route</th>
               <th>Payment Method</th>
               <th>Status</th>
               <th>Final Cash Due</th>
@@ -354,7 +438,7 @@
               <th>Order ID</th>
               <th>Customer Phone</th>
               <th>Payment</th>
-              <th>Route</th>
+              <th>Type & Route</th>
               <th>Fare</th>
               <th>Current Status</th>
               <th>Actions</th>
@@ -424,7 +508,7 @@
                 <th>Order ID</th>
                 <th>Customer Phone</th>
                 <th>Payment</th>
-                <th>Route</th>
+                <th>Type & Route</th>
                 <th>Base Fare</th>
                 <th>Transport Charge</th>
                 <th>Final Fare</th>
@@ -460,7 +544,6 @@
           </table>
         </div>
 
-        <!-- NEW FEATURE: Registered Customers Monitor -->
         <div class="card">
           <h2>Registered Customers Monitor</h2>
           <table>
@@ -498,16 +581,15 @@
 
     const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
 
-    /* =====================================================
-       AUDIO & STICKY NOTIFICATION SYSTEM (UPGRADED WITH VIBRATION)
-    ===================================================== */
+    function openTermsModal() { document.getElementById('termsModal').style.display = 'flex'; }
+    function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
+
+    // Audio & Vibration System
     function playNotificationSound() {
-      // 1. Multi-pulse vibration for active devices
       if ("vibrate" in navigator) {
         navigator.vibrate([500, 150, 500, 150, 800]);
       }
 
-      // 2. Chime sound effect
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc1 = audioCtx.createOscillator();
@@ -534,7 +616,7 @@
           osc2.stop(audioCtx.currentTime + 1.0);
         }, 150);
       } catch (e) {
-        console.log("Audio play prevented until user interacts with page.");
+        console.log("Audio alert prevented by browser permissions.");
       }
     }
 
@@ -567,6 +649,7 @@
       }
     }
 
+    let initialModOrderCount = null;
     async function checkModeratorAuth() {
       const user = auth.currentUser;
       if (user) {
@@ -576,6 +659,15 @@
             document.getElementById('modAuthCard').style.display = "none";
             document.getElementById('modDashboardContent').style.display = "block";
             loadModeratorDashboard();
+
+            // Moderator notification when a customer places an order
+            db.collection("orders").onSnapshot(snapshot => {
+              if (initialModOrderCount !== null && snapshot.size > initialModOrderCount) {
+                showBannerNotification("A new customer order has been placed!");
+              }
+              initialModOrderCount = snapshot.size;
+            });
+
             return;
           }
         } catch(e) {}
@@ -614,9 +706,12 @@
     }
 
     async function registerCustomer() {
+      const name = document.getElementById('custName').value;
       const email = document.getElementById('custEmail').value;
       const password = document.getElementById('custPassword').value;
       const phone = document.getElementById('custPhone').value;
+
+      if (!name) return alert("Please enter your full name.");
 
       try {
         const cred = await auth.createUserWithEmailAndPassword(email, password);
@@ -628,8 +723,16 @@
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
           },
-          body: JSON.stringify({ email, phone })
+          body: JSON.stringify({ name, email, phone })
         });
+
+        await db.collection("users").doc(cred.user.uid).set({
+          name: name,
+          email: email,
+          phone: phone,
+          role: "customer",
+          points: 0
+        }, { merge: true });
 
         alert("Account registered successfully!");
         loadCustomerProfile();
@@ -663,7 +766,6 @@
           let cashToPay = totalFare;
           let pointsUsed = 0;
 
-          // Deduct points balance (1 Pt = 1 KSh)
           if (o.paymentMethod === 'points' && totalFare > 0) {
             if (userPoints >= totalFare) {
               pointsUsed = totalFare;
@@ -674,7 +776,6 @@
             }
           }
 
-          // Handle Points Deductions and Rewards on Delivery Completion
           if (o.status === 'delivered' && !o.pointsAwarded) {
             let netPointsChange = 0;
 
@@ -697,12 +798,12 @@
             });
           }
 
+          // Customer notification when rider completes delivery
           if (previousCustomerOrderStatuses[orderId] && previousCustomerOrderStatuses[orderId] !== 'delivered' && o.status === 'delivered') {
-            showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered! 🎉`);
+            showBannerNotification(`Order #${orderId.substring(0,6)} has been successfully Delivered / Completed! 🎉`);
           }
           previousCustomerOrderStatuses[orderId] = o.status;
 
-          // UPGRADED FEATURE: Direct Rider Phone Call Action Button
           let riderDetails = "<em>Unassigned</em>";
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
@@ -735,10 +836,12 @@
             }
           }
 
+          const serviceBadge = o.serviceType === 'passenger' ? '🙋‍♂️ Passenger' : '📦 Parcel';
+
           tbody.innerHTML += `
             <tr>
               <td>#${orderId.substring(0,6)}</td>
-              <td>${o.pickup} ➔ ${o.dropoff}</td>
+              <td><strong>[${serviceBadge}]</strong><br>${o.pickup} ➔ ${o.dropoff}</td>
               <td><strong>${payLabel}</strong></td>
               <td><strong>${o.status || 'Pending'}</strong></td>
               <td>KSh ${cashToPay}${totalFare !== cashToPay ? ` (Total: KSh ${totalFare})` : ''}</td>
@@ -753,10 +856,15 @@
       const user = auth.currentUser;
       if (!user) return alert("Please sign in first.");
 
+      if (!document.getElementById('acceptTerms').checked) {
+        return alert("Please accept the Terms & Conditions to proceed.");
+      }
+
       const userDoc = await db.collection("users").doc(user.uid).get();
       const userPhone = userDoc.exists ? (userDoc.data().phone || "") : "";
       const currentPoints = userDoc.exists ? (userDoc.data().points || 0) : 0;
 
+      const serviceType = document.getElementById('serviceType').value;
       const pickup = document.getElementById('pickupLoc').value;
       const dropoff = document.getElementById('dropoffLoc').value;
       const itemNote = document.getElementById('itemNote').value;
@@ -771,6 +879,7 @@
       await db.collection("orders").add({
         userId: user.uid,
         customerPhone: userPhone,
+        serviceType,
         pickup,
         dropoff,
         itemNote,
@@ -785,6 +894,33 @@
       });
 
       alert("Order submitted successfully!");
+    }
+
+    async function trackCustomerOrder() {
+      const orderIdInput = document.getElementById('trackOrderIdInput').value.trim();
+      const resDiv = document.getElementById('trackOrderResult');
+
+      if (!orderIdInput) return alert("Please enter an Order ID.");
+
+      try {
+        const doc = await db.collection("orders").doc(orderIdInput).get();
+        if (!doc.exists) {
+          resDiv.style.display = "block";
+          resDiv.innerHTML = "<span style='color:red;'>Order not found. Please check your Order ID.</span>";
+          return;
+        }
+
+        const o = doc.data();
+        resDiv.style.display = "block";
+        resDiv.innerHTML = `
+          <strong>Order Status:</strong> ${o.status.toUpperCase()}<br>
+          <strong>Type:</strong> ${o.serviceType || 'parcel'}<br>
+          <strong>Route:</strong> ${o.pickup} ➔ ${o.dropoff}<br>
+          <strong>Fare:</strong> KSh ${o.finalFare || 0}
+        `;
+      } catch (err) {
+        alert("Error tracking order: " + err.message);
+      }
     }
 
     let previousRiderOrderCount = null;
@@ -810,6 +946,7 @@
         document.getElementById('riderProfilePlate').textContent = data.rider.plateNumber || 'N/A';
         document.getElementById('riderProfileStatus').textContent = data.rider.availabilityStatus;
 
+        // Notification to rider when assigned an order by moderator
         db.collection("orders").where("riderUid", "==", auth.currentUser.uid).onSnapshot(snapshot => {
           if (previousRiderOrderCount !== null && snapshot.size > previousRiderOrderCount) {
             showBannerNotification("You received a NEW Delivery Request! 🏍️💨");
@@ -837,23 +974,24 @@
         data.orders.forEach(o => {
           let actionBtn = "";
           if (o.status === "assigned") {
-            actionBtn = `<button class="btn btn-warning" onclick="updateRiderOrder('${o.id}', 'pickup')">🏍️ Pickup Package</button>`;
+            actionBtn = `<button class="btn btn-warning" onclick="updateRiderOrder('${o.id}', 'pickup')">🏍️ Pickup</button>`;
           } else if (o.status === "picked_up") {
-            actionBtn = `<button class="btn btn-primary" onclick="updateRiderOrder('${o.id}', 'start-delivery')">🚚 Start Delivery</button>`;
+            actionBtn = `<button class="btn btn-primary" onclick="updateRiderOrder('${o.id}', 'start-delivery')">🚚 Start Trip</button>`;
           } else if (o.status === "in_transit") {
-            actionBtn = `<button class="btn btn-success" onclick="updateRiderOrder('${o.id}', 'delivered')">✅ Complete Delivery</button>`;
+            actionBtn = `<button class="btn btn-success" onclick="updateRiderOrder('${o.id}', 'delivered')">✅ Complete</button>`;
           } else {
             actionBtn = `<span>Completed</span>`;
           }
 
           const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
+          const serviceBadge = o.serviceType === 'passenger' ? '🙋‍♂️ Passenger' : '📦 Parcel';
 
           tbody.innerHTML += `
             <tr>
               <td>#${o.id.substring(0,6)}</td>
               <td>${o.customerPhone || 'N/A'}</td>
               <td><strong>${payLabel}</strong></td>
-              <td>${o.pickup} ➔ ${o.dropoff}</td>
+              <td><strong>[${serviceBadge}]</strong><br>${o.pickup} ➔ ${o.dropoff}</td>
               <td>KSh ${o.finalFare || 0}</td>
               <td><strong>${o.status}</strong></td>
               <td>${actionBtn}</td>
@@ -924,14 +1062,14 @@
           }
 
           const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
+          const serviceBadge = o.serviceType === 'passenger' ? '🙋‍♂️ Passenger' : '📦 Parcel';
 
-          // UPGRADED FEATURE: Delete Order button for Moderator
           tbodyOrders.innerHTML += `
             <tr>
               <td>#${o.id.substring(0,6)}</td>
               <td>${o.customerPhone || 'N/A'}</td>
               <td><strong>${payLabel}</strong></td>
-              <td>${o.pickup} ➔ ${o.dropoff}</td>
+              <td><strong>[${serviceBadge}]</strong><br>${o.pickup} ➔ ${o.dropoff}</td>
               <td><input type="number" id="baseFare_${o.id}" class="form-control" value="${o.originalFare || 0}"></td>
               <td><input type="number" id="chargeFare_${o.id}" class="form-control" value="${o.transportCharge || 0}"></td>
               <td><strong>KSh ${o.finalFare || 0}</strong></td>
@@ -976,7 +1114,7 @@
         });
       }
 
-      // UPGRADED FEATURE: Load Registered Customers in Moderator Dashboard
+      // Customer name extraction fix (prevents "Unnamed")
       db.collection("users")
         .where("role", "==", "customer")
         .onSnapshot((snapshot) => {
@@ -991,9 +1129,17 @@
 
           snapshot.forEach((doc) => {
             const cust = doc.data();
+            let displayName = cust.name;
+            if (!displayName && cust.email) {
+              displayName = cust.email.split('@')[0];
+            }
+            if (!displayName) {
+              displayName = "Customer #" + doc.id.substring(0, 5);
+            }
+
             tbodyCustomers.innerHTML += `
               <tr>
-                <td><strong>${cust.name || 'Unnamed'}</strong></td>
+                <td><strong>${displayName}</strong></td>
                 <td>📞 <a href="tel:${cust.phone}">${cust.phone || 'N/A'}</a></td>
                 <td>📧 ${cust.email || 'N/A'}</td>
                 <td>⭐ ${cust.points || 0} pts</td>
@@ -1070,7 +1216,6 @@
       loadModeratorDashboard();
     }
 
-    // UPGRADED FEATURE: Delete Unnecessary Order Function
     async function deleteOrderByModerator(orderId) {
       const confirmDelete = confirm("Are you sure you want to delete order #" + orderId.substring(0,6) + "? This cannot be undone.");
       if (confirmDelete) {
