@@ -459,6 +459,24 @@
             </tbody>
           </table>
         </div>
+
+        <!-- NEW FEATURE: Registered Customers Monitor -->
+        <div class="card">
+          <h2>Registered Customers Monitor</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Phone / WhatsApp</th>
+                <th>Email</th>
+                <th>Loyalty Points</th>
+              </tr>
+            </thead>
+            <tbody id="moderatorCustomersTable">
+              <tr><td colspan="4">Loading registered customers...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -481,9 +499,15 @@
     const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
 
     /* =====================================================
-       AUDIO & STICKY NOTIFICATION SYSTEM
+       AUDIO & STICKY NOTIFICATION SYSTEM (UPGRADED WITH VIBRATION)
     ===================================================== */
     function playNotificationSound() {
+      // 1. Multi-pulse vibration for active devices
+      if ("vibrate" in navigator) {
+        navigator.vibrate([500, 150, 500, 150, 800]);
+      }
+
+      // 2. Chime sound effect
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc1 = audioCtx.createOscillator();
@@ -678,6 +702,7 @@
           }
           previousCustomerOrderStatuses[orderId] = o.status;
 
+          // UPGRADED FEATURE: Direct Rider Phone Call Action Button
           let riderDetails = "<em>Unassigned</em>";
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
@@ -688,7 +713,8 @@
                   <strong>👤 ${r.name || 'Rider'}</strong><br>
                   📞 <a href="tel:${r.phone}">${r.phone || 'N/A'}</a><br>
                   🏍️ <strong>Plate:</strong> ${r.plateNumber || 'N/A'}<br>
-                  🛵 <strong>Bike:</strong> ${r.bikeModel || 'N/A'}
+                  🛵 <strong>Bike:</strong> ${r.bikeModel || 'N/A'}<br>
+                  <a href="tel:${r.phone}" class="btn btn-success" style="display:inline-block; margin-top:6px; padding:4px 8px; font-size:0.75rem; text-decoration:none;">📞 Call Rider</a>
                 </div>
               `;
             } else {
@@ -899,6 +925,7 @@
 
           const payLabel = o.paymentMethod === 'points' ? '⭐ Points' : (o.paymentMethod === 'mpesa' ? '📱 M-Pesa' : '💵 Cash');
 
+          // UPGRADED FEATURE: Delete Order button for Moderator
           tbodyOrders.innerHTML += `
             <tr>
               <td>#${o.id.substring(0,6)}</td>
@@ -915,8 +942,9 @@
                 </select>
               </td>
               <td>
-                <button class="btn btn-primary" onclick="saveModeratorFare('${o.id}')">Save Fare</button>
-                <button class="btn btn-success" onclick="assignRiderByModerator('${o.id}')">Assign</button>
+                <button class="btn btn-primary" style="margin-bottom: 4px;" onclick="saveModeratorFare('${o.id}')">Save Fare</button>
+                <button class="btn btn-success" style="margin-bottom: 4px;" onclick="assignRiderByModerator('${o.id}')">Assign</button>
+                <button class="btn btn-danger" onclick="deleteOrderByModerator('${o.id}')">Delete</button>
               </td>
             </tr>
           `;
@@ -947,6 +975,32 @@
           `;
         });
       }
+
+      // UPGRADED FEATURE: Load Registered Customers in Moderator Dashboard
+      db.collection("users")
+        .where("role", "==", "customer")
+        .onSnapshot((snapshot) => {
+          const tbodyCustomers = document.getElementById("moderatorCustomersTable");
+          if (!tbodyCustomers) return;
+          tbodyCustomers.innerHTML = "";
+
+          if (snapshot.empty) {
+            tbodyCustomers.innerHTML = "<tr><td colspan='4'>No registered customers found.</td></tr>";
+            return;
+          }
+
+          snapshot.forEach((doc) => {
+            const cust = doc.data();
+            tbodyCustomers.innerHTML += `
+              <tr>
+                <td><strong>${cust.name || 'Unnamed'}</strong></td>
+                <td>📞 <a href="tel:${cust.phone}">${cust.phone || 'N/A'}</a></td>
+                <td>📧 ${cust.email || 'N/A'}</td>
+                <td>⭐ ${cust.points || 0} pts</td>
+              </tr>
+            `;
+          });
+        });
     }
 
     async function registerRiderByModerator() {
@@ -1014,6 +1068,21 @@
 
       alert("Rider assigned!");
       loadModeratorDashboard();
+    }
+
+    // UPGRADED FEATURE: Delete Unnecessary Order Function
+    async function deleteOrderByModerator(orderId) {
+      const confirmDelete = confirm("Are you sure you want to delete order #" + orderId.substring(0,6) + "? This cannot be undone.");
+      if (confirmDelete) {
+        try {
+          await db.collection("orders").doc(orderId).delete();
+          alert("Order deleted successfully.");
+          loadModeratorDashboard();
+        } catch (error) {
+          console.error("Error deleting order:", error);
+          alert("Failed to delete order: " + error.message);
+        }
+      }
     }
 
     async function toggleRiderStatus(uid, currentStatus) {
