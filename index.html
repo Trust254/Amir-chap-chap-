@@ -938,7 +938,7 @@
         return alert("You have 0 Loyalty Points! Please select Pay Cash or M-Pesa.");
       }
 
-      await db.collection("orders").add({
+      const newOrderRef = await db.collection("orders").add({
         userId: user.uid,
         customerPhone: userPhone,
         serviceType,
@@ -954,6 +954,19 @@
         pointsRedeemed: false,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
+
+      // Trigger Notification for Moderators when order is created
+      try {
+        await db.collection("notifications").add({
+          type: "NEW_ORDER",
+          title: "New Order Placed",
+          message: `New ${serviceType} order created (#${newOrderRef.id.substring(0,6)}).`,
+          orderId: newOrderRef.id,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (err) {
+        console.log("Moderator notification write error:", err);
+      }
 
       alert("Order submitted successfully!");
     }
@@ -1106,6 +1119,25 @@
 
       const data = await res.json();
       if (!res.ok) return alert("Error: " + data.error);
+
+      // Trigger Customer Notification when Order is Marked Delivered
+      if (actionPath === 'delivered') {
+        try {
+          const orderDoc = await db.collection("orders").doc(orderId).get();
+          if (orderDoc.exists && orderDoc.data().userId) {
+            await db.collection("customerNotifications").add({
+              userId: orderDoc.data().userId,
+              type: "ORDER_DELIVERED",
+              title: "Order Completed",
+              message: `Your Order #${orderId.substring(0,6)} has been successfully delivered!`,
+              orderId: orderId,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          }
+        } catch (err) {
+          console.log("Customer notification write error:", err);
+        }
+      }
 
       alert(data.message);
       loadRiderJobs();
@@ -1314,6 +1346,20 @@
 
       const data = await res.json();
       if (!res.ok) return alert("Error: " + data.error);
+
+      // Trigger Rider Notification when assigned
+      try {
+        await db.collection("riderNotifications").add({
+          riderUid: riderUid,
+          type: "ORDER_ASSIGNED",
+          title: "New Delivery Assigned",
+          message: `You have been assigned to Order #${orderId.substring(0,6)}.`,
+          orderId: orderId,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (err) {
+        console.log("Rider notification write error:", err);
+      }
 
       alert("Rider assigned!");
       loadModeratorDashboard();
