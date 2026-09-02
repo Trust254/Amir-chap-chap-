@@ -299,8 +299,98 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
+    /* AI Chat Widget Styles */
+    #aiChatFab {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 168, 89, 0.4);
+      z-index: 99999;
+      transition: transform 0.2s ease;
+      border: 2px solid white;
+    }
+    #aiChatFab:hover { transform: scale(1.08); }
+
+    #aiChatContainer {
+      display: none;
+      position: fixed;
+      bottom: 95px;
+      right: 25px;
+      width: 360px;
+      max-width: 90vw;
+      height: 480px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      z-index: 99999;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      animation: slideIn 0.25s ease;
+    }
+
+    .ai-chat-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #f8fafc;
+      font-size: 0.88rem;
+    }
+
+    .ai-msg {
+      max-width: 82%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      line-height: 1.4;
+    }
+    .ai-msg.bot {
+      background: #ffffff;
+      color: var(--text);
+      align-self: flex-start;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .ai-msg.user {
+      background: var(--primary);
+      color: white;
+      align-self: flex-end;
+      box-shadow: 0 2px 6px rgba(0, 168, 89, 0.2);
+    }
+
+    .ai-chat-input-area {
+      padding: 12px;
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
     @keyframes slideIn {
-      from { transform: translateY(-20px); opacity: 0; }
+      from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
 
@@ -311,6 +401,24 @@
   </style>
 </head>
 <body>
+
+  <!-- Floating AI Assistant Button -->
+  <div id="aiChatFab" onclick="toggleAiChat()" title="Chat with Amir AI Assistant">🤖</div>
+
+  <!-- Floating AI Chat Window -->
+  <div id="aiChatContainer">
+    <div class="ai-chat-header">
+      <span>💬 Amir Chap Chap AI Assistant</span>
+      <button onclick="toggleAiChat()" style="background:none; border:none; color:white; font-size:1.1rem; cursor:pointer;">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+      <div class="ai-msg bot">Hello! I'm your Amir Chap Chap AI assistant. Ask me anything about booking parcels, passenger rides, safety rules, loyalty points, or cancellation fees!</div>
+    </div>
+    <div class="ai-chat-input-area">
+      <input type="text" id="aiChatInput" class="form-control" placeholder="Type your question..." onkeypress="handleAiKeyPress(event)">
+      <button class="btn btn-primary" style="padding: 10px 16px;" onclick="sendAiMessage()">Send</button>
+    </div>
+  </div>
 
   <!-- Notification Banner -->
   <div id="notifBanner">
@@ -568,7 +676,7 @@
 
       <div id="modDashboardContent" style="display:none;">
         
-        <!-- NEW: Moderator Penalty & Unpaid Debt Management Panel -->
+        <!-- Moderator Penalty & Unpaid Debt Management Panel -->
         <div class="card" style="border: 1px solid var(--warning);">
           <h2 style="color: var(--warning);">⚠️ Customer Cancellation Penalties & Unpaid Debts</h2>
           <p style="font-size:0.85rem; color:var(--gray); margin-bottom:12px;">Customers who cancel an order after a rider is assigned incur a 50% penalty fee and are locked out of new bookings until cleared.</p>
@@ -721,6 +829,61 @@
     const db = firebase.firestore();
 
     const BACKEND_URL = "https://amir-chap-chap-backend.onrender.com"; 
+
+    // AI Chat Assistant Logic
+    function toggleAiChat() {
+      const container = document.getElementById('aiChatContainer');
+      if (container.style.display === 'flex') {
+        container.style.display = 'none';
+      } else {
+        container.style.display = 'flex';
+        document.getElementById('aiChatInput').focus();
+      }
+    }
+
+    function handleAiKeyPress(e) {
+      if (e.key === 'Enter') {
+        sendAiMessage();
+      }
+    }
+
+    function sendAiMessage() {
+      const input = document.getElementById('aiChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const messagesDiv = document.getElementById('aiChatMessages');
+      
+      // Append user message
+      messagesDiv.innerHTML += `<div class="ai-msg user">${escapeHtml(text)}</div>`;
+      input.value = "";
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+      // Simple rule-based & smart assistant responses
+      setTimeout(() => {
+        let reply = "I can help you with Amir Chap Chap logistics! For direct assistance, call our customer care at **0791730207** or **0792102645**.";
+        const lower = text.toLowerCase();
+
+        if (lower.includes('cancel') || lower.includes('penalty')) {
+          reply = "If you cancel a booking after a rider has been assigned, a **50% cancellation fee** of the transport charge is applied to your phone number, and you will be locked out of new bookings until cleared.";
+        } else if (lower.includes('helmet') || lower.includes('safety')) {
+          reply = "Safety first! Passengers must wear approved helmets provided by the rider at all times. Riders must also maintain valid licenses and perform safety checks.";
+        } else if (lower.includes('contact') || lower.includes('phone') || lower.includes('help') || lower.includes('support')) {
+          reply = "You can reach official Amir Chap Chap support anytime at **0791730207** or **0792102645**.";
+        } else if (lower.includes('point') || lower.includes('loyalty')) {
+          reply = "You earn loyalty points on every completed delivery (1 point per KSh 10 cash paid) and can use them to pay for future trips!";
+        } else if (lower.includes('parcel') || lower.includes('passenger') || lower.includes('book')) {
+          reply = "To book, go to the Customer Portal, fill in your pickup and destination, select your service type (Parcel or Passenger), and submit your order!";
+        }
+
+        messagesDiv.innerHTML += `<div class="ai-msg bot">${reply}</div>`;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }, 500);
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
 
     function openTermsModal() { document.getElementById('termsModal').style.display = 'flex'; }
     function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
@@ -985,7 +1148,6 @@
           }
           previousCustomerOrderStatuses[orderId] = o.status;
 
-          // Render Rider Details & Safety Rating Action Button & Cancel Order Action Button
           let riderDetailsHtml = `<span style="color:var(--gray); font-style:italic;">⏳ Awaiting Rider Assignment...</span>`;
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
@@ -1073,7 +1235,7 @@
         if (penaltyFee > 0) {
           updateData.cancellationFee = penaltyFee;
           updateData.penaltyApplied = true;
-          updateData.penaltyPaid = false; // Marks as unpaid debt
+          updateData.penaltyPaid = false;
           updateData.customerPhone = customerPhone || "Unknown";
         }
 
@@ -1101,7 +1263,6 @@
         return alert("A valid mobile number is required on your profile to book orders. Please update your registration details.");
       }
 
-      // Check for Unpaid Cancellation Penalties linked to this phone number
       try {
         const unpaidQuery = await db.collection("orders")
           .where("customerPhone", "==", userPhone)
@@ -1356,7 +1517,6 @@
       }
     }
 
-    // NEW: Load Unpaid Penalties for Moderators
     async function loadModeratorPenalties() {
       db.collection("orders")
         .where("penaltyApplied", "==", true)
