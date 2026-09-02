@@ -198,7 +198,6 @@
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
       font-size: 0.88rem;
-      white-space: nowrap;
     }
 
     th { background-color: #f1f5f9; color: var(--gray); font-weight: 700; }
@@ -225,7 +224,6 @@
       border-radius: 12px;
       font-size: 0.85rem;
       line-height: 1.6;
-      white-space: normal;
       box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
@@ -233,7 +231,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin-top: 10px;
+      margin-top: 8px;
       padding: 8px 14px;
       background-color: var(--primary);
       color: white;
@@ -277,9 +275,7 @@
       cursor: pointer;
       font-size: 0.8rem;
       font-weight: 600;
-      transition: background 0.2s;
     }
-    .notif-close-btn:hover { background: rgba(255, 255, 255, 0.25); }
 
     .modal {
       display: none;
@@ -296,9 +292,9 @@
       background: white;
       padding: 28px;
       border-radius: 20px;
-      max-width: 500px;
+      max-width: 550px;
       width: 90%;
-      max-height: 80vh;
+      max-height: 85vh;
       overflow-y: auto;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
@@ -324,18 +320,55 @@
     </div>
   </div>
 
-  <!-- Terms & Conditions Modal -->
+  <!-- Comprehensive Terms & Conditions Modal -->
   <div id="termsModal" class="modal">
     <div class="modal-content">
-      <h2>Terms & Conditions</h2>
-      <p style="margin-top: 10px; font-size: 0.9rem; line-height: 1.6; color: #334155;">
-        1. All parcels submitted for delivery must be clearly packaged and non-hazardous.<br>
-        2. Passengers must adhere to helmet and safety standards provided by the rider.<br>
-        3. Payment must be cleared upon trip or delivery completion.<br>
-        4. Customer Care lines: <strong>0791730207</strong> / <strong>0792102645</strong>.<br>
-        5. Published Date: <strong>January 2026</strong>.
-      </p>
-      <button class="btn btn-primary" style="margin-top:20px;" onclick="closeTermsModal()">Close</button>
+      <h2>🛡️ Amir Chap Chap Safety & Terms Policy</h2>
+      <div style="margin-top: 12px; font-size: 0.88rem; line-height: 1.6; color: #334155;">
+        <p><strong>1. Customer Safety & Conduct:</strong><br>
+        - Passengers must wear approved safety helmets provided by the rider at all times during transit.<br>
+        - Customers must maintain civil conduct. Harassment, reckless interference with the rider, or forcing unsafe routes is strictly prohibited.</p>
+        
+        <p style="margin-top: 10px;"><strong>2. Rider Safety Standards & Compliance:</strong><br>
+        - Riders must possess valid licensing, insurance, and adhere strictly to traffic laws.<br>
+        - Riders must conduct routine safety checks on brakes, lights, and tires before every trip.<br>
+        - Riders are required to provide clean, sanitized safety helmets for passenger trips.</p>
+
+        <p style="margin-top: 10px;"><strong>3. Parcel & Cargo Rules:</strong><br>
+        - Parcels must be securely packaged, non-hazardous, and non-illegal (weapons, contraband, and corrosive materials are strictly banned).<br>
+        - Fragile items must be explicitly declared upon booking to ensure careful handling by the assigned rider.</p>
+
+        <p style="margin-top: 10px;"><strong>4. Support & Care Lines:</strong><br>
+        - Official Helplines: <strong>0791730207</strong> / <strong>0792102645</strong>.<br>
+        - Published Date: <strong>January 2026</strong>.</p>
+      </div>
+      <button class="btn btn-primary" style="margin-top:20px; width:100%;" onclick="closeTermsModal()">I Understand & Accept</button>
+    </div>
+  </div>
+
+  <!-- Rider Rating Modal -->
+  <div id="ratingModal" class="modal">
+    <div class="modal-content" style="max-width: 450px;">
+      <h2>⭐ Rate Your Rider & Safety</h2>
+      <input type="hidden" id="rateOrderId">
+      <div class="form-group" style="margin-top: 15px;">
+        <label>Safety & Service Rating (1 to 5 Stars)</label>
+        <select id="ratingStars" class="form-control">
+          <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent & Safe Driving</option>
+          <option value="4">⭐⭐⭐⭐ 4 - Good & Professional</option>
+          <option value="3">⭐⭐⭐ 3 - Average</option>
+          <option value="2">⭐⭐ 2 - Below Expectations</option>
+          <option value="1">⭐ 1 - Unsafe / Poor Service</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Safety Feedback / Comments (Helmet, Speed, Parcel Care)</label>
+        <textarea id="ratingComment" class="form-control" rows="3" placeholder="e.g. Rider provided a clean helmet and drove very carefully."></textarea>
+      </div>
+      <div class="btn-group" style="justify-content: flex-end; margin-top: 15px;">
+        <button class="btn btn-secondary" onclick="closeRatingModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitRiderRating()">Submit Rating</button>
+      </div>
     </div>
   </div>
 
@@ -397,8 +430,8 @@
           <div class="form-group">
             <label>Service Type</label>
             <select id="serviceType" class="form-control">
-              <option value="parcel">📦 Parcel Delivery</option>
-              <option value="passenger">🙋‍♂️ Passenger Trip</option>
+              <option value="parcel">📦 Parcel Delivery (Secure Cargo)</option>
+              <option value="passenger">🙋‍♂️ Passenger Trip (Helmet Provided)</option>
             </select>
           </div>
           <div class="form-group">
@@ -411,7 +444,7 @@
           </div>
           <div class="form-group">
             <label>Item Description / Passenger Note</label>
-            <input type="text" id="itemNote" class="form-control" placeholder="e.g. Electronics package / 1 Passenger waiting">
+            <input type="text" id="itemNote" class="form-control" placeholder="e.g. Fragile electronics / 1 Passenger waiting">
           </div>
           <div class="form-group">
             <label>Payment Method</label>
@@ -424,7 +457,7 @@
           <div class="form-group" style="display:flex; align-items:center; gap:8px;">
             <input type="checkbox" id="acceptTerms" style="width: 18px; height: 18px; accent-color: var(--primary);">
             <label for="acceptTerms" style="margin-bottom:0; font-size:0.85rem;">
-              I accept <a href="#" style="color:var(--primary); font-weight:700;" onclick="openTermsModal(); return false;">Terms & Conditions</a>
+              I accept all <a href="#" style="color:var(--primary); font-weight:700;" onclick="openTermsModal(); return false;">Safety & Terms Rules</a>
             </label>
           </div>
           <button class="btn btn-success" onclick="createCustomerOrder()">Submit Order</button>
@@ -457,7 +490,7 @@
                 <th>Payment Method</th>
                 <th>Status</th>
                 <th>Final Cash Due</th>
-                <th>Assigned Rider Details & Phone</th>
+                <th>Assigned Rider & Safety Actions</th>
               </tr>
             </thead>
             <tbody id="customerOrdersTable">
@@ -485,7 +518,7 @@
         </div>
 
         <div class="card">
-          <h2>Rider Profile Status</h2>
+          <h2>Rider Profile Status & Safety Badge</h2>
           <p style="margin-bottom: 8px;"><strong>Rider Name:</strong> <span id="riderProfileName">-</span></p>
           <p style="margin-bottom: 8px;"><strong>Job ID:</strong> <span id="riderProfileJobId">-</span></p>
           <p style="margin-bottom: 8px;"><strong>Plate Number:</strong> <span id="riderProfilePlate">-</span></p>
@@ -668,6 +701,35 @@
 
     function openTermsModal() { document.getElementById('termsModal').style.display = 'flex'; }
     function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
+
+    function openRatingModal(orderId) {
+      document.getElementById('rateOrderId').value = orderId;
+      document.getElementById('ratingModal').style.display = 'flex';
+    }
+    function closeRatingModal() { document.getElementById('ratingModal').style.display = 'none'; }
+
+    async function submitRiderRating() {
+      const orderId = document.getElementById('rateOrderId').value;
+      const stars = document.getElementById('ratingStars').value;
+      const comment = document.getElementById('ratingComment').value;
+      const user = auth.currentUser;
+
+      if (!user) return alert("Please sign in.");
+
+      try {
+        await db.collection("ratings").add({
+          orderId,
+          customerId: user.uid,
+          stars: Number(stars),
+          comment,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Thank you! Your safety and service rating has been submitted.");
+        closeRatingModal();
+      } catch (err) {
+        alert("Failed to submit rating: " + err.message);
+      }
+    }
 
     function playNotificationSound() {
       if ("vibrate" in navigator) { navigator.vibrate([500, 150, 500, 150, 800]); }
@@ -895,7 +957,7 @@
           }
           previousCustomerOrderStatuses[orderId] = o.status;
 
-          // Render Live Assigned Rider Details & Direct Phone Dial Button
+          // Render Live Assigned Rider Details & Safety Rating Action Button
           let riderDetailsHtml = `<span style="color:var(--gray); font-style:italic;">⏳ Awaiting Rider Assignment...</span>`;
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
@@ -906,14 +968,18 @@
               const rPlate = r.plateNumber || 'N/A';
               const rBike = r.bikeModel || 'N/A';
 
+              let rateBtnHtml = "";
+              if (o.status === 'delivered') {
+                rateBtnHtml = `<button class="btn btn-warning" style="margin-top:8px; padding:6px 12px; font-size:0.78rem;" onclick="openRatingModal('${orderId}')">⭐ Rate Rider & Safety</button>`;
+              }
+
               riderDetailsHtml = `
                 <div class="rider-card-box">
                   <strong>🏍️ Rider:</strong> ${rName}<br>
                   <strong>📞 Phone:</strong> <a href="tel:${rPhone}" style="color:var(--primary-dark); font-weight:bold;">${rPhone}</a><br>
                   <strong>🔢 Plate:</strong> ${rPlate} (${rBike})<br>
-                  <a href="tel:${rPhone}" class="rider-call-btn">
-                    📞 Call Rider
-                  </a>
+                  <a href="tel:${rPhone}" class="rider-call-btn">📞 Call Rider</a><br>
+                  ${rateBtnHtml}
                 </div>
               `;
             } else if (o.riderName) {
@@ -955,7 +1021,7 @@
       if (!user) return alert("Please sign in first.");
 
       if (!document.getElementById('acceptTerms').checked) {
-        return alert("Please accept the Terms & Conditions to proceed.");
+        return alert("Please accept the Safety & Terms Policy to proceed.");
       }
 
       const userDoc = await db.collection("users").doc(user.uid).get();
@@ -991,7 +1057,6 @@
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 
-      // Trigger Notification for Moderators when order is created
       try {
         await db.collection("notifications").add({
           type: "NEW_ORDER",
@@ -1156,7 +1221,6 @@
       const data = await res.json();
       if (!res.ok) return alert("Error: " + data.error);
 
-      // Trigger Customer Notification when Order is Marked Delivered
       if (actionPath === 'delivered') {
         try {
           const orderDoc = await db.collection("orders").doc(orderId).get();
@@ -1298,7 +1362,7 @@
               <tr>
                 <td><strong>${displayName}</strong></td>
                 <td>📞 <a href="tel:${cust.phone}">${cust.phone || 'N/A'}</a></td>
-                <td>📧 ${cust.email || 'N/A'}</td>
+                <td>📧 ${cust.email || 'N/Y'}</td>
                 <td>⭐ ${cust.points || 0} pts</td>
                 <td>
                   <button class="btn btn-danger" style="padding:6px 12px; font-size:0.8rem;" onclick="deleteCustomerByModerator('${doc.id}', '${displayName}')">Delete Customer</button>
@@ -1383,7 +1447,6 @@
       const data = await res.json();
       if (!res.ok) return alert("Error: " + data.error);
 
-      // Trigger Rider Notification when assigned
       try {
         await db.collection("riderNotifications").add({
           riderUid: riderUid,
