@@ -416,8 +416,8 @@
             <input type="password" id="custPassword" class="form-control" placeholder="••••••••">
           </div>
           <div class="form-group">
-            <label>Phone / WhatsApp Number</label>
-            <input type="text" id="custPhone" class="form-control" placeholder="+254 700 000000">
+            <label>Phone / WhatsApp Number (Mandatory for Bookings & Penalties)</label>
+            <input type="tel" id="custPhone" class="form-control" placeholder="e.g. 0712345678" required>
           </div>
           <div class="btn-group">
             <button class="btn btn-primary" onclick="loginCustomer()">Login</button>
@@ -567,6 +567,29 @@
       </div>
 
       <div id="modDashboardContent" style="display:none;">
+        
+        <!-- NEW: Moderator Penalty & Unpaid Debt Management Panel -->
+        <div class="card" style="border: 1px solid var(--warning);">
+          <h2 style="color: var(--warning);">⚠️ Customer Cancellation Penalties & Unpaid Debts</h2>
+          <p style="font-size:0.85rem; color:var(--gray); margin-bottom:12px;">Customers who cancel an order after a rider is assigned incur a 50% penalty fee and are locked out of new bookings until cleared.</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr style="background-color: #fef9c3;">
+                  <th>Order ID</th>
+                  <th>Customer Phone</th>
+                  <th>Cancellation Fee Due</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="moderatorPenaltiesTable">
+                <tr><td colspan="5">Loading pending cancellation penalties...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div class="card">
           <h2>🎉 Broadcast Special Offers & Notifications</h2>
           <div class="grid-2">
@@ -812,6 +835,7 @@
             document.getElementById('modAuthCard').style.display = "none";
             document.getElementById('modDashboardContent').style.display = "block";
             loadModeratorDashboard();
+            loadModeratorPenalties();
 
             db.collection("orders").onSnapshot(snapshot => {
               if (initialModOrderCount !== null && snapshot.size > initialModOrderCount) {
@@ -860,9 +884,10 @@
       const name = document.getElementById('custName').value;
       const email = document.getElementById('custEmail').value;
       const password = document.getElementById('custPassword').value;
-      const phone = document.getElementById('custPhone').value;
+      const phone = document.getElementById('custPhone').value.trim();
 
       if (!name) return alert("Please enter your full name.");
+      if (!phone || phone.length < 10) return alert("Please enter a valid mobile number for safety and booking verifications.");
 
       try {
         const cred = await auth.createUserWithEmailAndPassword(email, password);
@@ -900,9 +925,12 @@
 
       const userDoc = await db.collection("users").doc(user.uid).get();
       let userPoints = 0;
+      let userPhone = "";
       if (userDoc.exists) {
         userPoints = userDoc.data().points || 0;
+        userPhone = userDoc.data().phone || "";
         document.getElementById('customerPointsDisplay').textContent = `Loyalty Points: ${userPoints} pts`;
+        document.getElementById('custPhone').value = userPhone;
       }
 
       db.collection("orders").where("userId", "==", user.uid).onSnapshot(async snapshot => {
@@ -957,7 +985,7 @@
           }
           previousCustomerOrderStatuses[orderId] = o.status;
 
-          // Render Live Assigned Rider Details & Safety Rating Action Button
+          // Render Rider Details & Safety Rating Action Button & Cancel Order Action Button
           let riderDetailsHtml = `<span style="color:var(--gray); font-style:italic;">⏳ Awaiting Rider Assignment...</span>`;
           if (o.riderUid) {
             const riderDoc = await db.collection("users").doc(o.riderUid).get();
@@ -987,6 +1015,11 @@
             }
           }
 
+          let cancelBtnHtml = "";
+          if (o.status === 'pending' || o.status === 'assigned' || o.status === 'accepted') {
+            cancelBtnHtml = `<button class="btn btn-danger" style="margin-top:8px; padding:6px 12px; font-size:0.78rem;" onclick="cancelCustomerOrder('${orderId}', '${o.status}', ${totalFare}, '${userPhone}')">❌ Cancel Order</button>`;
+          }
+
           let payLabel = "💵 Cash";
           if (o.paymentMethod === 'mpesa') {
             payLabel = "📱 M-Pesa";
@@ -1009,11 +1042,47 @@
               <td><strong>${payLabel}</strong></td>
               <td><strong>${o.status || 'Pending'}</strong></td>
               <td>KSh ${cashToPay}${totalFare !== cashToPay ? ` (Total: KSh ${totalFare})` : ''}</td>
-              <td>${riderDetailsHtml}</td>
+              <td>
+                ${riderDetailsHtml}
+                ${cancelBtnHtml}
+              </td>
             </tr>
           `;
         }
       });
+    }
+
+    async function cancelCustomerOrder(orderId, currentStatus, transportFare, customerPhone) {
+      let penaltyFee = 0;
+      let confirmMessage = "Are you sure you want to cancel this order?";
+
+      if (currentStatus === 'assigned' || currentStatus === 'accepted') {
+        penaltyFee = transportFare * 0.5;
+        confirmMessage = `⚠️ Warning: A rider is already assigned to this trip. Cancelling now incurs a 50% cancellation fee of Ksh ${penaltyFee}, which will be registered under your phone number (${customerPhone || 'N/A'}). Do you wish to proceed?`;
+      }
+
+      if (!confirm(confirmMessage)) return;
+
+      try {
+        const orderRef = db.collection("orders").doc(orderId);
+        const updateData = {
+          status: "cancelled",
+          cancelledAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        if (penaltyFee > 0) {
+          updateData.cancellationFee = penaltyFee;
+          updateData.penaltyApplied = true;
+          updateData.penaltyPaid = false; // Marks as unpaid debt
+          updateData.customerPhone = customerPhone || "Unknown";
+        }
+
+        await orderRef.update(updateData);
+        alert("Order has been cancelled successfully.");
+      } catch (error) {
+        console.error("Error cancelling order:", error);
+        alert("Failed to cancel order: " + error.message);
+      }
     }
 
     async function createCustomerOrder() {
@@ -1025,8 +1094,33 @@
       }
 
       const userDoc = await db.collection("users").doc(user.uid).get();
-      const userPhone = userDoc.exists ? (userDoc.data().phone || "") : "";
+      const userPhone = userDoc.exists ? (userDoc.data().phone || "").trim() : "";
       const currentPoints = userDoc.exists ? (userDoc.data().points || 0) : 0;
+
+      if (!userPhone) {
+        return alert("A valid mobile number is required on your profile to book orders. Please update your registration details.");
+      }
+
+      // Check for Unpaid Cancellation Penalties linked to this phone number
+      try {
+        const unpaidQuery = await db.collection("orders")
+          .where("customerPhone", "==", userPhone)
+          .where("penaltyApplied", "==", true)
+          .where("penaltyPaid", "==", false)
+          .get();
+
+        if (!unpaidQuery.empty) {
+          let totalDebt = 0;
+          unpaidQuery.forEach(doc => {
+            totalDebt += doc.data().cancellationFee || 0;
+          });
+
+          alert(`🚫 Booking Blocked: You have an unpaid cancellation penalty of Ksh ${totalDebt} linked to phone number ${userPhone}. Please clear this balance with support (0791730207 / 0792102645) to unlock your account.`);
+          return;
+        }
+      } catch (err) {
+        console.error("Error checking debt status:", err);
+      }
 
       const serviceType = document.getElementById('serviceType').value;
       const pickup = document.getElementById('pickupLoc').value;
@@ -1259,6 +1353,52 @@
         }
       } catch (err) {
         alert("Moderator Login Failed: " + err.message);
+      }
+    }
+
+    // NEW: Load Unpaid Penalties for Moderators
+    async function loadModeratorPenalties() {
+      db.collection("orders")
+        .where("penaltyApplied", "==", true)
+        .where("penaltyPaid", "==", false)
+        .onSnapshot(snapshot => {
+          const tbody = document.getElementById("moderatorPenaltiesTable");
+          if (!tbody) return;
+          tbody.innerHTML = "";
+
+          if (snapshot.empty) {
+            tbody.innerHTML = "<tr><td colspan='5'>No pending cancellation penalties or debts.</td></tr>";
+            return;
+          }
+
+          snapshot.forEach(doc => {
+            const o = doc.data();
+            const orderId = doc.id;
+            tbody.innerHTML += `
+              <tr>
+                <td>#${orderId.substring(0,6)}</td>
+                <td>📞 <a href="tel:${o.customerPhone}">${o.customerPhone || 'N/A'}</a></td>
+                <td><strong style="color:var(--danger);">KSh ${o.cancellationFee || 0}</strong></td>
+                <td><span class="badge badge-offline">Unpaid Debt</span></td>
+                <td>
+                  <button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem;" onclick="clearOrderPenalty('${orderId}')">✅ Clear Debt</button>
+                </td>
+              </tr>
+            `;
+          });
+        });
+    }
+
+    async function clearOrderPenalty(orderId) {
+      if (confirm("Mark this cancellation penalty as paid and unlock the customer's phone number?")) {
+        try {
+          await db.collection("orders").doc(orderId).update({
+            penaltyPaid: true
+          });
+          alert("Penalty cleared successfully! Customer can now book orders again.");
+        } catch (err) {
+          alert("Failed to clear penalty: " + err.message);
+        }
       }
     }
 
