@@ -1730,4 +1730,67 @@
       loadModeratorDashboard();
     }
 
-    async function assignRiderBy
+    async function assignRiderByModerator(orderId) {
+      const riderUid = document.getElementById(`riderSelect_${orderId}`).value;
+      if (!riderUid) return alert("Please select a rider.");
+
+      const token = await auth.currentUser.getIdToken();
+      const res = await fetch(`${BACKEND_URL}/api/moderator/orders/${orderId}/assign-rider`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ riderUid })
+      });
+
+      const data = await res.json();
+      if (!res.ok) return alert("Error: " + data.error);
+
+      try {
+        await db.collection("riderNotifications").add({
+          riderUid: riderUid,
+          type: "ORDER_ASSIGNED",
+          title: "New Delivery Assigned",
+          message: `You have been assigned to Order #${orderId.substring(0,6)}.`,
+          orderId: orderId,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (err) {
+        console.log("Rider notification write error:", err);
+      }
+
+      alert("Rider assigned!");
+      loadModeratorDashboard();
+    }
+
+    async function deleteOrderByModerator(orderId) {
+      if (confirm("Delete order #" + orderId.substring(0,6) + "?")) {
+        try {
+          await db.collection("orders").doc(orderId).delete();
+          alert("Order deleted.");
+          loadModeratorDashboard();
+        } catch (error) {
+          alert("Failed to delete order: " + error.message);
+        }
+      }
+    }
+
+    async function toggleRiderStatus(uid, currentStatus) {
+      const newStatus = currentStatus === "active" ? "inactive" : "active";
+      const token = await auth.currentUser.getIdToken();
+
+      await fetch(`${BACKEND_URL}/api/moderator/riders/${uid}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      loadModeratorDashboard();
+    }
+  </script>
+</body>
+</html>
